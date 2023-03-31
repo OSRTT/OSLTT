@@ -12,6 +12,9 @@ namespace OSLTT
 {
     public partial class Main : Form
     {
+        private List<float> inputLagEvents = new List<float>();
+
+
         public Main()
         {
             InitializeComponent();
@@ -20,6 +23,12 @@ namespace OSLTT
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void getInputLagEvents(List<float> fpsList)
+        {
+            inputLagEvents = fpsList;
+            //Console.WriteLine(fpsList.Average().ToString());
         }
     }
 }

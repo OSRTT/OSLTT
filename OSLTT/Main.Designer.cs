@@ -29,7 +29,6 @@ namespace OSLTT
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.deviceStatusPanel = new System.Windows.Forms.Panel();
             this.checkImg = new System.Windows.Forms.PictureBox();
             this.devStat = new System.Windows.Forms.Label();
@@ -50,7 +49,7 @@ namespace OSLTT
             // 
             // checkImg
             // 
-            this.checkImg.ErrorImage = ((System.Drawing.Image)(resources.GetObject("checkImg.ErrorImage")));
+            this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
             this.checkImg.Location = new System.Drawing.Point(219, 7);
             this.checkImg.Name = "checkImg";
             this.checkImg.Size = new System.Drawing.Size(58, 29);

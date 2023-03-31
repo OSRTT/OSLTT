@@ -12,6 +12,7 @@ using System;
 using System.Windows.Input;
 using Key = System.Windows.Input.Key;
 using System.Reflection;
+using OSLTT;
 
 namespace OSRTT_Launcher.DirectX.System
 {
