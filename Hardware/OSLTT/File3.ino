@@ -11,6 +11,8 @@ void setup() {
   pinMode(PullDownPin, INPUT_PULLDOWN);   
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
+
+  ADC_Init();
   establishContact();  // send a byte to establish contact until receiver responds
 }
 
@@ -65,6 +67,17 @@ void loop() {
       }
     }
   }
+  else if (input[0] == 'D') // Button trigger, audio latency
+  {
+    while(input[0] != 'X')
+    {
+      getSerialChars();
+      if (digitalRead(ButtonPin))
+      {
+        // listen to audio port for spike
+      }
+    }
+  }
   else if (input[0] == 'I') // Initialise everything
   {
     Serial.print("FW:");
@@ -77,6 +90,40 @@ void loop() {
     int MSB = convertHexToDec(input[0]);
     int LSB = convertHexToDec(input[1]);
     shotCount = (MSB * 100) + (LSB * 10);
+  }
+  else if (input[0] == 'Y')
+  {
+    while (input[0] != 'X')
+    {
+      int pulldown = digitalRead(PullDownPin);
+      Serial.println(pulldown);
+      if (pulldown == HIGH)
+      {
+        pulseLED(true);
+      }
+      delay(100);
+    }
+  }
+  else if (input[0] == 'Z')
+  {
+    Serial.println("Z registered");
+    Swap_ADC_Input(0);
+    Serial.println("Swapped input");
+    int buttonState = digitalRead(ButtonPin);
+    Serial.print("Read button - ");
+    Serial.println(buttonState);
+    // ADC->SWTRIG.bit.START = 1; //Start ADC
+    // while (!ADC->INTFLAG.bit.RESRDY); //wait for ADC to have a new value
+    // int result = ADC->RESULT.reg;
+    // Serial.println(result);
+    while (buttonState != HIGH)
+    {
+      int value = getSingleADCValue();
+      //int value = analogRead(A1);
+      Serial.println(value);
+      buttonState = digitalRead(ButtonPin);
+    }
+    Serial.println("Exited");
   }
 
 

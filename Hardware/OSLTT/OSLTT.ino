@@ -5,8 +5,8 @@
 
 
 int LEDPin = 3;    // first analog sensor
-int PullDownPin = 6;   // second analog sensor
-int ButtonPin = 7;    // digital sensor
+int PullDownPin = 4;   // second analog sensor
+int ButtonPin = 6;    // digital sensor
 int inByte = 0;         // incoming serial byte
 
 

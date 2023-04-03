@@ -29,33 +29,34 @@ namespace OSLTT
         /// </summary>
         private void InitializeComponent()
         {
-            this.deviceStatusPanel = new System.Windows.Forms.Panel();
-            this.checkImg = new System.Windows.Forms.PictureBox();
+            this.fwLbl = new System.Windows.Forms.Label();
+            this.fwLblTitle = new System.Windows.Forms.Label();
             this.devStat = new System.Windows.Forms.Label();
-            this.deviceStatusPanel.SuspendLayout();
+            this.checkImg = new System.Windows.Forms.PictureBox();
+            this.deviceStatusPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
+            this.deviceStatusPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // deviceStatusPanel
+            // fwLbl
             // 
-            this.deviceStatusPanel.BackColor = System.Drawing.Color.White;
-            this.deviceStatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.deviceStatusPanel.Controls.Add(this.checkImg);
-            this.deviceStatusPanel.Controls.Add(this.devStat);
-            this.deviceStatusPanel.Location = new System.Drawing.Point(12, 12);
-            this.deviceStatusPanel.Name = "deviceStatusPanel";
-            this.deviceStatusPanel.Size = new System.Drawing.Size(776, 45);
-            this.deviceStatusPanel.TabIndex = 31;
+            this.fwLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwLbl.Location = new System.Drawing.Point(679, 9);
+            this.fwLbl.Name = "fwLbl";
+            this.fwLbl.Size = new System.Drawing.Size(80, 25);
+            this.fwLbl.TabIndex = 9;
+            this.fwLbl.Text = "V0.00";
+            this.fwLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkImg
+            // fwLblTitle
             // 
-            this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
-            this.checkImg.Location = new System.Drawing.Point(219, 7);
-            this.checkImg.Name = "checkImg";
-            this.checkImg.Size = new System.Drawing.Size(58, 29);
-            this.checkImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.checkImg.TabIndex = 7;
-            this.checkImg.TabStop = false;
+            this.fwLblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fwLblTitle.Location = new System.Drawing.Point(633, 9);
+            this.fwLblTitle.Name = "fwLblTitle";
+            this.fwLblTitle.Size = new System.Drawing.Size(61, 25);
+            this.fwLblTitle.TabIndex = 8;
+            this.fwLblTitle.Text = "FW:";
+            this.fwLblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // devStat
             // 
@@ -67,6 +68,28 @@ namespace OSLTT
             this.devStat.Text = "Device Connected";
             this.devStat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // checkImg
+            // 
+            this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
+            this.checkImg.Location = new System.Drawing.Point(219, 7);
+            this.checkImg.Name = "checkImg";
+            this.checkImg.Size = new System.Drawing.Size(58, 29);
+            this.checkImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.checkImg.TabIndex = 7;
+            this.checkImg.TabStop = false;
+            // 
+            // deviceStatusPanel
+            // 
+            this.deviceStatusPanel.BackColor = System.Drawing.Color.White;
+            this.deviceStatusPanel.Controls.Add(this.fwLbl);
+            this.deviceStatusPanel.Controls.Add(this.fwLblTitle);
+            this.deviceStatusPanel.Controls.Add(this.checkImg);
+            this.deviceStatusPanel.Controls.Add(this.devStat);
+            this.deviceStatusPanel.Location = new System.Drawing.Point(-5, -1);
+            this.deviceStatusPanel.Name = "deviceStatusPanel";
+            this.deviceStatusPanel.Size = new System.Drawing.Size(809, 45);
+            this.deviceStatusPanel.TabIndex = 31;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -74,19 +97,20 @@ namespace OSLTT
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.deviceStatusPanel);
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "OSLTT";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.deviceStatusPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).EndInit();
+            this.deviceStatusPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel deviceStatusPanel;
         private System.Windows.Forms.PictureBox checkImg;
         private System.Windows.Forms.Label devStat;
+        private System.Windows.Forms.Label fwLbl;
+        private System.Windows.Forms.Label fwLblTitle;
+        private System.Windows.Forms.Panel deviceStatusPanel;
     }
 }
 

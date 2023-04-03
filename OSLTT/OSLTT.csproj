@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CFuncs.cs" />
     <Compile Include="DirectX\DPerformanceTester.cs" />
     <Compile Include="DirectX\Graphics\DCameraClass.cs" />
     <Compile Include="DirectX\Graphics\DDX11Class.cs" />
@@ -140,9 +141,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoundedButton.cs">
+    <Compile Include="RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UpdateHandler.cs" />
+    <Compile Include="UserSettings.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
