@@ -700,53 +700,112 @@ namespace OSLTT
             //Console.WriteLine(fpsList.Average().ToString());
         }
 
-        private void materialButton1_Click(object sender, EventArgs e)
+        private void DialogBox()
         {
             MaterialDialog materialDialog = new MaterialDialog(this, "Dialog Title", "Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.", "OK", true, "Cancel");
             DialogResult result = materialDialog.ShowDialog(this);
 
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar(result.ToString(), 750);
             SnackBarMessage.Show(this);
+        }
+
+        private void monitorPresetBtn_Click(object sender, EventArgs e)
+        {
+            PresetConfigs(true, false, false, 100, 0.5, true, true, false);
 
         }
+
+        private void micePresetBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gamePresetBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioPresetBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void resultsViewBtn_Click(object sender, EventArgs e)
+        {
+            // ResultsView rv = new ResultsView();
+            // rv.Show();
+        }
+
+        private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioTriggerToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pinTriggerToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lightSensorToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioSensorToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clickCountSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timeBetweenSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void preTestToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void directXToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gameExternalToggle_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            CFuncs.HyperlinkOut("https://andymanic.github.io/OSRTTDocs/");
+        }
+
+
+        private void PresetConfigs(bool btn, bool mic, bool pin, int clicks, double time, bool preTest, bool directX, bool game)
+        {
+            this.buttonTriggerToggle.Checked = btn;
+            this.audioTriggerToggle.Checked = mic;
+            this.pinTriggerToggle.Checked = pin;
+            this.clickCountSelect.SelectedItem = clicks;
+            this.timeBetweenSelect.SelectedItem = time;
+            this.preTestToggle.Checked = preTest;
+            this.directXToggle.Checked = directX;
+            this.gameExternalToggle.Checked = game;
+        }
+
+
+
     }
 
-    public class RoundButton : Button
-    {
-        GraphicsPath GetRoundPath(RectangleF Rect, int radius)
-        {
-            float m = 2.75F;
-            float r2 = radius / 2f;
-            GraphicsPath GraphPath = new GraphicsPath();
-
-            GraphPath.AddArc(Rect.X + m, Rect.Y + m, radius, radius, 180, 90);
-            GraphPath.AddLine(Rect.X + r2 + m, Rect.Y + m, Rect.Width - r2 - m, Rect.Y + m);
-            GraphPath.AddArc(Rect.X + Rect.Width - radius - m, Rect.Y + m, radius, radius, 270, 90);
-            GraphPath.AddLine(Rect.Width - m, Rect.Y + r2, Rect.Width - m, Rect.Height - r2 - m);
-            GraphPath.AddArc(Rect.X + Rect.Width - radius - m,
-                           Rect.Y + Rect.Height - radius - m, radius, radius, 0, 90);
-            GraphPath.AddLine(Rect.Width - r2 - m, Rect.Height - m, Rect.X + r2 - m, Rect.Height - m);
-            GraphPath.AddArc(Rect.X + m, Rect.Y + Rect.Height - radius - m, radius, radius, 90, 90);
-            GraphPath.AddLine(Rect.X + m, Rect.Height - r2 - m, Rect.X + m, Rect.Y + r2 + m);
-
-            GraphPath.CloseFigure();
-            return GraphPath;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            int borderRadius = 25;
-            float borderThickness = 1.75f;
-            base.OnPaint(e);
-            RectangleF Rect = new RectangleF(0, 0, this.Width, this.Height);
-            GraphicsPath GraphPath = GetRoundPath(Rect, borderRadius);
-
-            this.Region = new Region(GraphPath);
-            using (Pen pen = new Pen(Color.Silver, borderThickness))
-            {
-                pen.Alignment = PenAlignment.Inset;
-                e.Graphics.DrawPath(pen, GraphPath);
-            }
-        }
-    }
 }

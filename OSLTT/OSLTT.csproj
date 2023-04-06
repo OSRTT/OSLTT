@@ -149,6 +149,7 @@
     <Compile Include="RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SettingsClasses.cs" />
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="UserSettings.cs" />
     <EmbeddedResource Include="Main.resx">
