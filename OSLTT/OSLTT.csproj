@@ -38,6 +38,9 @@
     <Reference Include="AutoUpdater.NET, Version=1.7.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>packages\Autoupdater.NET.Official.1.7.7\lib\net45\AutoUpdater.NET.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialSkin, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialSkin.2.2.3.1\lib\net48\MaterialSkin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.1587.40, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Web.WebView2.1.0.1587.40\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
     </Reference>
@@ -50,6 +53,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ScottPlot, Version=4.1.61.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
       <HintPath>packages\ScottPlot.4.1.61\lib\net462\ScottPlot.dll</HintPath>
@@ -86,6 +90,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Drawing.Common.4.7.2\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
