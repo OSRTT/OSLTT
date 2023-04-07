@@ -63,6 +63,7 @@ namespace OSLTT
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.resultsViewBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
+            this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard1.SuspendLayout();
@@ -239,6 +240,8 @@ namespace OSLTT
             // buttonTriggerToggle
             // 
             this.buttonTriggerToggle.AutoSize = true;
+            this.buttonTriggerToggle.Checked = true;
+            this.buttonTriggerToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.buttonTriggerToggle.Depth = 0;
             this.buttonTriggerToggle.Location = new System.Drawing.Point(14, 43);
             this.buttonTriggerToggle.Margin = new System.Windows.Forms.Padding(0);
@@ -296,7 +299,7 @@ namespace OSLTT
             "200",
             "250",
             "500"});
-            this.clickCountSelect.Location = new System.Drawing.Point(365, 52);
+            this.clickCountSelect.Location = new System.Drawing.Point(364, 76);
             this.clickCountSelect.MaxDropDownItems = 4;
             this.clickCountSelect.MouseState = MaterialSkin.MouseState.OUT;
             this.clickCountSelect.Name = "clickCountSelect";
@@ -310,7 +313,7 @@ namespace OSLTT
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
             this.materialLabel4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel4.Location = new System.Drawing.Point(226, 72);
+            this.materialLabel4.Location = new System.Drawing.Point(225, 96);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
             this.materialLabel4.Size = new System.Drawing.Size(122, 19);
@@ -338,7 +341,7 @@ namespace OSLTT
             "3",
             "4",
             "5"});
-            this.timeBetweenSelect.Location = new System.Drawing.Point(384, 109);
+            this.timeBetweenSelect.Location = new System.Drawing.Point(383, 133);
             this.timeBetweenSelect.MaxDropDownItems = 4;
             this.timeBetweenSelect.MouseState = MaterialSkin.MouseState.OUT;
             this.timeBetweenSelect.Name = "timeBetweenSelect";
@@ -352,7 +355,7 @@ namespace OSLTT
             this.materialLabel5.AutoSize = true;
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel5.Location = new System.Drawing.Point(226, 126);
+            this.materialLabel5.Location = new System.Drawing.Point(225, 150);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
             this.materialLabel5.Size = new System.Drawing.Size(147, 19);
@@ -362,6 +365,7 @@ namespace OSLTT
             // settingsCard
             // 
             this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.settingsCard.Controls.Add(this.autoClickToggle);
             this.settingsCard.Controls.Add(this.helpBtn);
             this.settingsCard.Controls.Add(this.materialLabel9);
             this.settingsCard.Controls.Add(this.preTestToggle);
@@ -416,7 +420,7 @@ namespace OSLTT
             this.materialLabel9.Depth = 0;
             this.materialLabel9.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel9.Location = new System.Drawing.Point(212, 169);
+            this.materialLabel9.Location = new System.Drawing.Point(211, 197);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
             this.materialLabel9.Size = new System.Drawing.Size(243, 29);
@@ -427,7 +431,7 @@ namespace OSLTT
             // 
             this.preTestToggle.AutoSize = true;
             this.preTestToggle.Depth = 0;
-            this.preTestToggle.Location = new System.Drawing.Point(207, 198);
+            this.preTestToggle.Location = new System.Drawing.Point(206, 226);
             this.preTestToggle.Margin = new System.Windows.Forms.Padding(0);
             this.preTestToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.preTestToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -471,6 +475,8 @@ namespace OSLTT
             // directXToggle
             // 
             this.directXToggle.AutoSize = true;
+            this.directXToggle.Checked = true;
+            this.directXToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.directXToggle.Depth = 0;
             this.directXToggle.Location = new System.Drawing.Point(530, 43);
             this.directXToggle.Margin = new System.Windows.Forms.Padding(0);
@@ -529,6 +535,8 @@ namespace OSLTT
             // lightSensorToggle
             // 
             this.lightSensorToggle.AutoSize = true;
+            this.lightSensorToggle.Checked = true;
+            this.lightSensorToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.lightSensorToggle.Depth = 0;
             this.lightSensorToggle.Location = new System.Drawing.Point(14, 198);
             this.lightSensorToggle.Margin = new System.Windows.Forms.Padding(0);
@@ -635,6 +643,22 @@ namespace OSLTT
             this.materialCard3.Size = new System.Drawing.Size(186, 100);
             this.materialCard3.TabIndex = 42;
             // 
+            // autoClickToggle
+            // 
+            this.autoClickToggle.AutoSize = true;
+            this.autoClickToggle.Depth = 0;
+            this.autoClickToggle.Location = new System.Drawing.Point(216, 43);
+            this.autoClickToggle.Margin = new System.Windows.Forms.Padding(0);
+            this.autoClickToggle.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.autoClickToggle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.autoClickToggle.Name = "autoClickToggle";
+            this.autoClickToggle.Ripple = true;
+            this.autoClickToggle.Size = new System.Drawing.Size(129, 37);
+            this.autoClickToggle.TabIndex = 55;
+            this.autoClickToggle.Text = "Auto Click";
+            this.autoClickToggle.UseVisualStyleBackColor = true;
+            this.autoClickToggle.CheckedChanged += new System.EventHandler(this.autoClickToggle_CheckedChanged);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,6 +720,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialSwitch gameExternalToggle;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialButton helpBtn;
+        private MaterialSkin.Controls.MaterialSwitch autoClickToggle;
     }
 }
 

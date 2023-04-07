@@ -711,23 +711,22 @@ namespace OSLTT
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
         {
-            PresetConfigs(true, false, false, 100, 0.5, true, true, false);
-
+            PresetConfigs(true, false, false, true, true, false, 100, 0.5, false, true, false);
         }
 
         private void micePresetBtn_Click(object sender, EventArgs e)
         {
-
+            PresetConfigs(false, true, false, true, false, false, 100, 0.5, true, true, false);
         }
 
         private void gamePresetBtn_Click(object sender, EventArgs e)
         {
-
+            PresetConfigs(true, false, false, true, true, false, 100, 0.5, true, false, true);
         }
 
         private void audioPresetBtn_Click(object sender, EventArgs e)
         {
-
+            PresetConfigs(true, false, false, false, true, true, 100, 2, true, false, false);
         }
 
         private void resultsViewBtn_Click(object sender, EventArgs e)
@@ -738,52 +737,180 @@ namespace OSLTT
 
         private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    audioTriggerToggle.Checked = true;
+                    pinTriggerToggle.Checked = false;
+                    buttonTriggerToggle.Checked = false;
+                }
+                else
+                {
+                    audioTriggerToggle.Checked = false;
+                    pinTriggerToggle.Checked = false;
+                    buttonTriggerToggle.Checked = true;
+                }
+                SaveSettings();
+            }
         }
 
         private void audioTriggerToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    buttonTriggerToggle.Checked = true;
+                    audioTriggerToggle.Checked = false;
+                    pinTriggerToggle.Checked = false;
+                }
+                else
+                {
+                    buttonTriggerToggle.Checked = false;
+                    audioTriggerToggle.Checked = true;
+                    pinTriggerToggle.Checked = false;
+                }
+                SaveSettings();
+            }
         }
 
         private void pinTriggerToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    buttonTriggerToggle.Checked = true;
+                    audioTriggerToggle.Checked = false;
+                    pinTriggerToggle.Checked = false;
+                }
+                else
+                {
+                    buttonTriggerToggle.Checked = false;
+                    audioTriggerToggle.Checked = false;
+                    pinTriggerToggle.Checked = true;
+                }
+                SaveSettings();
+            }
         }
 
         private void lightSensorToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    lightSensorToggle.Checked = false;
+                    audioSensorToggle.Checked = true;
+                }
+                else
+                {
+                    lightSensorToggle.Checked = true;
+                    audioSensorToggle.Checked = false;
+                }
+                SaveSettings();
+            }
         }
 
         private void audioSensorToggle_CheckedChanged(object sender, EventArgs e)
         {
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    lightSensorToggle.Checked = true;
+                    audioSensorToggle.Checked = false;
+                }
+                else
+                {
+                    lightSensorToggle.Checked = false;
+                    audioSensorToggle.Checked = true;
+                }
+                SaveSettings();
+            }
+        }
 
+        private void autoClickToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                //autoClickToggle.Checked = !autoClickToggle.Checked;
+                SaveSettings();
+            }
         }
 
         private void clickCountSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MaterialComboBox m = sender as MaterialComboBox;
+            if (m.Focused)
+            {
+                SaveSettings();
+            }
         }
 
         private void timeBetweenSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MaterialComboBox m = sender as MaterialComboBox;
+            if (m.Focused)
+            {
+                SaveSettings();
+            }
         }
 
         private void preTestToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                //preTestToggle.Checked = !preTestToggle.Checked;
+                SaveSettings();
+                Console.WriteLine(preTestToggle.Checked);
+            }
         }
 
         private void directXToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    directXToggle.Checked = false;
+                    gameExternalToggle.Checked = true;
+                }
+                else
+                {
+                    directXToggle.Checked = true;
+                    gameExternalToggle.Checked = false;
+                }
+                SaveSettings();
+            }
         }
 
         private void gameExternalToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (!s.Checked)
+                {
+                    directXToggle.Checked = true;
+                    gameExternalToggle.Checked = false;
+                }
+                else
+                {
+                    directXToggle.Checked = false;
+                    gameExternalToggle.Checked = true;
+                }
+                SaveSettings();
+            }
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
@@ -792,20 +919,49 @@ namespace OSLTT
         }
 
 
-        private void PresetConfigs(bool btn, bool mic, bool pin, int clicks, double time, bool preTest, bool directX, bool game)
+        private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool autoClick, bool audio, int clicks, double time, bool preTest, bool directX, bool game)
         {
             this.buttonTriggerToggle.Checked = btn;
             this.audioTriggerToggle.Checked = mic;
             this.pinTriggerToggle.Checked = pin;
-            this.clickCountSelect.SelectedItem = clicks;
-            this.timeBetweenSelect.SelectedItem = time;
+            this.lightSensorToggle.Checked = light;
+            this.audioSensorToggle.Checked = audio;
+            this.autoClickToggle.Checked = autoClick;
+            SetComboBoxValue(clickCountSelect, clicks);
+            SetComboBoxValue(timeBetweenSelect, time);
             this.preTestToggle.Checked = preTest;
             this.directXToggle.Checked = directX;
             this.gameExternalToggle.Checked = game;
         }
 
+        private void SaveSettings()
+        {
+            Properties.Settings.Default.buttonTriggerToggle = buttonTriggerToggle.Checked;
+            Properties.Settings.Default.audioTriggerToggle = audioTriggerToggle.Checked;
+            Properties.Settings.Default.pinTriggerToggle = pinTriggerToggle.Checked;
+            Properties.Settings.Default.lightSensorToggle = lightSensorToggle.Checked;
+            Properties.Settings.Default.autoClickToggle = autoClickToggle.Checked;
+            Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.SelectedItem.ToString());
+            Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.SelectedItem.ToString());
+            Properties.Settings.Default.preTestToggle = preTestToggle.Checked;
+            Properties.Settings.Default.directXToggle = directXToggle.Checked;
+            Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
+            Properties.Settings.Default.Save();
+        }
 
+        private void SetComboBoxValue(MaterialComboBox mcb, double value)
+        {
+            for (int i = 0; i < mcb.Items.Count; i++)
+            {
+                if (mcb.Items[i].ToString() == value.ToString())
+                {
+                    mcb.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
 
+        
     }
 
 }

@@ -34,5 +34,137 @@ namespace OSLTT.Properties {
                 this["updateInProgress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool buttonTriggerToggle {
+            get {
+                return ((bool)(this["buttonTriggerToggle"]));
+            }
+            set {
+                this["buttonTriggerToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool audioTriggerToggle {
+            get {
+                return ((bool)(this["audioTriggerToggle"]));
+            }
+            set {
+                this["audioTriggerToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool pinTriggerToggle {
+            get {
+                return ((bool)(this["pinTriggerToggle"]));
+            }
+            set {
+                this["pinTriggerToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool lightSensorToggle {
+            get {
+                return ((bool)(this["lightSensorToggle"]));
+            }
+            set {
+                this["lightSensorToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool audioSensorToggle {
+            get {
+                return ((bool)(this["audioSensorToggle"]));
+            }
+            set {
+                this["audioSensorToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoClickToggle {
+            get {
+                return ((bool)(this["autoClickToggle"]));
+            }
+            set {
+                this["autoClickToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int clickCountSelect {
+            get {
+                return ((int)(this["clickCountSelect"]));
+            }
+            set {
+                this["clickCountSelect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double timeBetweenSelect {
+            get {
+                return ((double)(this["timeBetweenSelect"]));
+            }
+            set {
+                this["timeBetweenSelect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool preTestToggle {
+            get {
+                return ((bool)(this["preTestToggle"]));
+            }
+            set {
+                this["preTestToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool directXToggle {
+            get {
+                return ((bool)(this["directXToggle"]));
+            }
+            set {
+                this["directXToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool gameExternalToggle {
+            get {
+                return ((bool)(this["gameExternalToggle"]));
+            }
+            set {
+                this["gameExternalToggle"] = value;
+            }
+        }
     }
 }
