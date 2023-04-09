@@ -49,6 +49,10 @@ namespace OSLTT
         string resultsFolderPath = "";
 
         private List<float> inputLagEvents = new List<float>();
+        private List<ProcessData.rawInputLagResult> inputLagRawData = new List<ProcessData.rawInputLagResult>();
+        private List<ProcessData.inputLagResult> inputLagProcessed = new List<ProcessData.inputLagResult>();
+
+        private bool processingFailed = false;
 
         private readonly string fqbn = "Seeduino:samd:seeed_XIAO_m0";
 
@@ -61,6 +65,9 @@ namespace OSLTT
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
+
+            //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
             this.Resize += Form1_Resize;
 
@@ -590,6 +597,17 @@ namespace OSLTT
             }
         }
 
+        private void portWrite(string input)
+        {
+            if (port != null)
+            {
+                if (port.IsOpen)
+                {
+                    port.Write(input);
+                }
+            }
+        }
+
         private void ControlDeviceButtons(bool state)
         {
             /*if (this.launchBtn.InvokeRequired)
@@ -618,14 +636,13 @@ namespace OSLTT
             if (state == 1)
             {
                 text = "Device Connected";
-                bg = Color.White;
                 check = true;
                 active = true;
-                btnBg = Color.FromArgb(255, 105, 180, 76);
+                bg = Color.FromArgb(255, 38, 50, 56);
             }
             else if (state == 2)
             {
-                text = "Updating Firmware Now";
+                text = "Updating Firmware";
                 bg = Color.Violet;
             }
             else if (state == 3)
@@ -638,6 +655,13 @@ namespace OSLTT
             {
                 text = "Firmware Update Failed";
                 bg = Color.FromArgb(255, 255, 80, 80);
+            }
+            else if (state == 5)
+            {
+                text = "Test Running";
+                check = false;
+                active = false;
+                bg = Color.FromArgb(255, 38, 50, 56);
             }
             if (this.devStat.InvokeRequired)
             {
@@ -656,7 +680,7 @@ namespace OSLTT
                 this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.BackColor = btnBg));
                 this.inputLagButton.Invoke((MethodInvoker)(() => this.inputLagButton.BackColor = btnBg));
                 this.LiveViewBtn.Invoke((MethodInvoker)(() => LiveViewBtn.Enabled = active));
-                this.LiveViewBtn.Invoke((MethodInvoker)(() => LiveViewBtn.BackColor = btnBg));*/
+                */
             }
             else
             {
@@ -675,7 +699,7 @@ namespace OSLTT
                 this.launchBtn.BackColor = btnBg;
                 this.inputLagButton.BackColor = btnBg;
                 this.LiveViewBtn.Enabled = active;
-                this.LiveViewBtn.BackColor = btnBg;
+                
                 */
             }
         }
@@ -700,13 +724,14 @@ namespace OSLTT
             //Console.WriteLine(fpsList.Average().ToString());
         }
 
-        private void DialogBox()
+        private DialogResult DialogBox(string title, string message, string okButton, bool showCancel, string cancelText = "Cancel")
         {
-            MaterialDialog materialDialog = new MaterialDialog(this, "Dialog Title", "Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.", "OK", true, "Cancel");
+            MaterialDialog materialDialog = new MaterialDialog(this, title, message, okButton, showCancel, cancelText);
             DialogResult result = materialDialog.ShowDialog(this);
 
             MaterialSnackBar SnackBarMessage = new MaterialSnackBar(result.ToString(), 750);
             SnackBarMessage.Show(this);
+            return result;
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
@@ -731,8 +756,8 @@ namespace OSLTT
 
         private void resultsViewBtn_Click(object sender, EventArgs e)
         {
-            // ResultsView rv = new ResultsView();
-            // rv.Show();
+            ResultsView rv = new ResultsView();
+            rv.Show();
         }
 
         private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
@@ -947,6 +972,7 @@ namespace OSLTT
             Properties.Settings.Default.directXToggle = directXToggle.Checked;
             Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
             Properties.Settings.Default.Save();
+            portWrite("I");
         }
 
         private void SetComboBoxValue(MaterialComboBox mcb, double value)
@@ -961,7 +987,96 @@ namespace OSLTT
             }
         }
 
-        
+        private void startTestBtn_Click(object sender, EventArgs e)
+        {
+            runTest();
+        }
+
+        private void runTest()
+        {
+
+        }
+
+        private void processInputLagData()
+        {
+            inputLagProcessed.Clear();
+
+            try //Wrapped whole thing in try just in case
+            {
+                // Then process the lines
+                //ProcessData pd = new ProcessData();
+                ProcessData.averagedInputLag inputLagProcessed = ProcessData.AverageInputLagResults(inputLagRawData);
+
+                // Write results to csv using new name
+                decimal fileNumber = 001;
+                // search /Results folder for existing file names, pick new name
+                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LATENCY-OSRTT.csv");
+                // Search \Results folder for existing results to not overwrite existing or have save conflict errors
+                foreach (var s in existingFiles)
+                {
+                    decimal num = 0;
+                    try
+                    { num = decimal.Parse(Path.GetFileNameWithoutExtension(s).Remove(3)); }
+                    catch
+                    { Console.WriteLine("Non-standard file name found"); }
+                    if (num >= fileNumber)
+                    {
+                        fileNumber = num + 1;
+                    }
+                }
+                string[] folders = resultsFolderPath.Split('\\');
+                string monitorInfo = folders.Last();
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-OSRTT.csv";
+                //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
+
+                string strSeparator = ",";
+                StringBuilder csvString = new StringBuilder();
+                csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
+
+                foreach (var res in inputLagProcessed.inputLagResults)
+                {
+                    csvString.AppendLine(
+                        res.shotNumber.ToString() + "," +
+                        res.clickTimeMs.ToString() + "," +
+                        res.frameTimeMs.ToString() + "," +
+                        res.onDisplayLatency.ToString() + "," +
+                        res.totalInputLag.ToString()
+                        );
+                }
+                csvString.AppendLine("AVERAGE," + inputLagProcessed.ClickTime.AVG.ToString() + "," + inputLagProcessed.FrameTime.AVG.ToString() + "," + inputLagProcessed.onDisplayLatency.AVG.ToString() + "," + inputLagProcessed.totalInputLag.AVG.ToString());
+                csvString.AppendLine("MINIMUM," + inputLagProcessed.ClickTime.MIN.ToString() + "," + inputLagProcessed.FrameTime.MIN.ToString() + "," + inputLagProcessed.onDisplayLatency.MIN.ToString() + "," + inputLagProcessed.totalInputLag.MIN.ToString());
+                csvString.AppendLine("MAXIMUM," + inputLagProcessed.ClickTime.MAX.ToString() + "," + inputLagProcessed.FrameTime.MAX.ToString() + "," + inputLagProcessed.onDisplayLatency.MAX.ToString() + "," + inputLagProcessed.totalInputLag.MAX.ToString());
+                Console.WriteLine(filePath);
+                File.WriteAllText(filePath, csvString.ToString());
+                
+
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    ResultsView rv = new ResultsView();
+                    rv.setResultsFolder(resultsFolderPath);
+                    rv.inputLagMode(inputLagProcessed);
+                    rv.Show();
+                });
+                //Process.Start("explorer.exe", resultsFolderPath);
+            }
+            catch (Exception procEx)
+            {
+                Console.WriteLine(procEx);
+                processingFailed = true;
+                if (port != null)
+                {
+                    if (port.IsOpen)
+                    {
+                        port.Write("X");
+                        DialogBox("One or more set of results failed to process and won't be included in the multi-run averaging. \n " +
+                            "Brightness may be too high or monitor may be strobing it's backlight. \n" +
+                            "Try calibrating the brightness again, or use the Graph View Template to view the raw data.", "Processing Failed", "OK", false);
+                        processingFailed = false;
+                    }
+                }
+            }
+        }
+
     }
 
 }

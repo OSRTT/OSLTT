@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OSLTT
 {
-    class ProcessData
+    public class ProcessData
     {
         /////////////////////////////////////////////////////////////////////////////
         //              Input Lag

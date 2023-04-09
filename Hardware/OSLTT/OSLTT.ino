@@ -16,7 +16,13 @@ float firmwareVersion = 0.1;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 
-int shotCount = 50;
+int sensorType = 0; // 0 = light, 1 = audio
+
+int shotCount = 100;
+
+double timeBetween = 0.5;
+
+bool autoClick = true;
 
 char input[INPUT_SIZE + 1];
 

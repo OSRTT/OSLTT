@@ -155,6 +155,7 @@ int convertHexToDec(char c)
   }
 }
 
+
 void pulseLED(bool state)
 {
   if (state)
@@ -189,6 +190,14 @@ void toggleLED()
 
 void runTest(int sampleCount = 9000)
 {
+  if (sensorType == 0)
+  {
+    Swap_ADC_Input(0);
+  }
+  else
+  {
+    Swap_ADC_Input(1);
+  }
   long timeTaken = fillADCBuffer(sampleCount);
   pulseLED(true);
   long localStartValue = 0;
@@ -223,5 +232,23 @@ void runTest(int sampleCount = 9000)
   double result = (timeTaken / sampleCount) * triggerSampleNum; 
   Serial.print(result / 1000);
   pulseLED(false);
+}
+
+void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100)
+{
+  if (autoRun)
+  {
+    int localCounter = 0;
+    while (input[0] != 'X' && localCounter < clickCount )
+    {
+      getSerialChars();
+      runTest(sampleCount);
+      localCounter++;
+    }
+  }
+  else
+  {
+    runTest(sampleCount);
+  }
 }
 

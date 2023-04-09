@@ -26,55 +26,47 @@ void loop() {
     while(input[0] != 'X')
     {
       getSerialChars();
-      if (digitalRead(ButtonPin))
+      if (inputType == 0)
       {
-        // Run test
-        runTest(9000);
+        if (digitalRead(ButtonPin))
+        {
+          // Run test
+          runTest(9000);
+        }
       }
-    }
-  }
-  else if (input[0] == 'B') // Audio trigger test mode
-  {
-    Swap_ADC_Input(1);
-    int baseline = getADCValue(500);
-    while (input[0] != 'X')
-    {
-      if (digitalRead(ButtonPin))
+      else if (inputType == 1)
       {
-        input[0] = 'X';
+        Swap_ADC_Input(1);
+        int baseline = getADCValue(500);
+        while (input[0] != 'X')
+        {
+          if (digitalRead(ButtonPin))
+          {
+            input[0] = 'X';
+          }
+          int current = getSingleADCValue();
+          Serial.print("audio:");
+          Serial.println(current);
+          if (current > (baseline * 2))
+          {
+            // Audio trigger
+            // run test
+            Swap_ADC_Input(0);
+            runTest(9000);
+          }
+        }
       }
-      int current = getSingleADCValue();
-      Serial.print("audio:");
-      Serial.println(current);
-      if (current > (baseline * 2))
+      else if (inputType == 2)
       {
-        // Audio trigger
-        // run test
-        Swap_ADC_Input(0);
-        runTest(9000);
-      }
-    }
-  }
-  else if (input[0] == 'C') // Pin input trigger test mode
-  {
-    while(input[0] != 'X')
-    {
-      getSerialChars();
-      if (digitalRead(PullDownPin))
-      {
-        // Run test
-        runTest(9000);
-      }
-    }
-  }
-  else if (input[0] == 'D') // Button trigger, audio latency
-  {
-    while(input[0] != 'X')
-    {
-      getSerialChars();
-      if (digitalRead(ButtonPin))
-      {
-        // listen to audio port for spike
+        while(input[0] != 'X')
+        {
+          getSerialChars();
+          if (digitalRead(PullDownPin))
+          {
+            // Run test
+            runTest(9000);
+          }
+        }
       }
     }
   }
@@ -82,13 +74,71 @@ void loop() {
   {
     Serial.print("FW:");
     Serial.println(firmwareVersion);
+    Serial.println("Clicks");
+    while (input[0] !- 'X')
+    {
+      getSerialChars();
+      if (input[0] < '0' || input[1] < '0')
+      {
+        int msb = convertHexToDec(input[1]);
+        int lsb = convertHexToDec(input[0]);
+        shotCount = (msb * 100) + (lsb * 10);
+        break;
+      }
+    }
+    Serial.println("TimeBetween");
+    while (input[0] !- 'X')
+    {
+      getSerialChars();
+      if (input[0] < '0' || input[1] < '0')
+      {
+        int lsb = convertHexToDec(input[0]);
+        if (lsb == 1)
+        {
+          timeBetween = 0.5;
+        }
+        else
+        {
+          timeBetween = lsb - 1;
+        }
+        break;
+      }
+    }
+    Serial.println("AutoClick");
+    while (input[0] !- 'X')
+    {
+      getSerialChars();
+      if (input[0] < '0' || input[1] < '0')
+      {
+        if (input[0] == 1)
+        {
+          autoClick = true;
+        }
+        else
+        {
+          autoClick = false;
+        }
+        break;
+      }
+    }
+    Serial.println("TriggerSensor");
+    while (input[0] !- 'X')
+    {
+      getSerialChars();
+      if (input[0] < '0' && input[1] < '0')
+      {
+        inputType = convertHexToDec(input[0]) - 1;
+        sensorType = convertHexToDec(input[1]) - 1;
+        break;
+      }
+    }
   }
   else if (input[0] == 'S') // Shot count
   {
     Serial.println("Ready");
     getSerialChars();
-    int MSB = convertHexToDec(input[0]);
-    int LSB = convertHexToDec(input[1]);
+    int MSB = convertHexToDec(input[1]);
+    int LSB = convertHexToDec(input[0]);
     shotCount = (MSB * 100) + (LSB * 10);
   }
   else if (input[0] == 'Y')
