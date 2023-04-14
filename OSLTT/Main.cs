@@ -54,8 +54,11 @@ namespace OSLTT
         private List<ProcessData.inputLagResult> inputLagProcessed = new List<ProcessData.inputLagResult>();
 
         private bool processingFailed = false;
+        public bool settingsSynced = false;
 
         private readonly string fqbn = "Seeduino:samd:seeed_XIAO_m0";
+
+        debugForm debug = new debugForm();
 
         public Main()
         {
@@ -197,7 +200,7 @@ namespace OSLTT
                         catch (Exception e)
                         {
                             Console.WriteLine(e);
-                            //SetText(e.Message + e.StackTrace);
+                            debug.AddToLog(e.Message + e.StackTrace);
                         }
                     }
 
@@ -294,13 +297,16 @@ namespace OSLTT
                     Console.WriteLine(message);
                     /*if (debugMode)
                     {
-                        SetText(message);
+                        debug.AddToLog(message);
                     }*/
                     if (message.Contains("Results"))
                     {
                         
                     }
-
+                    else if (message.Contains("Settings Synced"))
+                    {
+                        settingsSynced = true;
+                    }
                     
                     else if (message.Contains("FW:"))
                     {
@@ -435,18 +441,18 @@ namespace OSLTT
 
                     else
                     {
-                        //this.SetText(message);
+                        debug.AddToLog(message);
                     }
                 }
                 catch (TimeoutException ex)
                 {
-                    //Console.WriteLine(ex);
-                    //SetText(ex.Message + ex.StackTrace);
+                    Console.WriteLine(ex);
+                    debug.AddToLog(ex.Message + ex.StackTrace);
                 }
                 catch (ArgumentOutOfRangeException aex)
                 {
                     Console.WriteLine(aex);
-                    //SetText(aex.Message + aex.StackTrace);
+                    debug.AddToLog(aex.Message + aex.StackTrace);
                 }
                 catch (Exception e)
                 {
@@ -457,10 +463,10 @@ namespace OSLTT
                     catch (Exception exc)
                     {
                         Console.WriteLine(exc);
-                        //SetText(exc.Message + exc.StackTrace);
+                        debug.AddToLog(exc.Message + exc.StackTrace);
                     }
                     Console.WriteLine(e);
-                    //SetText(e.Message + e.StackTrace);
+                    debug.AddToLog(e.Message + e.StackTrace);
                     port.Close();
                     portConnected = false;
                     //testRunning = false;
@@ -820,6 +826,14 @@ namespace OSLTT
             CFuncs.HyperlinkOut("https://andymanic.github.io/OSRTTDocs/");
         }
 
+        private void debugBtn_Click(object sender, EventArgs e)
+        {
+            if (debug.IsDisposed)
+            {
+                debug = new debugForm();
+            }
+            debug.Show();
+        }
 
         private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool autoClick, bool audio, int clicks, double time, bool preTest, bool directX, bool game)
         {
@@ -838,13 +852,15 @@ namespace OSLTT
 
         private void SaveSettings()
         {
+            if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
+            if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
             Properties.Settings.Default.buttonTriggerToggle = buttonTriggerToggle.Checked;
             Properties.Settings.Default.audioTriggerToggle = audioTriggerToggle.Checked;
             Properties.Settings.Default.pinTriggerToggle = pinTriggerToggle.Checked;
             Properties.Settings.Default.lightSensorToggle = lightSensorToggle.Checked;
             Properties.Settings.Default.autoClickToggle = autoClickToggle.Checked;
-            Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.SelectedItem.ToString());
-            Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.SelectedItem.ToString());
+            Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
+            Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.Items[timeBetweenSelect.SelectedIndex].ToString());
             Properties.Settings.Default.preTestToggle = preTestToggle.Checked;
             Properties.Settings.Default.directXToggle = directXToggle.Checked;
             Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
@@ -880,12 +896,20 @@ namespace OSLTT
 
         private void startTestBtn_Click(object sender, EventArgs e)
         {
-            runTest();
+            //makeResultsFolder();
+            settingsSynced = false;
+            SaveSettings();
+            Thread testThread = new Thread(new ThreadStart(runTest));
+            testThread.Start();
         }
 
         private void runTest()
         {
-
+            while (!settingsSynced) { }
+            if (Properties.Settings.Default.directXToggle)
+            {
+                DirectX.System.DSystem.inputLagMode = true;
+            }
         }
 
         private void processInputLagData()
@@ -967,6 +991,8 @@ namespace OSLTT
                 }
             }
         }
+
+        
 
     }
 

@@ -33,7 +33,12 @@ namespace OSLTT
             this.fwLbl = new MaterialSkin.Controls.MaterialLabel();
             this.fwLblTitle = new MaterialSkin.Controls.MaterialLabel();
             this.devStat = new MaterialSkin.Controls.MaterialLabel();
+            this.checkImg = new System.Windows.Forms.PictureBox();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
+            this.monitorPresetBtn = new MaterialSkin.Controls.MaterialButton();
+            this.audioPresetBtn = new MaterialSkin.Controls.MaterialButton();
+            this.gamePresetBtn = new MaterialSkin.Controls.MaterialButton();
+            this.micePresetBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.buttonTriggerToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.materialDrawer1 = new MaterialSkin.Controls.MaterialDrawer();
@@ -42,7 +47,10 @@ namespace OSLTT
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.debugBtn = new MaterialSkin.Controls.MaterialButton();
+            this.startTestBtn = new MaterialSkin.Controls.MaterialButton();
             this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.helpBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.gameExternalToggle = new MaterialSkin.Controls.MaterialSwitch();
@@ -57,24 +65,16 @@ namespace OSLTT
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
-            this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
-            this.deviceNameBox = new MaterialSkin.Controls.MaterialTextBox2();
-            this.notesBox = new MaterialSkin.Controls.MaterialTextBox2();
-            this.debugBtn = new MaterialSkin.Controls.MaterialButton();
-            this.startTestBtn = new MaterialSkin.Controls.MaterialButton();
-            this.helpBtn = new MaterialSkin.Controls.MaterialButton();
             this.resultsViewBtn = new MaterialSkin.Controls.MaterialButton();
-            this.monitorPresetBtn = new MaterialSkin.Controls.MaterialButton();
-            this.audioPresetBtn = new MaterialSkin.Controls.MaterialButton();
-            this.gamePresetBtn = new MaterialSkin.Controls.MaterialButton();
-            this.micePresetBtn = new MaterialSkin.Controls.MaterialButton();
-            this.checkImg = new System.Windows.Forms.PictureBox();
+            this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
+            this.notesBox = new MaterialSkin.Controls.MaterialTextBox2();
+            this.deviceNameBox = new MaterialSkin.Controls.MaterialTextBox2();
             this.deviceStatusPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.materialCard1.SuspendLayout();
             this.settingsCard.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.materialCard2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.SuspendLayout();
             // 
             // deviceStatusPanel
@@ -128,6 +128,16 @@ namespace OSLTT
             this.devStat.TabIndex = 10;
             this.devStat.Text = "Device Connected";
             // 
+            // checkImg
+            // 
+            this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
+            this.checkImg.Location = new System.Drawing.Point(184, 5);
+            this.checkImg.Name = "checkImg";
+            this.checkImg.Size = new System.Drawing.Size(58, 29);
+            this.checkImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.checkImg.TabIndex = 7;
+            this.checkImg.TabStop = false;
+            // 
             // materialCard1
             // 
             this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -145,6 +155,86 @@ namespace OSLTT
             this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard1.Size = new System.Drawing.Size(664, 100);
             this.materialCard1.TabIndex = 39;
+            // 
+            // monitorPresetBtn
+            // 
+            this.monitorPresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.monitorPresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.monitorPresetBtn.Depth = 0;
+            this.monitorPresetBtn.HighEmphasis = true;
+            this.monitorPresetBtn.Icon = global::OSLTT.Properties.Resources.desktop_solid;
+            this.monitorPresetBtn.Location = new System.Drawing.Point(14, 49);
+            this.monitorPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.monitorPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.monitorPresetBtn.Name = "monitorPresetBtn";
+            this.monitorPresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.monitorPresetBtn.Size = new System.Drawing.Size(124, 36);
+            this.monitorPresetBtn.TabIndex = 43;
+            this.monitorPresetBtn.Text = "monitors";
+            this.monitorPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.monitorPresetBtn.UseAccentColor = false;
+            this.monitorPresetBtn.UseVisualStyleBackColor = true;
+            this.monitorPresetBtn.Click += new System.EventHandler(this.monitorPresetBtn_Click);
+            // 
+            // audioPresetBtn
+            // 
+            this.audioPresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.audioPresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.audioPresetBtn.Depth = 0;
+            this.audioPresetBtn.HighEmphasis = true;
+            this.audioPresetBtn.Icon = global::OSLTT.Properties.Resources.headset_solid;
+            this.audioPresetBtn.Location = new System.Drawing.Point(450, 49);
+            this.audioPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.audioPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioPresetBtn.Name = "audioPresetBtn";
+            this.audioPresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.audioPresetBtn.Size = new System.Drawing.Size(201, 36);
+            this.audioPresetBtn.TabIndex = 42;
+            this.audioPresetBtn.Text = "Headsets/Speakers";
+            this.audioPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.audioPresetBtn.UseAccentColor = false;
+            this.audioPresetBtn.UseVisualStyleBackColor = true;
+            this.audioPresetBtn.Click += new System.EventHandler(this.audioPresetBtn_Click);
+            // 
+            // gamePresetBtn
+            // 
+            this.gamePresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gamePresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.gamePresetBtn.Depth = 0;
+            this.gamePresetBtn.HighEmphasis = true;
+            this.gamePresetBtn.Icon = global::OSLTT.Properties.Resources.gamepad_solid;
+            this.gamePresetBtn.Location = new System.Drawing.Point(337, 49);
+            this.gamePresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.gamePresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gamePresetBtn.Name = "gamePresetBtn";
+            this.gamePresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.gamePresetBtn.Size = new System.Drawing.Size(99, 36);
+            this.gamePresetBtn.TabIndex = 41;
+            this.gamePresetBtn.Text = "Games";
+            this.gamePresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.gamePresetBtn.UseAccentColor = false;
+            this.gamePresetBtn.UseVisualStyleBackColor = true;
+            this.gamePresetBtn.Click += new System.EventHandler(this.gamePresetBtn_Click);
+            // 
+            // micePresetBtn
+            // 
+            this.micePresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.micePresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.micePresetBtn.Depth = 0;
+            this.micePresetBtn.HighEmphasis = true;
+            this.micePresetBtn.Icon = global::OSLTT.Properties.Resources.computer_mouse_solid;
+            this.micePresetBtn.Location = new System.Drawing.Point(150, 49);
+            this.micePresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.micePresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.micePresetBtn.Name = "micePresetBtn";
+            this.micePresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.micePresetBtn.Size = new System.Drawing.Size(174, 36);
+            this.micePresetBtn.TabIndex = 40;
+            this.micePresetBtn.Text = "Mice/Keyboards";
+            this.micePresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.micePresetBtn.UseAccentColor = false;
+            this.micePresetBtn.UseVisualStyleBackColor = true;
+            this.micePresetBtn.Click += new System.EventHandler(this.micePresetBtn_Click);
             // 
             // materialLabel1
             // 
@@ -205,7 +295,7 @@ namespace OSLTT
             this.clickCountSelect.DropDownHeight = 174;
             this.clickCountSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.clickCountSelect.DropDownWidth = 121;
-            this.clickCountSelect.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.clickCountSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.clickCountSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.clickCountSelect.FormattingEnabled = true;
             this.clickCountSelect.IntegralHeight = false;
@@ -251,7 +341,7 @@ namespace OSLTT
             this.timeBetweenSelect.DropDownHeight = 174;
             this.timeBetweenSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.timeBetweenSelect.DropDownWidth = 121;
-            this.timeBetweenSelect.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.timeBetweenSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.timeBetweenSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.timeBetweenSelect.FormattingEnabled = true;
             this.timeBetweenSelect.IntegralHeight = false;
@@ -318,6 +408,48 @@ namespace OSLTT
             this.settingsCard.Size = new System.Drawing.Size(892, 286);
             this.settingsCard.TabIndex = 44;
             // 
+            // debugBtn
+            // 
+            this.debugBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.debugBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.debugBtn.Depth = 0;
+            this.debugBtn.HighEmphasis = true;
+            this.debugBtn.Icon = global::OSLTT.Properties.Resources.bug_solid;
+            this.debugBtn.Location = new System.Drawing.Point(778, 62);
+            this.debugBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.debugBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.debugBtn.Name = "debugBtn";
+            this.debugBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.debugBtn.Size = new System.Drawing.Size(96, 36);
+            this.debugBtn.TabIndex = 57;
+            this.debugBtn.Text = "Debug";
+            this.debugBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.debugBtn.UseAccentColor = false;
+            this.debugBtn.UseVisualStyleBackColor = true;
+            this.debugBtn.Click += new System.EventHandler(this.debugBtn_Click);
+            // 
+            // startTestBtn
+            // 
+            this.startTestBtn.AutoSize = false;
+            this.startTestBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.startTestBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.startTestBtn.Depth = 0;
+            this.startTestBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startTestBtn.HighEmphasis = true;
+            this.startTestBtn.Icon = global::OSLTT.Properties.Resources.play_solid;
+            this.startTestBtn.Location = new System.Drawing.Point(696, 212);
+            this.startTestBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.startTestBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.startTestBtn.Name = "startTestBtn";
+            this.startTestBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.startTestBtn.Size = new System.Drawing.Size(178, 54);
+            this.startTestBtn.TabIndex = 56;
+            this.startTestBtn.Text = "Start Testing";
+            this.startTestBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.startTestBtn.UseAccentColor = true;
+            this.startTestBtn.UseVisualStyleBackColor = true;
+            this.startTestBtn.Click += new System.EventHandler(this.startTestBtn_Click);
+            // 
             // autoClickToggle
             // 
             this.autoClickToggle.AutoSize = true;
@@ -333,6 +465,26 @@ namespace OSLTT
             this.autoClickToggle.Text = "Auto Click";
             this.autoClickToggle.UseVisualStyleBackColor = true;
             this.autoClickToggle.CheckedChanged += new System.EventHandler(this.autoClickToggle_CheckedChanged);
+            // 
+            // helpBtn
+            // 
+            this.helpBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.helpBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.helpBtn.Depth = 0;
+            this.helpBtn.HighEmphasis = true;
+            this.helpBtn.Icon = global::OSLTT.Properties.Resources.circle_question_solid;
+            this.helpBtn.Location = new System.Drawing.Point(788, 14);
+            this.helpBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.helpBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.helpBtn.Name = "helpBtn";
+            this.helpBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.helpBtn.Size = new System.Drawing.Size(86, 36);
+            this.helpBtn.TabIndex = 54;
+            this.helpBtn.Text = "Help";
+            this.helpBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.helpBtn.UseAccentColor = false;
+            this.helpBtn.UseVisualStyleBackColor = true;
+            this.helpBtn.Click += new System.EventHandler(this.helpBtn_Click);
             // 
             // materialLabel9
             // 
@@ -543,6 +695,26 @@ namespace OSLTT
             this.materialCard3.Size = new System.Drawing.Size(218, 100);
             this.materialCard3.TabIndex = 42;
             // 
+            // resultsViewBtn
+            // 
+            this.resultsViewBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.resultsViewBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.resultsViewBtn.Depth = 0;
+            this.resultsViewBtn.HighEmphasis = true;
+            this.resultsViewBtn.Icon = global::OSLTT.Properties.Resources.chart_bar_solid;
+            this.resultsViewBtn.Location = new System.Drawing.Point(18, 49);
+            this.resultsViewBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.resultsViewBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.resultsViewBtn.Name = "resultsViewBtn";
+            this.resultsViewBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.resultsViewBtn.Size = new System.Drawing.Size(168, 36);
+            this.resultsViewBtn.TabIndex = 39;
+            this.resultsViewBtn.Text = "Results Viewer";
+            this.resultsViewBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.resultsViewBtn.UseAccentColor = false;
+            this.resultsViewBtn.UseVisualStyleBackColor = true;
+            this.resultsViewBtn.Click += new System.EventHandler(this.resultsViewBtn_Click);
+            // 
             // materialCard2
             // 
             this.materialCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -558,42 +730,13 @@ namespace OSLTT
             this.materialCard2.Size = new System.Drawing.Size(890, 70);
             this.materialCard2.TabIndex = 45;
             // 
-            // deviceNameBox
-            // 
-            this.deviceNameBox.AnimateReadOnly = false;
-            this.deviceNameBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.deviceNameBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.deviceNameBox.Depth = 0;
-            this.deviceNameBox.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.deviceNameBox.HideSelection = true;
-            this.deviceNameBox.Hint = "Device Name";
-            this.deviceNameBox.LeadingIcon = null;
-            this.deviceNameBox.Location = new System.Drawing.Point(14, 13);
-            this.deviceNameBox.MaxLength = 32767;
-            this.deviceNameBox.MouseState = MaterialSkin.MouseState.OUT;
-            this.deviceNameBox.Name = "deviceNameBox";
-            this.deviceNameBox.PasswordChar = '\0';
-            this.deviceNameBox.PrefixSuffixText = null;
-            this.deviceNameBox.ReadOnly = false;
-            this.deviceNameBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.deviceNameBox.SelectedText = "";
-            this.deviceNameBox.SelectionLength = 0;
-            this.deviceNameBox.SelectionStart = 0;
-            this.deviceNameBox.ShortcutsEnabled = true;
-            this.deviceNameBox.Size = new System.Drawing.Size(310, 48);
-            this.deviceNameBox.TabIndex = 3;
-            this.deviceNameBox.TabStop = false;
-            this.deviceNameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.deviceNameBox.TrailingIcon = null;
-            this.deviceNameBox.UseSystemPasswordChar = false;
-            // 
             // notesBox
             // 
             this.notesBox.AnimateReadOnly = false;
             this.notesBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.notesBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.notesBox.Depth = 0;
-            this.notesBox.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.notesBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.notesBox.HideSelection = true;
             this.notesBox.Hint = "Test Notes";
             this.notesBox.LeadingIcon = null;
@@ -616,176 +759,34 @@ namespace OSLTT
             this.notesBox.TrailingIcon = null;
             this.notesBox.UseSystemPasswordChar = false;
             // 
-            // debugBtn
+            // deviceNameBox
             // 
-            this.debugBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.debugBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.debugBtn.Depth = 0;
-            this.debugBtn.HighEmphasis = true;
-            this.debugBtn.Icon = global::OSLTT.Properties.Resources.bug_solid;
-            this.debugBtn.Location = new System.Drawing.Point(778, 62);
-            this.debugBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.debugBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.debugBtn.Name = "debugBtn";
-            this.debugBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.debugBtn.Size = new System.Drawing.Size(96, 36);
-            this.debugBtn.TabIndex = 57;
-            this.debugBtn.Text = "Debug";
-            this.debugBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.debugBtn.UseAccentColor = false;
-            this.debugBtn.UseVisualStyleBackColor = true;
-            // 
-            // startTestBtn
-            // 
-            this.startTestBtn.AutoSize = false;
-            this.startTestBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.startTestBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.startTestBtn.Depth = 0;
-            this.startTestBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startTestBtn.HighEmphasis = true;
-            this.startTestBtn.Icon = global::OSLTT.Properties.Resources.play_solid;
-            this.startTestBtn.Location = new System.Drawing.Point(696, 212);
-            this.startTestBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.startTestBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.startTestBtn.Name = "startTestBtn";
-            this.startTestBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.startTestBtn.Size = new System.Drawing.Size(178, 54);
-            this.startTestBtn.TabIndex = 56;
-            this.startTestBtn.Text = "Start Testing";
-            this.startTestBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.startTestBtn.UseAccentColor = true;
-            this.startTestBtn.UseVisualStyleBackColor = true;
-            this.startTestBtn.Click += new System.EventHandler(this.startTestBtn_Click);
-            // 
-            // helpBtn
-            // 
-            this.helpBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.helpBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.helpBtn.Depth = 0;
-            this.helpBtn.HighEmphasis = true;
-            this.helpBtn.Icon = global::OSLTT.Properties.Resources.circle_question_solid;
-            this.helpBtn.Location = new System.Drawing.Point(788, 14);
-            this.helpBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.helpBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.helpBtn.Name = "helpBtn";
-            this.helpBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.helpBtn.Size = new System.Drawing.Size(86, 36);
-            this.helpBtn.TabIndex = 54;
-            this.helpBtn.Text = "Help";
-            this.helpBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.helpBtn.UseAccentColor = false;
-            this.helpBtn.UseVisualStyleBackColor = true;
-            this.helpBtn.Click += new System.EventHandler(this.helpBtn_Click);
-            // 
-            // resultsViewBtn
-            // 
-            this.resultsViewBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.resultsViewBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.resultsViewBtn.Depth = 0;
-            this.resultsViewBtn.HighEmphasis = true;
-            this.resultsViewBtn.Icon = global::OSLTT.Properties.Resources.chart_bar_solid;
-            this.resultsViewBtn.Location = new System.Drawing.Point(18, 49);
-            this.resultsViewBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.resultsViewBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.resultsViewBtn.Name = "resultsViewBtn";
-            this.resultsViewBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.resultsViewBtn.Size = new System.Drawing.Size(168, 36);
-            this.resultsViewBtn.TabIndex = 39;
-            this.resultsViewBtn.Text = "Results Viewer";
-            this.resultsViewBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.resultsViewBtn.UseAccentColor = false;
-            this.resultsViewBtn.UseVisualStyleBackColor = true;
-            this.resultsViewBtn.Click += new System.EventHandler(this.resultsViewBtn_Click);
-            // 
-            // monitorPresetBtn
-            // 
-            this.monitorPresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.monitorPresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.monitorPresetBtn.Depth = 0;
-            this.monitorPresetBtn.HighEmphasis = true;
-            this.monitorPresetBtn.Icon = global::OSLTT.Properties.Resources.desktop_solid;
-            this.monitorPresetBtn.Location = new System.Drawing.Point(14, 49);
-            this.monitorPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.monitorPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.monitorPresetBtn.Name = "monitorPresetBtn";
-            this.monitorPresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.monitorPresetBtn.Size = new System.Drawing.Size(124, 36);
-            this.monitorPresetBtn.TabIndex = 43;
-            this.monitorPresetBtn.Text = "monitors";
-            this.monitorPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.monitorPresetBtn.UseAccentColor = false;
-            this.monitorPresetBtn.UseVisualStyleBackColor = true;
-            this.monitorPresetBtn.Click += new System.EventHandler(this.monitorPresetBtn_Click);
-            // 
-            // audioPresetBtn
-            // 
-            this.audioPresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.audioPresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.audioPresetBtn.Depth = 0;
-            this.audioPresetBtn.HighEmphasis = true;
-            this.audioPresetBtn.Icon = global::OSLTT.Properties.Resources.headset_solid;
-            this.audioPresetBtn.Location = new System.Drawing.Point(450, 49);
-            this.audioPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.audioPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.audioPresetBtn.Name = "audioPresetBtn";
-            this.audioPresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.audioPresetBtn.Size = new System.Drawing.Size(201, 36);
-            this.audioPresetBtn.TabIndex = 42;
-            this.audioPresetBtn.Text = "Headsets/Speakers";
-            this.audioPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.audioPresetBtn.UseAccentColor = false;
-            this.audioPresetBtn.UseVisualStyleBackColor = true;
-            this.audioPresetBtn.Click += new System.EventHandler(this.audioPresetBtn_Click);
-            // 
-            // gamePresetBtn
-            // 
-            this.gamePresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.gamePresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.gamePresetBtn.Depth = 0;
-            this.gamePresetBtn.HighEmphasis = true;
-            this.gamePresetBtn.Icon = global::OSLTT.Properties.Resources.gamepad_solid;
-            this.gamePresetBtn.Location = new System.Drawing.Point(337, 49);
-            this.gamePresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.gamePresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gamePresetBtn.Name = "gamePresetBtn";
-            this.gamePresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.gamePresetBtn.Size = new System.Drawing.Size(99, 36);
-            this.gamePresetBtn.TabIndex = 41;
-            this.gamePresetBtn.Text = "Games";
-            this.gamePresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.gamePresetBtn.UseAccentColor = false;
-            this.gamePresetBtn.UseVisualStyleBackColor = true;
-            this.gamePresetBtn.Click += new System.EventHandler(this.gamePresetBtn_Click);
-            // 
-            // micePresetBtn
-            // 
-            this.micePresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.micePresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.micePresetBtn.Depth = 0;
-            this.micePresetBtn.HighEmphasis = true;
-            this.micePresetBtn.Icon = global::OSLTT.Properties.Resources.computer_mouse_solid;
-            this.micePresetBtn.Location = new System.Drawing.Point(150, 49);
-            this.micePresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.micePresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.micePresetBtn.Name = "micePresetBtn";
-            this.micePresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.micePresetBtn.Size = new System.Drawing.Size(174, 36);
-            this.micePresetBtn.TabIndex = 40;
-            this.micePresetBtn.Text = "Mice/Keyboards";
-            this.micePresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.micePresetBtn.UseAccentColor = false;
-            this.micePresetBtn.UseVisualStyleBackColor = true;
-            this.micePresetBtn.Click += new System.EventHandler(this.micePresetBtn_Click);
-            // 
-            // checkImg
-            // 
-            this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
-            this.checkImg.Location = new System.Drawing.Point(184, 5);
-            this.checkImg.Name = "checkImg";
-            this.checkImg.Size = new System.Drawing.Size(58, 29);
-            this.checkImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.checkImg.TabIndex = 7;
-            this.checkImg.TabStop = false;
+            this.deviceNameBox.AnimateReadOnly = false;
+            this.deviceNameBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.deviceNameBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.deviceNameBox.Depth = 0;
+            this.deviceNameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.deviceNameBox.HideSelection = true;
+            this.deviceNameBox.Hint = "Device Name";
+            this.deviceNameBox.LeadingIcon = null;
+            this.deviceNameBox.Location = new System.Drawing.Point(14, 13);
+            this.deviceNameBox.MaxLength = 32767;
+            this.deviceNameBox.MouseState = MaterialSkin.MouseState.OUT;
+            this.deviceNameBox.Name = "deviceNameBox";
+            this.deviceNameBox.PasswordChar = '\0';
+            this.deviceNameBox.PrefixSuffixText = null;
+            this.deviceNameBox.ReadOnly = false;
+            this.deviceNameBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.deviceNameBox.SelectedText = "";
+            this.deviceNameBox.SelectionLength = 0;
+            this.deviceNameBox.SelectionStart = 0;
+            this.deviceNameBox.ShortcutsEnabled = true;
+            this.deviceNameBox.Size = new System.Drawing.Size(310, 48);
+            this.deviceNameBox.TabIndex = 3;
+            this.deviceNameBox.TabStop = false;
+            this.deviceNameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.deviceNameBox.TrailingIcon = null;
+            this.deviceNameBox.UseSystemPasswordChar = false;
             // 
             // Main
             // 
@@ -803,6 +804,7 @@ namespace OSLTT
             this.Load += new System.EventHandler(this.Form1_Load);
             this.deviceStatusPanel.ResumeLayout(false);
             this.deviceStatusPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkImg)).EndInit();
             this.materialCard1.ResumeLayout(false);
             this.materialCard1.PerformLayout();
             this.settingsCard.ResumeLayout(false);
@@ -810,7 +812,6 @@ namespace OSLTT
             this.materialCard3.ResumeLayout(false);
             this.materialCard3.PerformLayout();
             this.materialCard2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.checkImg)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -132,6 +132,7 @@ void loop() {
         break;
       }
     }
+    Serial.println("Settings Synced");
   }
   else if (input[0] == 'S') // Shot count
   {

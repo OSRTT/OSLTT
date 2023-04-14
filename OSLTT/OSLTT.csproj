@@ -139,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CFuncs.cs" />
+    <Compile Include="debugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="debugForm.Designer.cs">
+      <DependentUpon>debugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DirectX\DPerformanceTester.cs" />
     <Compile Include="DirectX\Graphics\DCameraClass.cs" />
     <Compile Include="DirectX\Graphics\DDX11Class.cs" />
@@ -171,9 +177,13 @@
     <Compile Include="RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsClasses.cs" />
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="UserSettings.cs" />
+    <EmbeddedResource Include="debugForm.resx">
+      <DependentUpon>debugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
