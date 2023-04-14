@@ -73,6 +73,16 @@ namespace OSLTT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bug_solid {
+            get {
+                object obj = ResourceManager.GetObject("bug-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chart_bar_solid {
             get {
                 object obj = ResourceManager.GetObject("chart-bar-solid", resourceCulture);
@@ -86,6 +96,16 @@ namespace OSLTT.Properties {
         internal static System.Drawing.Bitmap check {
             get {
                 object obj = ResourceManager.GetObject("check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap circle_question_solid {
+            get {
+                object obj = ResourceManager.GetObject("circle-question-solid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

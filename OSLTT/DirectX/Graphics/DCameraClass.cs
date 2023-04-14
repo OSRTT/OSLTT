@@ -1,6 +1,6 @@
 ﻿using SharpDX;
 
-namespace OSRTT_Launcher.DirectX.Graphics
+namespace OSLTT.DirectX.Graphics
 {
     public class DCamera                    // 53 lines
     {

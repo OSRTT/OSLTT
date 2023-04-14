@@ -1,5 +1,5 @@
-﻿using OSRTT_Launcher.DirectX.Graphics;
-using OSRTT_Launcher.DirectX.Input;
+﻿using OSLTT.DirectX.Graphics;
+using OSLTT.DirectX.Input;
 using SharpDX.Windows;
 using SharpDX.RawInput;
 using SharpDX.DirectInput;
@@ -14,7 +14,7 @@ using Key = System.Windows.Input.Key;
 using System.Reflection;
 using OSLTT;
 
-namespace OSRTT_Launcher.DirectX.System
+namespace OSLTT.DirectX.System
 {
     // I have to give a massive thank you to both xoofx for making SharpDX and all the work on it over the years
     // https://github.com/sharpdx/SharpDX

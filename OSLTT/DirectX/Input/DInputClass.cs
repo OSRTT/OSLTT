@@ -1,9 +1,9 @@
-﻿using OSRTT_Launcher.DirectX.System;
+﻿using OSLTT.DirectX.System;
 using SharpDX;
 using SharpDX.DirectInput;
 using System;
 
-namespace OSRTT_Launcher.DirectX.Input
+namespace OSLTT.DirectX.Input
 {
     public class DInput                 // 212 lines
     {

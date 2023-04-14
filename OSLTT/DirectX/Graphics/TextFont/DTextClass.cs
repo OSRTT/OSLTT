@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OSRTT_Launcher.DirectX.Graphics.TextFont
+namespace OSLTT.DirectX.Graphics.TextFont
 {
     public class DTextClass                 // 275 lines
     {

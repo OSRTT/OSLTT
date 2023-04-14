@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace OSRTT_Launcher.DirectX.System
+namespace OSLTT.DirectX.System
 {
     public class DSystemConfiguration                   // 52 lines
     {

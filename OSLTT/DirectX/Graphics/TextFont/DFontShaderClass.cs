@@ -1,4 +1,4 @@
-﻿using OSRTT_Launcher.DirectX.System;
+﻿using OSLTT.DirectX.System;
 using SharpDX;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D11;
@@ -7,7 +7,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace OSRTT_Launcher.DirectX.Graphics.TextFont
+namespace OSLTT.DirectX.Graphics.TextFont
 {
     public class DFontShader                    // 275 lines
     {

@@ -21,7 +21,7 @@ void loop() {
   
   getSerialChars();
 
-  if (input[0] == 'A') // Button trigger test mode
+  if (input[0] == 'T') // Button trigger test mode
   {
     while(input[0] != 'X')
     {
@@ -75,7 +75,7 @@ void loop() {
     Serial.print("FW:");
     Serial.println(firmwareVersion);
     Serial.println("Clicks");
-    while (input[0] !- 'X')
+    while (input[0] != 'X')
     {
       getSerialChars();
       if (input[0] < '0' || input[1] < '0')
@@ -87,7 +87,7 @@ void loop() {
       }
     }
     Serial.println("TimeBetween");
-    while (input[0] !- 'X')
+    while (input[0] != 'X')
     {
       getSerialChars();
       if (input[0] < '0' || input[1] < '0')
@@ -105,7 +105,7 @@ void loop() {
       }
     }
     Serial.println("AutoClick");
-    while (input[0] !- 'X')
+    while (input[0] != 'X')
     {
       getSerialChars();
       if (input[0] < '0' || input[1] < '0')
@@ -122,7 +122,7 @@ void loop() {
       }
     }
     Serial.println("TriggerSensor");
-    while (input[0] !- 'X')
+    while (input[0] != 'X')
     {
       getSerialChars();
       if (input[0] < '0' && input[1] < '0')
@@ -141,7 +141,7 @@ void loop() {
     int LSB = convertHexToDec(input[0]);
     shotCount = (MSB * 100) + (LSB * 10);
   }
-  else if (input[0] == 'Y')
+  else if (input[0] == 'W')
   {
     while (input[0] != 'X')
     {
@@ -153,6 +153,27 @@ void loop() {
       }
       delay(100);
     }
+  }
+  else if (input[0] == 'Y')
+  {
+    Serial.println("Y registered");
+    Swap_ADC_Input(1);
+    Serial.println("Swapped input");
+    int buttonState = digitalRead(ButtonPin);
+    Serial.print("Read button - ");
+    Serial.println(buttonState);
+    // ADC->SWTRIG.bit.START = 1; //Start ADC
+    // while (!ADC->INTFLAG.bit.RESRDY); //wait for ADC to have a new value
+    // int result = ADC->RESULT.reg;
+    // Serial.println(result);
+    while (buttonState != HIGH)
+    {
+      int value = getSingleADCValue();
+      //int value = analogRead(A1);
+      Serial.println(value);
+      buttonState = digitalRead(ButtonPin);
+    }
+    Serial.println("Exited");
   }
   else if (input[0] == 'Z')
   {

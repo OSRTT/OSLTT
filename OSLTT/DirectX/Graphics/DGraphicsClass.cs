@@ -1,9 +1,9 @@
-﻿using OSRTT_Launcher.DirectX.Graphics.TextFont;
-using OSRTT_Launcher.DirectX.System;
+﻿using OSLTT.DirectX.Graphics.TextFont;
+using OSLTT.DirectX.System;
 using System;
 using System.Windows.Forms;
 
-namespace OSRTT_Launcher.DirectX.Graphics
+namespace OSLTT.DirectX.Graphics
 {
     public class DGraphics                  // 120 lines
     {

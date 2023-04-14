@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace OSRTT_Launcher.DirectX.System
+namespace OSLTT.DirectX.System
 {
     public class DTimer                 // 47 lines
     {

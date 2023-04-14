@@ -84,8 +84,24 @@ void ADC_Init()
 
 void Swap_ADC_Input(int input)
 {
-    ADC->INPUTCTRL.bit.MUXPOS = input; // PIN A0, SWITCH TO = 1 for AUDIO
-  while ( ADC->STATUS.bit.SYNCBUSY  );
+  ADC->SWTRIG.bit.START = 0;
+  ADC->CTRLA.bit.ENABLE = 0;
+  while (ADC->STATUS.bit.SYNCBUSY) {};
+  if (input == 0)
+  {
+    ADC->INPUTCTRL.reg = ADC_INPUTCTRL_GAIN_1X | ADC_INPUTCTRL_MUXNEG_GND | ADC_INPUTCTRL_MUXPOS_PIN0;
+  }
+  else
+  {
+    ADC->INPUTCTRL.reg = ADC_INPUTCTRL_GAIN_1X | ADC_INPUTCTRL_MUXNEG_GND | ADC_INPUTCTRL_MUXPOS_PIN4;
+  }
+  while ( ADC->STATUS.bit.SYNCBUSY){};
+  //Enable ADC
+  ADC->SWTRIG.bit.START = 1;
+  ADC->CTRLA.bit.ENABLE = 1;
+
+  //wait for ADC to be ready
+  while (ADC->STATUS.bit.SYNCBUSY) {};
 }
 
 void getSerialChars()

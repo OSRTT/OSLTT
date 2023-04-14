@@ -127,11 +127,14 @@
   <data name="arrow_rotate_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-rotate-right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="play-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="headset-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\headset-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="play-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\play-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chart-bar-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chart-bar-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gamepad-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gamepad-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,7 +142,10 @@
   <data name="check" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="chart-bar-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\chart-bar-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="bug-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bug-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="circle-question-solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\circle-question-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

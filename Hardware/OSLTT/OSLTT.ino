@@ -1,4 +1,4 @@
-// Definitions, libraries
+  // Definitions, libraries
 
 
 #define INPUT_SIZE 2

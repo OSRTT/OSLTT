@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace OSRTT_Launcher.DirectX.System
+namespace OSLTT.DirectX.System
 {
     public class DCPU                   // 60 lines
     {

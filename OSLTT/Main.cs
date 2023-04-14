@@ -244,11 +244,11 @@ namespace OSLTT
         public void Read()
         {
             while (port.IsOpen)
-            { /*
+            { 
                 try
                 {
                     string message = port.ReadLine();
-                    if (liveView)
+                    /*if (liveView)
                     {
                         if (message.Contains("pot"))
                         {
@@ -288,132 +288,15 @@ namespace OSLTT
                             LiveViewObject.startStopBtn_Click(null, null);
 
                         }
-                    }
+                    }*/
                     Console.WriteLine(message);
-                    if (debugMode)
+                    /*if (debugMode)
                     {
                         SetText(message);
-                    }
+                    }*/
                     if (message.Contains("Results"))
                     {
-                        // Split result string into individual results
-                        String newMessage = message.Remove(0, 9);
-                        string[] values = newMessage.Split(',');
-                        int[] intValues = new int[values.Length - 1];
-                        for (int i = 0; i < values.Length - 1; i++)
-                        {
-                            if (values[i] == "0")
-                            {
-                                intValues[i] = 0;
-                            }
-                            else if (values[i] != "")
-                            {
-                                try
-                                {
-                                    intValues[i] = int.Parse(values[i]);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.WriteLine(values[i]);
-                                }
-                            }
-                            else { continue; }
-                        }
-                        // Added extra check to make sure test is cancelled if there isn't a light level difference between start and end. Using 5 samples to account for noise.
-                        int start = intValues[50] + intValues[51] + intValues[52] + intValues[53] + intValues[54];
-                        int end = intValues[intValues.Length - 50] + intValues[intValues.Length - 51] + intValues[intValues.Length - 52] + intValues[intValues.Length - 53] + intValues[intValues.Length - 54];
-                        if (intValues[0] < intValues[1])
-                        {
-                            if (start < end)
-                            {
-                                ProcessData.rawResultData rawResult = new ProcessData.rawResultData
-                                {
-                                    StartingRGB = intValues[0],
-                                    EndRGB = intValues[1],
-                                    TimeTaken = intValues[2],
-                                    SampleCount = intValues[3],
-                                    SampleTime = ((double)intValues[2] / (double)intValues[3]),
-                                    Samples = intValues.Skip(4).ToList()
-                                };
-                                results[currentRun].Add(rawResult);
-                            }
-                            else
-                            {
-                                if (!Properties.Settings.Default.ignoreErrors)
-                                {
-                                    port.Write("X");
-                                    port.Write("X");
-                                    port.Write("X");
-                                    testRunning = false;
-                                    if (runTestThread != null)
-                                    {
-                                        runTestThread.Abort();
-                                    }
-                                    MessageBox.Show("The last test result showed no difference in light level. The brightness may be too high. The test has been cancelled.", "Test Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                else
-                                {
-                                    ProcessData.rawResultData rawResult = new ProcessData.rawResultData
-                                    {
-                                        StartingRGB = intValues[0],
-                                        EndRGB = intValues[1],
-                                        TimeTaken = intValues[2],
-                                        SampleCount = intValues[3],
-                                        SampleTime = ((double)intValues[2] / (double)intValues[3]),
-                                        Samples = intValues.Skip(4).ToList()
-                                    };
-                                    results[currentRun].Add(rawResult);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (start > end)
-                            {
-                                ProcessData.rawResultData rawResult = new ProcessData.rawResultData
-                                {
-                                    StartingRGB = intValues[0],
-                                    EndRGB = intValues[1],
-                                    TimeTaken = intValues[2],
-                                    SampleCount = intValues[3],
-                                    SampleTime = ((double)intValues[2] / (double)intValues[3]),
-                                    Samples = intValues.Skip(4).ToList()
-                                };
-                                results[currentRun].Add(rawResult);
-                            }
-                            else
-                            {
-                                if (!Properties.Settings.Default.ignoreErrors)
-                                {
-                                    port.Write("X");
-                                    port.Write("X");
-                                    port.Write("X");
-                                    testRunning = false;
-                                    if (runTestThread != null)
-                                    {
-                                        runTestThread.Abort();
-                                    }
-                                    MessageBox.Show("The last test result showed no difference in light level. The brightness may be too high. The test has been cancelled.", "Test Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                                else
-                                {
-                                    ProcessData.rawResultData rawResult = new ProcessData.rawResultData
-                                    {
-                                        StartingRGB = intValues[0],
-                                        EndRGB = intValues[1],
-                                        TimeTaken = intValues[2],
-                                        SampleCount = intValues[3],
-                                        SampleTime = ((double)intValues[2] / (double)intValues[3]),
-                                        Samples = intValues.Skip(4).ToList()
-                                    };
-                                    results[currentRun].Add(rawResult);
-                                }
-                            }
-                        }
-
-                        currentStart = intValues[0];
-                        currentEnd = intValues[1];
-
+                        
                     }
 
                     else if (message.Contains("Test Started"))
@@ -548,7 +431,7 @@ namespace OSLTT
                                 {
                                     csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
                                 }
-                                File.WriteAllText(filePath, csvString.ToString());
+                                File.WriteAllText(filePath, csvString.ToString());*/
                             }
                             Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                             inputLagThread.Start();
@@ -593,7 +476,7 @@ namespace OSLTT
                     if (runTestThread != null)
                     { runTestThread.Abort(); }
                     readThread.Abort();
-                }*/
+                }
             }
         }
 

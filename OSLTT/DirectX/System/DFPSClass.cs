@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OSRTT_Launcher.DirectX.System
+namespace OSLTT.DirectX.System
 {
     public class DFPS                   // 43 lines
     {

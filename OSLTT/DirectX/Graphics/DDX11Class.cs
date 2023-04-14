@@ -1,11 +1,11 @@
-﻿using OSRTT_Launcher.DirectX.System;
+﻿using OSLTT.DirectX.System;
 using SharpDX;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using System;
 
-namespace OSRTT_Launcher.DirectX.Graphics
+namespace OSLTT.DirectX.Graphics
 {
     public class DDX11                  // 384 lines
     {

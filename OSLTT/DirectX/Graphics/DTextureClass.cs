@@ -1,7 +1,7 @@
 ﻿using SharpDX.Direct3D11;
 using SharpDX.WIC;
 
-namespace OSRTT_Launcher.DirectX.Graphics
+namespace OSLTT.DirectX.Graphics
 {
     public class DTexture                   // 31 lines
     {
