@@ -14,6 +14,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Resources;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -87,6 +88,7 @@ namespace OSLTT
 
             UserSettings.readAndSaveUserSettings(false);
 
+            LoadSettings();
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
 
@@ -299,22 +301,15 @@ namespace OSLTT
                         
                     }
 
-                    else if (message.Contains("Test Started"))
-                    {
-                        testStarted = true;
-                    }
-                    else if (message.Contains("NEXT"))
-                    {
-                        triggerNextResult = true;
-                        //Console.WriteLine("trigger next result true");
-                    }
+                    
                     else if (message.Contains("FW:"))
                     {
                         string[] sp = message.Split(':');
                         boardFirmware = double.Parse(sp[1]);
-                        compareFirmware();
+                        //compareFirmware();
                         this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Text = "V" + boardFirmware));
                     }
+                    /*
                     else if (message.Contains("TEST CANCELLED"))
                     {
                         testRunning = false;
@@ -328,17 +323,17 @@ namespace OSLTT
                         {
                             MessageBox.Show("ERROR - TEST CANCELLED. USB supply voltage may be too low - please plug the device either directly into your system or a powered USB hub.", "Test Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }
+                    }*/
                     else if (message.Contains("Ready to test"))
                     {
-                        testMode = true;
+                        //testMode = true;
                     }
                     else if (message.Contains("UniqueID"))
                     {
                         string s = message.Remove(0, 9);
                         Regex.Replace(s, @"\s+", "");
-                        Properties.Settings.Default.serialNumber = s;
-                        Properties.Settings.Default.Save();
+                        //Properties.Settings.Default.serialNumber = s;
+                        //Properties.Settings.Default.Save();
                     }
                     else if (message.Contains("IL"))
                     {
@@ -387,7 +382,7 @@ namespace OSLTT
                                 FrameTime = frameTime
                             };
                             inputLagRawData.Add(rawLag);
-                        }
+                        }/*
                         else if (message.Contains("Clicks"))
                         {
                             // Send number of clicks to run
@@ -401,11 +396,10 @@ namespace OSLTT
                             double t = timeBetween * 10;
                             port.Write(t.ToString());
                             Console.WriteLine("Time Between: " + t);
-                        }
+                        }*/
                         else if (message.Contains("Finished"))
                         {
-                            if (Properties.Settings.Default.saveInputLagRaw)
-                            {
+                            
                                 string[] folders = resultsFolderPath.Split('\\');
                                 string monitorInfo = folders.Last();
                                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
@@ -432,7 +426,7 @@ namespace OSLTT
                                     csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
                                 }
                                 File.WriteAllText(filePath, csvString.ToString());*/
-                            }
+                            
                             Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                             inputLagThread.Start();
                             //processInputLagData();
@@ -441,7 +435,7 @@ namespace OSLTT
 
                     else
                     {
-                        this.SetText(message);
+                        //this.SetText(message);
                     }
                 }
                 catch (TimeoutException ex)
@@ -452,7 +446,7 @@ namespace OSLTT
                 catch (ArgumentOutOfRangeException aex)
                 {
                     Console.WriteLine(aex);
-                    SetText(aex.Message + aex.StackTrace);
+                    //SetText(aex.Message + aex.StackTrace);
                 }
                 catch (Exception e)
                 {
@@ -463,19 +457,19 @@ namespace OSLTT
                     catch (Exception exc)
                     {
                         Console.WriteLine(exc);
-                        SetText(exc.Message + exc.StackTrace);
+                        //SetText(exc.Message + exc.StackTrace);
                     }
                     Console.WriteLine(e);
-                    SetText(e.Message + e.StackTrace);
+                    //SetText(e.Message + e.StackTrace);
                     port.Close();
                     portConnected = false;
-                    testRunning = false;
-                    testMode = false;
-                    testStarted = false;
-                    brightnessCheck = false;
-                    if (runTestThread != null)
-                    { runTestThread.Abort(); }
-                    readThread.Abort();
+                    //testRunning = false;
+                    //testMode = false;
+                    //testStarted = false;
+                    
+                    //if (runTestThread != null)
+                    //{ runTestThread.Abort(); }
+                    //readThread.Abort();
                 }
             }
         }
@@ -856,6 +850,20 @@ namespace OSLTT
             Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
             Properties.Settings.Default.Save();
             portWrite("I");
+        }
+
+        private void LoadSettings()
+        {
+            buttonTriggerToggle.Checked = Properties.Settings.Default.buttonTriggerToggle;
+            audioTriggerToggle.Checked = Properties.Settings.Default.audioTriggerToggle;
+            pinTriggerToggle.Checked = Properties.Settings.Default.pinTriggerToggle;
+            lightSensorToggle.Checked = Properties.Settings.Default.lightSensorToggle;
+            autoClickToggle.Checked = Properties.Settings.Default.autoClickToggle;
+            clickCountSelect.SelectedIndex = clickCountSelect.Items.IndexOf(Properties.Settings.Default.clickCountSelect);
+            timeBetweenSelect.SelectedIndex = timeBetweenSelect.Items.IndexOf(Properties.Settings.Default.timeBetweenSelect);
+            preTestToggle.Checked = Properties.Settings.Default.preTestToggle;
+            directXToggle.Checked = Properties.Settings.Default.directXToggle;
+            gameExternalToggle.Checked = Properties.Settings.Default.gameExternalToggle;
         }
 
         private void SetComboBoxValue(MaterialComboBox mcb, double value)
