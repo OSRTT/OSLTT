@@ -896,7 +896,7 @@ namespace OSLTT
 
         private void startTestBtn_Click(object sender, EventArgs e)
         {
-            //makeResultsFolder();
+            resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
             settingsSynced = false;
             SaveSettings();
             Thread testThread = new Thread(new ThreadStart(runTest));
@@ -919,13 +919,12 @@ namespace OSLTT
             try //Wrapped whole thing in try just in case
             {
                 // Then process the lines
-                //ProcessData pd = new ProcessData();
                 ProcessData.averagedInputLag inputLagProcessed = ProcessData.AverageInputLagResults(inputLagRawData);
 
                 // Write results to csv using new name
                 decimal fileNumber = 001;
                 // search /Results folder for existing file names, pick new name
-                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LATENCY-OSRTT.csv");
+                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LATENCY-OSLTT.csv");
                 // Search \Results folder for existing results to not overwrite existing or have save conflict errors
                 foreach (var s in existingFiles)
                 {
@@ -941,7 +940,7 @@ namespace OSLTT
                 }
                 string[] folders = resultsFolderPath.Split('\\');
                 string monitorInfo = folders.Last();
-                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-OSRTT.csv";
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-OSLTT.csv";
                 //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
 
                 string strSeparator = ",";

@@ -86,5 +86,30 @@ namespace OSLTT
             }
         }
 
+        public static string makeResultsFolder(string path, string deviceName="OSLTT")
+        {
+            decimal fileNumber = 001;
+            // search /Results folder for existing file names, pick new name
+            string[] existingFiles = Directory.GetDirectories(path, "*-" + deviceName);
+            //search files for number
+            if (existingFiles.Length != 0)
+            {
+                foreach (var s in existingFiles)
+                {
+                    var name = new DirectoryInfo(s).Name;
+                    string[] splitMe = name.Split('-');
+                    decimal num = decimal.Parse(splitMe.Last());
+                    if (num >= fileNumber)
+                    {
+                        fileNumber = num + 1;
+                    }
+                }
+            }
+            string filePath = path + "\\" + deviceName + "-" + fileNumber.ToString("000");
+            Directory.CreateDirectory(filePath);
+            return filePath;
+            //initRunSettingsFile(filePath, monitor);
+        }
+
     }
 }
