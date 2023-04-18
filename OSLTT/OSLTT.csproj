@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsClasses.cs" />
+    <Compile Include="UpdateFirmware.cs" />
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="UserSettings.cs" />
     <EmbeddedResource Include="debugForm.resx">

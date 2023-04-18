@@ -28,6 +28,7 @@ namespace OSLTT
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
+        public static bool fwUpdateRunning = false;
 
         private ResourceManager rm = OSLTT.Properties.Resources.ResourceManager;
 
@@ -203,9 +204,11 @@ namespace OSLTT
                             debug.AddToLog(e.Message + e.StackTrace);
                         }
                     }
-
                     Thread.Sleep(1000);
-
+                }
+                else if (fwUpdateRunning)
+                {
+                    Thread.Sleep(100);
                 }
             }
         }
@@ -312,7 +315,7 @@ namespace OSLTT
                     {
                         string[] sp = message.Split(':');
                         boardFirmware = double.Parse(sp[1]);
-                        //compareFirmware();
+                        compareFirmware();
                         this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Text = "V" + boardFirmware));
                     }
                     /*
@@ -489,6 +492,16 @@ namespace OSLTT
                     port.Write(input);
                 }
             }
+        }
+
+        private void compareFirmware()
+        {
+            // run function to fetch latest version, returns new version number
+            // if (boardFirmware < newFirmware)
+            // fwUpdateRunning = true;
+            // port.Close();
+            // run function to update firmware, returns bool. 
+            // fwUpdateRunning = UpdateFirmware.Update();
         }
 
         private void ControlDeviceButtons(bool state)
@@ -991,8 +1004,10 @@ namespace OSLTT
             }
         }
 
-        
-
+        private void materialButton1_Click(object sender, EventArgs e)
+        {
+            UpdateFirmware.getNewFirmwareFile();
+        }
     }
 
 }
