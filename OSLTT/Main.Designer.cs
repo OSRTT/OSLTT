@@ -797,14 +797,14 @@ namespace OSLTT
             this.materialButton1.Depth = 0;
             this.materialButton1.HighEmphasis = true;
             this.materialButton1.Icon = global::OSLTT.Properties.Resources.bug_solid;
-            this.materialButton1.Location = new System.Drawing.Point(778, 110);
+            this.materialButton1.Location = new System.Drawing.Point(748, 110);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton1.Size = new System.Drawing.Size(96, 36);
+            this.materialButton1.Size = new System.Drawing.Size(126, 36);
             this.materialButton1.TabIndex = 58;
-            this.materialButton1.Text = "Test";
+            this.materialButton1.Text = "(Dev) Test";
             this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton1.UseAccentColor = false;
             this.materialButton1.UseVisualStyleBackColor = true;

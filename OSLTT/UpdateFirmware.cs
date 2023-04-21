@@ -33,7 +33,7 @@ namespace OSLTT
                             string[] splitForUrl = s.Split('"');
                             foreach (var st in splitForUrl)
                             {
-                                if (st.StartsWith("https://github.com/") && st.Contains(".zip")) // change to .ino.bin for prod
+                                if (st.StartsWith("https://github.com/") && st.Contains(".ino.bin")) // change to .ino.bin for prod
                                 {
                                     newFirmwareUrl = st;
                                     break;

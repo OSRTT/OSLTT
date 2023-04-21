@@ -12,7 +12,9 @@ void setup() {
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
 
-  ADC_Init();
+  //ADC_Init();
+  analogReadResolution(14);
+
   establishContact();  // send a byte to establish contact until receiver responds
 }
 
@@ -36,7 +38,6 @@ void loop() {
       }
       else if (inputType == 1)
       {
-        Swap_ADC_Input(1);
         int baseline = getADCValue(500);
         while (input[0] != 'X')
         {
@@ -51,7 +52,6 @@ void loop() {
           {
             // Audio trigger
             // run test
-            Swap_ADC_Input(0);
             runTest(9000);
           }
         }
@@ -142,7 +142,7 @@ void loop() {
     int LSB = convertHexToDec(input[0]);
     shotCount = (MSB * 100) + (LSB * 10);
   }
-  else if (input[0] == 'W')
+  else if (input[0] == 'Q')
   {
     while (input[0] != 'X')
     {
@@ -154,6 +154,34 @@ void loop() {
       }
       delay(100);
     }
+  }
+  else if (input[0] == 'W')
+  {
+    Serial.print("Reading pin 16 (D4): ");
+    Serial.println(digitalRead(PullDownPin));
+    Serial.print("Reading pin 2 (D6): ");
+    Serial.println(digitalRead(ButtonPin));
+
+    pulseLED(true);
+    pulseLED(false);
+    for (int i = 0; i < 2; i++)
+    {
+      //Swap_ADC_Input(i);
+      Serial.print(i);
+      Serial.print(": ");
+      Serial.println(analogRead(i));  
+    }
+    long start = micros();
+    for (int k = 0; k < 10000; k++)
+    {
+      adcBuff[k] = analogRead(0);
+    }
+    long end = micros();
+    Serial.print("Time taken: ");
+    Serial.println((end - start) / 1000);
+    Serial.print("Time per sample: ");
+    Serial.println((end - start) / 10000);
+    Serial.println("Done");
   }
   else if (input[0] == 'Y')
   {
