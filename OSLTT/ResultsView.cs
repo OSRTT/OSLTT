@@ -36,5 +36,37 @@ namespace OSLTT
         {
 
         }
+
+        public void importMode()
+        {
+            Size = new Size(720, 156);
+            importPanel.Visible = true;
+            importPanel.BringToFront();
+            barPlot.Visible = false;
+            barPlot.SendToBack();
+            controlsPanel.Visible = false;
+            controlsPanel.SendToBack();
+        }
+
+        public void graphMode()
+        {
+            Size = new Size(1222, 829);
+            importPanel.Visible = false;
+            importPanel.SendToBack();
+            barPlot.Visible = true;
+            barPlot.BringToFront();
+            controlsPanel.Visible = true;
+            controlsPanel.BringToFront();
+        }
+
+        private void savePNGBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveWhitePNGBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

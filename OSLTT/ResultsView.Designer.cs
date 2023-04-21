@@ -33,7 +33,13 @@ namespace OSLTT
             this.importProcessedBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.importRawBtn = new MaterialSkin.Controls.MaterialButton();
+            this.barPlot = new ScottPlot.FormsPlot();
+            this.controlsPanel = new MaterialSkin.Controls.MaterialCard();
+            this.saveWhitePNGBtn = new MaterialSkin.Controls.MaterialButton();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.importPanel.SuspendLayout();
+            this.controlsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // importPanel
@@ -49,7 +55,7 @@ namespace OSLTT
             this.importPanel.MouseState = MaterialSkin.MouseState.HOVER;
             this.importPanel.Name = "importPanel";
             this.importPanel.Padding = new System.Windows.Forms.Padding(14);
-            this.importPanel.Size = new System.Drawing.Size(1002, 60);
+            this.importPanel.Size = new System.Drawing.Size(679, 60);
             this.importPanel.TabIndex = 0;
             // 
             // importProcessedBtn
@@ -59,7 +65,7 @@ namespace OSLTT
             this.importProcessedBtn.Depth = 0;
             this.importProcessedBtn.HighEmphasis = true;
             this.importProcessedBtn.Icon = null;
-            this.importProcessedBtn.Location = new System.Drawing.Point(691, 12);
+            this.importProcessedBtn.Location = new System.Drawing.Point(457, 12);
             this.importProcessedBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.importProcessedBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.importProcessedBtn.Name = "importProcessedBtn";
@@ -91,7 +97,7 @@ namespace OSLTT
             this.importRawBtn.Depth = 0;
             this.importRawBtn.HighEmphasis = true;
             this.importRawBtn.Icon = null;
-            this.importRawBtn.Location = new System.Drawing.Point(342, 12);
+            this.importRawBtn.Location = new System.Drawing.Point(256, 12);
             this.importRawBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.importRawBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.importRawBtn.Name = "importRawBtn";
@@ -103,16 +109,98 @@ namespace OSLTT
             this.importRawBtn.UseAccentColor = false;
             this.importRawBtn.UseVisualStyleBackColor = true;
             // 
+            // barPlot
+            // 
+            this.barPlot.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.barPlot.Location = new System.Drawing.Point(17, 148);
+            this.barPlot.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.barPlot.Name = "barPlot";
+            this.barPlot.Size = new System.Drawing.Size(1184, 666);
+            this.barPlot.TabIndex = 34;
+            // 
+            // controlsPanel
+            // 
+            this.controlsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.controlsPanel.Controls.Add(this.saveWhitePNGBtn);
+            this.controlsPanel.Controls.Add(this.materialLabel2);
+            this.controlsPanel.Controls.Add(this.savePNGBtn);
+            this.controlsPanel.Depth = 0;
+            this.controlsPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.controlsPanel.Location = new System.Drawing.Point(17, 78);
+            this.controlsPanel.Margin = new System.Windows.Forms.Padding(14);
+            this.controlsPanel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.controlsPanel.Name = "controlsPanel";
+            this.controlsPanel.Padding = new System.Windows.Forms.Padding(14);
+            this.controlsPanel.Size = new System.Drawing.Size(1184, 60);
+            this.controlsPanel.TabIndex = 35;
+            // 
+            // saveWhitePNGBtn
+            // 
+            this.saveWhitePNGBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.saveWhitePNGBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.saveWhitePNGBtn.Depth = 0;
+            this.saveWhitePNGBtn.HighEmphasis = true;
+            this.saveWhitePNGBtn.Icon = null;
+            this.saveWhitePNGBtn.Location = new System.Drawing.Point(1026, 12);
+            this.saveWhitePNGBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.saveWhitePNGBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.saveWhitePNGBtn.Name = "saveWhitePNGBtn";
+            this.saveWhitePNGBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.saveWhitePNGBtn.Size = new System.Drawing.Size(140, 36);
+            this.saveWhitePNGBtn.TabIndex = 2;
+            this.saveWhitePNGBtn.Text = "Save White PNG";
+            this.saveWhitePNGBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.saveWhitePNGBtn.UseAccentColor = false;
+            this.saveWhitePNGBtn.UseVisualStyleBackColor = true;
+            this.saveWhitePNGBtn.Click += new System.EventHandler(this.saveWhitePNGBtn_Click);
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel2.Location = new System.Drawing.Point(17, 15);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(92, 29);
+            this.materialLabel2.TabIndex = 1;
+            this.materialLabel2.Text = "Controls";
+            // 
+            // savePNGBtn
+            // 
+            this.savePNGBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.savePNGBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.savePNGBtn.Depth = 0;
+            this.savePNGBtn.HighEmphasis = true;
+            this.savePNGBtn.Icon = null;
+            this.savePNGBtn.Location = new System.Drawing.Point(927, 12);
+            this.savePNGBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.savePNGBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.savePNGBtn.Name = "savePNGBtn";
+            this.savePNGBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.savePNGBtn.Size = new System.Drawing.Size(91, 36);
+            this.savePNGBtn.TabIndex = 0;
+            this.savePNGBtn.Text = "Save PNG";
+            this.savePNGBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.savePNGBtn.UseAccentColor = false;
+            this.savePNGBtn.UseVisualStyleBackColor = true;
+            this.savePNGBtn.Click += new System.EventHandler(this.savePNGBtn_Click);
+            // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1036, 732);
+            this.ClientSize = new System.Drawing.Size(1222, 829);
+            this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
+            this.Controls.Add(this.controlsPanel);
             this.Name = "ResultsView";
             this.Text = "Results View";
             this.importPanel.ResumeLayout(false);
             this.importPanel.PerformLayout();
+            this.controlsPanel.ResumeLayout(false);
+            this.controlsPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -123,5 +211,10 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton importRawBtn;
         private MaterialSkin.Controls.MaterialButton importProcessedBtn;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private ScottPlot.FormsPlot barPlot;
+        private MaterialSkin.Controls.MaterialCard controlsPanel;
+        private MaterialSkin.Controls.MaterialButton saveWhitePNGBtn;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialButton savePNGBtn;
     }
 }
