@@ -151,10 +151,12 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
       runTest(sampleCount);
       localCounter++;
     }
+    Serial.println("AUTO FINISHED");
   }
   else
   {
     runTest(sampleCount);
+    Serial.println("SINGLE FIRE");
   }
 }
 

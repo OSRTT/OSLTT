@@ -12,6 +12,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Media;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -48,11 +49,14 @@ namespace OSLTT
         private BackgroundWorker bgWorker = new BackgroundWorker();
 
         string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
+        string resultsPath = "";
         string resultsFolderPath = "";
 
         private List<float> inputLagEvents = new List<float>();
         private List<ProcessData.rawInputLagResult> inputLagRawData = new List<ProcessData.rawInputLagResult>();
         private List<ProcessData.inputLagResult> inputLagProcessed = new List<ProcessData.inputLagResult>();
+        private List<ProcessData.rawInputLagResult> rawSystemLagData = new List<ProcessData.rawInputLagResult>();
+        private List<ProcessData.inputLagResult> systemLagData = new List<ProcessData.inputLagResult>();
 
         private bool processingFailed = false;
         public bool settingsSynced = false;
@@ -60,6 +64,8 @@ namespace OSLTT
         private readonly string fqbn = "Seeduino:samd:seeed_XIAO_m0";
 
         debugForm debug = new debugForm();
+
+        SoundPlayer audioTestClip;
 
         public Main()
         {
@@ -77,7 +83,9 @@ namespace OSLTT
             this.Resize += Form1_Resize;
 
             path = new Uri(System.IO.Path.GetDirectoryName(path)).LocalPath;
-            path += @"\Results";
+            resultsPath = path + @"\Results";
+
+            audioTestClip = new SoundPlayer(path + @"\audioTestClip.wav");
 
             //UpdateHandler.UpdateMe(softwareVersion);
 
@@ -310,6 +318,11 @@ namespace OSLTT
                     {
                         settingsSynced = true;
                     }
+                    else if (message.Contains("AUDIO TRIGGER"))
+                    {
+                        // play sound
+                        audioTestClip.Play();
+                    }
                     
                     else if (message.Contains("FW:"))
                     {
@@ -371,15 +384,18 @@ namespace OSLTT
                                 }
                                 else { continue; }
                             }
-                            if (DirectX.System.DSystem.EventList.Count == 0)
-                            { Thread.Sleep(50); } // add continuous check
                             float frameTime = 0;
-                            try
+                            if (Properties.Settings.Default.directXToggle)
                             {
-                                frameTime = DirectX.System.DSystem.EventList.Last();
+                                if (DirectX.System.DSystem.EventList.Count == 0)
+                                { Thread.Sleep(50); } // add continuous check
+                                try
+                                {
+                                    frameTime = DirectX.System.DSystem.EventList.Last();
+                                }
+                                catch
+                                { }
                             }
-                            catch
-                            { }
 
                             ProcessData.rawInputLagResult rawLag = new ProcessData.rawInputLagResult
                             {
@@ -391,22 +407,8 @@ namespace OSLTT
                                 FrameTime = frameTime
                             };
                             inputLagRawData.Add(rawLag);
-                        }/*
-                        else if (message.Contains("Clicks"))
-                        {
-                            // Send number of clicks to run
-                            int clicks = numberOfClicks / 10;
-                            Console.WriteLine("Clicks: " + clicks);
-                            port.Write(clicks.ToString("00"));
                         }
-                        else if (message.Contains("Time"))
-                        {
-                            // Send time between setting
-                            double t = timeBetween * 10;
-                            port.Write(t.ToString());
-                            Console.WriteLine("Time Between: " + t);
-                        }*/
-                        else if (message.Contains("Finished"))
+                        else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                         {
                             
                                 string[] folders = resultsFolderPath.Split('\\');
@@ -439,6 +441,11 @@ namespace OSLTT
                             Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                             inputLagThread.Start();
                             //processInputLagData();
+                        }
+                        else if (message.Contains("SINGLE FIRE"))
+                        {
+                            // write most recent result to raw file
+                            // process then append processed result to file
                         }
                     }
 
@@ -525,6 +532,7 @@ namespace OSLTT
         private void SetDeviceStatus(int state)
         {
             string text = " Device Not Connected";
+            string testBtnText = "Start";
             Color bg = Color.FromArgb(255, 255, 131, 21);
             Color btnBg = Color.Gray;
             bool active = false;
@@ -558,6 +566,7 @@ namespace OSLTT
                 check = false;
                 active = false;
                 bg = Color.FromArgb(255, 38, 50, 56);
+                testBtnText = "End Test";
             }
             if (this.devStat.InvokeRequired)
             {
@@ -566,6 +575,7 @@ namespace OSLTT
                 this.fwLblTitle.Invoke((MethodInvoker)(() => this.fwLblTitle.Visible = check));
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
+                this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = text));
                 //this.controlsPanel.Invoke((MethodInvoker)(() => this.controlsPanel.Enabled = active));
                 /*this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.Enabled = active));
                 this.fpsLimitList.Invoke((MethodInvoker)(() => this.fpsLimitList.Enabled = active));
@@ -585,6 +595,7 @@ namespace OSLTT
                 this.deviceStatusPanel.BackColor = bg;
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
+                this.startTestBtn.Text = text;
                 //this.controlsPanel.Enabled = active;
                 /*this.launchBtn.Enabled = active;
                 this.fpsLimitList.Enabled = active;
@@ -909,19 +920,50 @@ namespace OSLTT
 
         private void startTestBtn_Click(object sender, EventArgs e)
         {
-            resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
-            settingsSynced = false;
-            SaveSettings();
-            Thread testThread = new Thread(new ThreadStart(runTest));
-            testThread.Start();
+            if (startTestBtn.Text == "Start")
+            {
+                resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
+                settingsSynced = false;
+                SaveSettings();
+                SetDeviceStatus(5);
+                runTest();
+            }
+            else
+            {
+                // End test
+            }
         }
 
         private void runTest()
         {
-            while (!settingsSynced) { }
-            if (Properties.Settings.Default.directXToggle)
+            try
             {
-                DirectX.System.DSystem.inputLagMode = true;
+                while (!settingsSynced) { }
+                port.WriteLine("T");
+                inputLagEvents.Clear();
+                inputLagProcessed.Clear();
+                inputLagRawData.Clear();
+                if (Properties.Settings.Default.directXToggle)
+                {
+                    DirectX.System.DSystem.inputLagMode = true;
+                    if (DirectX.System.DSystem.mainWindow == null)
+                        DirectX.System.DSystem.mainWindow = this;
+
+
+                    DirectX.System.DSystem.inputLagMode = true;
+                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                }
+                else
+                {
+                    // erm idk? wait? Not using 
+                }
+
+                SetDeviceStatus(1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+                debug.AddToLog(ex.Message + ex.StackTrace);
             }
         }
 

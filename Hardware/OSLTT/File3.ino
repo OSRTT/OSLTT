@@ -32,23 +32,38 @@ void loop() {
       {
         if (digitalRead(ButtonPin))
         {
-          // Run test
-          runTest(9000);
+          if (sensorType == 1)
+          {
+            long start = micros();
+            Serial.println("AUDIO TRIGGER");
+            long end = micros();
+            runTest(9000);
+            Serial.print("AUDIO SERIAL DELAY:");
+            Serial.println(end - start);
+          }
+          else
+          {
+            runTest(9000);
+          }
+          
+          
         }
       }
       else if (inputType == 1)
       {
-        int baseline = getADCValue(500);
+        int baseline = getADCValue(500, 1);
         while (input[0] != 'X')
         {
           if (digitalRead(ButtonPin))
           {
             input[0] = 'X';
           }
-          int current = getSingleADCValue();
-          Serial.print("audio:");
+          int current = getSingleADCValue(1);
+          Serial.print("AUDIO:");
           Serial.println(current);
-          if (current > (baseline * 2))
+          int baselineAdjusted = 16380 - baseline;
+          baselineAdjusted *= 0.5;
+          if (current > (baseline + baselineAdjusted))
           {
             // Audio trigger
             // run test
@@ -61,7 +76,7 @@ void loop() {
         while(input[0] != 'X')
         {
           getSerialChars();
-          if (digitalRead(PullDownPin))
+          if (digitalRead(PullDownPin) != HIGH)
           {
             // Run test
             runTest(9000);
@@ -146,37 +161,36 @@ void loop() {
   {
     while (input[0] != 'X')
     {
+      getSerialChars();
       int pulldown = digitalRead(PullDownPin);
       Serial.println(pulldown);
-      if (pulldown == HIGH)
+      if (pulldown == LOW)
       {
         pulseLED(true);
+      }
+      else
+      {
+        pulseLED(false);
       }
       delay(100);
     }
   }
   else if (input[0] == 'W')
   {
-    Serial.print("Reading pin 16 (D4): ");
-    Serial.println(digitalRead(PullDownPin));
-    Serial.print("Reading pin 2 (D6): ");
-    Serial.println(digitalRead(ButtonPin));
-
-    pulseLED(true);
-    pulseLED(false);
-    for (int i = 0; i < 2; i++)
+    while (digitalRead(ButtonPin) != HIGH)
     {
-      //Swap_ADC_Input(i);
-      Serial.print(i);
-      Serial.print(": ");
-      Serial.println(analogRead(i));  
+      delay(1);
     }
+    delay(1000);
     long start = micros();
     for (int k = 0; k < 10000; k++)
     {
-      adcBuff[k] = analogRead(0);
+      Serial.print(analogRead(1));
+      Serial.print(",");
+      delayMicroseconds(100);
     }
     long end = micros();
+    Serial.println();
     Serial.print("Time taken: ");
     Serial.println((end - start) / 1000);
     Serial.print("Time per sample: ");
@@ -186,8 +200,7 @@ void loop() {
   else if (input[0] == 'Y')
   {
     Serial.println("Y registered");
-    Swap_ADC_Input(1);
-    Serial.println("Swapped input");
+    Serial.println("Audio sensor");
     int buttonState = digitalRead(ButtonPin);
     Serial.print("Read button - ");
     Serial.println(buttonState);
@@ -197,8 +210,8 @@ void loop() {
     // Serial.println(result);
     while (buttonState != HIGH)
     {
-      int value = getSingleADCValue();
-      //int value = analogRead(A1);
+      //int value = getSingleADCValue();
+      int value = analogRead(1);
       Serial.println(value);
       buttonState = digitalRead(ButtonPin);
     }
@@ -207,8 +220,7 @@ void loop() {
   else if (input[0] == 'Z')
   {
     Serial.println("Z registered");
-    Swap_ADC_Input(0);
-    Serial.println("Swapped input");
+    Serial.println("Light sensor");
     int buttonState = digitalRead(ButtonPin);
     Serial.print("Read button - ");
     Serial.println(buttonState);
@@ -218,8 +230,8 @@ void loop() {
     // Serial.println(result);
     while (buttonState != HIGH)
     {
-      int value = getSingleADCValue();
-      //int value = analogRead(A1);
+      //int value = getSingleADCValue();
+      int value = analogRead(0);
       Serial.println(value);
       buttonState = digitalRead(ButtonPin);
     }
