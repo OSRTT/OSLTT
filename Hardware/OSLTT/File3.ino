@@ -45,8 +45,6 @@ void loop() {
           {
             runTest(9000);
           }
-          
-          
         }
       }
       else if (inputType == 1)

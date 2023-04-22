@@ -107,7 +107,7 @@ namespace OSLTT
             connectThread = new Thread(new ThreadStart(this.findAndConnectToBoard));
             connectThread.Start();
 
-             
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -260,7 +260,7 @@ namespace OSLTT
         public void Read()
         {
             while (port.IsOpen)
-            { 
+            {
                 try
                 {
                     string message = port.ReadLine();
@@ -310,9 +310,9 @@ namespace OSLTT
                     {
                         debug.AddToLog(message);
                     }*/
-                    if (message.Contains("Results"))
+                    if (message.Contains("RESULT:"))
                     {
-                        
+                        // on-device processed result. not that accurate.
                     }
                     else if (message.Contains("Settings Synced"))
                     {
@@ -323,7 +323,7 @@ namespace OSLTT
                         // play sound
                         audioTestClip.Play();
                     }
-                    
+
                     else if (message.Contains("FW:"))
                     {
                         string[] sp = message.Split(':');
@@ -357,103 +357,103 @@ namespace OSLTT
                         //Properties.Settings.Default.serialNumber = s;
                         //Properties.Settings.Default.Save();
                     }
-                    else if (message.Contains("IL"))
+                    else if (message.Contains("RES:"))
                     {
-                        if (message.Contains("IL:"))
+
+                        // Results Data
+                        String newMessage = message.Remove(0, 3);
+                        string[] values = newMessage.Split(',');
+                        List<int> intValues = new List<int>();
+                        for (int i = 0; i < values.Length - 1; i++)
                         {
-                            // Results Data
-                            String newMessage = message.Remove(0, 3);
-                            string[] values = newMessage.Split(',');
-                            List<int> intValues = new List<int>();
-                            for (int i = 0; i < values.Length - 1; i++)
+                            if (values[i] == "0")
                             {
-                                if (values[i] == "0")
-                                {
-                                    intValues.Add(0);
-                                }
-                                else if (values[i] != "")
-                                {
-                                    try
-                                    {
-                                        intValues.Add(int.Parse(values[i]));
-                                    }
-                                    catch
-                                    {
-                                        Console.WriteLine(values[i]);
-                                    }
-                                }
-                                else { continue; }
+                                intValues.Add(0);
                             }
-                            float frameTime = 0;
-                            if (Properties.Settings.Default.directXToggle)
+                            else if (values[i] != "")
                             {
-                                if (DirectX.System.DSystem.EventList.Count == 0)
-                                { Thread.Sleep(50); } // add continuous check
                                 try
                                 {
-                                    frameTime = DirectX.System.DSystem.EventList.Last();
+                                    intValues.Add(int.Parse(values[i]));
                                 }
                                 catch
-                                { }
+                                {
+                                    Console.WriteLine(values[i]);
+                                }
                             }
-
-                            ProcessData.rawInputLagResult rawLag = new ProcessData.rawInputLagResult
+                            else { continue; }
+                        }
+                        float frameTime = 0;
+                        if (Properties.Settings.Default.directXToggle)
+                        {
+                            if (DirectX.System.DSystem.EventList.Count == 0)
+                            { Thread.Sleep(50); } // add continuous check
+                            try
                             {
-                                ClickTime = intValues[0],
-                                TimeTaken = intValues[1],
-                                SampleCount = intValues[2],
-                                SampleTime = (double)intValues[1] / (double)intValues[2],
-                                Samples = intValues.Skip(4).ToList(),
-                                FrameTime = frameTime
-                            };
-                            inputLagRawData.Add(rawLag);
+                                frameTime = DirectX.System.DSystem.EventList.Last();
+                            }
+                            catch
+                            { }
                         }
-                        else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
-                        {
-                            
-                                string[] folders = resultsFolderPath.Split('\\');
-                                string monitorInfo = folders.Last();
-                                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
-                                /*
-                                decimal fileNumber = 001;
-                                // search /Results folder for existing file names, pick new name
-                                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LAG-RAW-OSRTT.csv");
-                                //search files for number
-                                foreach (var s in existingFiles)
-                                {
-                                    decimal num = decimal.Parse(Path.GetFileNameWithoutExtension(s).Remove(3));
-                                    if (num >= fileNumber)
-                                    {
-                                        fileNumber = num + 1;
-                                    }
-                                }
 
-                                string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-RAW-OSRTT.csv";
-                                
-                                string strSeparator = ",";
-                                StringBuilder csvString = new StringBuilder();
-                                foreach (var res in inputLagRawData)
-                                {
-                                    csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
-                                }
-                                File.WriteAllText(filePath, csvString.ToString());*/
-                            
-                            Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
-                            inputLagThread.Start();
-                            //processInputLagData();
-                        }
-                        else if (message.Contains("SINGLE FIRE"))
+                        ProcessData.rawInputLagResult rawLag = new ProcessData.rawInputLagResult
                         {
-                            // write most recent result to raw file
-                            // process then append processed result to file
-                        }
+                            ClickTime = intValues[0],
+                            TimeTaken = intValues[1],
+                            SampleCount = intValues[2],
+                            SampleTime = (double)intValues[1] / (double)intValues[2],
+                            Samples = intValues.Skip(4).ToList(),
+                            FrameTime = frameTime
+                        };
+                        inputLagRawData.Add(rawLag);
+
                     }
+                    else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
+                    {
+
+                        string[] folders = resultsFolderPath.Split('\\');
+                        string monitorInfo = folders.Last();
+                        string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
+                        /*
+                        decimal fileNumber = 001;
+                        // search /Results folder for existing file names, pick new name
+                        string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LAG-RAW-OSRTT.csv");
+                        //search files for number
+                        foreach (var s in existingFiles)
+                        {
+                            decimal num = decimal.Parse(Path.GetFileNameWithoutExtension(s).Remove(3));
+                            if (num >= fileNumber)
+                            {
+                                fileNumber = num + 1;
+                            }
+                        }
+
+                        string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-RAW-OSRTT.csv";
+
+                        string strSeparator = ",";
+                        StringBuilder csvString = new StringBuilder();
+                        foreach (var res in inputLagRawData)
+                        {
+                            csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
+                        }
+                        File.WriteAllText(filePath, csvString.ToString());*/
+
+                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                        inputLagThread.Start();
+                        //processInputLagData();
+                    }
+                    else if (message.Contains("SINGLE FIRE"))
+                    {
+                        // write most recent result to raw file
+                        // process then append processed result to file
+                    }
+
 
                     else
                     {
                         debug.AddToLog(message);
                     }
-                }
+                        }
                 catch (TimeoutException ex)
                 {
                     Console.WriteLine(ex);
@@ -482,7 +482,7 @@ namespace OSLTT
                     //testRunning = false;
                     //testMode = false;
                     //testStarted = false;
-                    
+
                     //if (runTestThread != null)
                     //{ runTestThread.Abort(); }
                     //readThread.Abort();
@@ -623,7 +623,7 @@ namespace OSLTT
             this.Invalidate();
         }
 
-        
+
 
         public void getInputLagEvents(List<float> fpsList)
         {
@@ -667,6 +667,12 @@ namespace OSLTT
             rv.Show();
         }
 
+        private void handleToggleSettingsChanges(MaterialSwitch sw)
+        {
+
+            SaveSettings();
+        }
+
         private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
         {
             MaterialSwitch s = sender as MaterialSwitch;
@@ -677,6 +683,7 @@ namespace OSLTT
                     audioTriggerToggle.Checked = true;
                     pinTriggerToggle.Checked = false;
                     buttonTriggerToggle.Checked = false;
+
                 }
                 else
                 {
@@ -1017,7 +1024,7 @@ namespace OSLTT
                 csvString.AppendLine("MAXIMUM," + inputLagProcessed.ClickTime.MAX.ToString() + "," + inputLagProcessed.FrameTime.MAX.ToString() + "," + inputLagProcessed.onDisplayLatency.MAX.ToString() + "," + inputLagProcessed.totalInputLag.MAX.ToString());
                 Console.WriteLine(filePath);
                 File.WriteAllText(filePath, csvString.ToString());
-                
+
 
                 this.Invoke((MethodInvoker)delegate ()
                 {
