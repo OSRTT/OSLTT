@@ -47,6 +47,7 @@ namespace OSLTT
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.debugBtn = new MaterialSkin.Controls.MaterialButton();
             this.startTestBtn = new MaterialSkin.Controls.MaterialButton();
             this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
@@ -69,7 +70,7 @@ namespace OSLTT
             this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
             this.notesBox = new MaterialSkin.Controls.MaterialTextBox2();
             this.deviceNameBox = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
+            this.audioSourceToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.deviceStatusPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.materialCard1.SuspendLayout();
@@ -378,6 +379,7 @@ namespace OSLTT
             // settingsCard
             // 
             this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.settingsCard.Controls.Add(this.audioSourceToggle);
             this.settingsCard.Controls.Add(this.materialButton1);
             this.settingsCard.Controls.Add(this.debugBtn);
             this.settingsCard.Controls.Add(this.startTestBtn);
@@ -409,6 +411,26 @@ namespace OSLTT
             this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
             this.settingsCard.Size = new System.Drawing.Size(892, 286);
             this.settingsCard.TabIndex = 44;
+            // 
+            // materialButton1
+            // 
+            this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton1.Depth = 0;
+            this.materialButton1.HighEmphasis = true;
+            this.materialButton1.Icon = global::OSLTT.Properties.Resources.bug_solid;
+            this.materialButton1.Location = new System.Drawing.Point(748, 110);
+            this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton1.Name = "materialButton1";
+            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton1.Size = new System.Drawing.Size(126, 36);
+            this.materialButton1.TabIndex = 58;
+            this.materialButton1.Text = "(Dev) Test";
+            this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton1.UseAccentColor = false;
+            this.materialButton1.UseVisualStyleBackColor = true;
+            this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
             // 
             // debugBtn
             // 
@@ -790,25 +812,21 @@ namespace OSLTT
             this.deviceNameBox.TrailingIcon = null;
             this.deviceNameBox.UseSystemPasswordChar = false;
             // 
-            // materialButton1
+            // audioSourceToggle
             // 
-            this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton1.Depth = 0;
-            this.materialButton1.HighEmphasis = true;
-            this.materialButton1.Icon = global::OSLTT.Properties.Resources.bug_solid;
-            this.materialButton1.Location = new System.Drawing.Point(748, 110);
-            this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton1.Name = "materialButton1";
-            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton1.Size = new System.Drawing.Size(126, 36);
-            this.materialButton1.TabIndex = 58;
-            this.materialButton1.Text = "(Dev) Test";
-            this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton1.UseAccentColor = false;
-            this.materialButton1.UseVisualStyleBackColor = true;
-            this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
+            this.audioSourceToggle.AutoSize = true;
+            this.audioSourceToggle.Depth = 0;
+            this.audioSourceToggle.Location = new System.Drawing.Point(530, 117);
+            this.audioSourceToggle.Margin = new System.Windows.Forms.Padding(0);
+            this.audioSourceToggle.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.audioSourceToggle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioSourceToggle.Name = "audioSourceToggle";
+            this.audioSourceToggle.Ripple = true;
+            this.audioSourceToggle.Size = new System.Drawing.Size(99, 37);
+            this.audioSourceToggle.TabIndex = 59;
+            this.audioSourceToggle.Text = "Audio";
+            this.audioSourceToggle.UseVisualStyleBackColor = true;
+            this.audioSourceToggle.CheckedChanged += new System.EventHandler(this.audioSourceToggle_CheckedChanged);
             // 
             // Main
             // 
@@ -880,6 +898,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialTextBox2 deviceNameBox;
         private MaterialSkin.Controls.MaterialButton debugBtn;
         private MaterialSkin.Controls.MaterialButton materialButton1;
+        private MaterialSkin.Controls.MaterialSwitch audioSourceToggle;
     }
 }
 

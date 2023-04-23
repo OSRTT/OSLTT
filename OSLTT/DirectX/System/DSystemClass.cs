@@ -45,6 +45,7 @@ namespace OSLTT.DirectX.System
 
         private static int failedFrames { get; set; }
         private static bool directInput = false;
+        private static int frameCounter = 0;
 
         // Statuc Properties
         public static bool IsMouseOffScreen { get; set; }
@@ -291,6 +292,16 @@ namespace OSLTT.DirectX.System
                     {
                         RGB = 0f;
                     }
+                }
+                if (frameCounter < 250 && frameCounter != 0)
+                {
+                    frameCounter += 1;
+                    RGB = 1f;
+                }
+                else
+                {
+                    RGB = 0f;
+                    frameCounter = 0;
                 }
             }
             //Console.WriteLine("7");

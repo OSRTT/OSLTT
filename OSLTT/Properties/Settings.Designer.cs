@@ -166,5 +166,17 @@ namespace OSLTT.Properties {
                 this["gameExternalToggle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool audioSourceToggle {
+            get {
+                return ((bool)(this["audioSourceToggle"]));
+            }
+            set {
+                this["audioSourceToggle"] = value;
+            }
+        }
     }
 }
