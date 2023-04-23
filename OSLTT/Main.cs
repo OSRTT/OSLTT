@@ -447,6 +447,74 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
+                    else if (message.Contains("Clicks"))
+                    {
+                        int clicks = Properties.Settings.Default.clickCountSelect / 10;
+                        Console.WriteLine("Clicks: " + clicks);
+                        port.Write(clicks.ToString("00"));
+                    }
+                    else if (message.Contains("TimeBetween"))
+                    {
+                        double t = Properties.Settings.Default.timeBetweenSelect;
+                        if (Properties.Settings.Default.timeBetweenSelect == 0.5)
+                        {
+                            port.Write("1");
+                        }
+                        else
+                        {
+                            t += 1;
+                            port.Write(t.ToString());
+                        }
+                        port.Write(t.ToString());
+                        Console.WriteLine("Time Between: " + t);
+                    }
+                    else if (message.Contains("AutoClick"))
+                    {
+                        if (Properties.Settings.Default.autoClickToggle)
+                        {
+                            port.Write("1");
+                        }
+                        else
+                        {
+                            port.Write("0");
+                        }
+                    }
+                    else if (message.Contains("TriggerSensor"))
+                    {
+                        string trigger = "1";
+                        string sensor = "1";
+                        if (Properties.Settings.Default.buttonTriggerToggle)
+                        {
+                            trigger = "1";
+                        }
+                        else if (Properties.Settings.Default.audioTriggerToggle)
+                        {
+                            trigger = "2";
+                        }
+                        else
+                        {
+                            trigger = "3";
+                        }
+                        if (Properties.Settings.Default.lightSensorToggle)
+                        {
+                            sensor = "1";
+                        }
+                        else
+                        {
+                            sensor = "2";
+                        }
+                    }
+                    else if (message.Contains("DirectX"))
+                    {
+                        if (Properties.Settings.Default.directXToggle)
+                        {
+                            port.Write("1");
+                        }
+                        else
+                        {
+                            port.Write("0");
+                        }
+                    }
 
 
                     else
@@ -667,9 +735,33 @@ namespace OSLTT
             rv.Show();
         }
 
+        private class ToggleState
+        {
+            public string Name { get; set; }
+            public bool Checked { get; set; }
+        }
+        private List<ToggleState> ToggleStates = new List<ToggleState> {
+        new ToggleState { Name = "buttonTriggerToggle", Checked=Properties.Settings.Default.buttonTriggerToggle},
+        new ToggleState { Name = "audioTriggerToggle", Checked=Properties.Settings.Default.audioTriggerToggle},
+        new ToggleState { Name = "pinTriggerToggle", Checked=Properties.Settings.Default.pinTriggerToggle},
+        new ToggleState { Name = "lightSensorToggle", Checked=Properties.Settings.Default.lightSensorToggle},
+        new ToggleState { Name = "audioSensorToggle", Checked=Properties.Settings.Default.audioSensorToggle},
+        new ToggleState { Name = "autoClickToggle", Checked=Properties.Settings.Default.autoClickToggle}
+        };
+
         private void handleToggleSettingsChanges(MaterialSwitch sw)
         {
+            foreach (var tog in ToggleStates)
+            {
+                if (sw.Name == tog.Name)
+                {
+                    tog.Checked = sw.Checked;
+                    if (sw.Name == "buttonTriggerToggle")
+                    {
 
+                    }
+                }
+            }
             SaveSettings();
         }
 

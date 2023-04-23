@@ -104,6 +104,10 @@ void runTest(int sampleCount = 9000)
   {
     pin = 1;
   }
+  if (inputType == 0 && directXMode)
+  {
+    Mouse.Click();
+  }
   long timeTaken = fillADCBuffer(sampleCount, pin);
   pulseLED(true);
   long localStartValue = 0;

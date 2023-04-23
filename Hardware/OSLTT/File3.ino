@@ -37,13 +37,13 @@ void loop() {
             long start = micros();
             Serial.println("AUDIO TRIGGER");
             long end = micros();
-            runTest(9000);
+            autoRunTest(9000);
             Serial.print("AUDIO SERIAL DELAY:");
             Serial.println(end - start);
           }
           else
           {
-            runTest(9000);
+            autoRunTest(9000);
           }
         }
       }
@@ -65,7 +65,7 @@ void loop() {
           {
             // Audio trigger
             // run test
-            runTest(9000);
+            autoRunTest(9000);
           }
         }
       }
@@ -77,7 +77,7 @@ void loop() {
           if (digitalRead(PullDownPin) != HIGH)
           {
             // Run test
-            runTest(9000);
+            autoRunTest(9000);
           }
         }
       }
@@ -142,6 +142,23 @@ void loop() {
       {
         inputType = convertHexToDec(input[0]) - 1;
         sensorType = convertHexToDec(input[1]) - 1;
+        break;
+      }
+    }
+    Serial.println("DirectX");
+    while (input[0] != 'X')
+    {
+      getSerialChars();
+      if (input[0] < '0' || input[1] < '0')
+      {
+        if (input[0] == 1)
+        {
+          directXMode = true;
+        }
+        else
+        {
+          directXMode = false;
+        }
         break;
       }
     }

@@ -1,5 +1,5 @@
   // Definitions, libraries
-
+#include <Mouse.h>
 
 #define INPUT_SIZE 2
 
@@ -23,6 +23,8 @@ int shotCount = 100;
 double timeBetween = 0.5;
 
 bool autoClick = true;
+
+bool directXMode = true;
 
 char input[INPUT_SIZE + 1];
 
