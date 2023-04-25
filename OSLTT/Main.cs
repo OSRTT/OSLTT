@@ -51,6 +51,8 @@ namespace OSLTT
         string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
         string resultsPath = "";
         string resultsFolderPath = "";
+        string rawFileName = "";
+        string processedFileName = "";
 
         private List<float> inputLagEvents = new List<float>();
         private List<ProcessData.rawInputLagResult> inputLagRawData = new List<ProcessData.rawInputLagResult>();
@@ -406,6 +408,10 @@ namespace OSLTT
                             FrameTime = frameTime
                         };
                         inputLagRawData.Add(rawLag);
+                        // save result to raw file
+                        CFuncs.saveRawResultToFile(resultsFolderPath, rawFileName, rawLag);
+                        // process individual result
+
 
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
@@ -1096,6 +1102,9 @@ namespace OSLTT
             if (startTestBtn.Text == "Start")
             {
                 resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
+                // create raw and processed files? or just let the files do that?
+                rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
+                processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
                 settingsSynced = false;
                 SaveSettings();
                 SetDeviceStatus(5);
@@ -1104,6 +1113,7 @@ namespace OSLTT
             else
             {
                 // End test
+
             }
         }
 
@@ -1221,7 +1231,14 @@ namespace OSLTT
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            UpdateFirmware.getNewFirmwareFile();
+            //UpdateFirmware.getNewFirmwareFile();
+
+            string filePath = resultsPath + "\\test.csv";
+            StringBuilder csvString = new StringBuilder();
+            csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
+            csvString.AppendLine("1,2,3,4,5,6,7,8,9,0");
+            
+            File.AppendAllText(filePath, csvString.ToString());
         }
 
         

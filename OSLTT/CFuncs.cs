@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -88,6 +89,10 @@ namespace OSLTT
 
         public static string makeResultsFolder(string path, string deviceName="OSLTT")
         {
+            if (deviceName=="")
+            {
+                deviceName = "OSLTT";
+            }
             decimal fileNumber = 001;
             // search /Results folder for existing file names, pick new name
             string[] existingFiles = Directory.GetDirectories(path, "*-" + deviceName);
@@ -109,6 +114,41 @@ namespace OSLTT
             Directory.CreateDirectory(filePath);
             return filePath;
             //initRunSettingsFile(filePath, monitor);
+        }
+
+        public static string makeResultsFile(string path, string type = "RAW")
+        {
+            if (type == "")
+            {
+                type = "RAW";
+            }
+            string[] folders = path.Split('\\');
+            string[] parts = folders.Last().Split('-');
+            string filePath = "";
+            Regex regexMatchString = new Regex(@"\d\d\d");
+            foreach (var s in parts)
+            {
+                if (regexMatchString.IsMatch(s))
+                {
+                    filePath += type + "-" + s;
+                }
+                else
+                {
+                    filePath += s + "-";
+                }
+            }
+            filePath += ".csv";
+            return filePath;
+            //initRunSettingsFile(filePath, monitor);
+        }
+
+        public static void saveRawResultToFile(string path, string fileName, ProcessData.rawInputLagResult res)
+        {
+            string strSeparator = ",";
+            StringBuilder csvString = new StringBuilder();
+            csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
+            
+            File.AppendAllText(path + "\\" + fileName, csvString.ToString());
         }
 
     }
