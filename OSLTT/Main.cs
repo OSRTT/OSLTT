@@ -420,29 +420,7 @@ namespace OSLTT
                         string[] folders = resultsFolderPath.Split('\\');
                         string monitorInfo = folders.Last();
                         string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
-                        /*
-                        decimal fileNumber = 001;
-                        // search /Results folder for existing file names, pick new name
-                        string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LAG-RAW-OSRTT.csv");
-                        //search files for number
-                        foreach (var s in existingFiles)
-                        {
-                            decimal num = decimal.Parse(Path.GetFileNameWithoutExtension(s).Remove(3));
-                            if (num >= fileNumber)
-                            {
-                                fileNumber = num + 1;
-                            }
-                        }
-
-                        string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-RAW-OSRTT.csv";
-
-                        string strSeparator = ",";
-                        StringBuilder csvString = new StringBuilder();
-                        foreach (var res in inputLagRawData)
-                        {
-                            csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
-                        }
-                        File.WriteAllText(filePath, csvString.ToString());*/
+                        
 
                         Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                         inputLagThread.Start();
@@ -1113,7 +1091,9 @@ namespace OSLTT
             else
             {
                 // End test
-
+                portWrite("X");
+                Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                inputLagThread.Start();
             }
         }
 
@@ -1206,7 +1186,7 @@ namespace OSLTT
                 {
                     ResultsView rv = new ResultsView();
                     rv.setResultsFolder(resultsFolderPath);
-                    rv.inputLagMode(inputLagProcessed);
+                    rv.inputLagMode(inputLagProcessed); 
                     rv.Show();
                 });
                 //Process.Start("explorer.exe", resultsFolderPath);

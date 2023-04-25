@@ -38,6 +38,8 @@ namespace OSLTT
             this.saveWhitePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
+            this.graphedData = new ScottPlot.FormsPlot();
+            this.switchGraphTypeBtn = new MaterialSkin.Controls.MaterialButton();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -121,6 +123,7 @@ namespace OSLTT
             // controlsPanel
             // 
             this.controlsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.controlsPanel.Controls.Add(this.switchGraphTypeBtn);
             this.controlsPanel.Controls.Add(this.saveWhitePNGBtn);
             this.controlsPanel.Controls.Add(this.materialLabel2);
             this.controlsPanel.Controls.Add(this.savePNGBtn);
@@ -187,14 +190,43 @@ namespace OSLTT
             this.savePNGBtn.UseVisualStyleBackColor = true;
             this.savePNGBtn.Click += new System.EventHandler(this.savePNGBtn_Click);
             // 
+            // graphedData
+            // 
+            this.graphedData.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.graphedData.Location = new System.Drawing.Point(17, 148);
+            this.graphedData.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.graphedData.Name = "graphedData";
+            this.graphedData.Size = new System.Drawing.Size(1184, 666);
+            this.graphedData.TabIndex = 36;
+            // 
+            // switchGraphTypeBtn
+            // 
+            this.switchGraphTypeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.switchGraphTypeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.switchGraphTypeBtn.Depth = 0;
+            this.switchGraphTypeBtn.HighEmphasis = true;
+            this.switchGraphTypeBtn.Icon = null;
+            this.switchGraphTypeBtn.Location = new System.Drawing.Point(637, 12);
+            this.switchGraphTypeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.switchGraphTypeBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.switchGraphTypeBtn.Name = "switchGraphTypeBtn";
+            this.switchGraphTypeBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.switchGraphTypeBtn.Size = new System.Drawing.Size(248, 36);
+            this.switchGraphTypeBtn.TabIndex = 3;
+            this.switchGraphTypeBtn.Text = "Switch to Individual Results";
+            this.switchGraphTypeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.switchGraphTypeBtn.UseAccentColor = false;
+            this.switchGraphTypeBtn.UseVisualStyleBackColor = true;
+            // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1222, 829);
+            this.Controls.Add(this.controlsPanel);
+            this.Controls.Add(this.graphedData);
             this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
-            this.Controls.Add(this.controlsPanel);
             this.Name = "ResultsView";
             this.Text = "Results View";
             this.importPanel.ResumeLayout(false);
@@ -216,5 +248,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton saveWhitePNGBtn;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialButton savePNGBtn;
+        private ScottPlot.FormsPlot graphedData;
+        private MaterialSkin.Controls.MaterialButton switchGraphTypeBtn;
     }
 }
