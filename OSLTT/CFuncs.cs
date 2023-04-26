@@ -151,5 +151,44 @@ namespace OSLTT
             File.AppendAllText(path + "\\" + fileName, csvString.ToString());
         }
 
+        public static string createIMGFileName(string path, string type)
+        {
+            string[] folders = path.Split('\\');
+            decimal fileNumber = 001;
+            // search /Results folder for existing file names, pick new name
+            string[] existingFiles = Directory.GetFiles(path, "*-" + folders.Last());
+            //search files for number
+            if (existingFiles.Length != 0)
+            {
+                foreach (var s in existingFiles)
+                {
+                    var name = new DirectoryInfo(s).Name;
+                    string[] splitMe = name.Split('-');
+                    decimal num = decimal.Parse(splitMe.Last());
+                    if (num >= fileNumber)
+                    {
+                        fileNumber = num + 1;
+                    }
+                }
+            }
+            string filePath = fileNumber.ToString("000") + "-";
+
+            string[] parts = folders.Last().Split('-');
+            Regex regexMatchString = new Regex(@"\d\d\d");
+            foreach (var s in parts)
+            {
+                if (regexMatchString.IsMatch(s))
+                {
+                    filePath += type;
+                }
+                else
+                {
+                    filePath += s + "-";
+                }
+            }
+            filePath += ".png";
+            return filePath;
+        }
+
     }
 }

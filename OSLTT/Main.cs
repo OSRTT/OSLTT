@@ -1112,8 +1112,6 @@ namespace OSLTT
                     if (DirectX.System.DSystem.mainWindow == null)
                         DirectX.System.DSystem.mainWindow = this;
 
-
-                    DirectX.System.DSystem.inputLagMode = true;
                     DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
                 }
                 else
@@ -1213,12 +1211,11 @@ namespace OSLTT
         {
             //UpdateFirmware.getNewFirmwareFile();
 
-            string filePath = resultsPath + "\\test.csv";
-            StringBuilder csvString = new StringBuilder();
-            csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
-            csvString.AppendLine("1,2,3,4,5,6,7,8,9,0");
-            
-            File.AppendAllText(filePath, csvString.ToString());
+            DirectX.System.DSystem.inputLagMode = true;
+            if (DirectX.System.DSystem.mainWindow == null)
+                DirectX.System.DSystem.mainWindow = this;
+
+            DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
         }
 
         

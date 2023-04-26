@@ -104,19 +104,24 @@ void runTest(int sampleCount = 9000)
   {
     pin = 1;
   }
+  unsigned long clickTime = micros();
   if (inputType == 0 && directXMode)
   {
-    Mouse.Click();
+    Mouse.click(MOUSE_LEFT);
   }
+  unsigned long start_time = micros();  
   long timeTaken = fillADCBuffer(sampleCount, pin);
   pulseLED(true);
   long localStartValue = 0;
   int triggerSampleNum = 0;
   Serial.print("RES:");
-  Serial.print(sampleCount);
+  Serial.print(start_time - clickTime);
   Serial.print(",");
   Serial.print(timeTaken);
-  Serial.print(",");        
+  Serial.print(","); 
+  Serial.print(sampleCount);
+  Serial.print(",");
+         
   for (int i = 0; i < sampleCount; i++)
   {
     Serial.print(adcBuff[i]);

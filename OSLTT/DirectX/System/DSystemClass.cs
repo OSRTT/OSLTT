@@ -275,6 +275,11 @@ namespace OSLTT.DirectX.System
                         case Keys.D:  // RGB 238
                             RGB = 238f / 255f;
                             break;
+                        case Keys.Space:
+                            RGB = 1f;
+                            EventList.Add(Timer.FrameTime);
+                            frameCounter += 1;
+                            break;
                     }
                 }
                 if (MouseEvent != null)
@@ -282,11 +287,9 @@ namespace OSLTT.DirectX.System
                     if (MouseEvent.ButtonFlags == MouseButtonFlags.LeftButtonDown)
                     {
                         RGB = 1f;
-                        if (inputLagMode)
-                        {
-                            EventList.Add(Timer.FrameTime); // I think this needs to be done on the next frame for perfect accuracy but I'll see.
-                            ILFrameCounter += 1;
-                        }
+                        EventList.Add(Timer.FrameTime); // I think this needs to be done on the next frame for perfect accuracy but I'll see.
+                        frameCounter += 1;
+                        
                     }
                     if (MouseEvent.ButtonFlags == MouseButtonFlags.RightButtonDown)
                     {
@@ -297,8 +300,9 @@ namespace OSLTT.DirectX.System
                 {
                     frameCounter += 1;
                     RGB = 1f;
+                    KeyboardEvent.Key = Keys.None;
                 }
-                else
+                else if (frameCounter >= 250)
                 {
                     RGB = 0f;
                     frameCounter = 0;

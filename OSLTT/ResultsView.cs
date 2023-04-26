@@ -185,7 +185,7 @@ namespace OSLTT
         {
             if (ScatterOption)
             {
-                string run = CFuncs.createFileName(resultsFolderPath, "-OSRTT-INPUT-LAG.png");
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-SCATTER");
                 Color bnColor = BackColor;
                 graphedData.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent);
                 graphedData.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
@@ -194,7 +194,7 @@ namespace OSLTT
             }
             else
             {
-                string run = CFuncs.createFileName(resultsFolderPath, "-OSRTT-INPUT-LAG.png");
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-CHART");
                 Color bnColor = BackColor;
                 barPlot.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent);
                 barPlot.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
@@ -207,7 +207,7 @@ namespace OSLTT
         {
             if (ScatterOption)
             {
-                string run = CFuncs.createFileName(resultsFolderPath, "-OSRTT-INPUT-LAG.png");
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-SCATTER");
                 Color bnColor = BackColor;
                 graphedData.Plot.Style(figureBackground: Color.White, dataBackground: Color.White);
                 graphedData.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
@@ -216,7 +216,7 @@ namespace OSLTT
             }
             else
             {
-                string run = CFuncs.createFileName(resultsFolderPath, "-OSRTT-INPUT-LAG.png");
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-CHART");
                 Color bnColor = BackColor;
                 barPlot.Plot.Style(figureBackground: Color.White, dataBackground: Color.White);
                 barPlot.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
