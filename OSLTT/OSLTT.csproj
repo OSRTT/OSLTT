@@ -222,6 +222,7 @@
     <Content Include="DirectX\Font\font01.bmp" />
     <Content Include="DirectX\Font\font01.txt" />
     <Content Include="DirectX\Font\fontdata.txt" />
+    <Content Include="OSLTTTone.wav" />
     <None Include="Resources\circle-question-solid.png" />
     <None Include="Resources\bug-solid.png" />
     <None Include="Resources\chart-bar-solid.png" />

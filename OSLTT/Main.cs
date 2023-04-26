@@ -87,7 +87,7 @@ namespace OSLTT
             path = new Uri(System.IO.Path.GetDirectoryName(path)).LocalPath;
             resultsPath = path + @"\Results";
 
-            audioTestClip = new SoundPlayer(path + @"\audioTestClip.wav");
+            audioTestClip = new SoundPlayer(Properties.Resources.OSLTTTone);
 
             //UpdateHandler.UpdateMe(softwareVersion);
 
@@ -1211,11 +1211,12 @@ namespace OSLTT
         {
             //UpdateFirmware.getNewFirmwareFile();
 
-            DirectX.System.DSystem.inputLagMode = true;
-            if (DirectX.System.DSystem.mainWindow == null)
-                DirectX.System.DSystem.mainWindow = this;
+            //DirectX.System.DSystem.inputLagMode = true;
+            //if (DirectX.System.DSystem.mainWindow == null)
+            //DirectX.System.DSystem.mainWindow = this;
 
-            DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+            //DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+            audioTestClip.Play();
         }
 
         
