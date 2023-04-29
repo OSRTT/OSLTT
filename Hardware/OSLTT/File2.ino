@@ -97,7 +97,7 @@ void toggleLED()
   }
 }
 
-void runTest(int sampleCount = 9000)
+void runTest(int sampleCount = 9000, String textType = "RES:")
 {
   int pin = 0;
   if (sensorType == 1)
@@ -114,7 +114,7 @@ void runTest(int sampleCount = 9000)
   pulseLED(true);
   long localStartValue = 0;
   int triggerSampleNum = 0;
-  Serial.print("RES:");
+  Serial.print(textType);
   Serial.print(start_time - clickTime);
   Serial.print(",");
   Serial.print(timeTaken);
@@ -149,7 +149,7 @@ void runTest(int sampleCount = 9000)
   pulseLED(false);
 }
 
-void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100)
+void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false)
 {
   if (autoRun)
   {
@@ -162,10 +162,21 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
     }
     Serial.println("AUTO FINISHED");
   }
-  else
+  else if (!autoRun)
   {
     runTest(sampleCount);
     Serial.println("SINGLE FIRE");
+  }
+  else if (pretest)
+  {
+    int localCounter = 0;
+    while (input[0] != 'X' && localCounter < clickCount )
+    {
+      getSerialChars();
+      runTest(sampleCount, "PRETEST:");
+      localCounter++;
+    }
+    Serial.println("PRETEST FINISHED");
   }
 }
 

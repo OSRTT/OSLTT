@@ -83,6 +83,17 @@ void loop() {
       }
     }
   }
+  else if (input[0] == 'P') // Pre-test
+  {
+    while(input[0] != 'X')
+    {
+      getSerialChars();
+      if (digitalRead(ButtonPin))
+      {
+        autoRunTest(9000, 100, true);
+      }
+    }
+  }
   else if (input[0] == 'I') // Initialise everything
   {
     Serial.print("FW:");
