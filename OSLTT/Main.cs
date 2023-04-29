@@ -103,6 +103,7 @@ namespace OSLTT
             UserSettings.readAndSaveUserSettings(false);
 
             LoadSettings();
+            listMonitors();
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
 
@@ -886,6 +887,72 @@ namespace OSLTT
             }
         }
 
+        private void displaySelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MaterialComboBox m = sender as MaterialComboBox;
+            if (m.Focused)
+            {
+                // don't need to save which display is selected here
+                //SaveSettings();
+            }
+        }
+
+        private void listMonitors(int selected = 0)
+        {
+            displaySelect.Items.Clear(); // Clear existing array and list before filling them
+            displayList.Clear();
+            var i = WindowsDisplayAPI.Display.GetDisplays();
+
+            foreach (var target in WindowsDisplayAPI.DisplayConfig.PathInfo.GetActivePaths())
+            {
+                foreach (var item in target.TargetsInfo)
+                {
+                    try
+                    {
+                        string con = "Other";
+                        if (item.OutputTechnology.ToString() == "DisplayPortExternal")
+                        {
+                            con = "DP";
+                        }
+                        else if (item.OutputTechnology.ToString() == "HDMI")
+                        {
+                            con = "HDMI";
+                        }
+                        double refreshRate = item.FrequencyInMillihertz;
+                        refreshRate /= 1000;
+                        refreshRate = Math.Round(refreshRate, 0);
+                        int refresh = (int)refreshRate;
+                        string name = item.DisplayTarget.ToString();
+                        string manCode = "";
+                        if (name == "")
+                        {
+                            name = target.DisplaySource.ToString().Remove(0, 4);
+                        }
+                        else { manCode = item.DisplayTarget.EDIDManufactureCode; }
+                        string res = "";
+                        try
+                        {
+                            res = item.DisplayTarget.PreferredResolution.Width.ToString() + "x" + item.DisplayTarget.PreferredResolution.Height.ToString();
+                        }
+                        catch { }
+                        if (res == "")
+                        {
+                            res = "Failed to Aquire";
+                        }
+                        string edidCode = item.DisplayTarget.EDIDProductCode.ToString();
+                        var data = new Displays { Name = name, Freq = refresh, Resolution = res, Connection = con, ManufacturerCode = manCode, EDIDModel = edidCode };
+                        displayList.Add(data);
+                        displaySelect.Items.Add(name);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message + ex.StackTrace);
+                    }
+                }
+            }
+            displaySelect.SelectedIndex = selected; // Pre-select the primary display
+        }
+
         private void preTestToggle_CheckedChanged(object sender, EventArgs e)
         {
             MaterialSwitch s = sender as MaterialSwitch;
@@ -1008,6 +1075,7 @@ namespace OSLTT
 
             clickCountSelect.Enabled = autoClick;
             timeBetweenSelect.Enabled = autoClick;
+            displaySelect.Enabled = directX;
             
         }
 
@@ -1113,6 +1181,10 @@ namespace OSLTT
                         DirectX.System.DSystem.mainWindow = this;
 
                     DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                }
+                else if (Properties.Settings.Default.audioSourceToggle)
+                {
+
                 }
                 else
                 {

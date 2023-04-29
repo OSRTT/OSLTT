@@ -47,6 +47,7 @@ namespace OSLTT
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.audioSourceToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.debugBtn = new MaterialSkin.Controls.MaterialButton();
             this.startTestBtn = new MaterialSkin.Controls.MaterialButton();
@@ -70,7 +71,8 @@ namespace OSLTT
             this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
             this.notesBox = new MaterialSkin.Controls.MaterialTextBox2();
             this.deviceNameBox = new MaterialSkin.Controls.MaterialTextBox2();
-            this.audioSourceToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.deviceStatusPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.materialCard1.SuspendLayout();
@@ -313,7 +315,7 @@ namespace OSLTT
             "200",
             "250",
             "500"});
-            this.clickCountSelect.Location = new System.Drawing.Point(364, 76);
+            this.clickCountSelect.Location = new System.Drawing.Point(355, 76);
             this.clickCountSelect.MaxDropDownItems = 4;
             this.clickCountSelect.MouseState = MaterialSkin.MouseState.OUT;
             this.clickCountSelect.Name = "clickCountSelect";
@@ -327,7 +329,7 @@ namespace OSLTT
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
             this.materialLabel4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel4.Location = new System.Drawing.Point(225, 96);
+            this.materialLabel4.Location = new System.Drawing.Point(216, 96);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
             this.materialLabel4.Size = new System.Drawing.Size(122, 19);
@@ -355,7 +357,7 @@ namespace OSLTT
             "3",
             "4",
             "5"});
-            this.timeBetweenSelect.Location = new System.Drawing.Point(383, 133);
+            this.timeBetweenSelect.Location = new System.Drawing.Point(374, 133);
             this.timeBetweenSelect.MaxDropDownItems = 4;
             this.timeBetweenSelect.MouseState = MaterialSkin.MouseState.OUT;
             this.timeBetweenSelect.Name = "timeBetweenSelect";
@@ -369,7 +371,7 @@ namespace OSLTT
             this.materialLabel5.AutoSize = true;
             this.materialLabel5.Depth = 0;
             this.materialLabel5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel5.Location = new System.Drawing.Point(225, 150);
+            this.materialLabel5.Location = new System.Drawing.Point(216, 150);
             this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel5.Name = "materialLabel5";
             this.materialLabel5.Size = new System.Drawing.Size(147, 19);
@@ -379,6 +381,8 @@ namespace OSLTT
             // settingsCard
             // 
             this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.settingsCard.Controls.Add(this.materialLabel10);
+            this.settingsCard.Controls.Add(this.displaySelect);
             this.settingsCard.Controls.Add(this.audioSourceToggle);
             this.settingsCard.Controls.Add(this.materialButton1);
             this.settingsCard.Controls.Add(this.debugBtn);
@@ -412,6 +416,22 @@ namespace OSLTT
             this.settingsCard.Size = new System.Drawing.Size(892, 286);
             this.settingsCard.TabIndex = 44;
             // 
+            // audioSourceToggle
+            // 
+            this.audioSourceToggle.AutoSize = true;
+            this.audioSourceToggle.Depth = 0;
+            this.audioSourceToggle.Location = new System.Drawing.Point(517, 217);
+            this.audioSourceToggle.Margin = new System.Windows.Forms.Padding(0);
+            this.audioSourceToggle.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.audioSourceToggle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioSourceToggle.Name = "audioSourceToggle";
+            this.audioSourceToggle.Ripple = true;
+            this.audioSourceToggle.Size = new System.Drawing.Size(99, 37);
+            this.audioSourceToggle.TabIndex = 59;
+            this.audioSourceToggle.Text = "Audio";
+            this.audioSourceToggle.UseVisualStyleBackColor = true;
+            this.audioSourceToggle.CheckedChanged += new System.EventHandler(this.audioSourceToggle_CheckedChanged);
+            // 
             // materialButton1
             // 
             this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -419,7 +439,7 @@ namespace OSLTT
             this.materialButton1.Depth = 0;
             this.materialButton1.HighEmphasis = true;
             this.materialButton1.Icon = global::OSLTT.Properties.Resources.bug_solid;
-            this.materialButton1.Location = new System.Drawing.Point(748, 110);
+            this.materialButton1.Location = new System.Drawing.Point(748, 164);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
@@ -478,7 +498,7 @@ namespace OSLTT
             // 
             this.autoClickToggle.AutoSize = true;
             this.autoClickToggle.Depth = 0;
-            this.autoClickToggle.Location = new System.Drawing.Point(216, 43);
+            this.autoClickToggle.Location = new System.Drawing.Point(207, 43);
             this.autoClickToggle.Margin = new System.Windows.Forms.Padding(0);
             this.autoClickToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.autoClickToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -516,7 +536,7 @@ namespace OSLTT
             this.materialLabel9.Depth = 0;
             this.materialLabel9.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel9.Location = new System.Drawing.Point(211, 197);
+            this.materialLabel9.Location = new System.Drawing.Point(202, 197);
             this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
             this.materialLabel9.Size = new System.Drawing.Size(243, 29);
@@ -527,7 +547,7 @@ namespace OSLTT
             // 
             this.preTestToggle.AutoSize = true;
             this.preTestToggle.Depth = 0;
-            this.preTestToggle.Location = new System.Drawing.Point(206, 226);
+            this.preTestToggle.Location = new System.Drawing.Point(197, 226);
             this.preTestToggle.Margin = new System.Windows.Forms.Padding(0);
             this.preTestToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.preTestToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -543,7 +563,7 @@ namespace OSLTT
             // 
             this.gameExternalToggle.AutoSize = true;
             this.gameExternalToggle.Depth = 0;
-            this.gameExternalToggle.Location = new System.Drawing.Point(530, 80);
+            this.gameExternalToggle.Location = new System.Drawing.Point(517, 180);
             this.gameExternalToggle.Margin = new System.Windows.Forms.Padding(0);
             this.gameExternalToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.gameExternalToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -561,7 +581,7 @@ namespace OSLTT
             this.materialLabel2.Depth = 0;
             this.materialLabel2.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel2.Location = new System.Drawing.Point(535, 14);
+            this.materialLabel2.Location = new System.Drawing.Point(522, 114);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
             this.materialLabel2.Size = new System.Drawing.Size(129, 29);
@@ -574,7 +594,7 @@ namespace OSLTT
             this.directXToggle.Checked = true;
             this.directXToggle.CheckState = System.Windows.Forms.CheckState.Checked;
             this.directXToggle.Depth = 0;
-            this.directXToggle.Location = new System.Drawing.Point(530, 43);
+            this.directXToggle.Location = new System.Drawing.Point(517, 143);
             this.directXToggle.Margin = new System.Windows.Forms.Padding(0);
             this.directXToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.directXToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -592,7 +612,7 @@ namespace OSLTT
             this.materialLabel8.Depth = 0;
             this.materialLabel8.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel8.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel8.Location = new System.Drawing.Point(224, 14);
+            this.materialLabel8.Location = new System.Drawing.Point(215, 14);
             this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel8.Name = "materialLabel8";
             this.materialLabel8.Size = new System.Drawing.Size(141, 29);
@@ -812,21 +832,41 @@ namespace OSLTT
             this.deviceNameBox.TrailingIcon = null;
             this.deviceNameBox.UseSystemPasswordChar = false;
             // 
-            // audioSourceToggle
+            // displaySelect
             // 
-            this.audioSourceToggle.AutoSize = true;
-            this.audioSourceToggle.Depth = 0;
-            this.audioSourceToggle.Location = new System.Drawing.Point(530, 117);
-            this.audioSourceToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.audioSourceToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.audioSourceToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.audioSourceToggle.Name = "audioSourceToggle";
-            this.audioSourceToggle.Ripple = true;
-            this.audioSourceToggle.Size = new System.Drawing.Size(99, 37);
-            this.audioSourceToggle.TabIndex = 59;
-            this.audioSourceToggle.Text = "Audio";
-            this.audioSourceToggle.UseVisualStyleBackColor = true;
-            this.audioSourceToggle.CheckedChanged += new System.EventHandler(this.audioSourceToggle_CheckedChanged);
+            this.displaySelect.AutoResize = false;
+            this.displaySelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.displaySelect.Depth = 0;
+            this.displaySelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.displaySelect.DropDownHeight = 174;
+            this.displaySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.displaySelect.DropDownWidth = 121;
+            this.displaySelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.displaySelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.displaySelect.FormattingEnabled = true;
+            this.displaySelect.IntegralHeight = false;
+            this.displaySelect.ItemHeight = 43;
+            this.displaySelect.Location = new System.Drawing.Point(527, 49);
+            this.displaySelect.MaxDropDownItems = 4;
+            this.displaySelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.displaySelect.Name = "displaySelect";
+            this.displaySelect.Size = new System.Drawing.Size(208, 49);
+            this.displaySelect.StartIndex = 0;
+            this.displaySelect.TabIndex = 60;
+            this.displaySelect.SelectedIndexChanged += new System.EventHandler(this.displaySelect_SelectedIndexChanged);
+            // 
+            // materialLabel10
+            // 
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel10.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel10.Location = new System.Drawing.Point(522, 14);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(131, 29);
+            this.materialLabel10.TabIndex = 61;
+            this.materialLabel10.Text = "Test Display";
             // 
             // Main
             // 
@@ -899,6 +939,8 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton debugBtn;
         private MaterialSkin.Controls.MaterialButton materialButton1;
         private MaterialSkin.Controls.MaterialSwitch audioSourceToggle;
+        private MaterialSkin.Controls.MaterialLabel materialLabel10;
+        private MaterialSkin.Controls.MaterialComboBox displaySelect;
     }
 }
 
