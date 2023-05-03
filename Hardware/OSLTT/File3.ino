@@ -52,6 +52,7 @@ void loop() {
         int baseline = getADCValue(500, 1);
         while (input[0] != 'X')
         {
+          //getSerialChars();
           if (digitalRead(ButtonPin))
           {
             input[0] = 'X';
@@ -203,25 +204,35 @@ void loop() {
   }
   else if (input[0] == 'W')
   {
-    while (digitalRead(ButtonPin) != HIGH)
+    // delay(1000);
+    // for (int i = 0; i < 50000; i++)
+    // {
+    //   Serial.print(getSingleADCValue(1));
+    //   Serial.print(",");
+    // }
+    // Serial.println();
+    int baseline = getADCValue(500, 1);
+    //Serial.setTimeout(100);
+    while (input[0] != 'X')
     {
-      delay(1);
+      //getSerialChars();
+      if (digitalRead(ButtonPin))
+      {
+        input[0] = 'X';
+      }
+      int current = getSingleADCValue(1);
+      Serial.print("AUDIO:");
+      Serial.println(current);
+      int baselineAdjusted = 16380 - baseline;
+      baselineAdjusted *= 0.5;
+      if (current < (baseline - 100))
+      {
+        // Audio trigger
+        // run test
+        Serial.println("Audio trigger detected");
+      }
     }
-    delay(1000);
-    long start = micros();
-    for (int k = 0; k < 10000; k++)
-    {
-      Serial.print(analogRead(1));
-      Serial.print(",");
-      delayMicroseconds(100);
-    }
-    long end = micros();
-    Serial.println();
-    Serial.print("Time taken: ");
-    Serial.println((end - start) / 1000);
-    Serial.print("Time per sample: ");
-    Serial.println((end - start) / 10000);
-    Serial.println("Done");
+  
   }
   else if (input[0] == 'Y')
   {
