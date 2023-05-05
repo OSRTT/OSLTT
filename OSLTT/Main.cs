@@ -60,6 +60,7 @@ namespace OSLTT
         private List<ProcessData.rawInputLagResult> rawSystemLagData = new List<ProcessData.rawInputLagResult>();
         private List<ProcessData.inputLagResult> systemLagData = new List<ProcessData.inputLagResult>();
 
+        public SettingsClasses.RunSettings RunSettings;
         private bool processingFailed = false;
         public bool settingsSynced = false;
 
@@ -1170,7 +1171,9 @@ namespace OSLTT
             try
             {
                 while (!settingsSynced) { }
+
                 port.WriteLine("T");
+                RunSettings = SettingsClasses.initRunSettings();
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
@@ -1199,6 +1202,7 @@ namespace OSLTT
                 debug.AddToLog(ex.Message + ex.StackTrace);
             }
         }
+
 
         private void processInputLagData()
         {

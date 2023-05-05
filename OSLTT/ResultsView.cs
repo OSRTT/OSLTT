@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Newtonsoft.Json;
 
 namespace OSLTT
 {
@@ -224,5 +225,309 @@ namespace OSLTT
                 Process.Start("explorer.exe", resultsFolderPath);
             }
         }
+
+        private void importRawBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var rawData = importRawInputLagData(""); //change this to path
+                if (rawData.Count != 0)
+                {
+                    var data = ProcessData.AverageInputLagResults(rawData);
+                    // Write results to csv using new name
+                    decimal fileNumber = 001;
+                    // search /Results folder for existing file names, pick new name
+                    string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LATENCY-OSRTT.csv");
+                    // Search \Results folder for existing results to not overwrite existing or have save conflict errors
+                    foreach (var s in existingFiles)
+                    {
+                        decimal num = 0;
+                        Console.WriteLine(Path.GetFileNameWithoutExtension(s).Remove(3));
+                        try
+                        { num = decimal.Parse(Path.GetFileNameWithoutExtension(s).Remove(3)); }
+                        catch
+                        { Console.WriteLine("Non-standard file name found"); }
+                        if (num >= fileNumber)
+                        {
+                            fileNumber = num + 1;
+                        }
+                    }
+                    string[] folders = resultsFolderPath.Split('\\');
+                    string monitorInfo = folders.Last();
+                    string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-OSRTT.csv";
+                    //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
+
+                    string strSeparator = ",";
+                    StringBuilder csvString = new StringBuilder();
+                    csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
+
+                    foreach (var res in data.inputLagResults)
+                    {
+                        csvString.AppendLine(
+                            res.shotNumber.ToString() + "," +
+                            res.clickTimeMs.ToString() + "," +
+                            res.frameTimeMs.ToString() + "," +
+                            res.onDisplayLatency.ToString() + "," +
+                            res.totalInputLag.ToString()
+                            );
+                    }
+                    csvString.AppendLine("AVERAGE," + data.ClickTime.AVG.ToString() + "," + data.FrameTime.AVG.ToString() + "," + data.onDisplayLatency.AVG.ToString() + "," + data.totalInputLag.AVG.ToString());
+                    csvString.AppendLine("MINIMUM," + data.ClickTime.MIN.ToString() + "," + data.FrameTime.MIN.ToString() + "," + data.onDisplayLatency.MIN.ToString() + "," + data.totalInputLag.MIN.ToString());
+                    csvString.AppendLine("MAXIMUM," + data.ClickTime.MAX.ToString() + "," + data.FrameTime.MAX.ToString() + "," + data.onDisplayLatency.MAX.ToString() + "," + data.totalInputLag.MAX.ToString());
+                    Console.WriteLine(filePath);
+                    File.WriteAllText(filePath, csvString.ToString());
+                    inputLagMode(data);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to import data", "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void importProcessedBtn_Click(object sender, EventArgs e)
+        {
+            var data = importInputLagData(""); // change this to a path
+            if (data.inputLagResults.Count != 0)
+            {
+                inputLagMode(data);
+            }
+            else
+            {
+                MessageBox.Show("Failed to import data", "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private ProcessData.averagedInputLag importInputLagData(string path)
+        {
+            // Open file picker dialogue
+            var filePath = string.Empty;
+            ProcessData.averagedInputLag averagedInputLag = new ProcessData.averagedInputLag();
+            averagedInputLag.inputLagResults = new List<ProcessData.inputLagResult>();
+            averagedInputLag.ClickTime = new ProcessData.averageInputLagResult();
+            averagedInputLag.FrameTime = new ProcessData.averageInputLagResult();
+            averagedInputLag.onDisplayLatency = new ProcessData.averageInputLagResult();
+            averagedInputLag.totalInputLag = new ProcessData.averageInputLagResult();
+            using (System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = path;
+                openFileDialog.Filter = "csv files (*.csv)|*.csv";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                    if (filePath.Contains("LATENCY-OSRTT"))
+                    {
+                        //Read the contents of the file into a stream
+                        try
+                        {
+                            var fileStream = openFileDialog.OpenFile();
+                            using (StreamReader reader = new StreamReader(fileStream))
+                            {
+                                while (!reader.EndOfStream)
+                                {
+                                    // This can probably be done better
+                                    string fullLine = reader.ReadLine();
+                                    if (fullLine.Contains("{"))
+                                    {
+                                        SettingsClasses.RunSettings runs = JsonConvert.DeserializeObject<SettingsClasses.RunSettings>(fullLine);
+                                        //runSettings = runs;
+                                        continue;
+                                    }
+                                    else if (fullLine.Contains("Shot"))
+                                    {
+                                        //skip headers
+                                    }
+                                    else
+                                    {
+                                        string[] line = fullLine.Split(',');
+                                        double[] intLine = new double[line.Length];
+                                        string azpattern = "[a-z]+";
+                                        if (line[0].Contains("A") || line[0].Contains("M"))
+                                        {
+                                            for (int i = 1; i < line.Length; i++)
+                                            {
+                                                if (line[i] == "0")
+                                                {
+                                                    intLine[i] = 0;
+                                                }
+                                                else if (line[i] != "")
+                                                {
+                                                    intLine[i] = double.Parse(line[i]);
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
+                                            if (line[0].Contains("AV"))
+                                            {
+                                                averagedInputLag.ClickTime.AVG = intLine[1];
+                                                averagedInputLag.FrameTime.AVG = intLine[2];
+                                                averagedInputLag.onDisplayLatency.AVG = intLine[3];
+                                                averagedInputLag.totalInputLag.AVG = intLine[4];
+                                            }
+                                            else if (line[0].Contains("MIN"))
+                                            {
+                                                averagedInputLag.ClickTime.MIN = intLine[1];
+                                                averagedInputLag.FrameTime.MIN = intLine[2];
+                                                averagedInputLag.onDisplayLatency.MIN = intLine[3];
+                                                averagedInputLag.totalInputLag.MIN = intLine[4];
+                                            }
+                                            else if (line[0].Contains("MAX"))
+                                            {
+                                                averagedInputLag.ClickTime.MAX = intLine[1];
+                                                averagedInputLag.FrameTime.MAX = intLine[2];
+                                                averagedInputLag.onDisplayLatency.MAX = intLine[3];
+                                                averagedInputLag.totalInputLag.MAX = intLine[4];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            for (int i = 0; i < line.Length; i++)
+                                            {
+                                                if (line[i] == "0")
+                                                {
+                                                    intLine[i] = 0;
+                                                }
+                                                else if (line[i] != "")
+                                                {
+                                                    intLine[i] = double.Parse(line[i]);
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
+                                            //Array.Resize(ref intLine, intLine.Length - 1);
+                                            ProcessData.inputLagResult rawResult = new ProcessData.inputLagResult
+                                            {
+                                                shotNumber = Convert.ToInt32(intLine[0]),
+                                                clickTimeMs = intLine[1],
+                                                frameTimeMs = intLine[2],
+                                                onDisplayLatency = intLine[3],
+                                                totalInputLag = intLine[4]
+                                            };
+                                            averagedInputLag.inputLagResults.Add(rawResult);
+                                        }
+                                    }
+                                }
+                            }
+                            resultsFolderPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
+                        }
+                        catch (Exception ex)
+                        {
+                            DialogResult d = MessageBox.Show("File may be in use by another program, please make sure it's not open elsewhere and try again.", "Unable to open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Console.WriteLine(ex.Message + ex.StackTrace);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sorry, only 'RAW' files can be imported. Please select a 'LATENCY-OSRTT.csv' file instead.", "Importer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw new Exception("Importer Error");
+                    }
+                }
+            }
+            return averagedInputLag;
+        }
+
+        private List<ProcessData.rawInputLagResult> importRawInputLagData(string path)
+        {
+            // Open file picker dialogue
+            var filePath = string.Empty;
+            List<ProcessData.rawInputLagResult> rawILData = new List<ProcessData.rawInputLagResult>();
+            using (System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = path;
+                openFileDialog.Filter = "csv files (*.csv)|*.csv";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                    if (filePath.Contains("LATENCY-RAW"))
+                    {
+                        //Read the contents of the file into a stream
+                        try
+                        {
+                            var fileStream = openFileDialog.OpenFile();
+                            using (StreamReader reader = new StreamReader(fileStream))
+                            {
+                                while (!reader.EndOfStream)
+                                {
+                                    // This can probably be done better
+                                    string fullLine = reader.ReadLine();
+                                    if (fullLine.Contains("{"))
+                                    {
+                                        SettingsClasses.RunSettings runs = JsonConvert.DeserializeObject<SettingsClasses.RunSettings>(fullLine);
+                                        //runSettings = runs;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        string[] line = fullLine.Split(',');
+                                        int[] intLine = new int[line.Length];
+                                        float frameTime = 0;
+                                        for (int i = 0; i < line.Length; i++)
+                                        {
+                                            if (line[i] == "0")
+                                            {
+                                                intLine[i] = 0;
+                                            }
+                                            else if (line[i].Contains("."))
+                                            {
+                                                frameTime = float.Parse(line[i]);
+                                            }
+                                            else if (line[i] != "")
+                                            {
+                                                intLine[i] = int.Parse(line[i]);
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                        Array.Resize(ref intLine, intLine.Length - 1);
+                                        List<int> samples = intLine.ToList();
+                                        samples.RemoveRange(0, 4);
+                                        ProcessData.rawInputLagResult rawResult = new ProcessData.rawInputLagResult
+                                        {
+                                            ClickTime = intLine[0],
+                                            FrameTime = frameTime,
+                                            TimeTaken = intLine[2],
+                                            SampleCount = intLine[3],
+                                            Samples = samples
+                                        };
+                                        rawILData.Add(rawResult);
+                                    }
+                                }
+                            }
+                            resultsFolderPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
+                        }
+                        catch (Exception ex)
+                        {
+                            DialogResult d = MessageBox.Show("File may be in use by another program, please make sure it's not open elsewhere and try again.", "Unable to open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Console.WriteLine(ex.Message + ex.StackTrace);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sorry, only 'RAW' files can be imported. Please select a 'LATENCY-OSRTT.csv' file instead.", "Importer Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //throw new Exception("Importer Error");
+                    }
+                }
+            }
+            return rawILData;
+        }
+
     }
 }

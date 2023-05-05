@@ -35,11 +35,11 @@ namespace OSLTT
             this.importRawBtn = new MaterialSkin.Controls.MaterialButton();
             this.barPlot = new ScottPlot.FormsPlot();
             this.controlsPanel = new MaterialSkin.Controls.MaterialCard();
+            this.switchGraphTypeBtn = new MaterialSkin.Controls.MaterialButton();
             this.saveWhitePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.graphedData = new ScottPlot.FormsPlot();
-            this.switchGraphTypeBtn = new MaterialSkin.Controls.MaterialButton();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -78,6 +78,7 @@ namespace OSLTT
             this.importProcessedBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.importProcessedBtn.UseAccentColor = false;
             this.importProcessedBtn.UseVisualStyleBackColor = true;
+            this.importProcessedBtn.Click += new System.EventHandler(this.importProcessedBtn_Click);
             // 
             // materialLabel1
             // 
@@ -110,6 +111,7 @@ namespace OSLTT
             this.importRawBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.importRawBtn.UseAccentColor = false;
             this.importRawBtn.UseVisualStyleBackColor = true;
+            this.importRawBtn.Click += new System.EventHandler(this.importRawBtn_Click);
             // 
             // barPlot
             // 
@@ -136,6 +138,26 @@ namespace OSLTT
             this.controlsPanel.Padding = new System.Windows.Forms.Padding(14);
             this.controlsPanel.Size = new System.Drawing.Size(1184, 60);
             this.controlsPanel.TabIndex = 35;
+            // 
+            // switchGraphTypeBtn
+            // 
+            this.switchGraphTypeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.switchGraphTypeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.switchGraphTypeBtn.Depth = 0;
+            this.switchGraphTypeBtn.HighEmphasis = true;
+            this.switchGraphTypeBtn.Icon = null;
+            this.switchGraphTypeBtn.Location = new System.Drawing.Point(637, 12);
+            this.switchGraphTypeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.switchGraphTypeBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.switchGraphTypeBtn.Name = "switchGraphTypeBtn";
+            this.switchGraphTypeBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.switchGraphTypeBtn.Size = new System.Drawing.Size(248, 36);
+            this.switchGraphTypeBtn.TabIndex = 3;
+            this.switchGraphTypeBtn.Text = "Switch to Individual Results";
+            this.switchGraphTypeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.switchGraphTypeBtn.UseAccentColor = false;
+            this.switchGraphTypeBtn.UseVisualStyleBackColor = true;
+            this.switchGraphTypeBtn.Click += new System.EventHandler(this.switchGraphTypeBtn_Click);
             // 
             // saveWhitePNGBtn
             // 
@@ -199,34 +221,15 @@ namespace OSLTT
             this.graphedData.Size = new System.Drawing.Size(1184, 666);
             this.graphedData.TabIndex = 36;
             // 
-            // switchGraphTypeBtn
-            // 
-            this.switchGraphTypeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.switchGraphTypeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.switchGraphTypeBtn.Depth = 0;
-            this.switchGraphTypeBtn.HighEmphasis = true;
-            this.switchGraphTypeBtn.Icon = null;
-            this.switchGraphTypeBtn.Location = new System.Drawing.Point(637, 12);
-            this.switchGraphTypeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.switchGraphTypeBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.switchGraphTypeBtn.Name = "switchGraphTypeBtn";
-            this.switchGraphTypeBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.switchGraphTypeBtn.Size = new System.Drawing.Size(248, 36);
-            this.switchGraphTypeBtn.TabIndex = 3;
-            this.switchGraphTypeBtn.Text = "Switch to Individual Results";
-            this.switchGraphTypeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.switchGraphTypeBtn.UseAccentColor = false;
-            this.switchGraphTypeBtn.UseVisualStyleBackColor = true;
-            // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1222, 829);
-            this.Controls.Add(this.controlsPanel);
             this.Controls.Add(this.graphedData);
             this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
+            this.Controls.Add(this.controlsPanel);
             this.Name = "ResultsView";
             this.Text = "Results View";
             this.importPanel.ResumeLayout(false);
