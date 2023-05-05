@@ -18,6 +18,7 @@ namespace OSLTT
     public partial class ResultsView : MaterialForm
     {
         public string resultsFolderPath = "";
+        public string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
         public ProcessData.averagedInputLag inputLagResults { get; set; }
         public int type = 2;
         private bool ScatterOption = false;
@@ -25,7 +26,8 @@ namespace OSLTT
         public ResultsView()
         {
             InitializeComponent();
-
+            path = new Uri(System.IO.Path.GetDirectoryName(path)).LocalPath;
+            path += @"\Results";
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
@@ -230,7 +232,7 @@ namespace OSLTT
         {
             try
             {
-                var rawData = importRawInputLagData(""); //change this to path
+                var rawData = importRawInputLagData(path); 
                 if (rawData.Count != 0)
                 {
                     var data = ProcessData.AverageInputLagResults(rawData);
@@ -291,7 +293,7 @@ namespace OSLTT
 
         private void importProcessedBtn_Click(object sender, EventArgs e)
         {
-            var data = importInputLagData(""); // change this to a path
+            var data = importInputLagData(path); 
             if (data.inputLagResults.Count != 0)
             {
                 inputLagMode(data);
