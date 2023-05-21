@@ -25,7 +25,7 @@ namespace OSLTT
     public partial class Main : MaterialForm
     {
         private string softwareVersion = "0.1";
-        private static double boardFirmware = 0.1;
+        private static double boardFirmware = -1;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
@@ -64,7 +64,7 @@ namespace OSLTT
         private bool processingFailed = false;
         public bool settingsSynced = false;
 
-        private readonly string fqbn = "Seeduino:samd:seeed_XIAO_m0";
+        private readonly string fqbn = "Seeeduino:samd:seeed_XIAO_m0";
 
         debugForm debug = new debugForm();
 
@@ -204,7 +204,7 @@ namespace OSLTT
                     {
                         try
                         {
-                            connectToBoard(p, port, readThread, bgWorker);
+                            connectToBoard(p);
                             Thread.Sleep(1000);
                             SetDeviceStatus(1);
                             ControlDeviceButtons(true);
@@ -225,7 +225,7 @@ namespace OSLTT
             }
         }
 
-        private void connectToBoard(string comPort, SerialPort port, Thread Read, BackgroundWorker hardWorker)
+        private void connectToBoard(string comPort)
         {
             System.ComponentModel.IContainer components =
                 new System.ComponentModel.Container();
@@ -245,12 +245,13 @@ namespace OSLTT
             if (port.IsOpen)
             {
                 portConnected = true;
+                Thread.Sleep(100);
+                port.Write("I");
                 readThread = new Thread(new ThreadStart(this.Read));
                 readThread.Start();
-                hardWorker.RunWorkerAsync();
+                bgWorker.RunWorkerAsync();
                 //port.Write("X");
                 //Thread.Sleep(250);
-                port.Write("I");
 
             }
             else
@@ -268,6 +269,7 @@ namespace OSLTT
                 try
                 {
                     string message = port.ReadLine();
+                    Console.WriteLine(message);
                     /*if (liveView)
                     {
                         if (message.Contains("pot"))
@@ -510,8 +512,8 @@ namespace OSLTT
                         }
                 catch (TimeoutException ex)
                 {
-                    Console.WriteLine(ex);
-                    debug.AddToLog(ex.Message + ex.StackTrace);
+                    //Console.WriteLine(ex);
+                    //debug.AddToLog(ex.Message + ex.StackTrace);
                 }
                 catch (ArgumentOutOfRangeException aex)
                 {
@@ -629,7 +631,7 @@ namespace OSLTT
                 this.fwLblTitle.Invoke((MethodInvoker)(() => this.fwLblTitle.Visible = check));
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
-                this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = text));
+                this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = testBtnText));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = active));
                 //this.controlsPanel.Invoke((MethodInvoker)(() => this.controlsPanel.Enabled = active));
                 /*this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.Enabled = active));
@@ -642,6 +644,7 @@ namespace OSLTT
                 this.inputLagButton.Invoke((MethodInvoker)(() => this.inputLagButton.BackColor = btnBg));
                 this.LiveViewBtn.Invoke((MethodInvoker)(() => LiveViewBtn.Enabled = active));
                 */
+                this.Invoke((MethodInvoker)(() => this.Invalidate()));
             }
             else
             {
@@ -650,7 +653,7 @@ namespace OSLTT
                 this.deviceStatusPanel.BackColor = bg;
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
-                this.startTestBtn.Text = text;
+                this.startTestBtn.Text = testBtnText;
                 this.startTestBtn.Enabled = active;
                 //this.controlsPanel.Enabled = active;
                 /*this.launchBtn.Enabled = active;
@@ -664,6 +667,7 @@ namespace OSLTT
                 this.LiveViewBtn.Enabled = active;
                 
                 */
+                this.Invalidate();
             }
         }
 
@@ -1088,15 +1092,31 @@ namespace OSLTT
             Properties.Settings.Default.audioTriggerToggle = audioTriggerToggle.Checked;
             Properties.Settings.Default.pinTriggerToggle = pinTriggerToggle.Checked;
             Properties.Settings.Default.lightSensorToggle = lightSensorToggle.Checked;
+            Properties.Settings.Default.audioSourceToggle = audioSourceToggle.Checked;
             Properties.Settings.Default.autoClickToggle = autoClickToggle.Checked;
             Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
             Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.Items[timeBetweenSelect.SelectedIndex].ToString());
             Properties.Settings.Default.preTestToggle = preTestToggle.Checked;
             Properties.Settings.Default.directXToggle = directXToggle.Checked;
             Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
-            Properties.Settings.Default.audioSourceToggle = audioSourceToggle.Checked;
             Properties.Settings.Default.Save();
-            portWrite("I");
+            string settings = "I";
+            if (lightSensorToggle.Checked) { settings += "1"; }
+            else if (audioSourceToggle.Checked) { settings += "2"; }
+            if (buttonTriggerToggle.Checked) { settings += "1"; }
+            else if (audioTriggerToggle.Checked) { settings += "2"; }
+            else if (pinTriggerToggle.Checked) { settings += "3"; }
+            if (autoClickToggle.Checked) { settings += "1"; }
+            else { settings += "2"; }
+            if (directXToggle.Checked) { settings += "1"; }
+            else { settings += "2"; }
+            int clicks = Properties.Settings.Default.clickCountSelect / 10;
+            settings += clicks.ToString("00");
+            double t = Properties.Settings.Default.timeBetweenSelect;
+            if (t == 0.5) { settings += "1"; }
+            else { t += 1; settings += t.ToString(); }
+
+            portWrite(settings);
         }
 
         private void LoadSettings()
@@ -1170,7 +1190,7 @@ namespace OSLTT
         {
             try
             {
-                while (!settingsSynced) { }
+                while (!settingsSynced) { Thread.Sleep(100); }
 
                 port.WriteLine("T");
                 RunSettings = SettingsClasses.initRunSettings();
@@ -1292,7 +1312,10 @@ namespace OSLTT
             //DirectX.System.DSystem.mainWindow = this;
 
             //DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
-            audioTestClip.Play();
+
+            //audioTestClip.Play();
+
+            debug.AddToLog("New string");
         }
 
         

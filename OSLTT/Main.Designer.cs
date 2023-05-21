@@ -47,6 +47,8 @@ namespace OSLTT
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
             this.audioSourceToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.debugBtn = new MaterialSkin.Controls.MaterialButton();
@@ -71,8 +73,6 @@ namespace OSLTT
             this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
             this.notesBox = new MaterialSkin.Controls.MaterialTextBox2();
             this.deviceNameBox = new MaterialSkin.Controls.MaterialTextBox2();
-            this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
-            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.deviceStatusPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checkImg)).BeginInit();
             this.materialCard1.SuspendLayout();
@@ -96,6 +96,7 @@ namespace OSLTT
             // fwLbl
             // 
             this.fwLbl.AutoSize = true;
+            this.fwLbl.BackColor = System.Drawing.Color.Transparent;
             this.fwLbl.Depth = 0;
             this.fwLbl.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.fwLbl.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
@@ -109,6 +110,7 @@ namespace OSLTT
             // fwLblTitle
             // 
             this.fwLblTitle.AutoSize = true;
+            this.fwLblTitle.BackColor = System.Drawing.Color.Transparent;
             this.fwLblTitle.Depth = 0;
             this.fwLblTitle.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.fwLblTitle.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
@@ -122,6 +124,7 @@ namespace OSLTT
             // devStat
             // 
             this.devStat.AutoSize = true;
+            this.devStat.BackColor = System.Drawing.Color.Transparent;
             this.devStat.Depth = 0;
             this.devStat.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.devStat.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
@@ -134,7 +137,11 @@ namespace OSLTT
             // 
             // checkImg
             // 
+            this.checkImg.BackColor = System.Drawing.Color.Transparent;
+            this.checkImg.BackgroundImage = global::OSLTT.Properties.Resources.check;
             this.checkImg.ErrorImage = global::OSLTT.Properties.Resources.check;
+            this.checkImg.Image = global::OSLTT.Properties.Resources.check;
+            this.checkImg.InitialImage = global::OSLTT.Properties.Resources.check;
             this.checkImg.Location = new System.Drawing.Point(184, 5);
             this.checkImg.Name = "checkImg";
             this.checkImg.Size = new System.Drawing.Size(58, 29);
@@ -415,6 +422,42 @@ namespace OSLTT
             this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
             this.settingsCard.Size = new System.Drawing.Size(892, 286);
             this.settingsCard.TabIndex = 44;
+            // 
+            // materialLabel10
+            // 
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel10.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel10.Location = new System.Drawing.Point(522, 14);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(131, 29);
+            this.materialLabel10.TabIndex = 61;
+            this.materialLabel10.Text = "Test Display";
+            // 
+            // displaySelect
+            // 
+            this.displaySelect.AutoResize = false;
+            this.displaySelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.displaySelect.Depth = 0;
+            this.displaySelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.displaySelect.DropDownHeight = 174;
+            this.displaySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.displaySelect.DropDownWidth = 121;
+            this.displaySelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.displaySelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.displaySelect.FormattingEnabled = true;
+            this.displaySelect.IntegralHeight = false;
+            this.displaySelect.ItemHeight = 43;
+            this.displaySelect.Location = new System.Drawing.Point(527, 49);
+            this.displaySelect.MaxDropDownItems = 4;
+            this.displaySelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.displaySelect.Name = "displaySelect";
+            this.displaySelect.Size = new System.Drawing.Size(208, 49);
+            this.displaySelect.StartIndex = 0;
+            this.displaySelect.TabIndex = 60;
+            this.displaySelect.SelectedIndexChanged += new System.EventHandler(this.displaySelect_SelectedIndexChanged);
             // 
             // audioSourceToggle
             // 
@@ -831,42 +874,6 @@ namespace OSLTT
             this.deviceNameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.deviceNameBox.TrailingIcon = null;
             this.deviceNameBox.UseSystemPasswordChar = false;
-            // 
-            // displaySelect
-            // 
-            this.displaySelect.AutoResize = false;
-            this.displaySelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.displaySelect.Depth = 0;
-            this.displaySelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.displaySelect.DropDownHeight = 174;
-            this.displaySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.displaySelect.DropDownWidth = 121;
-            this.displaySelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.displaySelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.displaySelect.FormattingEnabled = true;
-            this.displaySelect.IntegralHeight = false;
-            this.displaySelect.ItemHeight = 43;
-            this.displaySelect.Location = new System.Drawing.Point(527, 49);
-            this.displaySelect.MaxDropDownItems = 4;
-            this.displaySelect.MouseState = MaterialSkin.MouseState.OUT;
-            this.displaySelect.Name = "displaySelect";
-            this.displaySelect.Size = new System.Drawing.Size(208, 49);
-            this.displaySelect.StartIndex = 0;
-            this.displaySelect.TabIndex = 60;
-            this.displaySelect.SelectedIndexChanged += new System.EventHandler(this.displaySelect_SelectedIndexChanged);
-            // 
-            // materialLabel10
-            // 
-            this.materialLabel10.AutoSize = true;
-            this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel10.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel10.Location = new System.Drawing.Point(522, 14);
-            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(131, 29);
-            this.materialLabel10.TabIndex = 61;
-            this.materialLabel10.Text = "Test Display";
             // 
             // Main
             // 

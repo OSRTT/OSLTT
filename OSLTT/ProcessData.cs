@@ -161,11 +161,131 @@ namespace OSLTT
             return inputLagProcessed;
         }
 
-        public static averagedInputLag AverageInputLagResults(List<rawInputLagResult> inputLagData)
+        public static List<inputLagResult> processAudioLatencyData(List<rawInputLagResult> inputLagRawData)
+        {
+            List<inputLagResult> inputLagProcessed = new List<inputLagResult>();
+
+            int shotNumber = 1;
+            foreach (rawInputLagResult item in inputLagRawData)
+            {
+                // Save start, end, time and sample count then clear the values from the array
+                double ClickTime = item.ClickTime;
+                float FrameTime = item.FrameTime;
+                int TimeTaken = item.TimeTaken;
+                int SampleCount = item.SampleCount;
+                int[] samples = item.Samples.ToArray();
+
+                double SampleTime = ((double)TimeTaken / (double)SampleCount); // Get the time taken between samples
+
+                // Clean up noisy data using moving average function
+                /*int period = 20;
+                int[] buffer = new int[period];
+                int[] averagedSamples = new int[samples.Length];
+                int current_index = 0;
+                for (int a = 0; a < samples.Length; a++)
+                {
+                    buffer[current_index] = samples[a] / period;
+                    int movAvg = 0;
+                    for (int b = 0; b < period; b++)
+                    {
+                        movAvg += buffer[b];
+                    }
+                    averagedSamples[a] = movAvg;
+                    current_index = (current_index + 1) % period;
+                }
+
+                samples = averagedSamples.Skip(period).ToArray(); //Moving average spoils the first 10 samples so currently removing them.
+                */
+                // removed smoothing to not spoil data/accuracy and it's just not needed.
+
+                // Initialise in-use variables
+                int transStart = 0;
+
+                int startMax = samples[5]; // Initialise these variables with a real value 
+                int startMin = samples[5]; // Initialise these variables with a real value 
+                int endMax = samples[samples.Length - 10]; // Initialise these variables with a real value 
+                int endMin = samples[samples.Length - 10]; // Initialise these variables with a real value 
+
+                // Build start min/max to compare against
+                for (int l = 0; l < 50; l++) //CHANGE TO 180 FOR RUN 2 DATA
+                {
+                    if (samples[l] < startMin)
+                    {
+                        startMin = samples[l];
+                    }
+                    else if (samples[l] > startMax)
+                    {
+                        startMax = samples[l];
+                    }
+                }
+
+
+
+                // Search for where the result starts transitioning - start is almost always less sensitive
+                for (int j = 0; j < samples.Length; j++)
+                {
+                    if (samples[j] > (startMax))
+                    {
+                        if ((samples[j + 50] > (samples[j] + 50) || samples[j + 56] > (samples[j] + 50))
+                             && (samples[j + 100] > (samples[j] + 100) || samples[j + 106] > (samples[j] + 100))
+                             && (samples[j + 125] > (samples[j] + 100) || samples[j + 131] > (samples[j] + 100))
+                             && (samples[j + 150] > (samples[j] + 100) || samples[j + 156] > (samples[j] + 100))) // check the trigger point is actually the trigger and not noise
+                        {
+                            transStart = j;
+                            break;
+                        }
+                        else
+                        {
+                            if (samples[j] > startMax)
+                            {
+                                startMax = samples[j];
+                            }
+                        }
+                    }
+                }
+
+                Console.WriteLine("ClickTime: " + ClickTime);
+                double clickTimeMs = ClickTime;
+                clickTimeMs /= 1000;
+                Console.WriteLine("ClickTimems: " + clickTimeMs);
+                double transTime = (transStart * SampleTime) / 1000;
+                double inputLag = Math.Round(transTime, 3);
+
+                double totalInputLag = (ClickTime + (transStart * SampleTime)) / 1000;
+                totalInputLag = Math.Round(totalInputLag, 3);
+
+                double onDisplayLag = inputLag - FrameTime;
+
+                if (clickTimeMs == totalInputLag || onDisplayLag < 0)
+                {
+                    clickTimeMs = 0;
+                    FrameTime = 0;
+                    inputLag = 0;
+                    totalInputLag = 0;
+                    onDisplayLag = 0;
+                }
+
+                inputLagResult completeResult = new inputLagResult { shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
+                inputLagProcessed.Add(completeResult);
+                shotNumber++;
+            }
+            Console.WriteLine("Finished processing");
+            return inputLagProcessed;
+        }
+
+        public static averagedInputLag AverageInputLagResults(List<rawInputLagResult> inputLagData, int type = 0)
         {
             averagedInputLag inputLagProcessed = new averagedInputLag();
 
-            List<inputLagResult> processedResults = processInputLagData(inputLagData);
+            List<inputLagResult> processedResults;
+            if (type == 0)
+            {
+                processedResults = processInputLagData(inputLagData);
+            }
+            else
+            {
+                processedResults = processAudioLatencyData(inputLagData);
+            }
             if (processedResults.Count == 0)
             {
                 throw new Exception("Processing Failed");

@@ -97,84 +97,64 @@ void loop() {
   }
   else if (input[0] == 'I') // Initialise everything
   {
-    Serial.print("FW:");
-    Serial.println(firmwareVersion);
-    Serial.println("Clicks");
-    while (input[0] != 'X')
+    if (input[1] == ' ' || input[2] == ' ')
     {
-      getSerialChars();
-      if (input[0] < '0' || input[1] < '0')
-      {
-        int msb = convertHexToDec(input[1]);
-        int lsb = convertHexToDec(input[0]);
-        shotCount = (msb * 100) + (lsb * 10);
-        break;
-      }
+      Serial.print("FW:");
+      Serial.println(firmwareVersion);
     }
-    Serial.println("TimeBetween");
-    while (input[0] != 'X')
+    else
     {
-      getSerialChars();
-      if (input[0] < '0' || input[1] < '0')
+      // Sensor type - bit 1
+
+      sensorType = convertHexToDec(input[1]) - 1;
+
+      // Trigger type - bit 2
+      inputType = convertHexToDec(input[2]) - 1;
+
+      // Auto Click - bit 3
+      if (input[3] == 1)
       {
-        int lsb = convertHexToDec(input[0]);
-        if (lsb == 1)
-        {
-          timeBetween = 0.5;
-        }
-        else
-        {
-          timeBetween = lsb - 1;
-        }
-        break;
+        autoClick = true;
       }
-    }
-    Serial.println("AutoClick");
-    while (input[0] != 'X')
-    {
-      getSerialChars();
-      if (input[0] < '0' || input[1] < '0')
+      else
       {
-        if (input[0] == 1)
-        {
-          autoClick = true;
-        }
-        else
-        {
-          autoClick = false;
-        }
-        break;
+        autoClick = false;
       }
-    }
-    Serial.println("TriggerSensor");
-    while (input[0] != 'X')
-    {
-      getSerialChars();
-      if (input[0] < '0' && input[1] < '0')
+
+      // DirectX - bit 4
+      if (input[4] == 1)
       {
-        inputType = convertHexToDec(input[0]) - 1;
-        sensorType = convertHexToDec(input[1]) - 1;
-        break;
+        directXMode = true;
       }
-    }
-    Serial.println("DirectX");
-    while (input[0] != 'X')
-    {
-      getSerialChars();
-      if (input[0] < '0' || input[1] < '0')
+      else
       {
-        if (input[0] == 1)
-        {
-          directXMode = true;
-        }
-        else
-        {
-          directXMode = false;
-        }
-        break;
+        directXMode = false;
       }
+      
+      // Shot count - bit 5 + 6
+      int msb = convertHexToDec(input[6]);
+      int lsb = convertHexToDec(input[5]);
+      shotCount = (msb * 100) + (lsb * 10);
+
+      // Time between - bit 7
+      int tbw = convertHexToDec(input[0]);
+      if (tbw == 1)
+      {
+        timeBetween = 0.5;
+      }
+      else
+      {
+        timeBetween = tbw - 1;
+      }
+
+      // Confirm settings synced
+      for (int i = 0; i < INPUT_SIZE; i++)
+      {
+        Serial.print(input[i]);
+      }
+      Serial.println();
+      Serial.println("Settings Synced");
     }
-    Serial.println("Settings Synced");
   }
   else if (input[0] == 'S') // Shot count
   {

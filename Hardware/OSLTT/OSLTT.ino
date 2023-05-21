@@ -1,7 +1,7 @@
   // Definitions, libraries
 #include <Mouse.h>
 
-#define INPUT_SIZE 2
+#define INPUT_SIZE 8
 
 
 int LEDPin = 3; //19   // first analog sensor
