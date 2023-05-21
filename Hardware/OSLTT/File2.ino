@@ -85,15 +85,15 @@ void pulseLED(bool state)
   }
 }
 
-void toggleLED()
+void toggleLED(bool state)
 {
-  if (LEDState) // if high, set low
+  if (state) 
   {
-    analogWrite(3, 0x00);
+    analogWrite(3, 0xFF);
   }
   else
   {
-    analogWrite(3, 0xFF);
+    analogWrite(3, 0x00);
   }
 }
 
@@ -105,13 +105,17 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
     pin = 1;
   }
   unsigned long clickTime = micros();
+  Serial.print("input type: ");
+  Serial.print(inputType);
+  Serial.print(" & directXMode: ");
+  Serial.println(directXMode);
   if (inputType == 0 && directXMode)
   {
     Mouse.click(MOUSE_LEFT);
   }
   unsigned long start_time = micros();  
   long timeTaken = fillADCBuffer(sampleCount, pin);
-  pulseLED(true);
+  toggleLED(true);
   long localStartValue = 0;
   int triggerSampleNum = 0;
   Serial.print(textType);
@@ -145,8 +149,8 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
   Serial.println();
   Serial.print("RESULT:");
   double result = (timeTaken / sampleCount) * triggerSampleNum; 
-  Serial.print(result / 1000);
-  pulseLED(false);
+  Serial.println(result / 1000);
+  toggleLED(false);
 }
 
 void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false)
@@ -154,10 +158,15 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
   if (autoRun)
   {
     int localCounter = 0;
+    Serial.setTimeout(100);
     while (input[0] != 'X' && localCounter < clickCount )
     {
-      getSerialChars();
+
       runTest(sampleCount);
+      long timer1 = millis();
+      getSerialChars();
+      long targetTime = timer1 + (timeBetween * 1000);
+      while (millis() > targetTime) { delay(1); }
       localCounter++;
     }
     Serial.println("AUTO FINISHED");
@@ -179,4 +188,3 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
     Serial.println("PRETEST FINISHED");
   }
 }
-

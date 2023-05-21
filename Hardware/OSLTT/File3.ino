@@ -27,6 +27,7 @@ void loop() {
   {
     while(input[0] != 'X')
     {
+      Serial.setTimeout(100);
       getSerialChars();
       if (inputType == 0)
       {
@@ -112,7 +113,7 @@ void loop() {
       inputType = convertHexToDec(input[2]) - 1;
 
       // Auto Click - bit 3
-      if (input[3] == 1)
+      if (input[3] == '1')
       {
         autoClick = true;
       }
@@ -122,13 +123,15 @@ void loop() {
       }
 
       // DirectX - bit 4
-      if (input[4] == 1)
+      if (input[4] == '1')
       {
         directXMode = true;
+        Serial.println("direct X true");
       }
       else
       {
         directXMode = false;
+        Serial.println("direct X false");
       }
       
       // Shot count - bit 5 + 6
@@ -221,18 +224,15 @@ void loop() {
     int buttonState = digitalRead(ButtonPin);
     Serial.print("Read button - ");
     Serial.println(buttonState);
-    // ADC->SWTRIG.bit.START = 1; //Start ADC
-    // while (!ADC->INTFLAG.bit.RESRDY); //wait for ADC to have a new value
-    // int result = ADC->RESULT.reg;
-    // Serial.println(result);
     while (buttonState != HIGH)
     {
       //int value = getSingleADCValue();
       int value = analogRead(1);
-      Serial.println(value);
+      Serial.print(value);
+      Serial.print(",");
       buttonState = digitalRead(ButtonPin);
     }
-    Serial.println("Exited");
+    Serial.println();
   }
   else if (input[0] == 'Z')
   {

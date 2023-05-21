@@ -693,12 +693,20 @@ namespace OSLTT
 
         private DialogResult DialogBox(string title, string message, string okButton, bool showCancel, string cancelText = "Cancel")
         {
-            MaterialDialog materialDialog = new MaterialDialog(this, title, message, okButton, showCancel, cancelText);
-            DialogResult result = materialDialog.ShowDialog(this);
+            try
+            {
+                MaterialDialog materialDialog = new MaterialDialog(this, title, message, okButton, showCancel, cancelText);
+                DialogResult result = materialDialog.ShowDialog(this);
+                MaterialSnackBar SnackBarMessage = new MaterialSnackBar(result.ToString(), 750);
 
-            MaterialSnackBar SnackBarMessage = new MaterialSnackBar(result.ToString(), 750);
-            SnackBarMessage.Show(this);
-            return result;
+                SnackBarMessage.Show(this);
+                return result;
+            }
+            catch (InvalidOperationException ex)
+            {
+                DialogResult d = MessageBox.Show(message, title, MessageBoxButtons.OKCancel);
+                return d;
+            }
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
@@ -1115,7 +1123,7 @@ namespace OSLTT
             double t = Properties.Settings.Default.timeBetweenSelect;
             if (t == 0.5) { settings += "1"; }
             else { t += 1; settings += t.ToString(); }
-
+            Console.WriteLine(settings);
             portWrite(settings);
         }
 
@@ -1315,7 +1323,7 @@ namespace OSLTT
 
             //audioTestClip.Play();
 
-            debug.AddToLog("New string");
+            portWrite("Y");
         }
 
         
