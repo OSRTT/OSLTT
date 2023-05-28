@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
@@ -70,6 +71,7 @@ namespace OSLTT
 
         SoundPlayer audioTestClip;
 
+        Stopwatch sw = new Stopwatch();
         public Main()
         {
             InitializeComponent();
@@ -107,6 +109,7 @@ namespace OSLTT
             listMonitors();
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
+            toggleMouseKeyboardBoxes(false);
 
             connectThread = new Thread(new ThreadStart(this.findAndConnectToBoard));
             connectThread.Start();
@@ -311,7 +314,6 @@ namespace OSLTT
 
                         }
                     }*/
-                    Console.WriteLine(message);
                     /*if (debugMode)
                     {
                         debug.AddToLog(message);
@@ -329,7 +331,12 @@ namespace OSLTT
                         // play sound
                         audioTestClip.Play();
                     }
-
+                    else if (message.Contains("Audio"))
+                    {
+                        Console.WriteLine("test point reached");
+                        sw.Restart();
+                        materialButton1_Click(null, null);
+                    }
                     else if (message.Contains("FW:"))
                     {
                         string[] sp = message.Split(':');
@@ -509,7 +516,7 @@ namespace OSLTT
                     {
                         debug.AddToLog(message);
                     }
-                        }
+                }
                 catch (TimeoutException ex)
                 {
                     //Console.WriteLine(ex);
@@ -668,6 +675,34 @@ namespace OSLTT
                 
                 */
                 this.Invalidate();
+            }
+        }
+
+        private void toggleMouseKeyboardBoxes(bool state)
+        {
+            if (this.textTextBox.InvokeRequired)
+            {
+                this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.Visible = state));
+                this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.Visible = state));
+
+                if (state)
+                {
+                    this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
+                    this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
+                    this.materialTabControl1.Invoke((MethodInvoker)(() => this.materialTabControl1.SelectedIndex = materialTabControl1.TabCount - 1));
+                }
+                    
+            }
+            else
+            {
+                this.clickTestBox.Visible = state;
+                this.typeTextCard.Visible = state;
+                if (state)
+                {
+                    this.typeTextCard.BringToFront();
+                    this.clickTestBox.BringToFront();
+                    this.materialTabControl1.SelectedIndex = materialTabControl1.TabCount - 1;
+                }
             }
         }
 
@@ -910,6 +945,8 @@ namespace OSLTT
             }
         }
 
+        
+
         private void listMonitors(int selected = 0)
         {
             displaySelect.Items.Clear(); // Clear existing array and list before filling them
@@ -1014,6 +1051,31 @@ namespace OSLTT
             }
         }
 
+        private void MouseKeyboardToggle_CheckedChanged(object sender, EventArgs e)
+        {
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    PresetConfigs(true, false, false,
+                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
+                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
+                        preTestToggle.Checked, directXToggle.Checked,
+                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                }
+                else
+                {
+                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
+                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
+                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
+                        preTestToggle.Checked, directXToggle.Checked,
+                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                }
+                SaveSettings();
+            }
+        }
+
         private void gameExternalToggle_CheckedChanged(object sender, EventArgs e)
         {
             MaterialSwitch s = sender as MaterialSwitch;
@@ -1071,7 +1133,7 @@ namespace OSLTT
             debug.Show();
         }
 
-        private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool audio, bool autoClick, int clicks, double time, bool preTest, bool directX, bool game, bool audioSource)
+        private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool audio, bool autoClick, int clicks, double time, bool preTest, bool directX,  bool game, bool audioSource)
         {
             this.buttonTriggerToggle.Checked = btn;
             this.audioTriggerToggle.Checked = mic;
@@ -1083,6 +1145,7 @@ namespace OSLTT
             SetComboBoxValue(timeBetweenSelect, time);
             this.preTestToggle.Checked = preTest;
             this.directXToggle.Checked = directX;
+            //this.MouseKeyboardToggle.Checked = mouseKeyboard;
             this.gameExternalToggle.Checked = game;
             this.audioSourceToggle.Checked = audioSource;
 
@@ -1092,7 +1155,7 @@ namespace OSLTT
             
         }
 
-        private void SaveSettings()
+        private void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
         {
             if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
             if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
@@ -1108,6 +1171,7 @@ namespace OSLTT
             Properties.Settings.Default.directXToggle = directXToggle.Checked;
             Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
             Properties.Settings.Default.Save();
+
             string settings = "I";
             if (lightSensorToggle.Checked) { settings += "1"; }
             else if (audioSourceToggle.Checked) { settings += "2"; }
@@ -1118,7 +1182,7 @@ namespace OSLTT
             else { settings += "2"; }
             if (directXToggle.Checked) { settings += "1"; }
             else { settings += "2"; }
-            int clicks = Properties.Settings.Default.clickCountSelect / 10;
+            clicks = Properties.Settings.Default.clickCountSelect / 10;
             settings += clicks.ToString("00");
             double t = Properties.Settings.Default.timeBetweenSelect;
             if (t == 0.5) { settings += "1"; }
@@ -1311,6 +1375,27 @@ namespace OSLTT
             }
         }
 
+        
+
+        private void textTextBox_textChanged(object sender, EventArgs e)
+        {
+            sw.Stop();
+            double ticks = sw.ElapsedTicks;
+            double seconds = ticks / Stopwatch.Frequency;
+            double microseconds = (ticks / Stopwatch.Frequency) * 1000000;
+            Console.WriteLine("Click handler: " + microseconds);
+        }
+
+        private void materialLabel11_Click(object sender, EventArgs e)
+        {
+            clickTestBox_Click(null, null);
+        }
+
+        private void clickTestBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void materialButton1_Click(object sender, EventArgs e)
         {
             //UpdateFirmware.getNewFirmwareFile();
@@ -1323,7 +1408,13 @@ namespace OSLTT
 
             //audioTestClip.Play();
 
-            portWrite("Y");
+            //sw.Restart();
+
+            //portWrite("W");
+            //textTextBox.Text = "test";
+
+            toggleMouseKeyboardBoxes(true);
+
         }
 
         

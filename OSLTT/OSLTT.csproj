@@ -179,6 +179,12 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsClasses.cs" />
+    <Compile Include="SettingsPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsPane.Designer.cs">
+      <DependentUpon>SettingsPane.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpdateFirmware.cs" />
     <Compile Include="UpdateHandler.cs" />
     <Compile Include="UserSettings.cs" />
@@ -200,6 +206,9 @@
     </Compile>
     <EmbeddedResource Include="ResultsView.resx">
       <DependentUpon>ResultsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsPane.resx">
+      <DependentUpon>SettingsPane.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="DirectX\Font\Font.ps" />
     <None Include="DirectX\Font\Font.vs" />
