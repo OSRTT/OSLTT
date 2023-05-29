@@ -29,84 +29,55 @@ namespace OSLTT
         /// </summary>
         private void InitializeComponent()
         {
-            this.settingsCard = new MaterialSkin.Controls.MaterialCard();
-            this.MouseKeyboardToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
-            this.audioSourceToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.gameExternalToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.directXToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
-            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            this.audioSensorToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.clickCountSelect = new MaterialSkin.Controls.MaterialComboBox();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-            this.lightSensorToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.pinTriggerToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.audioTriggerToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
-            this.buttonTriggerToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.clickTrackingToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
+            this.clickKeypressRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.audioSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.lightSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
+            this.clickCountSelect = new MaterialSkin.Controls.MaterialComboBox();
+            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
+            this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
+            this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
+            this.twoPinRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.audioTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.buttonTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
+            this.audioSourceRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.gameExternalRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard5.SuspendLayout();
+            this.materialCard3.SuspendLayout();
             this.settingsCard.SuspendLayout();
+            this.materialCard1.SuspendLayout();
+            this.materialCard4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // settingsCard
+            // materialCard5
             // 
-            this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.settingsCard.Controls.Add(this.materialLabel1);
-            this.settingsCard.Controls.Add(this.clickTrackingToggle);
-            this.settingsCard.Controls.Add(this.MouseKeyboardToggle);
-            this.settingsCard.Controls.Add(this.materialLabel10);
-            this.settingsCard.Controls.Add(this.displaySelect);
-            this.settingsCard.Controls.Add(this.audioSourceToggle);
-            this.settingsCard.Controls.Add(this.autoClickToggle);
-            this.settingsCard.Controls.Add(this.preTestToggle);
-            this.settingsCard.Controls.Add(this.gameExternalToggle);
-            this.settingsCard.Controls.Add(this.materialLabel2);
-            this.settingsCard.Controls.Add(this.directXToggle);
-            this.settingsCard.Controls.Add(this.materialLabel8);
-            this.settingsCard.Controls.Add(this.timeBetweenSelect);
-            this.settingsCard.Controls.Add(this.materialLabel5);
-            this.settingsCard.Controls.Add(this.audioSensorToggle);
-            this.settingsCard.Controls.Add(this.materialLabel7);
-            this.settingsCard.Controls.Add(this.clickCountSelect);
-            this.settingsCard.Controls.Add(this.materialLabel4);
-            this.settingsCard.Controls.Add(this.lightSensorToggle);
-            this.settingsCard.Controls.Add(this.pinTriggerToggle);
-            this.settingsCard.Controls.Add(this.audioTriggerToggle);
-            this.settingsCard.Controls.Add(this.materialLabel6);
-            this.settingsCard.Controls.Add(this.buttonTriggerToggle);
-            this.settingsCard.Depth = 0;
-            this.settingsCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.settingsCard.Location = new System.Drawing.Point(2, 2);
-            this.settingsCard.Margin = new System.Windows.Forms.Padding(14);
-            this.settingsCard.MouseState = MaterialSkin.MouseState.HOVER;
-            this.settingsCard.Name = "settingsCard";
-            this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
-            this.settingsCard.Size = new System.Drawing.Size(883, 320);
-            this.settingsCard.TabIndex = 45;
-            // 
-            // MouseKeyboardToggle
-            // 
-            this.MouseKeyboardToggle.AutoSize = true;
-            this.MouseKeyboardToggle.Depth = 0;
-            this.MouseKeyboardToggle.Location = new System.Drawing.Point(622, 173);
-            this.MouseKeyboardToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.MouseKeyboardToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.MouseKeyboardToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.MouseKeyboardToggle.Name = "MouseKeyboardToggle";
-            this.MouseKeyboardToggle.Ripple = true;
-            this.MouseKeyboardToggle.Size = new System.Drawing.Size(180, 37);
-            this.MouseKeyboardToggle.TabIndex = 62;
-            this.MouseKeyboardToggle.Text = "Mouse/Keyboard";
-            this.MouseKeyboardToggle.UseVisualStyleBackColor = true;
-            this.MouseKeyboardToggle.CheckedChanged += new System.EventHandler(this.MouseKeyboardToggle_CheckedChanged);
+            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard5.Controls.Add(this.materialLabel10);
+            this.materialCard5.Controls.Add(this.displaySelect);
+            this.materialCard5.Depth = 0;
+            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard5.Location = new System.Drawing.Point(565, 7);
+            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard5.Name = "materialCard5";
+            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard5.Size = new System.Drawing.Size(242, 109);
+            this.materialCard5.TabIndex = 77;
             // 
             // materialLabel10
             // 
@@ -114,7 +85,7 @@ namespace OSLTT
             this.materialLabel10.Depth = 0;
             this.materialLabel10.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel10.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel10.Location = new System.Drawing.Point(627, 13);
+            this.materialLabel10.Location = new System.Drawing.Point(12, 13);
             this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel10.Name = "materialLabel10";
             this.materialLabel10.Size = new System.Drawing.Size(131, 29);
@@ -135,7 +106,7 @@ namespace OSLTT
             this.displaySelect.FormattingEnabled = true;
             this.displaySelect.IntegralHeight = false;
             this.displaySelect.ItemHeight = 43;
-            this.displaySelect.Location = new System.Drawing.Point(632, 48);
+            this.displaySelect.Location = new System.Drawing.Point(17, 48);
             this.displaySelect.MaxDropDownItems = 4;
             this.displaySelect.MouseState = MaterialSkin.MouseState.OUT;
             this.displaySelect.Name = "displaySelect";
@@ -144,100 +115,108 @@ namespace OSLTT
             this.displaySelect.TabIndex = 60;
             this.displaySelect.SelectedIndexChanged += new System.EventHandler(this.displaySelect_SelectedIndexChanged);
             // 
-            // audioSourceToggle
+            // materialCard3
             // 
-            this.audioSourceToggle.AutoSize = true;
-            this.audioSourceToggle.Depth = 0;
-            this.audioSourceToggle.Location = new System.Drawing.Point(622, 244);
-            this.audioSourceToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.audioSourceToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.audioSourceToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.audioSourceToggle.Name = "audioSourceToggle";
-            this.audioSourceToggle.Ripple = true;
-            this.audioSourceToggle.Size = new System.Drawing.Size(99, 37);
-            this.audioSourceToggle.TabIndex = 59;
-            this.audioSourceToggle.Text = "Audio";
-            this.audioSourceToggle.UseVisualStyleBackColor = true;
-            this.audioSourceToggle.CheckedChanged += new System.EventHandler(this.audioSourceToggle_CheckedChanged);
+            this.materialCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard3.Controls.Add(this.clickKeypressRadio);
+            this.materialCard3.Controls.Add(this.audioSensorRadio);
+            this.materialCard3.Controls.Add(this.lightSensorRadio);
+            this.materialCard3.Controls.Add(this.materialLabel1);
+            this.materialCard3.Depth = 0;
+            this.materialCard3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard3.Location = new System.Drawing.Point(4, 191);
+            this.materialCard3.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard3.Name = "materialCard3";
+            this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard3.Size = new System.Drawing.Size(195, 169);
+            this.materialCard3.TabIndex = 75;
             // 
-            // autoClickToggle
+            // clickKeypressRadio
             // 
-            this.autoClickToggle.AutoSize = true;
-            this.autoClickToggle.Depth = 0;
-            this.autoClickToggle.Location = new System.Drawing.Point(260, 42);
-            this.autoClickToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.autoClickToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.autoClickToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.autoClickToggle.Name = "autoClickToggle";
-            this.autoClickToggle.Ripple = true;
-            this.autoClickToggle.Size = new System.Drawing.Size(129, 37);
-            this.autoClickToggle.TabIndex = 55;
-            this.autoClickToggle.Text = "Auto Click";
-            this.autoClickToggle.UseVisualStyleBackColor = true;
-            this.autoClickToggle.CheckedChanged += new System.EventHandler(this.autoClickToggle_CheckedChanged);
+            this.clickKeypressRadio.AutoSize = true;
+            this.clickKeypressRadio.Depth = 0;
+            this.clickKeypressRadio.Location = new System.Drawing.Point(14, 123);
+            this.clickKeypressRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.clickKeypressRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.clickKeypressRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.clickKeypressRadio.Name = "clickKeypressRadio";
+            this.clickKeypressRadio.Ripple = true;
+            this.clickKeypressRadio.Size = new System.Drawing.Size(164, 37);
+            this.clickKeypressRadio.TabIndex = 69;
+            this.clickKeypressRadio.TabStop = true;
+            this.clickKeypressRadio.Text = "Clicks/Keypresses";
+            this.clickKeypressRadio.UseVisualStyleBackColor = true;
+            this.clickKeypressRadio.CheckedChanged += new System.EventHandler(this.clickKeypressRadio_CheckedChanged);
             // 
-            // preTestToggle
+            // audioSensorRadio
             // 
-            this.preTestToggle.AutoSize = true;
-            this.preTestToggle.Depth = 0;
-            this.preTestToggle.Location = new System.Drawing.Point(260, 234);
-            this.preTestToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.preTestToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.preTestToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.preTestToggle.Name = "preTestToggle";
-            this.preTestToggle.Ripple = true;
-            this.preTestToggle.Size = new System.Drawing.Size(168, 37);
-            this.preTestToggle.TabIndex = 52;
-            this.preTestToggle.Text = "Pre-test System";
-            this.preTestToggle.UseVisualStyleBackColor = true;
-            this.preTestToggle.CheckedChanged += new System.EventHandler(this.preTestToggle_CheckedChanged);
+            this.audioSensorRadio.AutoSize = true;
+            this.audioSensorRadio.Depth = 0;
+            this.audioSensorRadio.Location = new System.Drawing.Point(14, 86);
+            this.audioSensorRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.audioSensorRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.audioSensorRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioSensorRadio.Name = "audioSensorRadio";
+            this.audioSensorRadio.Ripple = true;
+            this.audioSensorRadio.Size = new System.Drawing.Size(129, 37);
+            this.audioSensorRadio.TabIndex = 68;
+            this.audioSensorRadio.TabStop = true;
+            this.audioSensorRadio.Text = "Audio Sensor";
+            this.audioSensorRadio.UseVisualStyleBackColor = true;
+            this.audioSensorRadio.CheckedChanged += new System.EventHandler(this.audioSensorRadio_CheckedChanged);
             // 
-            // gameExternalToggle
+            // lightSensorRadio
             // 
-            this.gameExternalToggle.AutoSize = true;
-            this.gameExternalToggle.Depth = 0;
-            this.gameExternalToggle.Location = new System.Drawing.Point(622, 207);
-            this.gameExternalToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.gameExternalToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.gameExternalToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gameExternalToggle.Name = "gameExternalToggle";
-            this.gameExternalToggle.Ripple = true;
-            this.gameExternalToggle.Size = new System.Drawing.Size(164, 37);
-            this.gameExternalToggle.TabIndex = 51;
-            this.gameExternalToggle.Text = "Game/External";
-            this.gameExternalToggle.UseVisualStyleBackColor = true;
-            this.gameExternalToggle.CheckedChanged += new System.EventHandler(this.gameExternalToggle_CheckedChanged);
+            this.lightSensorRadio.AutoSize = true;
+            this.lightSensorRadio.Checked = true;
+            this.lightSensorRadio.Depth = 0;
+            this.lightSensorRadio.Location = new System.Drawing.Point(14, 49);
+            this.lightSensorRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.lightSensorRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.lightSensorRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lightSensorRadio.Name = "lightSensorRadio";
+            this.lightSensorRadio.Ripple = true;
+            this.lightSensorRadio.Size = new System.Drawing.Size(124, 37);
+            this.lightSensorRadio.TabIndex = 67;
+            this.lightSensorRadio.TabStop = true;
+            this.lightSensorRadio.Text = "Light Sensor";
+            this.lightSensorRadio.UseVisualStyleBackColor = true;
+            this.lightSensorRadio.CheckedChanged += new System.EventHandler(this.lightSensorRadio_CheckedChanged);
             // 
-            // materialLabel2
+            // materialLabel1
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel2.Location = new System.Drawing.Point(627, 113);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(129, 29);
-            this.materialLabel2.TabIndex = 50;
-            this.materialLabel2.Text = "Test Source";
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel1.Location = new System.Drawing.Point(17, 14);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(132, 29);
+            this.materialLabel1.TabIndex = 66;
+            this.materialLabel1.Text = "Sensor Type";
             // 
-            // directXToggle
+            // settingsCard
             // 
-            this.directXToggle.AutoSize = true;
-            this.directXToggle.Checked = true;
-            this.directXToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.directXToggle.Depth = 0;
-            this.directXToggle.Location = new System.Drawing.Point(622, 142);
-            this.directXToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.directXToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.directXToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.directXToggle.Name = "directXToggle";
-            this.directXToggle.Ripple = true;
-            this.directXToggle.Size = new System.Drawing.Size(174, 37);
-            this.directXToggle.TabIndex = 49;
-            this.directXToggle.Text = "DirectX Program";
-            this.directXToggle.UseVisualStyleBackColor = true;
-            this.directXToggle.CheckedChanged += new System.EventHandler(this.directXToggle_CheckedChanged);
+            this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.settingsCard.Controls.Add(this.materialLabel8);
+            this.settingsCard.Controls.Add(this.materialLabel4);
+            this.settingsCard.Controls.Add(this.clickCountSelect);
+            this.settingsCard.Controls.Add(this.materialLabel5);
+            this.settingsCard.Controls.Add(this.autoClickToggle);
+            this.settingsCard.Controls.Add(this.timeBetweenSelect);
+            this.settingsCard.Controls.Add(this.preTestToggle);
+            this.settingsCard.Controls.Add(this.materialLabel9);
+            this.settingsCard.Depth = 0;
+            this.settingsCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.settingsCard.Location = new System.Drawing.Point(212, 7);
+            this.settingsCard.Margin = new System.Windows.Forms.Padding(14);
+            this.settingsCard.MouseState = MaterialSkin.MouseState.HOVER;
+            this.settingsCard.Name = "settingsCard";
+            this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
+            this.settingsCard.Size = new System.Drawing.Size(340, 280);
+            this.settingsCard.TabIndex = 73;
             // 
             // materialLabel8
             // 
@@ -245,83 +224,24 @@ namespace OSLTT
             this.materialLabel8.Depth = 0;
             this.materialLabel8.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel8.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel8.Location = new System.Drawing.Point(268, 13);
+            this.materialLabel8.Location = new System.Drawing.Point(28, 14);
             this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel8.Name = "materialLabel8";
             this.materialLabel8.Size = new System.Drawing.Size(141, 29);
             this.materialLabel8.TabIndex = 48;
             this.materialLabel8.Text = "Test Settings";
             // 
-            // timeBetweenSelect
+            // materialLabel4
             // 
-            this.timeBetweenSelect.AutoResize = false;
-            this.timeBetweenSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.timeBetweenSelect.Depth = 0;
-            this.timeBetweenSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.timeBetweenSelect.DropDownHeight = 174;
-            this.timeBetweenSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.timeBetweenSelect.DropDownWidth = 121;
-            this.timeBetweenSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.timeBetweenSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.timeBetweenSelect.FormattingEnabled = true;
-            this.timeBetweenSelect.IntegralHeight = false;
-            this.timeBetweenSelect.ItemHeight = 43;
-            this.timeBetweenSelect.Items.AddRange(new object[] {
-            "0.5",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.timeBetweenSelect.Location = new System.Drawing.Point(427, 132);
-            this.timeBetweenSelect.MaxDropDownItems = 4;
-            this.timeBetweenSelect.MouseState = MaterialSkin.MouseState.OUT;
-            this.timeBetweenSelect.Name = "timeBetweenSelect";
-            this.timeBetweenSelect.Size = new System.Drawing.Size(121, 49);
-            this.timeBetweenSelect.StartIndex = 0;
-            this.timeBetweenSelect.TabIndex = 46;
-            this.timeBetweenSelect.SelectedIndexChanged += new System.EventHandler(this.timeBetweenSelect_SelectedIndexChanged);
-            // 
-            // materialLabel5
-            // 
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel5.Location = new System.Drawing.Point(269, 149);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(147, 19);
-            this.materialLabel5.TabIndex = 45;
-            this.materialLabel5.Text = "Time Between Clicks";
-            // 
-            // audioSensorToggle
-            // 
-            this.audioSensorToggle.AutoSize = true;
-            this.audioSensorToggle.Depth = 0;
-            this.audioSensorToggle.Location = new System.Drawing.Point(14, 235);
-            this.audioSensorToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.audioSensorToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.audioSensorToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.audioSensorToggle.Name = "audioSensorToggle";
-            this.audioSensorToggle.Ripple = true;
-            this.audioSensorToggle.Size = new System.Drawing.Size(152, 37);
-            this.audioSensorToggle.TabIndex = 47;
-            this.audioSensorToggle.Text = "Audio Sensor";
-            this.audioSensorToggle.UseVisualStyleBackColor = true;
-            this.audioSensorToggle.CheckedChanged += new System.EventHandler(this.audioSensorToggle_CheckedChanged);
-            // 
-            // materialLabel7
-            // 
-            this.materialLabel7.AutoSize = true;
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel7.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel7.Location = new System.Drawing.Point(17, 169);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(132, 29);
-            this.materialLabel7.TabIndex = 46;
-            this.materialLabel7.Text = "Sensor Type";
+            this.materialLabel4.AutoSize = true;
+            this.materialLabel4.Depth = 0;
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel4.Location = new System.Drawing.Point(30, 96);
+            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel4.Name = "materialLabel4";
+            this.materialLabel4.Size = new System.Drawing.Size(122, 19);
+            this.materialLabel4.TabIndex = 0;
+            this.materialLabel4.Text = "Number of Clicks";
             // 
             // clickCountSelect
             // 
@@ -348,7 +268,7 @@ namespace OSLTT
             "200",
             "250",
             "500"});
-            this.clickCountSelect.Location = new System.Drawing.Point(408, 75);
+            this.clickCountSelect.Location = new System.Drawing.Point(169, 76);
             this.clickCountSelect.MaxDropDownItems = 4;
             this.clickCountSelect.MouseState = MaterialSkin.MouseState.OUT;
             this.clickCountSelect.Name = "clickCountSelect";
@@ -357,67 +277,161 @@ namespace OSLTT
             this.clickCountSelect.TabIndex = 44;
             this.clickCountSelect.SelectedIndexChanged += new System.EventHandler(this.clickCountSelect_SelectedIndexChanged);
             // 
-            // materialLabel4
+            // materialLabel5
             // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel4.Location = new System.Drawing.Point(269, 95);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(122, 19);
-            this.materialLabel4.TabIndex = 0;
-            this.materialLabel4.Text = "Number of Clicks";
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.Depth = 0;
+            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel5.Location = new System.Drawing.Point(30, 150);
+            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(147, 19);
+            this.materialLabel5.TabIndex = 45;
+            this.materialLabel5.Text = "Time Between Clicks";
             // 
-            // lightSensorToggle
+            // autoClickToggle
             // 
-            this.lightSensorToggle.AutoSize = true;
-            this.lightSensorToggle.Checked = true;
-            this.lightSensorToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.lightSensorToggle.Depth = 0;
-            this.lightSensorToggle.Location = new System.Drawing.Point(14, 198);
-            this.lightSensorToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.lightSensorToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.lightSensorToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lightSensorToggle.Name = "lightSensorToggle";
-            this.lightSensorToggle.Ripple = true;
-            this.lightSensorToggle.Size = new System.Drawing.Size(147, 37);
-            this.lightSensorToggle.TabIndex = 45;
-            this.lightSensorToggle.Text = "Light Sensor";
-            this.lightSensorToggle.UseVisualStyleBackColor = true;
-            this.lightSensorToggle.CheckedChanged += new System.EventHandler(this.lightSensorToggle_CheckedChanged);
+            this.autoClickToggle.AutoSize = true;
+            this.autoClickToggle.Depth = 0;
+            this.autoClickToggle.Location = new System.Drawing.Point(23, 43);
+            this.autoClickToggle.Margin = new System.Windows.Forms.Padding(0);
+            this.autoClickToggle.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.autoClickToggle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.autoClickToggle.Name = "autoClickToggle";
+            this.autoClickToggle.Ripple = true;
+            this.autoClickToggle.Size = new System.Drawing.Size(129, 37);
+            this.autoClickToggle.TabIndex = 55;
+            this.autoClickToggle.Text = "Auto Click";
+            this.autoClickToggle.UseVisualStyleBackColor = true;
+            this.autoClickToggle.CheckedChanged += new System.EventHandler(this.autoClickToggle_CheckedChanged);
             // 
-            // pinTriggerToggle
+            // timeBetweenSelect
             // 
-            this.pinTriggerToggle.AutoSize = true;
-            this.pinTriggerToggle.Depth = 0;
-            this.pinTriggerToggle.Location = new System.Drawing.Point(14, 117);
-            this.pinTriggerToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.pinTriggerToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.pinTriggerToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.pinTriggerToggle.Name = "pinTriggerToggle";
-            this.pinTriggerToggle.Ripple = true;
-            this.pinTriggerToggle.Size = new System.Drawing.Size(134, 37);
-            this.pinTriggerToggle.TabIndex = 44;
-            this.pinTriggerToggle.Text = "2 Pin Input";
-            this.pinTriggerToggle.UseVisualStyleBackColor = true;
-            this.pinTriggerToggle.CheckedChanged += new System.EventHandler(this.pinTriggerToggle_CheckedChanged);
+            this.timeBetweenSelect.AutoResize = false;
+            this.timeBetweenSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.timeBetweenSelect.Depth = 0;
+            this.timeBetweenSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.timeBetweenSelect.DropDownHeight = 174;
+            this.timeBetweenSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timeBetweenSelect.DropDownWidth = 121;
+            this.timeBetweenSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.timeBetweenSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.timeBetweenSelect.FormattingEnabled = true;
+            this.timeBetweenSelect.IntegralHeight = false;
+            this.timeBetweenSelect.ItemHeight = 43;
+            this.timeBetweenSelect.Items.AddRange(new object[] {
+            "0.5",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.timeBetweenSelect.Location = new System.Drawing.Point(188, 133);
+            this.timeBetweenSelect.MaxDropDownItems = 4;
+            this.timeBetweenSelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.timeBetweenSelect.Name = "timeBetweenSelect";
+            this.timeBetweenSelect.Size = new System.Drawing.Size(121, 49);
+            this.timeBetweenSelect.StartIndex = 0;
+            this.timeBetweenSelect.TabIndex = 46;
+            this.timeBetweenSelect.SelectedIndexChanged += new System.EventHandler(this.timeBetweenSelect_SelectedIndexChanged);
             // 
-            // audioTriggerToggle
+            // preTestToggle
             // 
-            this.audioTriggerToggle.AutoSize = true;
-            this.audioTriggerToggle.Depth = 0;
-            this.audioTriggerToggle.Location = new System.Drawing.Point(14, 80);
-            this.audioTriggerToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.audioTriggerToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.audioTriggerToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.audioTriggerToggle.Name = "audioTriggerToggle";
-            this.audioTriggerToggle.Ripple = true;
-            this.audioTriggerToggle.Size = new System.Drawing.Size(178, 37);
-            this.audioTriggerToggle.TabIndex = 43;
-            this.audioTriggerToggle.Text = "Audio Jack (Mic)";
-            this.audioTriggerToggle.UseVisualStyleBackColor = true;
-            this.audioTriggerToggle.CheckedChanged += new System.EventHandler(this.audioTriggerToggle_CheckedChanged);
+            this.preTestToggle.AutoSize = true;
+            this.preTestToggle.Depth = 0;
+            this.preTestToggle.Location = new System.Drawing.Point(23, 226);
+            this.preTestToggle.Margin = new System.Windows.Forms.Padding(0);
+            this.preTestToggle.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.preTestToggle.MouseState = MaterialSkin.MouseState.HOVER;
+            this.preTestToggle.Name = "preTestToggle";
+            this.preTestToggle.Ripple = true;
+            this.preTestToggle.Size = new System.Drawing.Size(168, 37);
+            this.preTestToggle.TabIndex = 52;
+            this.preTestToggle.Text = "Pre-test System";
+            this.preTestToggle.UseVisualStyleBackColor = true;
+            this.preTestToggle.CheckedChanged += new System.EventHandler(this.preTestToggle_CheckedChanged);
+            // 
+            // materialLabel9
+            // 
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel9.Location = new System.Drawing.Point(28, 196);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(243, 29);
+            this.materialLabel9.TabIndex = 53;
+            this.materialLabel9.Text = "Isolate Device Latency";
+            // 
+            // materialCard1
+            // 
+            this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard1.Controls.Add(this.twoPinRadio);
+            this.materialCard1.Controls.Add(this.audioTriggerRadio);
+            this.materialCard1.Controls.Add(this.buttonTriggerRadio);
+            this.materialCard1.Controls.Add(this.materialLabel6);
+            this.materialCard1.Depth = 0;
+            this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard1.Location = new System.Drawing.Point(4, 7);
+            this.materialCard1.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard1.Name = "materialCard1";
+            this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard1.Size = new System.Drawing.Size(195, 169);
+            this.materialCard1.TabIndex = 74;
+            // 
+            // twoPinRadio
+            // 
+            this.twoPinRadio.AutoSize = true;
+            this.twoPinRadio.Depth = 0;
+            this.twoPinRadio.Location = new System.Drawing.Point(14, 123);
+            this.twoPinRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.twoPinRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.twoPinRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.twoPinRadio.Name = "twoPinRadio";
+            this.twoPinRadio.Ripple = true;
+            this.twoPinRadio.Size = new System.Drawing.Size(111, 37);
+            this.twoPinRadio.TabIndex = 69;
+            this.twoPinRadio.TabStop = true;
+            this.twoPinRadio.Text = "2 Pin Input";
+            this.twoPinRadio.UseVisualStyleBackColor = true;
+            this.twoPinRadio.CheckedChanged += new System.EventHandler(this.twoPinRadio_CheckedChanged);
+            // 
+            // audioTriggerRadio
+            // 
+            this.audioTriggerRadio.AutoSize = true;
+            this.audioTriggerRadio.Depth = 0;
+            this.audioTriggerRadio.Location = new System.Drawing.Point(14, 86);
+            this.audioTriggerRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.audioTriggerRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.audioTriggerRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioTriggerRadio.Name = "audioTriggerRadio";
+            this.audioTriggerRadio.Ripple = true;
+            this.audioTriggerRadio.Size = new System.Drawing.Size(155, 37);
+            this.audioTriggerRadio.TabIndex = 68;
+            this.audioTriggerRadio.TabStop = true;
+            this.audioTriggerRadio.Text = "Audio Jack (Mic)";
+            this.audioTriggerRadio.UseVisualStyleBackColor = true;
+            this.audioTriggerRadio.CheckedChanged += new System.EventHandler(this.audioTriggerRadio_CheckedChanged);
+            // 
+            // buttonTriggerRadio
+            // 
+            this.buttonTriggerRadio.AutoSize = true;
+            this.buttonTriggerRadio.Checked = true;
+            this.buttonTriggerRadio.Depth = 0;
+            this.buttonTriggerRadio.Location = new System.Drawing.Point(14, 49);
+            this.buttonTriggerRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonTriggerRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.buttonTriggerRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonTriggerRadio.Name = "buttonTriggerRadio";
+            this.buttonTriggerRadio.Ripple = true;
+            this.buttonTriggerRadio.Size = new System.Drawing.Size(136, 37);
+            this.buttonTriggerRadio.TabIndex = 67;
+            this.buttonTriggerRadio.TabStop = true;
+            this.buttonTriggerRadio.Text = "OSLTT Button";
+            this.buttonTriggerRadio.UseVisualStyleBackColor = true;
+            this.buttonTriggerRadio.CheckedChanged += new System.EventHandler(this.buttonTriggerRadio_CheckedChanged);
             // 
             // materialLabel6
             // 
@@ -429,94 +443,162 @@ namespace OSLTT
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
             this.materialLabel6.Size = new System.Drawing.Size(133, 29);
-            this.materialLabel6.TabIndex = 42;
+            this.materialLabel6.TabIndex = 66;
             this.materialLabel6.Text = "Trigger Type";
             // 
-            // buttonTriggerToggle
+            // materialCard4
             // 
-            this.buttonTriggerToggle.AutoSize = true;
-            this.buttonTriggerToggle.Checked = true;
-            this.buttonTriggerToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.buttonTriggerToggle.Depth = 0;
-            this.buttonTriggerToggle.Location = new System.Drawing.Point(14, 43);
-            this.buttonTriggerToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonTriggerToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.buttonTriggerToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.buttonTriggerToggle.Name = "buttonTriggerToggle";
-            this.buttonTriggerToggle.Ripple = true;
-            this.buttonTriggerToggle.Size = new System.Drawing.Size(159, 37);
-            this.buttonTriggerToggle.TabIndex = 41;
-            this.buttonTriggerToggle.Text = "OSLTT Button";
-            this.buttonTriggerToggle.UseVisualStyleBackColor = true;
-            this.buttonTriggerToggle.CheckedChanged += new System.EventHandler(this.buttonTriggerToggle_CheckedChanged);
+            this.materialCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard4.Controls.Add(this.audioSourceRadio);
+            this.materialCard4.Controls.Add(this.gameExternalRadio);
+            this.materialCard4.Controls.Add(this.mouseKeyboardRadio);
+            this.materialCard4.Controls.Add(this.DirectXRadio);
+            this.materialCard4.Controls.Add(this.materialLabel3);
+            this.materialCard4.Depth = 0;
+            this.materialCard4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard4.Location = new System.Drawing.Point(565, 140);
+            this.materialCard4.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard4.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard4.Name = "materialCard4";
+            this.materialCard4.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard4.Size = new System.Drawing.Size(242, 198);
+            this.materialCard4.TabIndex = 76;
             // 
-            // clickTrackingToggle
+            // audioSourceRadio
             // 
-            this.clickTrackingToggle.AutoSize = true;
-            this.clickTrackingToggle.Depth = 0;
-            this.clickTrackingToggle.Location = new System.Drawing.Point(14, 272);
-            this.clickTrackingToggle.Margin = new System.Windows.Forms.Padding(0);
-            this.clickTrackingToggle.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.clickTrackingToggle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.clickTrackingToggle.Name = "clickTrackingToggle";
-            this.clickTrackingToggle.Ripple = true;
-            this.clickTrackingToggle.Size = new System.Drawing.Size(168, 37);
-            this.clickTrackingToggle.TabIndex = 63;
-            this.clickTrackingToggle.Text = "Click/Keystroke";
-            this.clickTrackingToggle.UseVisualStyleBackColor = true;
-            this.clickTrackingToggle.CheckedChanged += new System.EventHandler(this.clickTrackingToggle_CheckedChanged);
+            this.audioSourceRadio.AutoSize = true;
+            this.audioSourceRadio.Depth = 0;
+            this.audioSourceRadio.Location = new System.Drawing.Point(14, 160);
+            this.audioSourceRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.audioSourceRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.audioSourceRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.audioSourceRadio.Name = "audioSourceRadio";
+            this.audioSourceRadio.Ripple = true;
+            this.audioSourceRadio.Size = new System.Drawing.Size(107, 37);
+            this.audioSourceRadio.TabIndex = 70;
+            this.audioSourceRadio.TabStop = true;
+            this.audioSourceRadio.Text = "Audio Clip";
+            this.audioSourceRadio.UseVisualStyleBackColor = true;
+            this.audioSourceRadio.CheckedChanged += new System.EventHandler(this.audioSourceRadio_CheckedChanged);
             // 
-            // materialLabel1
+            // gameExternalRadio
             // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel1.Location = new System.Drawing.Point(267, 205);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(249, 29);
-            this.materialLabel1.TabIndex = 64;
-            this.materialLabel1.Text = "Isolate System Latency";
+            this.gameExternalRadio.AutoSize = true;
+            this.gameExternalRadio.Depth = 0;
+            this.gameExternalRadio.Location = new System.Drawing.Point(14, 123);
+            this.gameExternalRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.gameExternalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.gameExternalRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gameExternalRadio.Name = "gameExternalRadio";
+            this.gameExternalRadio.Ripple = true;
+            this.gameExternalRadio.Size = new System.Drawing.Size(141, 37);
+            this.gameExternalRadio.TabIndex = 69;
+            this.gameExternalRadio.TabStop = true;
+            this.gameExternalRadio.Text = "Game/External";
+            this.gameExternalRadio.UseVisualStyleBackColor = true;
+            this.gameExternalRadio.CheckedChanged += new System.EventHandler(this.gameExternalRadio_CheckedChanged);
+            // 
+            // mouseKeyboardRadio
+            // 
+            this.mouseKeyboardRadio.AutoSize = true;
+            this.mouseKeyboardRadio.Depth = 0;
+            this.mouseKeyboardRadio.Location = new System.Drawing.Point(14, 86);
+            this.mouseKeyboardRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.mouseKeyboardRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.mouseKeyboardRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.mouseKeyboardRadio.Name = "mouseKeyboardRadio";
+            this.mouseKeyboardRadio.Ripple = true;
+            this.mouseKeyboardRadio.Size = new System.Drawing.Size(157, 37);
+            this.mouseKeyboardRadio.TabIndex = 68;
+            this.mouseKeyboardRadio.TabStop = true;
+            this.mouseKeyboardRadio.Text = "Mouse/Keyboard";
+            this.mouseKeyboardRadio.UseVisualStyleBackColor = true;
+            this.mouseKeyboardRadio.CheckedChanged += new System.EventHandler(this.mouseKeyboardRadio_CheckedChanged);
+            // 
+            // DirectXRadio
+            // 
+            this.DirectXRadio.AutoSize = true;
+            this.DirectXRadio.Checked = true;
+            this.DirectXRadio.Depth = 0;
+            this.DirectXRadio.Location = new System.Drawing.Point(14, 49);
+            this.DirectXRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.DirectXRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.DirectXRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.DirectXRadio.Name = "DirectXRadio";
+            this.DirectXRadio.Ripple = true;
+            this.DirectXRadio.Size = new System.Drawing.Size(122, 37);
+            this.DirectXRadio.TabIndex = 67;
+            this.DirectXRadio.TabStop = true;
+            this.DirectXRadio.Text = "DirectX Tool";
+            this.DirectXRadio.UseVisualStyleBackColor = true;
+            this.DirectXRadio.CheckedChanged += new System.EventHandler(this.DirectXRadio_CheckedChanged);
+            // 
+            // materialLabel3
+            // 
+            this.materialLabel3.AutoSize = true;
+            this.materialLabel3.Depth = 0;
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel3.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel3.Location = new System.Drawing.Point(17, 14);
+            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel3.Name = "materialLabel3";
+            this.materialLabel3.Size = new System.Drawing.Size(129, 29);
+            this.materialLabel3.TabIndex = 66;
+            this.materialLabel3.Text = "Test Source";
             // 
             // SettingsPane
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.materialCard5);
+            this.Controls.Add(this.materialCard3);
             this.Controls.Add(this.settingsCard);
+            this.Controls.Add(this.materialCard1);
+            this.Controls.Add(this.materialCard4);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(887, 324);
+            this.Size = new System.Drawing.Size(816, 373);
+            this.materialCard5.ResumeLayout(false);
+            this.materialCard5.PerformLayout();
+            this.materialCard3.ResumeLayout(false);
+            this.materialCard3.PerformLayout();
             this.settingsCard.ResumeLayout(false);
             this.settingsCard.PerformLayout();
+            this.materialCard1.ResumeLayout(false);
+            this.materialCard1.PerformLayout();
+            this.materialCard4.ResumeLayout(false);
+            this.materialCard4.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialCard settingsCard;
-        private MaterialSkin.Controls.MaterialSwitch MouseKeyboardToggle;
+        private MaterialSkin.Controls.MaterialCard materialCard5;
         private MaterialSkin.Controls.MaterialLabel materialLabel10;
         private MaterialSkin.Controls.MaterialComboBox displaySelect;
-        private MaterialSkin.Controls.MaterialSwitch audioSourceToggle;
-        private MaterialSkin.Controls.MaterialSwitch autoClickToggle;
-        private MaterialSkin.Controls.MaterialSwitch preTestToggle;
-        private MaterialSkin.Controls.MaterialSwitch gameExternalToggle;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialSwitch directXToggle;
-        private MaterialSkin.Controls.MaterialLabel materialLabel8;
-        private MaterialSkin.Controls.MaterialComboBox timeBetweenSelect;
-        private MaterialSkin.Controls.MaterialLabel materialLabel5;
-        private MaterialSkin.Controls.MaterialSwitch audioSensorToggle;
-        private MaterialSkin.Controls.MaterialLabel materialLabel7;
-        private MaterialSkin.Controls.MaterialComboBox clickCountSelect;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private MaterialSkin.Controls.MaterialSwitch lightSensorToggle;
-        private MaterialSkin.Controls.MaterialSwitch pinTriggerToggle;
-        private MaterialSkin.Controls.MaterialSwitch audioTriggerToggle;
-        private MaterialSkin.Controls.MaterialLabel materialLabel6;
-        private MaterialSkin.Controls.MaterialSwitch buttonTriggerToggle;
-        private MaterialSkin.Controls.MaterialSwitch clickTrackingToggle;
+        private MaterialSkin.Controls.MaterialCard materialCard3;
+        private MaterialSkin.Controls.MaterialRadioButton clickKeypressRadio;
+        private MaterialSkin.Controls.MaterialRadioButton audioSensorRadio;
+        private MaterialSkin.Controls.MaterialRadioButton lightSensorRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private MaterialSkin.Controls.MaterialCard settingsCard;
+        private MaterialSkin.Controls.MaterialLabel materialLabel8;
+        private MaterialSkin.Controls.MaterialLabel materialLabel4;
+        private MaterialSkin.Controls.MaterialComboBox clickCountSelect;
+        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private MaterialSkin.Controls.MaterialSwitch autoClickToggle;
+        private MaterialSkin.Controls.MaterialComboBox timeBetweenSelect;
+        private MaterialSkin.Controls.MaterialSwitch preTestToggle;
+        private MaterialSkin.Controls.MaterialLabel materialLabel9;
+        private MaterialSkin.Controls.MaterialCard materialCard1;
+        private MaterialSkin.Controls.MaterialRadioButton twoPinRadio;
+        private MaterialSkin.Controls.MaterialRadioButton audioTriggerRadio;
+        private MaterialSkin.Controls.MaterialRadioButton buttonTriggerRadio;
+        private MaterialSkin.Controls.MaterialLabel materialLabel6;
+        private MaterialSkin.Controls.MaterialCard materialCard4;
+        private MaterialSkin.Controls.MaterialRadioButton audioSourceRadio;
+        private MaterialSkin.Controls.MaterialRadioButton gameExternalRadio;
+        private MaterialSkin.Controls.MaterialRadioButton mouseKeyboardRadio;
+        private MaterialSkin.Controls.MaterialRadioButton DirectXRadio;
+        private MaterialSkin.Controls.MaterialLabel materialLabel3;
     }
 }

@@ -34,16 +34,7 @@ namespace OSLTT
 
         private ResourceManager rm = OSLTT.Properties.Resources.ResourceManager;
 
-        public class Displays
-        {
-            public string Name { get; set; }
-            public int Freq { get; set; }
-            public string Resolution { get; set; }
-            public string Connection { get; set; }
-            public string ManufacturerCode { get; set; }
-            public string EDIDModel { get; set; }
-        }
-        public List<Displays> displayList = new List<Displays>();
+        
 
         private Thread readThread = null;
         private Thread connectThread = null;
@@ -82,7 +73,7 @@ namespace OSLTT
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-
+            //982, 588
             //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
             this.Resize += Form1_Resize;
@@ -106,7 +97,7 @@ namespace OSLTT
             UserSettings.readAndSaveUserSettings(false);
 
             LoadSettings();
-            listMonitors();
+            
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
             toggleMouseKeyboardBoxes(false);
@@ -689,7 +680,7 @@ namespace OSLTT
                 {
                     this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
-                    this.materialTabControl1.Invoke((MethodInvoker)(() => this.materialTabControl1.SelectedIndex = materialTabControl1.TabCount - 1));
+                    
                 }
                     
             }
@@ -701,7 +692,7 @@ namespace OSLTT
                 {
                     this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
-                    this.materialTabControl1.SelectedIndex = materialTabControl1.TabCount - 1;
+                    
                 }
             }
         }
@@ -744,31 +735,7 @@ namespace OSLTT
             }
         }
 
-        private void monitorPresetBtn_Click(object sender, EventArgs e)
-        {
-            PresetConfigs(true, false, false, true, false, true, 100, 0.5, false, true, false, false);
-        }
-
-        private void micePresetBtn_Click(object sender, EventArgs e)
-        {
-            PresetConfigs(false, true, false, true, false, false, Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect, true, true, false, false);
-        }
-
-        private void gamePresetBtn_Click(object sender, EventArgs e)
-        {
-            PresetConfigs(true, false, false, true, false, true, Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect, false, false, true, false);
-        }
-
-        private void audioPresetBtn_Click(object sender, EventArgs e)
-        {
-            PresetConfigs(true, false, false, false, true, true, 100, 2, false, false, false, true);
-        }
-
-        private void resultsViewBtn_Click(object sender, EventArgs e)
-        {
-            ResultsView rv = new ResultsView();
-            rv.Show();
-        }
+        
 
         private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
         {
@@ -777,19 +744,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(true, false, false, lightSensorToggle.Checked, 
-                        audioSensorToggle.Checked, autoClickToggle.Checked, 
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked, 
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                   
                 }
                 else
                 {
-                    PresetConfigs(false, true, false, lightSensorToggle.Checked,
-                        false, false,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, false);
+                   
                 }
                 SaveSettings();
             }
@@ -802,17 +761,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(false, true, false, true, false, false,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked, gameExternalToggle.Checked, false);
+                  
                 }
                 else
                 {
-                    PresetConfigs(true, false, false, lightSensorToggle.Checked,
-                        audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                   
                 }
                 SaveSettings();
             }
@@ -825,17 +778,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(false, false, true, true, false, false,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, false, true, false);
+                    
                 }
                 else
                 {
-                    PresetConfigs(true, false, false, lightSensorToggle.Checked,
-                        audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                 
                 }
                 SaveSettings();
             }
@@ -848,19 +795,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        true, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, false);
+                    
                 }
                 else
                 {
-                    PresetConfigs(true, false, false,
-                        false, true, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, true);
+                   
                 }
                 SaveSettings();
             }
@@ -873,18 +812,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(true, false, false,
-                        false, true, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, false, false, true);
+                    
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        true, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, true,
-                        false, false);
+                 
                 }
                 SaveSettings();
             }
@@ -897,19 +829,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(true, false, false,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                   
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                    
                 }
                 SaveSettings();
             }
@@ -947,61 +871,7 @@ namespace OSLTT
 
         
 
-        private void listMonitors(int selected = 0)
-        {
-            displaySelect.Items.Clear(); // Clear existing array and list before filling them
-            displayList.Clear();
-            var i = WindowsDisplayAPI.Display.GetDisplays();
-
-            foreach (var target in WindowsDisplayAPI.DisplayConfig.PathInfo.GetActivePaths())
-            {
-                foreach (var item in target.TargetsInfo)
-                {
-                    try
-                    {
-                        string con = "Other";
-                        if (item.OutputTechnology.ToString() == "DisplayPortExternal")
-                        {
-                            con = "DP";
-                        }
-                        else if (item.OutputTechnology.ToString() == "HDMI")
-                        {
-                            con = "HDMI";
-                        }
-                        double refreshRate = item.FrequencyInMillihertz;
-                        refreshRate /= 1000;
-                        refreshRate = Math.Round(refreshRate, 0);
-                        int refresh = (int)refreshRate;
-                        string name = item.DisplayTarget.ToString();
-                        string manCode = "";
-                        if (name == "")
-                        {
-                            name = target.DisplaySource.ToString().Remove(0, 4);
-                        }
-                        else { manCode = item.DisplayTarget.EDIDManufactureCode; }
-                        string res = "";
-                        try
-                        {
-                            res = item.DisplayTarget.PreferredResolution.Width.ToString() + "x" + item.DisplayTarget.PreferredResolution.Height.ToString();
-                        }
-                        catch { }
-                        if (res == "")
-                        {
-                            res = "Failed to Aquire";
-                        }
-                        string edidCode = item.DisplayTarget.EDIDProductCode.ToString();
-                        var data = new Displays { Name = name, Freq = refresh, Resolution = res, Connection = con, ManufacturerCode = manCode, EDIDModel = edidCode };
-                        displayList.Add(data);
-                        displaySelect.Items.Add(name);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message + ex.StackTrace);
-                    }
-                }
-            }
-            displaySelect.SelectedIndex = selected; // Pre-select the primary display
-        }
+        
 
         private void preTestToggle_CheckedChanged(object sender, EventArgs e)
         {
@@ -1010,19 +880,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        true, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, true,
-                        false, false);
+                 
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked); // possibly add pre-testing audio latency, maybe.
+                    
                 }
                 SaveSettings();
             }
@@ -1035,17 +897,10 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, true, false, false);
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, false, true, false);
+
                 }
                 SaveSettings();
             }
@@ -1058,19 +913,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(true, false, false,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                    
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, directXToggle.Checked,
-                        gameExternalToggle.Checked, audioSourceToggle.Checked);
+                   
                 }
                 SaveSettings();
             }
@@ -1083,17 +930,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        true, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        false, false, true, false); // possibly add pre-test latency for game/external
+                    
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, audioSensorToggle.Checked, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, true, false, false);
+                   
                 }
                 SaveSettings();
             }
@@ -1105,16 +946,11 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    PresetConfigs(true, false, false, false, true, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        false, false, false, true);
+                    
                 }
                 else
                 {
-                    PresetConfigs(buttonTriggerToggle.Checked, audioTriggerToggle.Checked, pinTriggerToggle.Checked,
-                        lightSensorToggle.Checked, false, autoClickToggle.Checked,
-                        Properties.Settings.Default.clickCountSelect, Properties.Settings.Default.timeBetweenSelect,
-                        preTestToggle.Checked, true, false, false);
+                    
                 }
                 SaveSettings();
             }
@@ -1135,7 +971,7 @@ namespace OSLTT
 
         private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool audio, bool autoClick, int clicks, double time, bool preTest, bool directX,  bool game, bool audioSource)
         {
-            this.buttonTriggerToggle.Checked = btn;
+            /*this.buttonTriggerToggle.Checked = btn;
             this.audioTriggerToggle.Checked = mic;
             this.pinTriggerToggle.Checked = pin;
             this.lightSensorToggle.Checked = light;
@@ -1152,28 +988,22 @@ namespace OSLTT
             clickCountSelect.Enabled = autoClick;
             timeBetweenSelect.Enabled = autoClick;
             displaySelect.Enabled = directX;
-            
+            */
         }
 
         private void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
         {
-            if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
+            /*if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
             if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
-            Properties.Settings.Default.buttonTriggerToggle = buttonTriggerToggle.Checked;
-            Properties.Settings.Default.audioTriggerToggle = audioTriggerToggle.Checked;
-            Properties.Settings.Default.pinTriggerToggle = pinTriggerToggle.Checked;
-            Properties.Settings.Default.lightSensorToggle = lightSensorToggle.Checked;
-            Properties.Settings.Default.audioSourceToggle = audioSourceToggle.Checked;
-            Properties.Settings.Default.autoClickToggle = autoClickToggle.Checked;
+            
             Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
             Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.Items[timeBetweenSelect.SelectedIndex].ToString());
             Properties.Settings.Default.preTestToggle = preTestToggle.Checked;
-            Properties.Settings.Default.directXToggle = directXToggle.Checked;
-            Properties.Settings.Default.gameExternalToggle = gameExternalToggle.Checked;
+            
             Properties.Settings.Default.Save();
 
             string settings = "I";
-            if (lightSensorToggle.Checked) { settings += "1"; }
+            /*if (lightSensorToggle.Checked) { settings += "1"; }
             else if (audioSourceToggle.Checked) { settings += "2"; }
             if (buttonTriggerToggle.Checked) { settings += "1"; }
             else if (audioTriggerToggle.Checked) { settings += "2"; }
@@ -1188,12 +1018,12 @@ namespace OSLTT
             if (t == 0.5) { settings += "1"; }
             else { t += 1; settings += t.ToString(); }
             Console.WriteLine(settings);
-            portWrite(settings);
+            portWrite(settings);*/
         }
 
         private void LoadSettings()
         {
-            for (int i = 0; i < clickCountSelect.Items.Count; i++)
+            /*for (int i = 0; i < clickCountSelect.Items.Count; i++)
             {
                 int index = int.Parse(clickCountSelect.Items[i].ToString());
                 if (index == Properties.Settings.Default.clickCountSelect)
@@ -1211,17 +1041,11 @@ namespace OSLTT
                     break;
                 }
             }
-            buttonTriggerToggle.Checked = Properties.Settings.Default.buttonTriggerToggle;
-            audioTriggerToggle.Checked = Properties.Settings.Default.audioTriggerToggle;
-            pinTriggerToggle.Checked = Properties.Settings.Default.pinTriggerToggle;
-            lightSensorToggle.Checked = Properties.Settings.Default.lightSensorToggle;
+            
             autoClickToggle.Checked = Properties.Settings.Default.autoClickToggle;
             preTestToggle.Checked = Properties.Settings.Default.preTestToggle;
-            directXToggle.Checked = Properties.Settings.Default.directXToggle;
-            gameExternalToggle.Checked = Properties.Settings.Default.gameExternalToggle;
-            audioSourceToggle.Checked = Properties.Settings.Default.audioSourceToggle;
             if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
-            if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
+            if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }*/
         }
 
         private void SetComboBoxValue(MaterialComboBox mcb, double value)
@@ -1417,7 +1241,55 @@ namespace OSLTT
 
         }
 
-        
+        private void buttonTriggerRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioTriggerRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void twoPinRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lightSensorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioSensorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clickKeypressRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DirectXRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mouseKeyboardRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gameExternalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void audioSourceRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
