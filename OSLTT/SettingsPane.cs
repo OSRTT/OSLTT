@@ -21,7 +21,28 @@ namespace OSLTT
         }
 
         TestSettings testSettings = new TestSettings();
+        public Main mainWindow;
 
+        private void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
+        {
+            if (mainWindow != null)
+            {
+                string settings = "I";
+                settings += sensor.ToString();
+                settings += trigger.ToString();
+                settings += autoClick.ToString();
+                settings += directX.ToString();
+                clicks = Properties.Settings.Default.clickCountSelect / 10;
+                settings += clicks.ToString("00");
+                double t = Properties.Settings.Default.timeBetweenSelect;
+                if (t == 0.5) { settings += "1"; }
+                else { t += 1; settings += t.ToString(); }
+                Console.WriteLine(settings);
+                mainWindow.portWrite(settings);
+
+                // maybe change these settings? change directX to source
+            }
+        }
         public class Displays
         {
             public string Name { get; set; }
@@ -98,6 +119,8 @@ namespace OSLTT
             // pretest disabled
             // display enabled
             // directx (disabled)
+            ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+            EnableDisable(false, false, false, true, true, false);
         }
 
         public void MouseKeyboardPreset()
@@ -106,6 +129,8 @@ namespace OSLTT
             // mouse/keyboard sensor
             // clicks/keypress source
             // audio jack trigger
+            ChangeSettings(2, 3, 2, false, 100, 0.5, false);
+            EnableDisable(false, false, false, false, false, false);
         }
 
         public void GamesPreset()
@@ -117,6 +142,8 @@ namespace OSLTT
             // pretest on (enabled)
             // display disabled
             // game/external (disabled)
+            ChangeSettings(1, 1, 3, true, 100, 0.5, true);
+            EnableDisable(false, false, false, true, false, false);
         }
 
         public void AudioPreset()
@@ -127,11 +154,130 @@ namespace OSLTT
             // pretest disabled (for now)
             // display disabled
             // audio clip source
+            ChangeSettings(1, 2, 4, true, 30, 1, false);
+            EnableDisable(false, false, false, true, false, false);
         }
 
         public void CustomPreset1()
         {
             // set to monitor settings then enable everything
+            ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+            EnableDisable(true, true, true, true, true, true);
+        }
+
+        public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest)
+        {
+            MaterialRadioButton triggerType;
+            MaterialRadioButton sensorType;
+            MaterialRadioButton sourceType;
+            if (trigger == 1)
+            {
+                triggerType = buttonTriggerRadio;
+            }
+            else if (trigger == 2)
+            {
+                triggerType = audioTriggerRadio;
+            }
+            else
+            {
+                triggerType = twoPinRadio;
+            }
+            if (sensor == 1)
+            {
+                sensorType = lightSensorRadio;
+            }
+            else if (sensor == 2)
+            {
+                sensorType = audioSensorRadio;
+            }
+            else
+            {
+                sensorType = clickKeypressRadio;
+            }
+            if (source == 1)
+            {
+                sourceType = DirectXRadio;
+            }
+            else if (source == 2)
+            {
+                sourceType = mouseKeyboardRadio;
+            }
+            else if (source == 3)
+            {
+                sourceType = gameExternalRadio;
+            }
+            else
+            {
+                sourceType = audioSourceRadio;
+            }
+            
+            SetComboBoxValue(clickCountSelect, clicks);
+            SetComboBoxValue(timeBetweenSelect, time);
+
+            if (this.InvokeRequired)
+            {
+                triggerType.Invoke((MethodInvoker)(() => triggerType.Checked = true));
+                sensorType.Invoke((MethodInvoker)(() => sensorType.Checked = true));
+                sourceType.Invoke((MethodInvoker)(() => sourceType.Checked = true));
+                autoClickToggle.Invoke((MethodInvoker)(() => autoClickToggle.Checked = autoClick));
+                preTestToggle.Invoke((MethodInvoker)(() => preTestToggle.Checked = pretest));
+            }
+            else
+            {
+                triggerType.Checked = true;
+                sensorType.Checked = true;
+                sourceType.Checked = true;
+                autoClickToggle.Checked = autoClick;
+                preTestToggle.Checked = pretest;
+            }
+            testSettings.AutoClick = autoClick;
+            testSettings.ClickCount = clicks;
+            testSettings.PreTest = pretest;
+            testSettings.SensorType = sensor;
+            testSettings.TestSource = source;
+            testSettings.TimeBetween = time;
+            testSettings.TriggerType = trigger;
+        }
+
+        private void SetComboBoxValue(MaterialComboBox mcb, double value)
+        {
+            for (int i = 0; i < mcb.Items.Count; i++)
+            {
+                if (mcb.Items[i].ToString() == value.ToString())
+                {
+                    if (mcb.InvokeRequired)
+                    {
+                        mcb.Invoke((MethodInvoker)(() => mcb.SelectedIndex = i));
+                    }
+                    else
+                    {
+                        mcb.SelectedIndex = i;
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void EnableDisable(bool triggerCard, bool sensorCard, bool sourceCard, bool settingsCard, bool displayCard, bool pretest)
+        {
+            if (this.InvokeRequired)
+            {
+                this.triggerCard.Invoke((MethodInvoker)(() => this.triggerCard.Enabled = triggerCard));
+                this.sensorCard.Invoke((MethodInvoker)(() => this.sensorCard.Enabled = sensorCard));
+                this.sourceCard.Invoke((MethodInvoker)(() => this.sourceCard.Enabled = sourceCard));
+                this.settingsCard.Invoke((MethodInvoker)(() => this.settingsCard.Enabled = settingsCard));
+                this.displayCard.Invoke((MethodInvoker)(() => this.displayCard.Enabled = displayCard));
+                this.preTestToggle.Invoke((MethodInvoker)(() => this.preTestToggle.Enabled = pretest));
+            }
+            else
+            {
+                this.triggerCard.Enabled = triggerCard;
+                this.sensorCard.Enabled = sensorCard;
+                this.sourceCard.Enabled = sourceCard;
+                this.settingsCard.Enabled = settingsCard;
+                this.displayCard.Enabled = displayCard;
+                this.preTestToggle.Enabled = pretest;
+            }
         }
 
         private void buttonTriggerRadio_CheckedChanged(object sender, EventArgs e)
@@ -141,7 +287,15 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    
+                    testSettings.TriggerType = 1;
+                    if (clickKeypressRadio.Checked)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (mouseKeyboardRadio.Checked)
+                    {
+                        DirectXRadio.Checked = true;
+                    }
                 }
                 //SaveSettings();
             }
@@ -215,6 +369,11 @@ namespace OSLTT
         private void audioSourceRadio_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void refreshMonitorsBtn_Click(object sender, EventArgs e)
+        {
+            listMonitors();
         }
     }
 }

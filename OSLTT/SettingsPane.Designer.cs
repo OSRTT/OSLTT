@@ -29,10 +29,10 @@ namespace OSLTT
         /// </summary>
         private void InitializeComponent()
         {
-            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
+            this.displayCard = new MaterialSkin.Controls.MaterialCard();
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
-            this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
+            this.sensorCard = new MaterialSkin.Controls.MaterialCard();
             this.clickKeypressRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.lightSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
@@ -46,38 +46,40 @@ namespace OSLTT
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
+            this.triggerCard = new MaterialSkin.Controls.MaterialCard();
             this.twoPinRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.buttonTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
+            this.sourceCard = new MaterialSkin.Controls.MaterialCard();
             this.audioSourceRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.gameExternalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard5.SuspendLayout();
-            this.materialCard3.SuspendLayout();
+            this.refreshMonitorsBtn = new MaterialSkin.Controls.MaterialButton();
+            this.displayCard.SuspendLayout();
+            this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
-            this.materialCard1.SuspendLayout();
-            this.materialCard4.SuspendLayout();
+            this.triggerCard.SuspendLayout();
+            this.sourceCard.SuspendLayout();
             this.SuspendLayout();
             // 
-            // materialCard5
+            // displayCard
             // 
-            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard5.Controls.Add(this.materialLabel10);
-            this.materialCard5.Controls.Add(this.displaySelect);
-            this.materialCard5.Depth = 0;
-            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard5.Location = new System.Drawing.Point(565, 7);
-            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard5.Name = "materialCard5";
-            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard5.Size = new System.Drawing.Size(242, 109);
-            this.materialCard5.TabIndex = 77;
+            this.displayCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.displayCard.Controls.Add(this.refreshMonitorsBtn);
+            this.displayCard.Controls.Add(this.materialLabel10);
+            this.displayCard.Controls.Add(this.displaySelect);
+            this.displayCard.Depth = 0;
+            this.displayCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.displayCard.Location = new System.Drawing.Point(565, 7);
+            this.displayCard.Margin = new System.Windows.Forms.Padding(14);
+            this.displayCard.MouseState = MaterialSkin.MouseState.HOVER;
+            this.displayCard.Name = "displayCard";
+            this.displayCard.Padding = new System.Windows.Forms.Padding(14);
+            this.displayCard.Size = new System.Drawing.Size(242, 123);
+            this.displayCard.TabIndex = 77;
             // 
             // materialLabel10
             // 
@@ -106,7 +108,7 @@ namespace OSLTT
             this.displaySelect.FormattingEnabled = true;
             this.displaySelect.IntegralHeight = false;
             this.displaySelect.ItemHeight = 43;
-            this.displaySelect.Location = new System.Drawing.Point(17, 48);
+            this.displaySelect.Location = new System.Drawing.Point(17, 57);
             this.displaySelect.MaxDropDownItems = 4;
             this.displaySelect.MouseState = MaterialSkin.MouseState.OUT;
             this.displaySelect.Name = "displaySelect";
@@ -115,22 +117,22 @@ namespace OSLTT
             this.displaySelect.TabIndex = 60;
             this.displaySelect.SelectedIndexChanged += new System.EventHandler(this.displaySelect_SelectedIndexChanged);
             // 
-            // materialCard3
+            // sensorCard
             // 
-            this.materialCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard3.Controls.Add(this.clickKeypressRadio);
-            this.materialCard3.Controls.Add(this.audioSensorRadio);
-            this.materialCard3.Controls.Add(this.lightSensorRadio);
-            this.materialCard3.Controls.Add(this.materialLabel1);
-            this.materialCard3.Depth = 0;
-            this.materialCard3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard3.Location = new System.Drawing.Point(4, 191);
-            this.materialCard3.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard3.Name = "materialCard3";
-            this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard3.Size = new System.Drawing.Size(195, 169);
-            this.materialCard3.TabIndex = 75;
+            this.sensorCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.sensorCard.Controls.Add(this.clickKeypressRadio);
+            this.sensorCard.Controls.Add(this.audioSensorRadio);
+            this.sensorCard.Controls.Add(this.lightSensorRadio);
+            this.sensorCard.Controls.Add(this.materialLabel1);
+            this.sensorCard.Depth = 0;
+            this.sensorCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.sensorCard.Location = new System.Drawing.Point(4, 191);
+            this.sensorCard.Margin = new System.Windows.Forms.Padding(14);
+            this.sensorCard.MouseState = MaterialSkin.MouseState.HOVER;
+            this.sensorCard.Name = "sensorCard";
+            this.sensorCard.Padding = new System.Windows.Forms.Padding(14);
+            this.sensorCard.Size = new System.Drawing.Size(195, 169);
+            this.sensorCard.TabIndex = 75;
             // 
             // clickKeypressRadio
             // 
@@ -364,22 +366,22 @@ namespace OSLTT
             this.materialLabel9.TabIndex = 53;
             this.materialLabel9.Text = "Isolate Device Latency";
             // 
-            // materialCard1
+            // triggerCard
             // 
-            this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard1.Controls.Add(this.twoPinRadio);
-            this.materialCard1.Controls.Add(this.audioTriggerRadio);
-            this.materialCard1.Controls.Add(this.buttonTriggerRadio);
-            this.materialCard1.Controls.Add(this.materialLabel6);
-            this.materialCard1.Depth = 0;
-            this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard1.Location = new System.Drawing.Point(4, 7);
-            this.materialCard1.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard1.Name = "materialCard1";
-            this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard1.Size = new System.Drawing.Size(195, 169);
-            this.materialCard1.TabIndex = 74;
+            this.triggerCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.triggerCard.Controls.Add(this.twoPinRadio);
+            this.triggerCard.Controls.Add(this.audioTriggerRadio);
+            this.triggerCard.Controls.Add(this.buttonTriggerRadio);
+            this.triggerCard.Controls.Add(this.materialLabel6);
+            this.triggerCard.Depth = 0;
+            this.triggerCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.triggerCard.Location = new System.Drawing.Point(4, 7);
+            this.triggerCard.Margin = new System.Windows.Forms.Padding(14);
+            this.triggerCard.MouseState = MaterialSkin.MouseState.HOVER;
+            this.triggerCard.Name = "triggerCard";
+            this.triggerCard.Padding = new System.Windows.Forms.Padding(14);
+            this.triggerCard.Size = new System.Drawing.Size(195, 169);
+            this.triggerCard.TabIndex = 74;
             // 
             // twoPinRadio
             // 
@@ -446,23 +448,23 @@ namespace OSLTT
             this.materialLabel6.TabIndex = 66;
             this.materialLabel6.Text = "Trigger Type";
             // 
-            // materialCard4
+            // sourceCard
             // 
-            this.materialCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard4.Controls.Add(this.audioSourceRadio);
-            this.materialCard4.Controls.Add(this.gameExternalRadio);
-            this.materialCard4.Controls.Add(this.mouseKeyboardRadio);
-            this.materialCard4.Controls.Add(this.DirectXRadio);
-            this.materialCard4.Controls.Add(this.materialLabel3);
-            this.materialCard4.Depth = 0;
-            this.materialCard4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard4.Location = new System.Drawing.Point(565, 140);
-            this.materialCard4.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard4.Name = "materialCard4";
-            this.materialCard4.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard4.Size = new System.Drawing.Size(242, 198);
-            this.materialCard4.TabIndex = 76;
+            this.sourceCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.sourceCard.Controls.Add(this.audioSourceRadio);
+            this.sourceCard.Controls.Add(this.gameExternalRadio);
+            this.sourceCard.Controls.Add(this.mouseKeyboardRadio);
+            this.sourceCard.Controls.Add(this.DirectXRadio);
+            this.sourceCard.Controls.Add(this.materialLabel3);
+            this.sourceCard.Depth = 0;
+            this.sourceCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.sourceCard.Location = new System.Drawing.Point(565, 140);
+            this.sourceCard.Margin = new System.Windows.Forms.Padding(14);
+            this.sourceCard.MouseState = MaterialSkin.MouseState.HOVER;
+            this.sourceCard.Name = "sourceCard";
+            this.sourceCard.Padding = new System.Windows.Forms.Padding(14);
+            this.sourceCard.Size = new System.Drawing.Size(242, 198);
+            this.sourceCard.TabIndex = 76;
             // 
             // audioSourceRadio
             // 
@@ -546,36 +548,56 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
+            // refreshMonitorsBtn
+            // 
+            this.refreshMonitorsBtn.AutoSize = false;
+            this.refreshMonitorsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.refreshMonitorsBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.refreshMonitorsBtn.Depth = 0;
+            this.refreshMonitorsBtn.HighEmphasis = true;
+            this.refreshMonitorsBtn.Icon = global::OSLTT.Properties.Resources.arrow_rotate_right;
+            this.refreshMonitorsBtn.Location = new System.Drawing.Point(185, 11);
+            this.refreshMonitorsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.refreshMonitorsBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.refreshMonitorsBtn.Name = "refreshMonitorsBtn";
+            this.refreshMonitorsBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.refreshMonitorsBtn.Size = new System.Drawing.Size(40, 36);
+            this.refreshMonitorsBtn.TabIndex = 62;
+            this.refreshMonitorsBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.refreshMonitorsBtn.UseAccentColor = false;
+            this.refreshMonitorsBtn.UseVisualStyleBackColor = true;
+            this.refreshMonitorsBtn.Click += new System.EventHandler(this.refreshMonitorsBtn_Click);
+            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.materialCard5);
-            this.Controls.Add(this.materialCard3);
+            this.Controls.Add(this.displayCard);
+            this.Controls.Add(this.sensorCard);
             this.Controls.Add(this.settingsCard);
-            this.Controls.Add(this.materialCard1);
-            this.Controls.Add(this.materialCard4);
+            this.Controls.Add(this.triggerCard);
+            this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
             this.Size = new System.Drawing.Size(816, 373);
-            this.materialCard5.ResumeLayout(false);
-            this.materialCard5.PerformLayout();
-            this.materialCard3.ResumeLayout(false);
-            this.materialCard3.PerformLayout();
+            this.displayCard.ResumeLayout(false);
+            this.displayCard.PerformLayout();
+            this.sensorCard.ResumeLayout(false);
+            this.sensorCard.PerformLayout();
             this.settingsCard.ResumeLayout(false);
             this.settingsCard.PerformLayout();
-            this.materialCard1.ResumeLayout(false);
-            this.materialCard1.PerformLayout();
-            this.materialCard4.ResumeLayout(false);
-            this.materialCard4.PerformLayout();
+            this.triggerCard.ResumeLayout(false);
+            this.triggerCard.PerformLayout();
+            this.sourceCard.ResumeLayout(false);
+            this.sourceCard.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialCard materialCard5;
+        private MaterialSkin.Controls.MaterialCard displayCard;
         private MaterialSkin.Controls.MaterialLabel materialLabel10;
         private MaterialSkin.Controls.MaterialComboBox displaySelect;
-        private MaterialSkin.Controls.MaterialCard materialCard3;
+        private MaterialSkin.Controls.MaterialCard sensorCard;
         private MaterialSkin.Controls.MaterialRadioButton clickKeypressRadio;
         private MaterialSkin.Controls.MaterialRadioButton audioSensorRadio;
         private MaterialSkin.Controls.MaterialRadioButton lightSensorRadio;
@@ -589,16 +611,17 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialComboBox timeBetweenSelect;
         private MaterialSkin.Controls.MaterialSwitch preTestToggle;
         private MaterialSkin.Controls.MaterialLabel materialLabel9;
-        private MaterialSkin.Controls.MaterialCard materialCard1;
+        private MaterialSkin.Controls.MaterialCard triggerCard;
         private MaterialSkin.Controls.MaterialRadioButton twoPinRadio;
         private MaterialSkin.Controls.MaterialRadioButton audioTriggerRadio;
         private MaterialSkin.Controls.MaterialRadioButton buttonTriggerRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel6;
-        private MaterialSkin.Controls.MaterialCard materialCard4;
+        private MaterialSkin.Controls.MaterialCard sourceCard;
         private MaterialSkin.Controls.MaterialRadioButton audioSourceRadio;
         private MaterialSkin.Controls.MaterialRadioButton gameExternalRadio;
         private MaterialSkin.Controls.MaterialRadioButton mouseKeyboardRadio;
         private MaterialSkin.Controls.MaterialRadioButton DirectXRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialButton refreshMonitorsBtn;
     }
 }

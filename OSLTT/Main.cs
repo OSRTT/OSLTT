@@ -97,7 +97,7 @@ namespace OSLTT
             UserSettings.readAndSaveUserSettings(false);
 
             LoadSettings();
-            
+            settingsPane1.mainWindow = this;
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
             toggleMouseKeyboardBoxes(false);
@@ -544,7 +544,7 @@ namespace OSLTT
             }
         }
 
-        private void portWrite(string input)
+        public void portWrite(string input)
         {
             if (port != null)
             {
@@ -991,7 +991,7 @@ namespace OSLTT
             */
         }
 
-        private void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
+        public void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
         {
             /*if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
             if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
