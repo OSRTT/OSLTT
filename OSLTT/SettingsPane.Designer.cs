@@ -30,6 +30,7 @@ namespace OSLTT
         private void InitializeComponent()
         {
             this.displayCard = new MaterialSkin.Controls.MaterialCard();
+            this.refreshMonitorsBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
             this.displaySelect = new MaterialSkin.Controls.MaterialComboBox();
             this.sensorCard = new MaterialSkin.Controls.MaterialCard();
@@ -57,7 +58,6 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.refreshMonitorsBtn = new MaterialSkin.Controls.MaterialButton();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -73,13 +73,33 @@ namespace OSLTT
             this.displayCard.Controls.Add(this.displaySelect);
             this.displayCard.Depth = 0;
             this.displayCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.displayCard.Location = new System.Drawing.Point(565, 7);
+            this.displayCard.Location = new System.Drawing.Point(604, 7);
             this.displayCard.Margin = new System.Windows.Forms.Padding(14);
             this.displayCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.displayCard.Name = "displayCard";
             this.displayCard.Padding = new System.Windows.Forms.Padding(14);
             this.displayCard.Size = new System.Drawing.Size(242, 123);
             this.displayCard.TabIndex = 77;
+            // 
+            // refreshMonitorsBtn
+            // 
+            this.refreshMonitorsBtn.AutoSize = false;
+            this.refreshMonitorsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.refreshMonitorsBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.refreshMonitorsBtn.Depth = 0;
+            this.refreshMonitorsBtn.HighEmphasis = true;
+            this.refreshMonitorsBtn.Icon = global::OSLTT.Properties.Resources.arrow_rotate_right;
+            this.refreshMonitorsBtn.Location = new System.Drawing.Point(185, 11);
+            this.refreshMonitorsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.refreshMonitorsBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.refreshMonitorsBtn.Name = "refreshMonitorsBtn";
+            this.refreshMonitorsBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.refreshMonitorsBtn.Size = new System.Drawing.Size(40, 36);
+            this.refreshMonitorsBtn.TabIndex = 62;
+            this.refreshMonitorsBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.refreshMonitorsBtn.UseAccentColor = false;
+            this.refreshMonitorsBtn.UseVisualStyleBackColor = true;
+            this.refreshMonitorsBtn.Click += new System.EventHandler(this.refreshMonitorsBtn_Click);
             // 
             // materialLabel10
             // 
@@ -212,7 +232,7 @@ namespace OSLTT
             this.settingsCard.Controls.Add(this.materialLabel9);
             this.settingsCard.Depth = 0;
             this.settingsCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.settingsCard.Location = new System.Drawing.Point(212, 7);
+            this.settingsCard.Location = new System.Drawing.Point(232, 7);
             this.settingsCard.Margin = new System.Windows.Forms.Padding(14);
             this.settingsCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.settingsCard.Name = "settingsCard";
@@ -458,7 +478,7 @@ namespace OSLTT
             this.sourceCard.Controls.Add(this.materialLabel3);
             this.sourceCard.Depth = 0;
             this.sourceCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.sourceCard.Location = new System.Drawing.Point(565, 140);
+            this.sourceCard.Location = new System.Drawing.Point(604, 140);
             this.sourceCard.Margin = new System.Windows.Forms.Padding(14);
             this.sourceCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.sourceCard.Name = "sourceCard";
@@ -548,26 +568,6 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
-            // refreshMonitorsBtn
-            // 
-            this.refreshMonitorsBtn.AutoSize = false;
-            this.refreshMonitorsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.refreshMonitorsBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.refreshMonitorsBtn.Depth = 0;
-            this.refreshMonitorsBtn.HighEmphasis = true;
-            this.refreshMonitorsBtn.Icon = global::OSLTT.Properties.Resources.arrow_rotate_right;
-            this.refreshMonitorsBtn.Location = new System.Drawing.Point(185, 11);
-            this.refreshMonitorsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.refreshMonitorsBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.refreshMonitorsBtn.Name = "refreshMonitorsBtn";
-            this.refreshMonitorsBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.refreshMonitorsBtn.Size = new System.Drawing.Size(40, 36);
-            this.refreshMonitorsBtn.TabIndex = 62;
-            this.refreshMonitorsBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.refreshMonitorsBtn.UseAccentColor = false;
-            this.refreshMonitorsBtn.UseVisualStyleBackColor = true;
-            this.refreshMonitorsBtn.Click += new System.EventHandler(this.refreshMonitorsBtn_Click);
-            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -577,7 +577,7 @@ namespace OSLTT
             this.Controls.Add(this.triggerCard);
             this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(816, 373);
+            this.Size = new System.Drawing.Size(866, 373);
             this.displayCard.ResumeLayout(false);
             this.displayCard.PerformLayout();
             this.sensorCard.ResumeLayout(false);

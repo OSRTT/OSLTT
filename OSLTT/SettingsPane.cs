@@ -18,23 +18,58 @@ namespace OSLTT
         {
             InitializeComponent();
             listMonitors();
+            if (Properties.Settings.Default.customTestSettings != null)
+            {
+                testSettings = Properties.Settings.Default.customTestSettings;
+            }
         }
 
         TestSettings testSettings = new TestSettings();
         public Main mainWindow;
 
-        private void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
+        private void SaveSettings()
         {
+            // save to testSettings, then save custom profile to settings?
+            
+            testSettings.TriggerType = testSettings.TriggerTypes(buttonTriggerRadio, audioTriggerRadio);
+            testSettings.SensorType = testSettings.SensorTypes(lightSensorRadio, audioSensorRadio);
+            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, gameExternalRadio);
+            testSettings.AutoClick = autoClickToggle.Checked;
+            testSettings.ClickCount = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
+            testSettings.PreTest = preTestToggle.Checked;
+            testSettings.TimeBetween = double.Parse(timeBetweenSelect.Items[timeBetweenSelect.SelectedIndex].ToString());
+            Properties.Settings.Default.customTestSettings = testSettings;
+            Properties.Settings.Default.Save();
+
+            if (testSettings.TestSource != 1)
+            {
+                displayCard.Enabled = false;
+            }
+            else
+            {
+                displayCard.Enabled = true;
+            }
+            if (autoClickToggle.Checked)
+            {
+                clickCountSelect.Enabled = true;
+                timeBetweenSelect.Enabled = true;
+            }
+            else
+            {
+                clickCountSelect.Enabled = false;
+                timeBetweenSelect.Enabled = false;
+            }
             if (mainWindow != null)
             {
+                int autoClick = 0;
                 string settings = "I";
-                settings += sensor.ToString();
-                settings += trigger.ToString();
+                settings += testSettings.SensorType.ToString();
+                settings += testSettings.TriggerType.ToString();
                 settings += autoClick.ToString();
-                settings += directX.ToString();
-                clicks = Properties.Settings.Default.clickCountSelect / 10;
+                settings += testSettings.TestSource.ToString();
+                int clicks = testSettings.ClickCount / 10;
                 settings += clicks.ToString("00");
-                double t = Properties.Settings.Default.timeBetweenSelect;
+                double t = testSettings.TimeBetween;
                 if (t == 0.5) { settings += "1"; }
                 else { t += 1; settings += t.ToString(); }
                 Console.WriteLine(settings);
@@ -53,6 +88,8 @@ namespace OSLTT
             public string EDIDModel { get; set; }
         }
         public List<Displays> displayList = new List<Displays>();
+
+        public Displays selectedDisplay;
 
         private void listMonitors(int selected = 0)
         {
@@ -161,7 +198,23 @@ namespace OSLTT
         public void CustomPreset1()
         {
             // set to monitor settings then enable everything
-            ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+            if (Properties.Settings.Default.customTestSettings != null)
+            {
+                testSettings = Properties.Settings.Default.customTestSettings;
+                ChangeSettings(
+                    testSettings.TriggerType,
+                    testSettings.SensorType,
+                    testSettings.TestSource,
+                    testSettings.AutoClick,
+                    testSettings.ClickCount,
+                    testSettings.TimeBetween,
+                    testSettings.PreTest
+                    );
+            }
+            else
+            {
+                ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+            }
             EnableDisable(true, true, true, true, true, true);
         }
 
@@ -297,78 +350,313 @@ namespace OSLTT
                         DirectXRadio.Checked = true;
                     }
                 }
-                //SaveSettings();
+                SaveSettings();
             }
         }
 
         private void audioTriggerRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.TriggerType = 2;
+                    if (!clickKeypressRadio.Checked)
+                    {
+                        clickKeypressRadio.Checked = true;
+                    }
+                    if (!mouseKeyboardRadio.Checked)
+                    {
+                        mouseKeyboardRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void twoPinRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.TriggerType = 3;
+                    // probs more to add here
+                    if (testSettings.SensorType != 1)
+                    {
+                        audioSensorRadio.Checked = true;
+                    }
+                    if (testSettings.TestSource == 2 || testSettings.TestSource == 4)
+                    {
+                        gameExternalRadio.Checked = true;
+                    }
+                    if (testSettings.SensorType != 1)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void lightSensorRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 1;
+                    if (audioSourceRadio.Checked)
+                    {
+                        DirectXRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void audioSensorRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 2;
+                    if (!buttonTriggerRadio.Checked)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                    if (testSettings.TestSource != 4)
+                    {
+                        audioSourceRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void clickKeypressRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 3;
+                    if (!mouseKeyboardRadio.Checked)
+                    {
+                        mouseKeyboardRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                    if (testSettings.TriggerType != 2)
+                    {
+                        audioTriggerRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void autoClickToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.AutoClick = s.Checked;
+                    if (testSettings.TriggerType != 1)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (testSettings.SensorType == 3)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (testSettings.TestSource == 2)
+                    {
+                        DirectXRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void clickCountSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                testSettings.ClickCount = int.Parse(s.Items[s.SelectedIndex].ToString());
+                SaveSettings();
+            }
         }
 
         private void timeBetweenSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                testSettings.TimeBetween = double.Parse(s.Items[s.SelectedIndex].ToString());
+                SaveSettings();
+            }
         }
 
         private void preTestToggle_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialSwitch s = sender as MaterialSwitch;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.PreTest = s.Checked;
+                    if (testSettings.TriggerType != 1)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (testSettings.SensorType != 1)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (testSettings.TestSource != 3)
+                    {
+                        gameExternalRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void displaySelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                selectedDisplay = displayList[s.SelectedIndex];
+            }
         }
 
         private void DirectXRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 1;
+                    if (!buttonTriggerRadio.Checked)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (!lightSensorRadio.Checked)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void mouseKeyboardRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 2;
+                    if (!audioTriggerRadio.Checked)
+                    {
+                        audioTriggerRadio.Checked = true;
+                    }
+                    if (!clickKeypressRadio.Checked)
+                    {
+                        clickKeypressRadio.Checked = true;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void gameExternalRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 3;
+                    if (!buttonTriggerRadio.Checked)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (!lightSensorRadio.Checked)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void audioSourceRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 4;
+                    if (!buttonTriggerRadio.Checked)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (!lightSensorRadio.Checked)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                    if (testSettings.SensorType != 2)
+                    {
+                        audioSensorRadio.Checked = true;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
         }
 
         private void refreshMonitorsBtn_Click(object sender, EventArgs e)

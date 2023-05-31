@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MaterialSkin.Controls;
 
 namespace OSLTT
 {
@@ -17,26 +18,57 @@ namespace OSLTT
         public double TimeBetween { get; set; }
         public bool PreTest { get; set; }
 
-        TestSettings Validate(TestSettings ts)
+        public int TriggerTypes(MaterialRadioButton button, MaterialRadioButton audio)
         {
-            if (ts.TriggerType == 2)
+            if (button.Checked)
             {
-                if (ts.SensorType == 2)
-                {
-                    ts.SensorType = 1;
-                }
-                ts.AutoClick = false;
-                if (ts.TestSource == 4)
-                {
-                    ts.TestSource = 1;
-                }
+                return 1;
             }
-            else if (ts.TriggerType == 3)
+            else if (audio.Checked)
             {
-
+                return 2;
             }
-
-            return ts;
+            else
+            {
+                return 3;
+            }
         }
+
+        public int SensorTypes(MaterialRadioButton light, MaterialRadioButton audio)
+        {
+            if (light.Checked)
+            {
+                return 1;
+            }
+            else if (audio.Checked)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+
+        public int SourceTypes(MaterialRadioButton directx, MaterialRadioButton mouse, MaterialRadioButton game)
+        {
+            if (directx.Checked)
+            {
+                return 1;
+            }
+            else if (mouse.Checked)
+            {
+                return 2;
+            }
+            else if (game.Checked)
+            {
+                return 3;
+            }
+            else
+            {
+                return 4;
+            }
+        }
+
     }
 }

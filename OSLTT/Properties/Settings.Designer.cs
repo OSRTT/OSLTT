@@ -178,5 +178,16 @@ namespace OSLTT.Properties {
                 this["audioSourceToggle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::OSLTT.TestSettings customTestSettings {
+            get {
+                return ((global::OSLTT.TestSettings)(this["customTestSettings"]));
+            }
+            set {
+                this["customTestSettings"] = value;
+            }
+        }
     }
 }

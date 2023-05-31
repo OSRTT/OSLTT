@@ -90,7 +90,7 @@ namespace OSLTT
             this.fwLbl.Depth = 0;
             this.fwLbl.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.fwLbl.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            this.fwLbl.Location = new System.Drawing.Point(660, 8);
+            this.fwLbl.Location = new System.Drawing.Point(645, 8);
             this.fwLbl.MouseState = MaterialSkin.MouseState.HOVER;
             this.fwLbl.Name = "fwLbl";
             this.fwLbl.Size = new System.Drawing.Size(53, 24);
@@ -104,7 +104,7 @@ namespace OSLTT
             this.fwLblTitle.Depth = 0;
             this.fwLblTitle.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.fwLblTitle.FontType = MaterialSkin.MaterialSkinManager.fontType.H6;
-            this.fwLblTitle.Location = new System.Drawing.Point(623, 8);
+            this.fwLblTitle.Location = new System.Drawing.Point(608, 8);
             this.fwLblTitle.MouseState = MaterialSkin.MouseState.HOVER;
             this.fwLblTitle.Name = "fwLblTitle";
             this.fwLblTitle.Size = new System.Drawing.Size(35, 24);
@@ -334,7 +334,7 @@ namespace OSLTT
             this.typeTextCard.Controls.Add(this.textTextBox);
             this.typeTextCard.Depth = 0;
             this.typeTextCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.typeTextCard.Location = new System.Drawing.Point(13, 604);
+            this.typeTextCard.Location = new System.Drawing.Point(13, 603);
             this.typeTextCard.Margin = new System.Windows.Forms.Padding(14);
             this.typeTextCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.typeTextCard.Name = "typeTextCard";
@@ -377,12 +377,12 @@ namespace OSLTT
             this.clickTestBox.Controls.Add(this.materialLabel11);
             this.clickTestBox.Depth = 0;
             this.clickTestBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.clickTestBox.Location = new System.Drawing.Point(13, 227);
+            this.clickTestBox.Location = new System.Drawing.Point(13, 310);
             this.clickTestBox.Margin = new System.Windows.Forms.Padding(14);
             this.clickTestBox.MouseState = MaterialSkin.MouseState.HOVER;
             this.clickTestBox.Name = "clickTestBox";
             this.clickTestBox.Padding = new System.Windows.Forms.Padding(14);
-            this.clickTestBox.Size = new System.Drawing.Size(885, 377);
+            this.clickTestBox.Size = new System.Drawing.Size(885, 283);
             this.clickTestBox.TabIndex = 48;
             // 
             // materialLabel11
@@ -444,6 +444,7 @@ namespace OSLTT
             this.customPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.customPresetBtn.UseAccentColor = false;
             this.customPresetBtn.UseVisualStyleBackColor = true;
+            this.customPresetBtn.Click += new System.EventHandler(this.customPresetBtn_Click);
             // 
             // headsetPresetBtn
             // 
@@ -463,6 +464,7 @@ namespace OSLTT
             this.headsetPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.headsetPresetBtn.UseAccentColor = false;
             this.headsetPresetBtn.UseVisualStyleBackColor = true;
+            this.headsetPresetBtn.Click += new System.EventHandler(this.headsetPresetBtn_Click);
             // 
             // gamePresetBtn
             // 
@@ -482,6 +484,7 @@ namespace OSLTT
             this.gamePresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.gamePresetBtn.UseAccentColor = false;
             this.gamePresetBtn.UseVisualStyleBackColor = true;
+            this.gamePresetBtn.Click += new System.EventHandler(this.gamePresetBtn_Click);
             // 
             // miceKeyboardPresetBtn
             // 
@@ -501,6 +504,7 @@ namespace OSLTT
             this.miceKeyboardPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.miceKeyboardPresetBtn.UseAccentColor = false;
             this.miceKeyboardPresetBtn.UseVisualStyleBackColor = true;
+            this.miceKeyboardPresetBtn.Click += new System.EventHandler(this.miceKeyboardPresetBtn_Click);
             // 
             // materialLabel1
             // 
@@ -533,12 +537,13 @@ namespace OSLTT
             this.monitorPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.monitorPresetBtn.UseAccentColor = false;
             this.monitorPresetBtn.UseVisualStyleBackColor = true;
+            this.monitorPresetBtn.Click += new System.EventHandler(this.monitorPresetBtn_Click);
             // 
             // settingsPane1
             // 
-            this.settingsPane1.Location = new System.Drawing.Point(40, 322);
+            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
             this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(818, 373);
+            this.settingsPane1.Size = new System.Drawing.Size(857, 392);
             this.settingsPane1.TabIndex = 59;
             // 
             // materialCard3
@@ -575,16 +580,16 @@ namespace OSLTT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1758, 847);
+            this.ClientSize = new System.Drawing.Size(911, 684);
+            this.Controls.Add(this.settingsPane1);
+            this.Controls.Add(this.typeTextCard);
             this.Controls.Add(this.materialCard4);
             this.Controls.Add(this.materialCard3);
-            this.Controls.Add(this.settingsPane1);
             this.Controls.Add(this.materialCard1);
             this.Controls.Add(this.materialCard2);
             this.Controls.Add(this.materialDrawer1);
             this.Controls.Add(this.deviceStatusPanel);
             this.Controls.Add(this.clickTestBox);
-            this.Controls.Add(this.typeTextCard);
             this.DrawerShowIconsWhenHidden = true;
             this.DrawerUseColors = true;
             this.Name = "Main";

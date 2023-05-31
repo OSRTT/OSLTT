@@ -41,5 +41,8 @@
     <Setting Name="audioSourceToggle" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="customTestSettings" Type="OSLTT.TestSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1241,54 +1241,29 @@ namespace OSLTT
 
         }
 
-        private void buttonTriggerRadio_CheckedChanged(object sender, EventArgs e)
+        private void monitorPresetBtn_Click(object sender, EventArgs e)
         {
-
+            settingsPane1.MonitorPreset();
         }
 
-        private void audioTriggerRadio_CheckedChanged(object sender, EventArgs e)
+        private void miceKeyboardPresetBtn_Click(object sender, EventArgs e)
         {
-
+            settingsPane1.MouseKeyboardPreset();
         }
 
-        private void twoPinRadio_CheckedChanged(object sender, EventArgs e)
+        private void gamePresetBtn_Click(object sender, EventArgs e)
         {
-
+            settingsPane1.GamesPreset();
         }
 
-        private void lightSensorRadio_CheckedChanged(object sender, EventArgs e)
+        private void headsetPresetBtn_Click(object sender, EventArgs e)
         {
-
+            settingsPane1.AudioPreset();
         }
 
-        private void audioSensorRadio_CheckedChanged(object sender, EventArgs e)
+        private void customPresetBtn_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void clickKeypressRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DirectXRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mouseKeyboardRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gameExternalRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void audioSourceRadio_CheckedChanged(object sender, EventArgs e)
-        {
-
+            settingsPane1.CustomPreset1();
         }
     }
 
