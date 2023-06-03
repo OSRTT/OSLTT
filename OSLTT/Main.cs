@@ -34,7 +34,7 @@ namespace OSLTT
 
         private ResourceManager rm = OSLTT.Properties.Resources.ResourceManager;
 
-        
+        public TestSettings testSettings = new TestSettings();
 
         private Thread readThread = null;
         private Thread connectThread = null;
@@ -96,7 +96,6 @@ namespace OSLTT
 
             UserSettings.readAndSaveUserSettings(false);
 
-            LoadSettings();
             settingsPane1.mainWindow = this;
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
@@ -675,6 +674,7 @@ namespace OSLTT
             {
                 this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.Visible = state));
                 this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.Visible = state));
+                this.settingsPane1.Invoke((MethodInvoker)(() => this.settingsPane1.Visible = !state));
 
                 if (state)
                 {
@@ -688,6 +688,7 @@ namespace OSLTT
             {
                 this.clickTestBox.Visible = state;
                 this.typeTextCard.Visible = state;
+                this.settingsPane1.Visible = !state;
                 if (state)
                 {
                     this.typeTextCard.BringToFront();
@@ -697,13 +698,7 @@ namespace OSLTT
             }
         }
 
-        /*protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            using (LinearGradientBrush brush = new LinearGradientBrush(this.ClientRectangle,Color.LightBlue,Color.SteelBlue,120F))
-            {
-                e.Graphics.FillRectangle(brush, this.ClientRectangle);
-            }
-        }*/
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
             this.Invalidate();
@@ -735,226 +730,6 @@ namespace OSLTT
             }
         }
 
-        
-
-        private void buttonTriggerToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                   
-                }
-                else
-                {
-                   
-                }
-                SaveSettings();
-            }
-        }
-
-        private void audioTriggerToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                  
-                }
-                else
-                {
-                   
-                }
-                SaveSettings();
-            }
-        }
-
-        private void pinTriggerToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                 
-                }
-                SaveSettings();
-            }
-        }
-
-        private void lightSensorToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                   
-                }
-                SaveSettings();
-            }
-        }
-
-        private void audioSensorToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                 
-                }
-                SaveSettings();
-            }
-        }
-
-        private void autoClickToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                   
-                }
-                else
-                {
-                    
-                }
-                SaveSettings();
-            }
-        }
-
-        private void clickCountSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MaterialComboBox m = sender as MaterialComboBox;
-            if (m.Focused)
-            {
-                Console.WriteLine(m.SelectedIndex + " " + m.SelectedItem);
-                SaveSettings();
-            }
-        }
-
-        private void timeBetweenSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MaterialComboBox m = sender as MaterialComboBox;
-            if (m.Focused)
-            {
-                Console.WriteLine(m.SelectedIndex + " " + m.SelectedItem);
-                SaveSettings();
-            }
-        }
-
-        private void displaySelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MaterialComboBox m = sender as MaterialComboBox;
-            if (m.Focused)
-            {
-                // don't need to save which display is selected here
-                //SaveSettings();
-            }
-        }
-
-        
-
-        
-
-        private void preTestToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                 
-                }
-                else
-                {
-                    
-                }
-                SaveSettings();
-            }
-        }
-
-        private void directXToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                }
-                else
-                {
-
-                }
-                SaveSettings();
-            }
-        }
-
-        private void MouseKeyboardToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                   
-                }
-                SaveSettings();
-            }
-        }
-
-        private void gameExternalToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                   
-                }
-                SaveSettings();
-            }
-        }
-        private void audioSourceToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialSwitch s = sender as MaterialSwitch;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    
-                }
-                else
-                {
-                    
-                }
-                SaveSettings();
-            }
-        }
         private void helpBtn_Click(object sender, EventArgs e)
         {
             CFuncs.HyperlinkOut("https://andymanic.github.io/OSRTTDocs/");
@@ -969,97 +744,6 @@ namespace OSLTT
             debug.Show();
         }
 
-        private void PresetConfigs(bool btn, bool mic, bool pin, bool light, bool audio, bool autoClick, int clicks, double time, bool preTest, bool directX,  bool game, bool audioSource)
-        {
-            /*this.buttonTriggerToggle.Checked = btn;
-            this.audioTriggerToggle.Checked = mic;
-            this.pinTriggerToggle.Checked = pin;
-            this.lightSensorToggle.Checked = light;
-            this.audioSensorToggle.Checked = audio;
-            this.autoClickToggle.Checked = autoClick;
-            SetComboBoxValue(clickCountSelect, clicks);
-            SetComboBoxValue(timeBetweenSelect, time);
-            this.preTestToggle.Checked = preTest;
-            this.directXToggle.Checked = directX;
-            //this.MouseKeyboardToggle.Checked = mouseKeyboard;
-            this.gameExternalToggle.Checked = game;
-            this.audioSourceToggle.Checked = audioSource;
-
-            clickCountSelect.Enabled = autoClick;
-            timeBetweenSelect.Enabled = autoClick;
-            displaySelect.Enabled = directX;
-            */
-        }
-
-        public void SaveSettings(int sensor = 1, int trigger = 1, int autoClick = 1, int directX = 1, int clicks = 100, double time = 0.5)
-        {
-            /*if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
-            if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }
-            
-            Properties.Settings.Default.clickCountSelect = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
-            Properties.Settings.Default.timeBetweenSelect = double.Parse(timeBetweenSelect.Items[timeBetweenSelect.SelectedIndex].ToString());
-            Properties.Settings.Default.preTestToggle = preTestToggle.Checked;
-            
-            Properties.Settings.Default.Save();
-
-            string settings = "I";
-            /*if (lightSensorToggle.Checked) { settings += "1"; }
-            else if (audioSourceToggle.Checked) { settings += "2"; }
-            if (buttonTriggerToggle.Checked) { settings += "1"; }
-            else if (audioTriggerToggle.Checked) { settings += "2"; }
-            else if (pinTriggerToggle.Checked) { settings += "3"; }
-            if (autoClickToggle.Checked) { settings += "1"; }
-            else { settings += "2"; }
-            if (directXToggle.Checked) { settings += "1"; }
-            else { settings += "2"; }
-            clicks = Properties.Settings.Default.clickCountSelect / 10;
-            settings += clicks.ToString("00");
-            double t = Properties.Settings.Default.timeBetweenSelect;
-            if (t == 0.5) { settings += "1"; }
-            else { t += 1; settings += t.ToString(); }
-            Console.WriteLine(settings);
-            portWrite(settings);*/
-        }
-
-        private void LoadSettings()
-        {
-            /*for (int i = 0; i < clickCountSelect.Items.Count; i++)
-            {
-                int index = int.Parse(clickCountSelect.Items[i].ToString());
-                if (index == Properties.Settings.Default.clickCountSelect)
-                {
-                    clickCountSelect.SelectedIndex = i;
-                    break;
-                }
-            }
-            for (int i = 0; i < timeBetweenSelect.Items.Count; i++)
-            {
-                double index = double.Parse(timeBetweenSelect.Items[i].ToString());
-                if (index == Properties.Settings.Default.timeBetweenSelect)
-                {
-                    timeBetweenSelect.SelectedIndex = i;
-                    break;
-                }
-            }
-            
-            autoClickToggle.Checked = Properties.Settings.Default.autoClickToggle;
-            preTestToggle.Checked = Properties.Settings.Default.preTestToggle;
-            if (clickCountSelect.SelectedIndex == -1) { clickCountSelect.SelectedIndex = 0; }
-            if (timeBetweenSelect.SelectedIndex == -1) { timeBetweenSelect.SelectedIndex = 0; }*/
-        }
-
-        private void SetComboBoxValue(MaterialComboBox mcb, double value)
-        {
-            for (int i = 0; i < mcb.Items.Count; i++)
-            {
-                if (mcb.Items[i].ToString() == value.ToString())
-                {
-                    mcb.SelectedIndex = i;
-                    break;
-                }
-            }
-        }
-
         private void startTestBtn_Click(object sender, EventArgs e)
         {
             if (startTestBtn.Text == "Start")
@@ -1069,7 +753,7 @@ namespace OSLTT
                 rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                 processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
                 settingsSynced = false;
-                SaveSettings();
+                settingsPane1.SaveSettings();
                 SetDeviceStatus(5);
                 runTest();
             }
@@ -1077,6 +761,7 @@ namespace OSLTT
             {
                 // End test
                 portWrite("X");
+                toggleMouseKeyboardBoxes(false);
                 Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                 inputLagThread.Start();
             }
@@ -1093,7 +778,7 @@ namespace OSLTT
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
-                if (Properties.Settings.Default.directXToggle)
+                if (testSettings.TestSource == 1)
                 {
                     DirectX.System.DSystem.inputLagMode = true;
                     if (DirectX.System.DSystem.mainWindow == null)
@@ -1101,13 +786,18 @@ namespace OSLTT
 
                     DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
                 }
-                else if (Properties.Settings.Default.audioSourceToggle)
+                else if (testSettings.TestSource == 2) // mouse/keyboard mode
                 {
-
+                    // switch modes then wait for test end
+                    toggleMouseKeyboardBoxes(true);
+                }
+                else if (testSettings.TestSource == 4) // audio clip
+                {
+                    // wait for device trigger still right?
                 }
                 else
                 {
-                    // erm idk? wait? Not using 
+                    // erm idk? wait? External/game mode
                 }
 
                 SetDeviceStatus(1);
@@ -1219,7 +909,7 @@ namespace OSLTT
         {
 
         }
-
+        bool testbool = false;
         private void materialButton1_Click(object sender, EventArgs e)
         {
             //UpdateFirmware.getNewFirmwareFile();
@@ -1236,8 +926,8 @@ namespace OSLTT
 
             //portWrite("W");
             //textTextBox.Text = "test";
-
-            toggleMouseKeyboardBoxes(true);
+            testbool = !testbool;
+            toggleMouseKeyboardBoxes(testbool);
 
         }
 

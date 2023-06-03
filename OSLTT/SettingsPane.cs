@@ -27,7 +27,7 @@ namespace OSLTT
         TestSettings testSettings = new TestSettings();
         public Main mainWindow;
 
-        private void SaveSettings()
+        public void SaveSettings()
         {
             // save to testSettings, then save custom profile to settings?
             
@@ -75,6 +75,7 @@ namespace OSLTT
                 Console.WriteLine(settings);
                 mainWindow.portWrite(settings);
 
+                mainWindow.testSettings = testSettings;
                 // maybe change these settings? change directX to source
             }
         }
