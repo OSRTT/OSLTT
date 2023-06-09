@@ -59,9 +59,13 @@ namespace OSLTT
                 clickCountSelect.Enabled = false;
                 timeBetweenSelect.Enabled = false;
             }
-            if (mainWindow != null)
+            if (mainWindow != null) // move this to separate function?
             {
                 int autoClick = 0;
+                if (testSettings.AutoClick)
+                {
+                    autoClick = 1;
+                }
                 string settings = "I";
                 settings += testSettings.SensorType.ToString();
                 settings += testSettings.TriggerType.ToString();

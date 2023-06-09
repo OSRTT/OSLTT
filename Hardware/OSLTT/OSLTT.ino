@@ -1,5 +1,6 @@
   // Definitions, libraries
 #include <Mouse.h>
+#include <Keyboard.h>
 
 #define INPUT_SIZE 8
 

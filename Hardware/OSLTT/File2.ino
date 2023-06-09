@@ -105,22 +105,19 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
     pin = 1;
   }
   unsigned long clickTime = micros();
-  Serial.print("input type: ");
-  Serial.print(inputType);
-  Serial.print(" & directXMode: ");
-  Serial.println(directXMode);
   if (inputType == 0 && directXMode)
   {
     //Mouse.click(MOUSE_LEFT);
     Keyboard.write((char) 32);
   }
   unsigned long start_time = micros();  
+  int t = start_time - clickTime;
   long timeTaken = fillADCBuffer(sampleCount, pin);
   toggleLED(true);
   long localStartValue = 0;
   int triggerSampleNum = 0;
   Serial.print(textType);
-  Serial.print(start_time - clickTime);
+  Serial.print(t);
   Serial.print(",");
   Serial.print(timeTaken);
   Serial.print(","); 
@@ -171,6 +168,11 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
       localCounter++;
     }
     Serial.println("AUTO FINISHED");
+    if (directXMode)
+    {
+        Keyboard.press(KEY_ESC);
+        Keyboard.releaseAll();
+    }
   }
   else if (!autoRun)
   {

@@ -748,12 +748,12 @@ namespace OSLTT
         {
             if (startTestBtn.Text == "Start")
             {
+                settingsSynced = false;
+                settingsPane1.SaveSettings();
                 resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
                 rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                 processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
-                settingsSynced = false;
-                settingsPane1.SaveSettings();
                 SetDeviceStatus(5);
                 runTest();
             }
@@ -767,11 +767,23 @@ namespace OSLTT
             }
         }
 
+        private void SyncSettingsThreadFunc()
+        {
+            if (port != null)
+            {
+                if (!settingsSynced)
+                {
+                    
+                }
+            }
+        }
+
         private void runTest()
         {
             try
             {
-                while (!settingsSynced) { Thread.Sleep(100); }
+                //while (!settingsSynced) { Thread.Sleep(100); }
+                Thread.Sleep(100);
 
                 port.WriteLine("T");
                 RunSettings = SettingsClasses.initRunSettings();
