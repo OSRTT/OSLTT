@@ -111,7 +111,8 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
   Serial.println(directXMode);
   if (inputType == 0 && directXMode)
   {
-    Mouse.click(MOUSE_LEFT);
+    //Mouse.click(MOUSE_LEFT);
+    Keyboard.write((char) 32);
   }
   unsigned long start_time = micros();  
   long timeTaken = fillADCBuffer(sampleCount, pin);

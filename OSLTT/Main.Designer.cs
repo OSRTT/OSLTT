@@ -580,7 +580,7 @@ namespace OSLTT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 684);
+            this.ClientSize = new System.Drawing.Size(911, 695);
             this.Controls.Add(this.settingsPane1);
             this.Controls.Add(this.typeTextCard);
             this.Controls.Add(this.materialCard4);
