@@ -83,6 +83,8 @@ namespace OSLTT
                 // maybe change these settings? change directX to source
             }
         }
+
+
         public class Displays
         {
             public string Name { get; set; }

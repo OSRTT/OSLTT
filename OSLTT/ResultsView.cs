@@ -42,7 +42,7 @@ namespace OSLTT
 
         public void inputLagMode(ProcessData.averagedInputLag il)
         {
-
+            graphMode();
         }
 
         public void importMode()

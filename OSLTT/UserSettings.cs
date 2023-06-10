@@ -32,7 +32,15 @@ namespace OSLTT
                     userSettings us = new userSettings();
                     foreach (System.Configuration.SettingsProperty s in Properties.Settings.Default.Properties)
                     {
-                        us.usersettings.Add(new userSettings.usersetting { name = s.Name, value = Properties.Settings.Default[s.Name].ToString() });
+                        if (s.Name == "customTestSettings")
+                        {
+                            string ts = JsonConvert.SerializeObject(Properties.Settings.Default.customTestSettings);
+                            us.usersettings.Add(new userSettings.usersetting { name = "customTestSettings", value = ts });
+                        }
+                        else
+                        {
+                            us.usersettings.Add(new userSettings.usersetting { name = s.Name, value = Properties.Settings.Default[s.Name].ToString() });
+                        }
                     }
                     string jsonData = JsonConvert.SerializeObject(us);
                     File.WriteAllText(UserSettingsFile, jsonData);
@@ -44,14 +52,28 @@ namespace OSLTT
                     userSettings settings = JsonConvert.DeserializeObject<userSettings>(contents);
                     foreach (userSettings.usersetting s in settings.usersettings)
                     {
-                        try
+                        if (s.name == "customTestSettings")
                         {
-                            Type t = Properties.Settings.Default[s.name].GetType();
-                            Properties.Settings.Default[s.name] = Convert.ChangeType(s.value, t);
+                            try
+                            {
+                                Properties.Settings.Default.customTestSettings = JsonConvert.DeserializeObject<TestSettings>(s.value);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message + e.StackTrace);
+                            }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine(e.Message + e.StackTrace);
+                            try
+                            {
+                                Type t = Properties.Settings.Default[s.name].GetType();
+                                Properties.Settings.Default[s.name] = Convert.ChangeType(s.value, t);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message + e.StackTrace);
+                            }
                         }
                     }
                     Properties.Settings.Default.Save();

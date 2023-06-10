@@ -265,6 +265,7 @@ namespace OSLTT
             this.resultsViewBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.resultsViewBtn.UseAccentColor = false;
             this.resultsViewBtn.UseVisualStyleBackColor = true;
+            this.resultsViewBtn.Click += new System.EventHandler(this.resultsViewBtn_Click);
             // 
             // startTestBtn
             // 

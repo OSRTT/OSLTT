@@ -80,6 +80,7 @@ namespace OSLTT
 
             path = new Uri(System.IO.Path.GetDirectoryName(path)).LocalPath;
             resultsPath = path + @"\Results";
+            if (!Directory.Exists(resultsPath)) { Directory.CreateDirectory(resultsPath); }
 
             audioTestClip = new SoundPlayer(Properties.Resources.OSLTTTone);
 
@@ -750,7 +751,7 @@ namespace OSLTT
             {
                 settingsSynced = false;
                 settingsPane1.SaveSettings();
-                resultsFolderPath = CFuncs.makeResultsFolder(path, deviceNameBox.Text);
+                resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
                 rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                 processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
@@ -966,6 +967,13 @@ namespace OSLTT
         private void customPresetBtn_Click(object sender, EventArgs e)
         {
             settingsPane1.CustomPreset1();
+        }
+
+        private void resultsViewBtn_Click(object sender, EventArgs e)
+        {
+            ResultsView res = new ResultsView();
+            res.importMode();
+            res.Show();
         }
     }
 
