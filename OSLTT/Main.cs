@@ -202,6 +202,8 @@ namespace OSLTT
                             Thread.Sleep(1000);
                             SetDeviceStatus(1);
                             ControlDeviceButtons(true);
+                            Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
+                            syncThread.Start();
                             //setBoardSerial();
                         }
                         catch (Exception e)
@@ -770,11 +772,12 @@ namespace OSLTT
 
         private void SyncSettingsThreadFunc()
         {
+            Thread.Sleep(1000);
             if (port != null)
             {
                 if (!settingsSynced)
                 {
-                    
+                    settingsPane1.SaveSettings();
                 }
             }
         }
@@ -786,7 +789,18 @@ namespace OSLTT
                 //while (!settingsSynced) { Thread.Sleep(100); }
                 Thread.Sleep(100);
 
-                port.WriteLine("T");
+                if (testSettings.PreTest && systemLagData.Count == 0)
+                {
+                    portWrite("P");
+                    // message box to explain what to do?
+                    DirectX.System.DSystem.inputLagMode = true;
+                    if (DirectX.System.DSystem.mainWindow == null)
+                        DirectX.System.DSystem.mainWindow = this;
+
+                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                }
+
+                portWrite("T");
                 RunSettings = SettingsClasses.initRunSettings();
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
