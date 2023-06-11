@@ -229,7 +229,7 @@ namespace OSLTT
             port.DtrEnable = true;
             port.ReadTimeout = 5000;
             port.WriteTimeout = 5000;
-            port.ReadBufferSize = 1048576;
+            port.ReadBufferSize = 2097152;
             Console.WriteLine("Port details set");
             try
             { port.Open(); }
@@ -365,7 +365,7 @@ namespace OSLTT
                     {
 
                         // Results Data
-                        String newMessage = message.Remove(0, 3);
+                        string newMessage = message.Remove(0, 4);
                         string[] values = newMessage.Split(',');
                         List<int> intValues = new List<int>();
                         for (int i = 0; i < values.Length - 1; i++)
@@ -911,6 +911,7 @@ namespace OSLTT
             double seconds = ticks / Stopwatch.Frequency;
             double microseconds = (ticks / Stopwatch.Frequency) * 1000000;
             Console.WriteLine("Click handler: " + microseconds);
+            // text changed handler added 487us.
         }
 
         private void materialLabel11_Click(object sender, EventArgs e)
@@ -920,7 +921,7 @@ namespace OSLTT
 
         private void clickTestBox_Click(object sender, EventArgs e)
         {
-
+            // click handlers added 87us
         }
         bool testbool = false;
         private void materialButton1_Click(object sender, EventArgs e)

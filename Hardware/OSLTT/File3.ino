@@ -38,13 +38,13 @@ void loop() {
             long start = micros();
             Serial.println("AUDIO TRIGGER");
             long end = micros();
-            autoRunTest(9000);
+            autoRunTest(autoClick, 9000, shotCount);
             Serial.print("AUDIO SERIAL DELAY:");
             Serial.println(end - start);
           }
           else
           {
-            autoRunTest(9000);
+            autoRunTest(autoClick, 9000, shotCount);
           }
         }
       }
@@ -67,7 +67,7 @@ void loop() {
           {
             // Audio trigger
             // run test
-            autoRunTest(9000);
+            autoRunTest(autoClick, 9000, shotCount);
           }
         }
       }
