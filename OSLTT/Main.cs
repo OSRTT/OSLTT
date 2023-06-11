@@ -844,7 +844,9 @@ namespace OSLTT
             {
                 if (!settingsSynced)
                 {
-                    settingsPane1.SaveSettings();
+                    this.Invoke((MethodInvoker)delegate () { 
+                        settingsPane1.SaveSettings();
+                    });
                 }
             }
         }

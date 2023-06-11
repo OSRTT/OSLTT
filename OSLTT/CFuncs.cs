@@ -74,7 +74,8 @@ namespace OSLTT
             {
                 if (ex.Message.Contains("Access to the path"))
                 {
-                    MessageBox.Show("Permissions Error - program unable to create new results folders, please relaunch the program as admin.", "Permissions Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Permissions Error - program unable to create new results folders. \n The program may be installed in the wrong location." +
+                        "Please check, or relaunch the program as admin.", "Permissions Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
             }
@@ -95,7 +96,7 @@ namespace OSLTT
             }
             decimal fileNumber = 001;
             // search /Results folder for existing file names, pick new name
-            string[] existingFiles = Directory.GetDirectories(path, "*-" + deviceName);
+            string[] existingFiles = Directory.GetDirectories(path, deviceName + "-*");
             //search files for number
             if (existingFiles.Length != 0)
             {
