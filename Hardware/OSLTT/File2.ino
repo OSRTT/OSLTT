@@ -189,5 +189,8 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
       localCounter++;
     }
     Serial.println("PRETEST FINISHED");
+    delay(1000);
+    Keyboard.press(KEY_ESC);
+    Keyboard.releaseAll();
   }
 }

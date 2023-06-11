@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static OSLTT.ProcessData;
 
 namespace OSLTT
 {
@@ -47,10 +48,10 @@ namespace OSLTT
         string processedFileName = "";
 
         private List<float> inputLagEvents = new List<float>();
-        private List<ProcessData.rawInputLagResult> inputLagRawData = new List<ProcessData.rawInputLagResult>();
-        private List<ProcessData.inputLagResult> inputLagProcessed = new List<ProcessData.inputLagResult>();
-        private List<ProcessData.rawInputLagResult> rawSystemLagData = new List<ProcessData.rawInputLagResult>();
-        private List<ProcessData.inputLagResult> systemLagData = new List<ProcessData.inputLagResult>();
+        private List<rawInputLagResult> inputLagRawData = new List<rawInputLagResult>();
+        private List<inputLagResult> inputLagProcessed = new List<inputLagResult>();
+        private List<rawInputLagResult> rawSystemLagData = new List<rawInputLagResult>();
+        private averagedInputLag systemLagData = new averagedInputLag();
 
         public SettingsClasses.RunSettings RunSettings;
         private bool processingFailed = false;
@@ -402,7 +403,7 @@ namespace OSLTT
                             { }
                         }
 
-                        ProcessData.rawInputLagResult rawLag = new ProcessData.rawInputLagResult
+                        rawInputLagResult rawLag = new rawInputLagResult
                         {
                             ClickTime = intValues[0],
                             TimeTaken = intValues[1],
@@ -425,6 +426,72 @@ namespace OSLTT
                         string monitorInfo = folders.Last();
                         string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
                         
+
+                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                        inputLagThread.Start();
+                        //processInputLagData();
+                    }
+                    else if (message.Contains("PRETEST:"))
+                    {
+
+                        // Results Data
+                        string newMessage = message.Remove(0, 4);
+                        string[] values = newMessage.Split(',');
+                        List<int> intValues = new List<int>();
+                        for (int i = 0; i < values.Length - 1; i++)
+                        {
+                            if (values[i] == "0")
+                            {
+                                intValues.Add(0);
+                            }
+                            else if (values[i] != "")
+                            {
+                                try
+                                {
+                                    intValues.Add(int.Parse(values[i]));
+                                }
+                                catch
+                                {
+                                    Console.WriteLine(values[i]);
+                                }
+                            }
+                            else { continue; }
+                        }
+                        float frameTime = 0;
+                        
+                        if (DirectX.System.DSystem.EventList.Count == 0)
+                        { Thread.Sleep(50); } // add continuous check
+                        try
+                        {
+                            frameTime = DirectX.System.DSystem.EventList.Last();
+                        }
+                        catch
+                        { }
+                        
+
+                        rawInputLagResult rawLag = new rawInputLagResult
+                        {
+                            ClickTime = intValues[0],
+                            TimeTaken = intValues[1],
+                            SampleCount = intValues[2],
+                            SampleTime = (double)intValues[1] / (double)intValues[2],
+                            Samples = intValues.Skip(4).ToList(),
+                            FrameTime = frameTime
+                        };
+                        rawSystemLagData.Add(rawLag);
+                        // save result to raw file
+                        //CFuncs.saveRawResultToFile(resultsFolderPath, rawFileName, rawLag);
+                        // process individual result
+
+
+                    }
+                    else if (message.Contains("PRETEST FINISHED")) // auto click test complete, write to folder & process
+                    {
+
+                        //string[] folders = resultsFolderPath.Split('\\');
+                        //string monitorInfo = folders.Last();
+                        //string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
+
 
                         Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                         inputLagThread.Start();
@@ -789,7 +856,7 @@ namespace OSLTT
                 //while (!settingsSynced) { Thread.Sleep(100); }
                 Thread.Sleep(100);
 
-                if (testSettings.PreTest && systemLagData.Count == 0)
+                if (testSettings.PreTest && systemLagData.inputLagResults.Count == 0)
                 {
                     portWrite("P");
                     // message box to explain what to do?
@@ -844,7 +911,7 @@ namespace OSLTT
             try //Wrapped whole thing in try just in case
             {
                 // Then process the lines
-                ProcessData.averagedInputLag inputLagProcessed = ProcessData.AverageInputLagResults(inputLagRawData);
+                averagedInputLag inputLagProcessed = AverageInputLagResults(inputLagRawData);
 
                 // Write results to csv using new name
                 decimal fileNumber = 001;
@@ -916,7 +983,35 @@ namespace OSLTT
             }
         }
 
-        
+        private void processSystemLagData()
+        {
+            systemLagData = new averagedInputLag();
+
+            try //Wrapped whole thing in try just in case
+            {
+                // Then process the lines
+                averagedInputLag inputLagProcessed = AverageInputLagResults(inputLagRawData);
+
+                systemLagData = inputLagProcessed;
+            }
+            catch (Exception procEx)
+            {
+                Console.WriteLine(procEx);
+                processingFailed = true;
+                if (port != null)
+                {
+                    if (port.IsOpen)
+                    {
+                        port.Write("X");
+                        DialogBox("One or more set of results failed to process and won't be included in the multi-run averaging. \n " +
+                            "Brightness may be too high or monitor may be strobing it's backlight. \n" +
+                            "Try calibrating the brightness again, or use the Graph View Template to view the raw data.", "Processing Failed", "OK", false);
+                        processingFailed = false;
+                    }
+                }
+            }
+        }
+
 
         private void textTextBox_textChanged(object sender, EventArgs e)
         {
