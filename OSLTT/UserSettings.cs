@@ -58,10 +58,7 @@ namespace OSLTT
                             {
                                 Properties.Settings.Default.customTestSettings = JsonConvert.DeserializeObject<TestSettings>(s.value);
                             }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message + e.StackTrace);
-                            }
+                            catch (Exception e) { Console.WriteLine(e.Message + e.StackTrace); }
                         }
                         else
                         {
@@ -70,10 +67,7 @@ namespace OSLTT
                                 Type t = Properties.Settings.Default[s.name].GetType();
                                 Properties.Settings.Default[s.name] = Convert.ChangeType(s.value, t);
                             }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message + e.StackTrace);
-                            }
+                            catch (Exception e) { Console.WriteLine(e.Message + e.StackTrace); }
                         }
                     }
                     Properties.Settings.Default.Save();

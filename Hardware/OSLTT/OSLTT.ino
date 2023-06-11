@@ -19,6 +19,8 @@ int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 
 int sensorType = 0; // 0 = light, 1 = audio
 
+int sourceType = 0; // 0 = directX, 1 = mouse/keyboard, 2 = game/external, 3 = audio clip
+
 int shotCount = 100;
 
 double timeBetween = 0.5;

@@ -1017,12 +1017,14 @@ namespace OSLTT
 
         private void textTextBox_textChanged(object sender, EventArgs e)
         {
-            sw.Stop();
-            double ticks = sw.ElapsedTicks;
-            double seconds = ticks / Stopwatch.Frequency;
-            double microseconds = (ticks / Stopwatch.Frequency) * 1000000;
-            Console.WriteLine("Click handler: " + microseconds);
+            //sw.Stop();
+            //double ticks = sw.ElapsedTicks;
+            //double seconds = ticks / Stopwatch.Frequency;
+            //double microseconds = (ticks / Stopwatch.Frequency) * 1000000;
+            //Console.WriteLine("Click handler: " + microseconds);
             // text changed handler added 487us.
+
+            portWrite("H");
         }
 
         private void materialLabel11_Click(object sender, EventArgs e)
@@ -1053,6 +1055,10 @@ namespace OSLTT
             //textTextBox.Text = "test";
             testbool = !testbool;
             toggleMouseKeyboardBoxes(testbool);
+            if (testbool)
+            {
+                portWrite("W");
+            }
 
         }
 

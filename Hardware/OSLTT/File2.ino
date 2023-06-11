@@ -105,7 +105,7 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
     pin = 1;
   }
   unsigned long clickTime = micros();
-  if (inputType == 0 && directXMode)
+  if (inputType == 0 && sourceType == 0)
   {
     //Mouse.click(MOUSE_LEFT);
     Keyboard.write((char) 32);

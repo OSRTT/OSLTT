@@ -50,6 +50,7 @@ void loop() {
       }
       else if (inputType == 1)
       {
+
         int baseline = getADCValue(500, 1);
         while (input[0] != 'X')
         {
@@ -123,16 +124,17 @@ void loop() {
       }
 
       // DirectX - bit 4
-      if (input[4] == '1')
-      {
-        directXMode = true;
-        Serial.println("direct X true");
-      }
-      else
-      {
-        directXMode = false;
-        Serial.println("direct X false");
-      }
+      sourceType = convertHexToDec(input[3]) - 1;
+      // if (input[4] == '1')
+      // {
+      //   directXMode = true;
+      //   Serial.println("direct X true");
+      // }
+      // else
+      // {
+      //   directXMode = false;
+      //   Serial.println("direct X false");
+      // }
       
       // Shot count - bit 5 + 6
       int msb = convertHexToDec(input[6]);
@@ -187,11 +189,24 @@ void loop() {
   }
   else if (input[0] == 'W')
   {
-    long timer1 = micros();
-    Serial.println("Audio trigger");
-    long timer2 = micros();
-    long time = timer2 - timer1;
-    Serial.println(time);
+    while (input[0] != 'X')
+    {
+      getSerialChars();
+      if (digitalRead(ButtonPin) == HIGH)
+      {
+        //Serial.println("Audio trigger");
+        Keyboard.write('A');
+        long timer1 = micros();
+        while (input[0] != 'H')
+        {
+          getSerialChars();
+        }
+        long timer2 = micros();
+        long time = timer2 - timer1;
+        Serial.println(time);
+      }
+    }
+    
     // // delay(1000);
     // // for (int i = 0; i < 50000; i++)
     // // {
