@@ -189,24 +189,24 @@ void loop() {
   }
   else if (input[0] == 'W')
   {
-    while (input[0] != 'X')
+    Serial.setTimeout(1);
+    while (!digitalRead(ButtonPin))
+    {
+      delay(10);
+    }
+    Keyboard.write('H');
+    //Mouse.click(MOUSE_LEFT);
+    long timer1 = micros();
+    while (input[0] != 'H')
     {
       getSerialChars();
-      if (digitalRead(ButtonPin) == HIGH)
-      {
-        //Serial.println("Audio trigger");
-        Keyboard.write('A');
-        long timer1 = micros();
-        while (input[0] != 'H')
-        {
-          getSerialChars();
-        }
-        long timer2 = micros();
-        long time = timer2 - timer1;
-        Serial.println(time);
-      }
     }
-    
+    long timer2 = micros();
+    long time = timer2 - timer1;
+    Serial.println(time / 1000);
+        
+    Serial.setTimeout(100);
+  
     // // delay(1000);
     // // for (int i = 0; i < 50000; i++)
     // // {

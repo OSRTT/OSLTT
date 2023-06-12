@@ -1023,7 +1023,7 @@ namespace OSLTT
             //double microseconds = (ticks / Stopwatch.Frequency) * 1000000;
             //Console.WriteLine("Click handler: " + microseconds);
             // text changed handler added 487us.
-
+            //3-4ms direct (osltt test mode)
             portWrite("H");
         }
 
@@ -1035,6 +1035,8 @@ namespace OSLTT
         private void clickTestBox_Click(object sender, EventArgs e)
         {
             // click handlers added 87us
+            // 1-2ms direct (osltt test mode)
+            portWrite("H");
         }
         bool testbool = false;
         private void materialButton1_Click(object sender, EventArgs e)

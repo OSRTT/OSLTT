@@ -371,6 +371,7 @@ namespace OSLTT
             this.textTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textTextBox.TrailingIcon = null;
             this.textTextBox.UseSystemPasswordChar = false;
+            this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_textChanged);
             // 
             // clickTestBox
             // 
@@ -385,6 +386,7 @@ namespace OSLTT
             this.clickTestBox.Padding = new System.Windows.Forms.Padding(14);
             this.clickTestBox.Size = new System.Drawing.Size(885, 283);
             this.clickTestBox.TabIndex = 48;
+            this.clickTestBox.Click += new System.EventHandler(this.clickTestBox_Click);
             // 
             // materialLabel11
             // 
@@ -398,6 +400,7 @@ namespace OSLTT
             this.materialLabel11.Size = new System.Drawing.Size(531, 29);
             this.materialLabel11.TabIndex = 1;
             this.materialLabel11.Text = "Click anywhere in this box for mouse click latency";
+            this.materialLabel11.Click += new System.EventHandler(this.materialLabel11_Click);
             // 
             // imageList1
             // 
