@@ -814,23 +814,37 @@ namespace OSLTT
             debug.Show();
         }
 
+        private Thread testThread;
+        public bool stopTest = false;
+
         private void startTestBtn_Click(object sender, EventArgs e)
         {
             if (startTestBtn.Text == "Start")
             {
                 settingsSynced = false;
+                stopTest = false;
                 settingsPane1.SaveSettings();
                 resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
                 rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                 processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
                 SetDeviceStatus(5);
-                runTest();
+                if (testSettings.TestSource == 1)
+                {
+                    runDirectXTest();
+                }
+                else
+                {
+                    runPretest();
+                    testThread = new Thread(new ThreadStart(runTest));
+                    testThread.Start();
+                }
             }
             else
             {
                 // End test
                 portWrite("X");
+                stopTest = true;
                 toggleMouseKeyboardBoxes(false);
                 Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                 inputLagThread.Start();
@@ -851,7 +865,57 @@ namespace OSLTT
             }
         }
 
+        private void runPretest()
+        {
+            if (testSettings.PreTest && systemLagData.inputLagResults.Count == 0)
+            {
+                portWrite("P");
+                // message box to explain what to do?
+                DirectX.System.DSystem.inputLagMode = true;
+                if (DirectX.System.DSystem.mainWindow == null)
+                    DirectX.System.DSystem.mainWindow = this;
+
+                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+            }
+        }
+
         private void runTest()
+        {
+            try
+            {
+                while (!settingsSynced) { Thread.Sleep(100); } // can use this because this function is threaded
+                portWrite("T");
+                RunSettings = SettingsClasses.initRunSettings();
+                inputLagEvents.Clear();
+                inputLagProcessed.Clear();
+                inputLagRawData.Clear();
+                if (testSettings.TestSource == 2) // mouse/keyboard mode
+                {
+                    // switch modes then wait for test end
+                    toggleMouseKeyboardBoxes(true);
+                }
+                else if (testSettings.TestSource == 4) // audio clip
+                {
+                    // wait for device trigger still right?
+                }
+                else
+                {
+                    // erm idk? wait? External/game mode
+                }
+                while (!stopTest)
+                {
+                    Thread.Sleep(100);
+                }
+                SetDeviceStatus(1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+                debug.AddToLog(ex.Message + ex.StackTrace);
+            }
+        }
+
+        private void runDirectXTest()
         {
             try
             {
@@ -874,27 +938,13 @@ namespace OSLTT
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
-                if (testSettings.TestSource == 1)
-                {
-                    DirectX.System.DSystem.inputLagMode = true;
-                    if (DirectX.System.DSystem.mainWindow == null)
-                        DirectX.System.DSystem.mainWindow = this;
+                
+                DirectX.System.DSystem.inputLagMode = true;
+                if (DirectX.System.DSystem.mainWindow == null)
+                    DirectX.System.DSystem.mainWindow = this;
 
-                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
-                }
-                else if (testSettings.TestSource == 2) // mouse/keyboard mode
-                {
-                    // switch modes then wait for test end
-                    toggleMouseKeyboardBoxes(true);
-                }
-                else if (testSettings.TestSource == 4) // audio clip
-                {
-                    // wait for device trigger still right?
-                }
-                else
-                {
-                    // erm idk? wait? External/game mode
-                }
+                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                
 
                 SetDeviceStatus(1);
             }

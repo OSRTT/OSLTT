@@ -80,7 +80,7 @@ void loop() {
           if (digitalRead(PullDownPin) != HIGH)
           {
             // Run test
-            autoRunTest(9000);
+            autoRunTest(false, 9000);
           }
         }
       }
@@ -93,7 +93,7 @@ void loop() {
       getSerialChars();
       if (digitalRead(ButtonPin))
       {
-        autoRunTest(9000, 100, true);
+        autoRunTest(true, 9000, 100, true);
       }
     }
   }
@@ -125,17 +125,7 @@ void loop() {
 
       // DirectX - bit 4
       sourceType = convertHexToDec(input[3]) - 1;
-      // if (input[4] == '1')
-      // {
-      //   directXMode = true;
-      //   Serial.println("direct X true");
-      // }
-      // else
-      // {
-      //   directXMode = false;
-      //   Serial.println("direct X false");
-      // }
-      
+            
       // Shot count - bit 5 + 6
       int msb = convertHexToDec(input[6]);
       int lsb = convertHexToDec(input[5]);
