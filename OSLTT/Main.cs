@@ -391,7 +391,7 @@ namespace OSLTT
                             else { continue; }
                         }
                         float frameTime = 0;
-                        if (Properties.Settings.Default.directXToggle)
+                        if (testSettings.TestSource == 1)
                         {
                             if (DirectX.System.DSystem.EventList.Count == 0)
                             { Thread.Sleep(50); } // add continuous check

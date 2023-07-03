@@ -51,6 +51,7 @@ void loop() {
       else if (inputType == 1)
       {
 
+        Serial.setTimeout(1);
         int baseline = getADCValue(500, 1);
         while (input[0] != 'X')
         {
@@ -60,17 +61,31 @@ void loop() {
             input[0] = 'X';
           }
           int current = getSingleADCValue(1);
-          Serial.print("AUDIO:");
-          Serial.println(current);
+          //Serial.print("AUDIO:");
+          //Serial.println(current);
           int baselineAdjusted = 16380 - baseline;
           baselineAdjusted *= 0.5;
           if (current > (baseline + baselineAdjusted))
           {
             // Audio trigger
             // run test
-            autoRunTest(autoClick, 9000, shotCount);
+            //autoRunTest(false, 9000);
+
+            // keyboard/mouse mode. Listen for click, wait for PC to report click.
+            long start = micros();
+            while (input[0] != 'H')
+            {
+              getSerialChars();
+            }
+            long end = micros();
+            long time = end - start;
+
+            Serial.print("CLICK RES:");
+            Serial.println(time / 1000);
           }
         }
+        Serial.setTimeout(100);
+        Serial.println("Audio Finished");
       }
       else if (inputType == 2)
       {
