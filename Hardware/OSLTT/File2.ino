@@ -1,10 +1,8 @@
 // Setup and helper functions
 
 
-void getSerialChars()
-{
-  for (int i = 0; i < INPUT_SIZE + 1; i++)
-  {
+void getSerialChars() {
+  for (int i = 0; i < INPUT_SIZE + 1; i++) {
     input[i] = ' ';
   }
   byte size = Serial.readBytes(input, INPUT_SIZE);
@@ -13,19 +11,17 @@ void getSerialChars()
 
 void establishContact() {
   while (Serial.available() <= 0) {
-    Serial.println('OSLTT');   // send a capital A
+    Serial.println('OSLTT');  // send a capital A
     delay(250);
   }
 }
 
 
-int getADCValue(int count, int pin = 0)
-{
+int getADCValue(int count, int pin = 0) {
   uint32_t value = 0;
   int localCounter = 0;
-  while (localCounter < count)
-  {
-    
+  while (localCounter < count) {
+
     value += analogRead(pin);
     localCounter++;
   }
@@ -33,13 +29,11 @@ int getADCValue(int count, int pin = 0)
   return value;
 }
 
-long fillADCBuffer(int count, int pin = 0)
-{
+long fillADCBuffer(int count, int pin = 0) {
 
   int localCounter = 0;
   long startTimer = micros();
-  while (localCounter < count)
-  {
+  while (localCounter < count) {
     adcBuff[localCounter] = analogRead(pin);
     localCounter++;
   }
@@ -51,66 +45,49 @@ int getSingleADCValue(int pin = 0) {
   return analogRead(pin);
 }
 
-int convertHexToDec(char c)
-{
-  if (c <= 57)
-  {
-    return c - '0'; // Convert char to int
-  }
-  else
-  {
+int convertHexToDec(char c) {
+  if (c <= 57) {
+    return c - '0';  // Convert char to int
+  } else {
     return c - 55;
   }
 }
 
 
-void pulseLED(bool state)
-{
-  if (state)
-  {
-    for (int i = 0; i < 255; i++)
-    {
+void pulseLED(bool state) {
+  if (state) {
+    for (int i = 0; i < 255; i++) {
       analogWrite(3, i);
       delay(5);
     }
-  }
-  else
-  {
-    for (int i = 255; i > 0; i--)
-    {
+  } else {
+    for (int i = 255; i > 0; i--) {
       analogWrite(3, i);
       delay(5);
     }
-    analogWrite(3,0);
+    analogWrite(3, 0);
   }
 }
 
-void toggleLED(bool state)
-{
-  if (state) 
-  {
+void toggleLED(bool state) {
+  if (state) {
     analogWrite(3, 0xFF);
-  }
-  else
-  {
+  } else {
     analogWrite(3, 0x00);
   }
 }
 
-void runTest(int sampleCount = 9000, String textType = "RES:")
-{
+void runTest(int sampleCount = 9000, String textType = "RES:") {
   int pin = 0;
-  if (sensorType == 1)
-  {
+  if (sensorType == 1) {
     pin = 1;
   }
   unsigned long clickTime = micros();
-  if (inputType == 0 && sourceType == 0)
-  {
+  if (inputType == 0 && sourceType == 0) {
     //Mouse.click(MOUSE_LEFT);
-    Keyboard.write((char) 32);
+    Keyboard.write((char)32);
   }
-  unsigned long start_time = micros();  
+  unsigned long start_time = micros();
   int t = start_time - clickTime;
   long timeTaken = fillADCBuffer(sampleCount, pin);
   toggleLED(true);
@@ -120,45 +97,36 @@ void runTest(int sampleCount = 9000, String textType = "RES:")
   Serial.print(t);
   Serial.print(",");
   Serial.print(timeTaken);
-  Serial.print(","); 
+  Serial.print(",");
   Serial.print(sampleCount);
   Serial.print(",");
-         
-  for (int i = 0; i < sampleCount; i++)
-  {
+
+  for (int i = 0; i < sampleCount; i++) {
     Serial.print(adcBuff[i]);
     Serial.print(",");
-    if (i < 100)
-    {
+    if (i < 100) {
       localStartValue += adcBuff[i];
-    }
-    else if (i == 100)
-    {
+    } else if (i == 100) {
       localStartValue /= 100;
-    }
-    else
-    {
-      if (adcBuff[i] > (localStartValue * 2) && triggerSampleNum == 0)
-      {
+    } else {
+      if (adcBuff[i] > (localStartValue * 2) && triggerSampleNum == 0) {
         triggerSampleNum = i;
       }
     }
   }
   Serial.println();
   Serial.print("RESULT:");
-  double result = (timeTaken / sampleCount) * triggerSampleNum; 
+  double result = (timeTaken / sampleCount) * triggerSampleNum;
   Serial.println(result / 1000);
   toggleLED(false);
 }
 
-void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false)
-{
-  if (autoRun)
-  {
+
+void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false) {
+  if (autoRun) {
     int localCounter = 0;
     Serial.setTimeout(100);
-    while (input[0] != 'X' && localCounter < clickCount )
-    {
+    while (input[0] != 'X' && localCounter < clickCount) {
 
       runTest(sampleCount);
       long timer1 = millis();
@@ -168,22 +136,16 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
       localCounter++;
     }
     Serial.println("AUTO FINISHED");
-    if (directXMode)
-    {
-        Keyboard.press(KEY_ESC);
-        Keyboard.releaseAll();
+    if (directXMode) {
+      Keyboard.press(KEY_ESC);
+      Keyboard.releaseAll();
     }
-  }
-  else if (!autoRun)
-  {
+  } else if (!autoRun) {
     runTest(sampleCount);
     Serial.println("SINGLE FIRE");
-  }
-  else if (pretest)
-  {
+  } else if (pretest) {
     int localCounter = 0;
-    while (input[0] != 'X' && localCounter < clickCount )
-    {
+    while (input[0] != 'X' && localCounter < clickCount) {
       getSerialChars();
       runTest(sampleCount, "PRETEST:");
       localCounter++;
@@ -193,4 +155,42 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
     Keyboard.press(KEY_ESC);
     Keyboard.releaseAll();
   }
+}
+
+void runClickTest() {
+  Serial.setTimeout(1);
+  int baseline = getADCValue(500, 1);
+  while (input[0] != 'X') {
+    if (digitalRead(ButtonPin)) {
+      input[0] = 'X';
+    }
+    int current = getSingleADCValue(1);
+    int baselineAdjusted = 16380 - baseline;
+    baselineAdjusted *= 0.5;
+    if (current > (baseline + baselineAdjusted)) {
+      // keyboard/mouse mode. Listen for click, wait for PC to report click.
+      input[0] = '0';
+      long start = micros();
+      while (input[0] != 'H') {
+        getSerialChars();
+      }
+      long end = micros();
+      long time = end - start;
+
+      Serial.print("CLICK:");
+      Serial.println(time / 1000);
+      delay(100);
+    }
+  }
+  Serial.setTimeout(100);
+  Serial.println("Clicks Finished");
+}
+
+void runAudioTest() {
+  long start = micros();
+  Serial.println("AUDIO TRIGGER");
+  long end = micros();
+  autoRunTest(false, 9000);
+  Serial.print("AUDIO SERIAL DELAY:");
+  Serial.println(end - start);
 }

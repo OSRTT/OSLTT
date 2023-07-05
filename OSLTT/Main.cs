@@ -325,12 +325,6 @@ namespace OSLTT
                         // play sound
                         audioTestClip.Play();
                     }
-                    else if (message.Contains("Audio"))
-                    {
-                        Console.WriteLine("test point reached");
-                        sw.Restart();
-                        materialButton1_Click(null, null);
-                    }
                     else if (message.Contains("FW:"))
                     {
                         string[] sp = message.Split(':');
@@ -419,6 +413,15 @@ namespace OSLTT
 
 
                     }
+                    else if (message.Contains("AUDIO SERIAL DELAY"))
+                    {
+                        // audio test result
+                    }
+                    else if (message.Contains("CLICK:"))
+                    {
+                        // click result
+
+                    }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
 
@@ -430,6 +433,15 @@ namespace OSLTT
                         Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                         inputLagThread.Start();
                         //processInputLagData();
+                    }
+                    else if (message.Contains("Clicks Finished")) // click test finished, end test (user cancelled test)
+                    {
+                        // end test
+
+                    }
+                    else if (message.Contains("AUDIO TEST FINISHED")) // audio test auto click finished
+                    {
+                        // end test
                     }
                     else if (message.Contains("PRETEST:"))
                     {
@@ -750,7 +762,6 @@ namespace OSLTT
                 {
                     this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
-                    
                 }
                     
             }
@@ -763,7 +774,6 @@ namespace OSLTT
                 {
                     this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
-                    
                 }
             }
         }
@@ -1079,7 +1089,8 @@ namespace OSLTT
 
         private void materialLabel11_Click(object sender, EventArgs e)
         {
-            clickTestBox_Click(null, null);
+            //clickTestBox_Click(null, null);
+            portWrite("H");
         }
 
         private void clickTestBox_Click(object sender, EventArgs e)

@@ -35,12 +35,19 @@ void loop() {
         {
           if (sensorType == 1)
           {
-            long start = micros();
-            Serial.println("AUDIO TRIGGER");
-            long end = micros();
-            autoRunTest(autoClick, 9000, shotCount);
-            Serial.print("AUDIO SERIAL DELAY:");
-            Serial.println(end - start);
+            if (autoClick)
+            {
+              for (int i = 0; i < shotCount; i++)
+              {
+                runAudioTest();
+                delay(250);
+              }
+              Serial.println("AUDIO TEST FINISHED");
+            }
+            else
+            {
+              runAudioTest();
+            }
           }
           else
           {
@@ -50,42 +57,7 @@ void loop() {
       }
       else if (inputType == 1)
       {
-
-        Serial.setTimeout(1);
-        int baseline = getADCValue(500, 1);
-        while (input[0] != 'X')
-        {
-          //getSerialChars();
-          if (digitalRead(ButtonPin))
-          {
-            input[0] = 'X';
-          }
-          int current = getSingleADCValue(1);
-          //Serial.print("AUDIO:");
-          //Serial.println(current);
-          int baselineAdjusted = 16380 - baseline;
-          baselineAdjusted *= 0.5;
-          if (current > (baseline + baselineAdjusted))
-          {
-            // Audio trigger
-            // run test
-            //autoRunTest(false, 9000);
-
-            // keyboard/mouse mode. Listen for click, wait for PC to report click.
-            long start = micros();
-            while (input[0] != 'H')
-            {
-              getSerialChars();
-            }
-            long end = micros();
-            long time = end - start;
-
-            Serial.print("CLICK RES:");
-            Serial.println(time / 1000);
-          }
-        }
-        Serial.setTimeout(100);
-        Serial.println("Audio Finished");
+        runClickTest();
       }
       else if (inputType == 2)
       {
@@ -122,7 +94,6 @@ void loop() {
     else
     {
       // Sensor type - bit 1
-
       sensorType = convertHexToDec(input[1]) - 1;
 
       // Trigger type - bit 2
@@ -142,10 +113,10 @@ void loop() {
       sourceType = convertHexToDec(input[3]) - 1;
             
       // Shot count - bit 5 + 6
-      int msb = convertHexToDec(input[6]);
-      int lsb = convertHexToDec(input[5]);
+      int msb = convertHexToDec(input[5]);
+      int lsb = convertHexToDec(input[6]);
       shotCount = (msb * 100) + (lsb * 10);
-
+     
       // Time between - bit 7
       int tbw = convertHexToDec(input[0]);
       if (tbw == 1)
