@@ -23,8 +23,16 @@ namespace OSLTT
             public List<int> Samples { get; set; }
         }
 
+        public enum resultType
+        {
+            Light,
+            Click,
+            Audio
+        }
+
         public class inputLagResult
         {
+            public resultType Type { get; set; }
             public int shotNumber { get; set; }
             public double clickTimeMs { get; set; }
             public double frameTimeMs { get; set; }

@@ -41,6 +41,19 @@ long fillADCBuffer(int count, int pin = 0) {
   return endTimer - startTimer;
 }
 
+long fillADCBufferSlower(int count, int pin = 0) {
+
+  int localCounter = 0;
+  long startTimer = micros();
+  while (localCounter < count) {
+    adcBuff[localCounter] = analogRead(pin);
+    delayMicroseconds(20);
+    localCounter++;
+  }
+  long endTimer = micros();
+  return endTimer - startTimer;
+}
+
 int getSingleADCValue(int pin = 0) {
   return analogRead(pin);
 }
@@ -77,7 +90,7 @@ void toggleLED(bool state) {
   }
 }
 
-void runTest(int sampleCount = 9000, String textType = "RES:") {
+void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = false) {
   int pin = 0;
   if (sensorType == 1) {
     pin = 1;
@@ -89,7 +102,15 @@ void runTest(int sampleCount = 9000, String textType = "RES:") {
   }
   unsigned long start_time = micros();
   int t = start_time - clickTime;
-  long timeTaken = fillADCBuffer(sampleCount, pin);
+  long timeTaken;
+  if (audioTest)
+  { 
+    timeTaken = fillADCBuffer(sampleCount, pin); 
+  }
+  else
+  {
+    timeTaken = fillADCBufferSlower(sampleCount, 1)
+  }
   toggleLED(true);
   long localStartValue = 0;
   int triggerSampleNum = 0;
@@ -190,7 +211,7 @@ void runAudioTest() {
   long start = micros();
   Serial.println("AUDIO TRIGGER");
   long end = micros();
-  autoRunTest(false, 9000);
+  long resultData = fillADCBufferSlower(14000, 1);
   Serial.print("AUDIO SERIAL DELAY:");
   Serial.println(end - start);
 }

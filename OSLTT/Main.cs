@@ -416,11 +416,16 @@ namespace OSLTT
                     else if (message.Contains("AUDIO SERIAL DELAY"))
                     {
                         // audio test result
+                        string[] splitMessage = message.Split(':');
+                        double result = double.Parse(splitMessage[1]);
+                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Audio, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result });
                     }
                     else if (message.Contains("CLICK:"))
                     {
                         // click result
-
+                        string[] splitMessage = message.Split(':');
+                        double result = double.Parse(splitMessage[1]);
+                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result });
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
@@ -437,11 +442,12 @@ namespace OSLTT
                     else if (message.Contains("Clicks Finished")) // click test finished, end test (user cancelled test)
                     {
                         // end test
-
+                        startTestBtn_Click(null, null);
                     }
                     else if (message.Contains("AUDIO TEST FINISHED")) // audio test auto click finished
                     {
                         // end test
+                        startTestBtn_Click(null, null);
                     }
                     else if (message.Contains("PRETEST:"))
                     {
