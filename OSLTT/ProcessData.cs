@@ -312,6 +312,61 @@ namespace OSLTT
 
             inputLagProcessed.inputLagResults = clearedResults;
 
+            return averageResults(inputLagProcessed);
+        }
+
+        public static double GetMedian(double[] sourceNumbers)
+        {
+            //Framework 2.0 version of this method. there is an easier way in F4        
+            if (sourceNumbers == null || sourceNumbers.Length == 0)
+                throw new System.Exception("Median of empty array not defined.");
+
+            //make sure the list is sorted, but use a new array
+            double[] sortedPNumbers = (double[])sourceNumbers.Clone();
+            Array.Sort(sortedPNumbers);
+
+            //get the median
+            int size = sortedPNumbers.Length;
+            int mid = size / 2;
+            double median = (size % 2 != 0) ? (double)sortedPNumbers[mid] : ((double)sortedPNumbers[mid] + (double)sortedPNumbers[mid - 1]) / 2;
+            return median;
+        }
+
+        public static List<inputLagResult> inputLagOutlierRejection(List<inputLagResult> res, bool removeOutliers = false)
+        {
+            // Consider adding actual outlier rejection like response time averaging...
+            List<double> resultsList = new List<double>();
+
+            List<inputLagResult> newRes = new List<inputLagResult>();
+            newRes.AddRange(res);
+            foreach (var i in res)
+            {
+                if (i.onDisplayLatency == 0)
+                {
+                    newRes.Remove(i);
+                }
+                resultsList.Add(i.totalInputLag);
+            }
+
+            // find median of results
+            double median = GetMedian(resultsList.ToArray());
+            if (removeOutliers)
+            {
+                foreach (var i in newRes)
+                {
+                    if (i.totalInputLag > (median * 3) || i.totalInputLag > (median / 3))
+                    {
+                        newRes.Remove(i);
+                    }
+                }
+            }
+
+            return newRes;
+        }
+
+        public static averagedInputLag averageResults(averagedInputLag input)
+        {
+            averagedInputLag inputLagProcessed = input;
             // convert to double array for each type of average
             inputLagProcessed.ClickTime = new averageInputLagResult { AVG = 0, MIN = 100, MAX = 0 };
             inputLagProcessed.FrameTime = new averageInputLagResult { AVG = 0, MIN = 100, MAX = 0 };
@@ -365,21 +420,6 @@ namespace OSLTT
             inputLagProcessed.totalInputLag.AVG /= inputLagProcessed.inputLagResults.Count;
             inputLagProcessed.totalInputLag.AVG = Math.Round(inputLagProcessed.totalInputLag.AVG, 3);
             return inputLagProcessed;
-        }
-
-        public static List<inputLagResult> inputLagOutlierRejection(List<inputLagResult> res)
-        {
-            // Consider adding actual outlier rejection like response time averaging...
-            List<inputLagResult> newRes = new List<inputLagResult>();
-            newRes.AddRange(res);
-            foreach (var i in res)
-            {
-                if (i.onDisplayLatency == 0)
-                {
-                    newRes.Remove(i);
-                }
-            }
-            return newRes;
         }
 
     }
