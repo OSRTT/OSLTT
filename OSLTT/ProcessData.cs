@@ -315,6 +315,16 @@ namespace OSLTT
             return averageResults(inputLagProcessed);
         }
 
+        public static averagedInputLag AveragePreProecessedResults(List<inputLagResult> res)
+        {
+            // This is the function to process clicks type measurements 
+            averagedInputLag inputLag = new averagedInputLag();
+
+            List<inputLagResult> processedResults = inputLagOutlierRejection(res, true);
+            inputLag.inputLagResults = processedResults;
+            return averageResults(inputLag);
+        }
+
         public static double GetMedian(double[] sourceNumbers)
         {
             //Framework 2.0 version of this method. there is an easier way in F4        
