@@ -109,7 +109,7 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   }
   else
   {
-    timeTaken = fillADCBufferSlower(sampleCount, 1)
+    timeTaken = fillADCBufferSlower(sampleCount, 1);
   }
   toggleLED(true);
   long localStartValue = 0;

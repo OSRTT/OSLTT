@@ -43,6 +43,7 @@ void loop() {
                 delay(250);
               }
               Serial.println("AUDIO TEST FINISHED");
+              break;
             }
             else
             {
@@ -52,6 +53,10 @@ void loop() {
           else
           {
             autoRunTest(autoClick, 9000, shotCount);
+            if (autoClick)
+            {
+              break;
+            }
           }
         }
       }

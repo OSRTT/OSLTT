@@ -30,9 +30,8 @@ namespace OSLTT
         private void InitializeComponent()
         {
             this.importPanel = new MaterialSkin.Controls.MaterialCard();
-            this.importProcessedBtn = new MaterialSkin.Controls.MaterialButton();
+            this.importBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.importRawBtn = new MaterialSkin.Controls.MaterialButton();
             this.barPlot = new ScottPlot.FormsPlot();
             this.controlsPanel = new MaterialSkin.Controls.MaterialCard();
             this.switchGraphTypeBtn = new MaterialSkin.Controls.MaterialButton();
@@ -47,9 +46,8 @@ namespace OSLTT
             // importPanel
             // 
             this.importPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.importPanel.Controls.Add(this.importProcessedBtn);
+            this.importPanel.Controls.Add(this.importBtn);
             this.importPanel.Controls.Add(this.materialLabel1);
-            this.importPanel.Controls.Add(this.importRawBtn);
             this.importPanel.Depth = 0;
             this.importPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.importPanel.Location = new System.Drawing.Point(17, 78);
@@ -60,25 +58,25 @@ namespace OSLTT
             this.importPanel.Size = new System.Drawing.Size(679, 60);
             this.importPanel.TabIndex = 0;
             // 
-            // importProcessedBtn
+            // importBtn
             // 
-            this.importProcessedBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.importProcessedBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.importProcessedBtn.Depth = 0;
-            this.importProcessedBtn.HighEmphasis = true;
-            this.importProcessedBtn.Icon = null;
-            this.importProcessedBtn.Location = new System.Drawing.Point(457, 12);
-            this.importProcessedBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.importProcessedBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.importProcessedBtn.Name = "importProcessedBtn";
-            this.importProcessedBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.importProcessedBtn.Size = new System.Drawing.Size(195, 36);
-            this.importProcessedBtn.TabIndex = 2;
-            this.importProcessedBtn.Text = "Import Processed File";
-            this.importProcessedBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.importProcessedBtn.UseAccentColor = false;
-            this.importProcessedBtn.UseVisualStyleBackColor = true;
-            this.importProcessedBtn.Click += new System.EventHandler(this.importProcessedBtn_Click);
+            this.importBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.importBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.importBtn.Depth = 0;
+            this.importBtn.HighEmphasis = true;
+            this.importBtn.Icon = null;
+            this.importBtn.Location = new System.Drawing.Point(457, 12);
+            this.importBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.importBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.importBtn.Name = "importBtn";
+            this.importBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.importBtn.Size = new System.Drawing.Size(195, 36);
+            this.importBtn.TabIndex = 2;
+            this.importBtn.Text = "Import Existing File";
+            this.importBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.importBtn.UseAccentColor = false;
+            this.importBtn.UseVisualStyleBackColor = true;
+            this.importBtn.Click += new System.EventHandler(this.importBtn_Click);
             // 
             // materialLabel1
             // 
@@ -92,26 +90,6 @@ namespace OSLTT
             this.materialLabel1.Size = new System.Drawing.Size(161, 29);
             this.materialLabel1.TabIndex = 1;
             this.materialLabel1.Text = "Import Options";
-            // 
-            // importRawBtn
-            // 
-            this.importRawBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.importRawBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.importRawBtn.Depth = 0;
-            this.importRawBtn.HighEmphasis = true;
-            this.importRawBtn.Icon = null;
-            this.importRawBtn.Location = new System.Drawing.Point(256, 12);
-            this.importRawBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.importRawBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.importRawBtn.Name = "importRawBtn";
-            this.importRawBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.importRawBtn.Size = new System.Drawing.Size(144, 36);
-            this.importRawBtn.TabIndex = 0;
-            this.importRawBtn.Text = "Import Raw File";
-            this.importRawBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.importRawBtn.UseAccentColor = false;
-            this.importRawBtn.UseVisualStyleBackColor = true;
-            this.importRawBtn.Click += new System.EventHandler(this.importRawBtn_Click);
             // 
             // barPlot
             // 
@@ -243,8 +221,7 @@ namespace OSLTT
         #endregion
 
         private MaterialSkin.Controls.MaterialCard importPanel;
-        private MaterialSkin.Controls.MaterialButton importRawBtn;
-        private MaterialSkin.Controls.MaterialButton importProcessedBtn;
+        private MaterialSkin.Controls.MaterialButton importBtn;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private ScottPlot.FormsPlot barPlot;
         private MaterialSkin.Controls.MaterialCard controlsPanel;

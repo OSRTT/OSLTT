@@ -430,13 +430,11 @@ namespace OSLTT
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
 
-                        string[] folders = resultsFolderPath.Split('\\');
-                        string monitorInfo = folders.Last();
-                        string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
+                        startTestBtn_Click(null, null);
                         
 
-                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
-                        inputLagThread.Start();
+                        //Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                        //inputLagThread.Start();
                         //processInputLagData();
                     }
                     else if (message.Contains("Clicks Finished")) // click test finished, end test (user cancelled test)
@@ -520,76 +518,6 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
-                    else if (message.Contains("Clicks"))
-                    {
-                        int clicks = Properties.Settings.Default.clickCountSelect / 10;
-                        Console.WriteLine("Clicks: " + clicks);
-                        port.Write(clicks.ToString("00"));
-                    }
-                    else if (message.Contains("TimeBetween"))
-                    {
-                        double t = Properties.Settings.Default.timeBetweenSelect;
-                        if (Properties.Settings.Default.timeBetweenSelect == 0.5)
-                        {
-                            port.Write("1");
-                        }
-                        else
-                        {
-                            t += 1;
-                            port.Write(t.ToString());
-                        }
-                        port.Write(t.ToString());
-                        Console.WriteLine("Time Between: " + t);
-                    }
-                    else if (message.Contains("AutoClick"))
-                    {
-                        if (Properties.Settings.Default.autoClickToggle)
-                        {
-                            port.Write("1");
-                        }
-                        else
-                        {
-                            port.Write("0");
-                        }
-                    }
-                    else if (message.Contains("TriggerSensor"))
-                    {
-                        string trigger = "1";
-                        string sensor = "1";
-                        if (Properties.Settings.Default.buttonTriggerToggle)
-                        {
-                            trigger = "1";
-                        }
-                        else if (Properties.Settings.Default.audioTriggerToggle)
-                        {
-                            trigger = "2";
-                        }
-                        else
-                        {
-                            trigger = "3";
-                        }
-                        if (Properties.Settings.Default.lightSensorToggle)
-                        {
-                            sensor = "1";
-                        }
-                        else
-                        {
-                            sensor = "2";
-                        }
-                    }
-                    else if (message.Contains("DirectX"))
-                    {
-                        if (Properties.Settings.Default.directXToggle)
-                        {
-                            port.Write("1");
-                        }
-                        else
-                        {
-                            port.Write("0");
-                        }
-                    }
-
-
                     else
                     {
                         debug.AddToLog(message);
@@ -862,8 +790,28 @@ namespace OSLTT
                 portWrite("X");
                 stopTest = true;
                 toggleMouseKeyboardBoxes(false);
+
+                SaveResultsToFile();
+
                 Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                 inputLagThread.Start();
+            }
+        }
+
+        private void SaveResultsToFile()
+        {
+            string[] folders = resultsFolderPath.Split('\\');
+            string monitorInfo = folders.Last();
+            if (inputLagRawData.Count != 0)
+            {
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
+
+            }
+            else
+            {
+                //inputLagProcessed
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAWRESULTS.csv";
+
             }
         }
 
