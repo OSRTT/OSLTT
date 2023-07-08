@@ -768,9 +768,14 @@ namespace OSLTT
                 settingsSynced = false;
                 stopTest = false;
                 settingsPane1.SaveSettings();
+                inputLagRawData.Clear();
+                inputLagProcessed.Clear();
                 resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
-                rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
+                if (testSettings.TestSource != 2)
+                {
+                    rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
+                }
                 processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
                 SetDeviceStatus(5);
                 if (testSettings.TestSource == 1)
@@ -805,15 +810,30 @@ namespace OSLTT
             if (inputLagRawData.Count != 0)
             {
                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
-
+                string strSeparator = ",";
+                StringBuilder csvString = new StringBuilder();
+                foreach (var res in inputLagRawData)
+                {
+                    csvString.AppendLine(res.ClickTime.ToString() + "," + res.FrameTime.ToString() + "," + res.TimeTaken.ToString() + "," + res.SampleCount.ToString() + "," + string.Join(strSeparator, res.Samples));
+                }
+                File.WriteAllText(filePath, csvString.ToString());
             }
             else
             {
                 //inputLagProcessed
                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAWRESULTS.csv";
-
+                string strSeparator = ",";
+                StringBuilder csvString = new StringBuilder();
+                csvString.AppendLine("Result Type,Shot Number,Click Time (ms),Frame Time (ms),On Display Latency (ms),Total Input Latency (ms)");
+                foreach (var res in inputLagProcessed)
+                {
+                    csvString.AppendLine(res.Type.ToString() + "," + res.shotNumber.ToString() + "," + res.clickTimeMs.ToString() + "," + res.onDisplayLatency.ToString() + "," + res.totalInputLag.ToString());
+                }
+                File.WriteAllText(filePath, csvString.ToString());
             }
         }
+
+
 
         private void SyncSettingsThreadFunc()
         {

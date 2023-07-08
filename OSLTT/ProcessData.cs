@@ -165,7 +165,7 @@ namespace OSLTT
                         onDisplayLag = 0;
                     }
 
-                    inputLagResult completeResult = new inputLagResult { shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
+                    inputLagResult completeResult = new inputLagResult { Type=resultType.Light, shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
                     inputLagProcessed.Add(completeResult);
                     shotNumber++;
                 }
@@ -282,7 +282,7 @@ namespace OSLTT
                     onDisplayLag = 0;
                 }
 
-                inputLagResult completeResult = new inputLagResult { shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
+                inputLagResult completeResult = new inputLagResult { Type=resultType.Audio, shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
                 inputLagProcessed.Add(completeResult);
                 shotNumber++;
             }
