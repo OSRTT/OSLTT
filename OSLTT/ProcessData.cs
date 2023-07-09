@@ -239,26 +239,46 @@ namespace OSLTT
 
 
                 // Search for where the result starts transitioning - start is almost always less sensitive
-                for (int j = 0; j < samples.Length; j++)
+                for (int j = 0; j < samples.Length - 17; j++)
                 {
-                    if (samples[j] > (startMax))
+                    if (samples[j] > (startMax) && j < samples.Length + 17)
                     {
-                        if ((samples[j + 50] > (samples[j] + 50) || samples[j + 56] > (samples[j] + 50))
-                             && (samples[j + 100] > (samples[j] + 100) || samples[j + 106] > (samples[j] + 100))
-                             && (samples[j + 125] > (samples[j] + 100) || samples[j + 131] > (samples[j] + 100))
-                             && (samples[j + 150] > (samples[j] + 100) || samples[j + 156] > (samples[j] + 100))) // check the trigger point is actually the trigger and not noise
+
+                        if ((samples[j + 10] > (samples[j] + 2000) || samples[j + 16] > (samples[j] + 2000))
+                            || (samples[j + 2] > (samples[j] - 2000) || samples[j + 12] > (samples[j] - 2000)))
                         {
+                            
                             transStart = j;
-                            break;
+                            
+                            //break;
                         }
-                        else
+                        else if (samples[j] > 16000) // backup in case spike is only a couple samples. Shouldn't really be needed
+                        {
+                            int countPeakResults = 0;
+                            for (int p = j; p < j + 50; p++)
+                            {
+                                if (samples[p] > 16000)
+                                {
+                                    countPeakResults++;
+                                }
+                            }
+                            if (countPeakResults > 2) // tweak this for reliable clicks at different volumes
+                            {
+                                transStart = j;
+                                
+                            }
+                        }
+
+
+                        /*else
                         {
                             if (samples[j] > startMax)
                             {
                                 startMax = samples[j];
                             }
-                        }
+                        }*/
                     }
+                    
                 }
 
                 Console.WriteLine("ClickTime: " + ClickTime);
