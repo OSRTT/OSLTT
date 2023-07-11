@@ -827,13 +827,11 @@ namespace OSLTT
                 csvString.AppendLine("Result Type,Shot Number,Click Time (ms),Frame Time (ms),On Display Latency (ms),Total Input Latency (ms)");
                 foreach (var res in inputLagProcessed)
                 {
-                    csvString.AppendLine(res.Type.ToString() + "," + res.shotNumber.ToString() + "," + res.clickTimeMs.ToString() + "," + res.onDisplayLatency.ToString() + "," + res.totalInputLag.ToString());
+                    csvString.AppendLine(res.Type.ToString() + "," + res.shotNumber.ToString() + "," + res.frameTimeMs.ToString() + "," + res.clickTimeMs.ToString() + "," + res.onDisplayLatency.ToString() + "," + res.totalInputLag.ToString());
                 }
                 File.WriteAllText(filePath, csvString.ToString());
             }
         }
-
-
 
         private void SyncSettingsThreadFunc()
         {
@@ -942,12 +940,25 @@ namespace OSLTT
 
         private void processInputLagData()
         {
-            inputLagProcessed.Clear();
+            //inputLagProcessed.Clear();
 
             try //Wrapped whole thing in try just in case
             {
                 // Then process the lines
-                averagedInputLag inputLagProcessed = AverageInputLagResults(inputLagRawData);
+                averagedInputLag averagedLatency = new averagedInputLag();
+                if (inputLagRawData.Count != 0)
+                {
+                    averagedLatency = AverageInputLagResults(inputLagRawData);
+                }
+                else if (inputLagProcessed.Count != 0)
+                {
+                    averagedLatency = AveragePreProecessedResults(inputLagProcessed);
+                }
+
+                if (averagedLatency.inputLagResults.Count == 0)
+                {
+                    throw new Exception("Failed to Process Results");
+                }
 
                 // Write results to csv using new name
                 decimal fileNumber = 001;
@@ -975,7 +986,7 @@ namespace OSLTT
                 StringBuilder csvString = new StringBuilder();
                 csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
 
-                foreach (var res in inputLagProcessed.inputLagResults)
+                foreach (var res in averagedLatency.inputLagResults)
                 {
                     csvString.AppendLine(
                         res.shotNumber.ToString() + "," +
@@ -985,9 +996,9 @@ namespace OSLTT
                         res.totalInputLag.ToString()
                         );
                 }
-                csvString.AppendLine("AVERAGE," + inputLagProcessed.ClickTime.AVG.ToString() + "," + inputLagProcessed.FrameTime.AVG.ToString() + "," + inputLagProcessed.onDisplayLatency.AVG.ToString() + "," + inputLagProcessed.totalInputLag.AVG.ToString());
-                csvString.AppendLine("MINIMUM," + inputLagProcessed.ClickTime.MIN.ToString() + "," + inputLagProcessed.FrameTime.MIN.ToString() + "," + inputLagProcessed.onDisplayLatency.MIN.ToString() + "," + inputLagProcessed.totalInputLag.MIN.ToString());
-                csvString.AppendLine("MAXIMUM," + inputLagProcessed.ClickTime.MAX.ToString() + "," + inputLagProcessed.FrameTime.MAX.ToString() + "," + inputLagProcessed.onDisplayLatency.MAX.ToString() + "," + inputLagProcessed.totalInputLag.MAX.ToString());
+                csvString.AppendLine("AVERAGE," + averagedLatency.ClickTime.AVG.ToString() + "," + averagedLatency.FrameTime.AVG.ToString() + "," + averagedLatency.onDisplayLatency.AVG.ToString() + "," + averagedLatency.totalInputLag.AVG.ToString());
+                csvString.AppendLine("MINIMUM," + averagedLatency.ClickTime.MIN.ToString() + "," + averagedLatency.FrameTime.MIN.ToString() + "," + averagedLatency.onDisplayLatency.MIN.ToString() + "," + averagedLatency.totalInputLag.MIN.ToString());
+                csvString.AppendLine("MAXIMUM," + averagedLatency.ClickTime.MAX.ToString() + "," + averagedLatency.FrameTime.MAX.ToString() + "," + averagedLatency.onDisplayLatency.MAX.ToString() + "," + averagedLatency.totalInputLag.MAX.ToString());
                 Console.WriteLine(filePath);
                 File.WriteAllText(filePath, csvString.ToString());
 
@@ -996,7 +1007,7 @@ namespace OSLTT
                 {
                     ResultsView rv = new ResultsView();
                     rv.setResultsFolder(resultsFolderPath);
-                    rv.inputLagMode(inputLagProcessed); 
+                    rv.inputLagMode(averagedLatency); 
                     rv.Show();
                 });
                 //Process.Start("explorer.exe", resultsFolderPath);
