@@ -15,6 +15,7 @@ namespace OSLTT
 
         public class rawInputLagResult
         {
+            public resultType ResultType { get; set; }
             public double ClickTime { get; set; }
             public float FrameTime { get; set; }
             public int TimeTaken { get; set; }
@@ -310,12 +311,17 @@ namespace OSLTT
             return inputLagProcessed;
         }
 
-        public static averagedInputLag AverageInputLagResults(List<rawInputLagResult> inputLagData, int type = 0)
+        public static averagedInputLag AverageInputLagResults(List<rawInputLagResult> inputLagData)
         {
             averagedInputLag inputLagProcessed = new averagedInputLag();
 
+            if (inputLagData.Count == 0)
+            {
+                throw new Exception("No results provided");
+            }
+
             List<inputLagResult> processedResults;
-            if (type == 0)
+            if (inputLagData[0].ResultType == resultType.Light)
             {
                 processedResults = processInputLagData(inputLagData);
             }

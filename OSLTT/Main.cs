@@ -362,8 +362,13 @@ namespace OSLTT
                     {
 
                         // Results Data
-                        string newMessage = message.Remove(0, 4);
-                        string[] values = newMessage.Split(',');
+                        resultType type = resultType.Light;
+                        if (message.Contains("AUDIO"))
+                        {
+                            type = resultType.Audio;
+                        }
+                        string[] newMessage = message.Split(':');
+                        string[] values = newMessage[1].Split(',');
                         List<int> intValues = new List<int>();
                         for (int i = 0; i < values.Length - 1; i++)
                         {
@@ -396,9 +401,10 @@ namespace OSLTT
                             catch
                             { }
                         }
-
+                        
                         rawInputLagResult rawLag = new rawInputLagResult
                         {
+                            ResultType = type,
                             ClickTime = intValues[0],
                             TimeTaken = intValues[1],
                             SampleCount = intValues[2],
@@ -413,13 +419,6 @@ namespace OSLTT
 
 
                     }
-                    else if (message.Contains("AUDIO SERIAL DELAY"))
-                    {
-                        // audio test result
-                        string[] splitMessage = message.Split(':');
-                        double result = double.Parse(splitMessage[1]);
-                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Audio, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result });
-                    }
                     else if (message.Contains("CLICK:"))
                     {
                         // click result
@@ -429,13 +428,8 @@ namespace OSLTT
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
-
+                        // end test
                         startTestBtn_Click(null, null);
-                        
-
-                        //Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
-                        //inputLagThread.Start();
-                        //processInputLagData();
                     }
                     else if (message.Contains("Clicks Finished")) // click test finished, end test (user cancelled test)
                     {
@@ -449,7 +443,6 @@ namespace OSLTT
                     }
                     else if (message.Contains("PRETEST:"))
                     {
-
                         // Results Data
                         string newMessage = message.Remove(0, 4);
                         string[] values = newMessage.Split(',');
@@ -503,17 +496,10 @@ namespace OSLTT
                     }
                     else if (message.Contains("PRETEST FINISHED")) // auto click test complete, write to folder & process
                     {
-
-                        //string[] folders = resultsFolderPath.Split('\\');
-                        //string monitorInfo = folders.Last();
-                        //string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
-
-
-                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData)); // change to processPretest?
                         inputLagThread.Start();
-                        //processInputLagData();
                     }
-                    else if (message.Contains("SINGLE FIRE"))
+                    else if (message.Contains("SINGLE FIRE")) // depricated? 
                     {
                         // write most recent result to raw file
                         // process then append processed result to file
@@ -645,7 +631,7 @@ namespace OSLTT
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = testBtnText));
-                this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = active));
+                //this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = active));
                 //this.controlsPanel.Invoke((MethodInvoker)(() => this.controlsPanel.Enabled = active));
                 /*this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.Enabled = active));
                 this.fpsLimitList.Invoke((MethodInvoker)(() => this.fpsLimitList.Enabled = active));
@@ -667,7 +653,7 @@ namespace OSLTT
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
                 this.startTestBtn.Text = testBtnText;
-                this.startTestBtn.Enabled = active;
+                //this.startTestBtn.Enabled = active;
                 //this.controlsPanel.Enabled = active;
                 /*this.launchBtn.Enabled = active;
                 this.fpsLimitList.Enabled = active;

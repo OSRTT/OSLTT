@@ -381,6 +381,10 @@ namespace OSLTT
                     {
                         preTestToggle.Checked = false;
                     }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
+                    }
                 }
                 SaveSettings();
             }
@@ -477,6 +481,10 @@ namespace OSLTT
                     if (testSettings.TriggerType != 2)
                     {
                         audioTriggerRadio.Checked = true;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
                     }
                 }
                 SaveSettings();

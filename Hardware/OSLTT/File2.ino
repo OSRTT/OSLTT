@@ -211,7 +211,18 @@ void runAudioTest() {
   long start = micros();
   Serial.println("AUDIO TRIGGER");
   long end = micros();
-  long resultData = fillADCBufferSlower(14000, 1);
-  Serial.print("AUDIO SERIAL DELAY:");
-  Serial.println(end - start);
+  long timeTaken = fillADCBufferSlower(14000, 1);
+  Serial.print("RES:");
+  Serial.print(end - start);
+  Serial.print(",");
+  Serial.print(timeTaken);
+  Serial.print(",14000,");
+
+  for (int i = 0; i < 14000; i++) {
+    Serial.print(adcBuff[i]);
+    Serial.print(",");
+  }
+  Serial.println();
+  //Serial.print("AUDIO SERIAL DELAY:");
+  //Serial.println(end - start);
 }
