@@ -196,8 +196,7 @@ void loop() {
   }
   else if (input[0] == 'Y')
   {
-    sensorType = 0;
-    runTest();
+    toggleLED(true);
   }
   else if (input[0] == 'Z')
   {

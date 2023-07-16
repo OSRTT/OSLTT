@@ -91,10 +91,6 @@ void toggleLED(bool state) {
 }
 
 void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = false) {
-  int pin = 0;
-  if (sensorType == 1) {
-    pin = 1;
-  }
 
   unsigned long clickTime = micros();
   if (inputType == 0 && sourceType == 0) {
@@ -106,11 +102,11 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   long timeTaken;
   if (audioTest)
   { 
-    timeTaken = fillADCBufferSlower(sampleCount, pin);
+    timeTaken = fillADCBufferSlower(sampleCount, 1);
   }
   else
   {
-    timeTaken = fillADCBuffer(sampleCount, pin); 
+    timeTaken = fillADCBuffer(sampleCount, 0); 
   }
   toggleLED(true);
   long localStartValue = 0;
