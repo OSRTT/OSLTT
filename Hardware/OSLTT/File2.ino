@@ -95,6 +95,7 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   if (sensorType == 1) {
     pin = 1;
   }
+
   unsigned long clickTime = micros();
   if (inputType == 0 && sourceType == 0) {
     //Mouse.click(MOUSE_LEFT);
@@ -105,11 +106,11 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   long timeTaken;
   if (audioTest)
   { 
-    timeTaken = fillADCBuffer(sampleCount, pin); 
+    timeTaken = fillADCBufferSlower(sampleCount, pin);
   }
   else
   {
-    timeTaken = fillADCBufferSlower(sampleCount, 1);
+    timeTaken = fillADCBuffer(sampleCount, pin); 
   }
   toggleLED(true);
   long localStartValue = 0;
@@ -125,20 +126,20 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   for (int i = 0; i < sampleCount; i++) {
     Serial.print(adcBuff[i]);
     Serial.print(",");
-    if (i < 100) {
-      localStartValue += adcBuff[i];
-    } else if (i == 100) {
-      localStartValue /= 100;
-    } else {
-      if (adcBuff[i] > (localStartValue * 2) && triggerSampleNum == 0) {
-        triggerSampleNum = i;
-      }
-    }
+    // if (i < 100) {
+    //   localStartValue += adcBuff[i];
+    // } else if (i == 100) {
+    //   localStartValue /= 100;
+    // } else {
+    //   if (adcBuff[i] > (localStartValue * 2) && triggerSampleNum == 0) {
+    //     triggerSampleNum = i;
+    //   }
+    // }
   }
   Serial.println();
-  Serial.print("RESULT:");
-  double result = (timeTaken / sampleCount) * triggerSampleNum;
-  Serial.println(result / 1000);
+  // Serial.print("RESULT:");
+  // double result = (timeTaken / sampleCount) * triggerSampleNum;
+  // Serial.println(result / 1000);
   toggleLED(false);
 }
 

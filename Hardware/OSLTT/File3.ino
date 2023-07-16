@@ -100,7 +100,7 @@ void loop() {
     {
       // Sensor type - bit 1
       sensorType = convertHexToDec(input[1]) - 1;
-
+      
       // Trigger type - bit 2
       inputType = convertHexToDec(input[2]) - 1;
 
@@ -196,20 +196,8 @@ void loop() {
   }
   else if (input[0] == 'Y')
   {
-    Serial.println("Y registered");
-    Serial.println("Audio sensor");
-    int buttonState = digitalRead(ButtonPin);
-    Serial.print("Read button - ");
-    Serial.println(buttonState);
-    while (buttonState != HIGH)
-    {
-      //int value = getSingleADCValue();
-      int value = analogRead(1);
-      Serial.print(value);
-      Serial.print(",");
-      buttonState = digitalRead(ButtonPin);
-    }
-    Serial.println();
+    sensorType = 0;
+    runTest();
   }
   else if (input[0] == 'Z')
   {
