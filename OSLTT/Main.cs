@@ -795,7 +795,7 @@ namespace OSLTT
             string monitorInfo = folders.Last();
             if (inputLagRawData.Count != 0)
             {
-                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAW.csv";
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-RAW-OSLTT.csv";
                 string strSeparator = ",";
                 StringBuilder csvString = new StringBuilder();
                 foreach (var res in inputLagRawData)
@@ -807,7 +807,7 @@ namespace OSLTT
             else
             {
                 //inputLagProcessed
-                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-RAWRESULTS.csv";
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-RAWRESULTS-OSLTT.csv";
                 string strSeparator = ",";
                 StringBuilder csvString = new StringBuilder();
                 csvString.AppendLine("Result Type,Shot Number,Click Time (ms),Frame Time (ms),On Display Latency (ms),Total Input Latency (ms)");
@@ -949,7 +949,7 @@ namespace OSLTT
                 // Write results to csv using new name
                 decimal fileNumber = 001;
                 // search /Results folder for existing file names, pick new name
-                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-INPUT-LATENCY-OSLTT.csv");
+                string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*-PROCESSED-OSLTT.csv");
                 // Search \Results folder for existing results to not overwrite existing or have save conflict errors
                 foreach (var s in existingFiles)
                 {
@@ -965,7 +965,7 @@ namespace OSLTT
                 }
                 string[] folders = resultsFolderPath.Split('\\');
                 string monitorInfo = folders.Last();
-                string filePath = resultsFolderPath + "\\" + monitorInfo + "-INPUT-LATENCY-OSLTT.csv";
+                string filePath = resultsFolderPath + "\\" + monitorInfo + "-PROCESSED-OSLTT.csv";
                 //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
 
                 string strSeparator = ",";
