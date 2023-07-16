@@ -843,7 +843,7 @@ namespace OSLTT
                 if (DirectX.System.DSystem.mainWindow == null)
                     DirectX.System.DSystem.mainWindow = this;
 
-                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
             }
         }
 
@@ -898,7 +898,7 @@ namespace OSLTT
                     if (DirectX.System.DSystem.mainWindow == null)
                         DirectX.System.DSystem.mainWindow = this;
 
-                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
                 }
 
                 portWrite("T");
@@ -911,7 +911,7 @@ namespace OSLTT
                 if (DirectX.System.DSystem.mainWindow == null)
                     DirectX.System.DSystem.mainWindow = this;
 
-                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
+                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
                 
 
                 SetDeviceStatus(1);

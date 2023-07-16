@@ -93,6 +93,7 @@ namespace OSLTT
             public string Connection { get; set; }
             public string ManufacturerCode { get; set; }
             public string EDIDModel { get; set; }
+            public int DisplayNumber { get; set; }
         }
         public List<Displays> displayList = new List<Displays>();
 
@@ -141,7 +142,7 @@ namespace OSLTT
                             res = "Failed to Aquire";
                         }
                         string edidCode = item.DisplayTarget.EDIDProductCode.ToString();
-                        var data = new Displays { Name = name, Freq = refresh, Resolution = res, Connection = con, ManufacturerCode = manCode, EDIDModel = edidCode };
+                        var data = new Displays { Name = name, Freq = refresh, Resolution = res, Connection = con, ManufacturerCode = manCode, EDIDModel = edidCode, DisplayNumber = displayList.Count() };
                         displayList.Add(data);
                         displaySelect.Items.Add(name);
                     }
@@ -152,6 +153,7 @@ namespace OSLTT
                 }
             }
             displaySelect.SelectedIndex = selected; // Pre-select the primary display
+            selectedDisplay = displayList[selected];
         }
 
         public void MonitorPreset()
