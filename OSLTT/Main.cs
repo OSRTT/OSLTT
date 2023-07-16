@@ -413,8 +413,8 @@ namespace OSLTT
                             FrameTime = frameTime
                         };
                         inputLagRawData.Add(rawLag);
-                        // save result to raw file
-                        CFuncs.saveRawResultToFile(resultsFolderPath, rawFileName, rawLag);
+                        // save result to raw file - depricated (for now)
+                        //CFuncs.saveRawResultToFile(resultsFolderPath, rawFileName, rawLag);
                         // process individual result
 
 
