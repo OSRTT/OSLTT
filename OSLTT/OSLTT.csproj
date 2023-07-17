@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoUpdater.NET, Version=1.7.7.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>packages\Autoupdater.NET.Official.1.7.7\lib\net45\AutoUpdater.NET.dll</HintPath>
@@ -235,7 +238,10 @@
     <Content Include="DirectX\Font\font01.bmp" />
     <Content Include="DirectX\Font\font01.txt" />
     <Content Include="DirectX\Font\fontdata.txt" />
+    <Content Include="icon.ico" />
+    <Content Include="icon.png" />
     <Content Include="OSLTTTone.wav" />
+    <Content Include="Properties\icon.ico" />
     <None Include="Resources\wrench-solid.png" />
     <None Include="Resources\circle-question-solid.png" />
     <None Include="Resources\bug-solid.png" />

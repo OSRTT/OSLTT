@@ -74,6 +74,8 @@ namespace OSLTT
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
+            this.Icon = (Icon)rm.GetObject("icon");
+
             //982, 588
             //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
@@ -783,7 +785,7 @@ namespace OSLTT
                 toggleMouseKeyboardBoxes(false);
 
                 SaveResultsToFile();
-
+                CFuncs.removeResultsFolder(resultsFolderPath); // if test failed to produce data, remove folder
                 Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                 inputLagThread.Start();
             }

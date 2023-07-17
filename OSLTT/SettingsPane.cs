@@ -21,6 +21,15 @@ namespace OSLTT
             if (Properties.Settings.Default.customTestSettings != null)
             {
                 testSettings = Properties.Settings.Default.customTestSettings;
+                ChangeSettings(
+                    testSettings.TriggerType,
+                    testSettings.SensorType,
+                    testSettings.TestSource,
+                    testSettings.AutoClick,
+                    testSettings.ClickCount,
+                    testSettings.TimeBetween,
+                    testSettings.PreTest
+                    );
             }
         }
 

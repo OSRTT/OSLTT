@@ -117,6 +117,17 @@ namespace OSLTT
             //initRunSettingsFile(filePath, monitor);
         }
 
+        public static void removeResultsFolder(string path)
+        {
+            // search /Results folder for existing file names, pick new name
+            string[] existingFiles = Directory.GetFiles(path);
+            //search files for number
+            if (existingFiles.Length == 0)
+            {
+                Directory.Delete(path);
+            }
+        }
+
         public static string makeResultsFile(string path, string type = "RAW")
         {
             if (type == "")
