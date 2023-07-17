@@ -63,11 +63,27 @@ namespace OSLTT
             barPlot.BringToFront();
             controlsPanel.Visible = true;
             controlsPanel.BringToFront();
+            drawBarGraph();
         }
 
         public void drawScatterGraph()
         {
-            this.Text = "On Display Latency";
+            if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
+            {
+                this.Text = "On Display Latency";
+                type = 2;
+            }
+            else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Click)
+            {
+                this.Text = "Click Latency";
+                type = 3;
+            }
+            else
+            {
+                this.Text = "Audio Latency";
+                type = 3;
+            }
+                
             graphedData.Plot.Clear();
             double[] xs = new double[inputLagResults.inputLagResults.Count];
             double[] ys = new double[inputLagResults.inputLagResults.Count];
@@ -112,23 +128,35 @@ namespace OSLTT
             this.Text = "Latency Results";
             barPlot.Plot.Clear();
             double[][] values = new double[3][];
-            values[0] = new double[4];
-            values[1] = new double[4];
-            values[2] = new double[4];
             string[] titles = { "USB Polling Delay", "Render Time", "On Display Lag", "Total Input Lag" };
             string[] labels = { "AVG", "MIN", "MAX" };
-            values[0][0] = inputLagResults.ClickTime.AVG;
-            values[1][0] = inputLagResults.ClickTime.MIN;
-            values[2][0] = inputLagResults.ClickTime.MAX;
-            values[0][1] = inputLagResults.FrameTime.AVG;
-            values[1][1] = inputLagResults.FrameTime.MIN;
-            values[2][1] = inputLagResults.FrameTime.MAX;
-            values[0][2] = inputLagResults.onDisplayLatency.AVG;
-            values[1][2] = inputLagResults.onDisplayLatency.MIN;
-            values[2][2] = inputLagResults.onDisplayLatency.MAX;
-            values[0][3] = inputLagResults.totalInputLag.AVG;
-            values[1][3] = inputLagResults.totalInputLag.MIN;
-            values[2][3] = inputLagResults.totalInputLag.MAX;
+            if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
+            {
+                values[0] = new double[4];
+                values[1] = new double[4];
+                values[2] = new double[4];
+                values[0][0] = inputLagResults.ClickTime.AVG;
+                values[1][0] = inputLagResults.ClickTime.MIN;
+                values[2][0] = inputLagResults.ClickTime.MAX;
+                values[0][1] = inputLagResults.FrameTime.AVG;
+                values[1][1] = inputLagResults.FrameTime.MIN;
+                values[2][1] = inputLagResults.FrameTime.MAX;
+                values[0][2] = inputLagResults.onDisplayLatency.AVG;
+                values[1][2] = inputLagResults.onDisplayLatency.MIN;
+                values[2][2] = inputLagResults.onDisplayLatency.MAX;
+                values[0][3] = inputLagResults.totalInputLag.AVG;
+                values[1][3] = inputLagResults.totalInputLag.MIN;
+                values[2][3] = inputLagResults.totalInputLag.MAX;
+            }
+            else
+            {
+                values[0] = new double[1];
+                values[1] = new double[1];
+                values[2] = new double[1];
+                values[0][0] = inputLagResults.totalInputLag.AVG;
+                values[1][0] = inputLagResults.totalInputLag.MIN;
+                values[2][0] = inputLagResults.totalInputLag.MAX;
+            }
 
             barPlot.Plot.Style(null, SystemColors.ControlDark);
             barPlot.Plot.AddBarGroups(titles, labels, values, null);
