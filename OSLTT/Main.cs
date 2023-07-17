@@ -66,6 +66,7 @@ namespace OSLTT
         Stopwatch sw = new Stopwatch();
         public Main()
         {
+            this.Icon = (Icon)rm.GetObject("icon");
             InitializeComponent();
 
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -74,7 +75,6 @@ namespace OSLTT
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
-            this.Icon = (Icon)rm.GetObject("icon");
 
             //982, 588
             //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -628,7 +628,6 @@ namespace OSLTT
             if (this.devStat.InvokeRequired)
             {
                 this.devStat.Invoke((MethodInvoker)(() => this.devStat.Text = text));
-                this.checkImg.Invoke((MethodInvoker)(() => this.checkImg.Visible = check));
                 this.fwLblTitle.Invoke((MethodInvoker)(() => this.fwLblTitle.Visible = check));
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
@@ -650,7 +649,6 @@ namespace OSLTT
             else
             {
                 this.devStat.Text = text;
-                this.checkImg.Visible = check;
                 this.deviceStatusPanel.BackColor = bg;
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
