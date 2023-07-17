@@ -375,29 +375,32 @@ namespace OSLTT
 
             List<inputLagResult> newRes = new List<inputLagResult>();
             newRes.AddRange(res);
-            foreach (var i in res)
-            {
-                if (i.onDisplayLatency == 0)
+            
+                foreach (var i in res)
                 {
-                    newRes.Remove(i);
+                    if (i.onDisplayLatency == 0 && res[0].Type == resultType.Light)
+                    {
+                        newRes.Remove(i);
+                    }
+                    resultsList.Add(i.totalInputLag);
                 }
-                resultsList.Add(i.totalInputLag);
-            }
 
+            List<inputLagResult> newRes2 = new List<inputLagResult>();
+            newRes2.AddRange(newRes);
             // find median of results
             double median = GetMedian(resultsList.ToArray());
             if (removeOutliers)
             {
                 foreach (var i in newRes)
                 {
-                    if (i.totalInputLag > (median * 3) || i.totalInputLag > (median / 3))
+                    if (i.totalInputLag > (median * 3) || i.totalInputLag < (median / 3))
                     {
-                        newRes.Remove(i);
+                        newRes2.Remove(i);
                     }
                 }
             }
 
-            return newRes;
+            return newRes2;
         }
 
         public static averagedInputLag averageResults(averagedInputLag input)

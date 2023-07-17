@@ -91,6 +91,7 @@ void loop() {
   }
   else if (input[0] == 'I') // Initialise everything
   {
+    toggleLED(true);
     if (input[1] == ' ' || input[2] == ' ')
     {
       Serial.print("FW:");

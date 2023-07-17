@@ -943,7 +943,7 @@ namespace OSLTT
                     averagedLatency = AveragePreProecessedResults(inputLagProcessed);
                 }
 
-                if (averagedLatency.inputLagResults.Count == 0)
+                if (averagedLatency.inputLagResults == null || averagedLatency.inputLagResults.Count == 0)
                 {
                     throw new Exception("Failed to Process Results");
                 }
