@@ -42,7 +42,7 @@ namespace OSLTT
             
             testSettings.TriggerType = testSettings.TriggerTypes(buttonTriggerRadio, audioTriggerRadio);
             testSettings.SensorType = testSettings.SensorTypes(lightSensorRadio, audioSensorRadio);
-            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, gameExternalRadio);
+            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, gameExternalRadio, audioSourceRadio);
             testSettings.AutoClick = autoClickToggle.Checked;
             testSettings.ClickCount = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
             testSettings.PreTest = preTestToggle.Checked;
@@ -277,9 +277,13 @@ namespace OSLTT
             {
                 sourceType = gameExternalRadio;
             }
-            else
+            else if (source == 4)
             {
                 sourceType = audioSourceRadio;
+            }
+            else
+            {
+                sourceType = externalRadio;
             }
             
             SetComboBoxValue(clickCountSelect, clicks);
@@ -643,6 +647,7 @@ namespace OSLTT
                 if (s.Checked)
                 {
                     testSettings.SensorType = 3;
+                    buttonTriggerRadio.Checked = true;
                     if (!buttonTriggerRadio.Checked)
                     {
                         buttonTriggerRadio.Checked = true;
@@ -688,6 +693,27 @@ namespace OSLTT
         private void refreshMonitorsBtn_Click(object sender, EventArgs e)
         {
             listMonitors();
+        }
+
+        private void externalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 3;
+                    if (!buttonTriggerRadio.Checked)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (!lightSensorRadio.Checked)
+                    {
+                        lightSensorRadio.Checked = true;
+                    }
+                }
+                SaveSettings();
+            }
         }
     }
 }

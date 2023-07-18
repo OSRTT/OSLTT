@@ -50,7 +50,7 @@ namespace OSLTT
             }
         }
 
-        public int SourceTypes(MaterialRadioButton directx, MaterialRadioButton mouse, MaterialRadioButton game)
+        public int SourceTypes(MaterialRadioButton directx, MaterialRadioButton mouse, MaterialRadioButton game, MaterialRadioButton audio)
         {
             if (directx.Checked)
             {
@@ -64,9 +64,13 @@ namespace OSLTT
             {
                 return 3;
             }
-            else
+            else if (audio.Checked)
             {
                 return 4;
+            }
+            else
+            {
+                return 5;
             }
         }
 

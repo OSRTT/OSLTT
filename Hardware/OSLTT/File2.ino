@@ -97,6 +97,10 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     //Mouse.click(MOUSE_LEFT);
     Keyboard.write((char)32);
   }
+  else if (inputType == 0 && sourceType == 3)
+  {
+    Mouse.click(MOUSE_LEFT);
+  }
   unsigned long start_time = micros();
   int t = start_time - clickTime;
   long timeTaken;

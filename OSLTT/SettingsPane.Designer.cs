@@ -58,6 +58,7 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.externalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -471,6 +472,7 @@ namespace OSLTT
             // sourceCard
             // 
             this.sourceCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.sourceCard.Controls.Add(this.externalRadio);
             this.sourceCard.Controls.Add(this.audioSourceRadio);
             this.sourceCard.Controls.Add(this.gameExternalRadio);
             this.sourceCard.Controls.Add(this.mouseKeyboardRadio);
@@ -483,7 +485,7 @@ namespace OSLTT
             this.sourceCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.sourceCard.Name = "sourceCard";
             this.sourceCard.Padding = new System.Windows.Forms.Padding(14);
-            this.sourceCard.Size = new System.Drawing.Size(242, 198);
+            this.sourceCard.Size = new System.Drawing.Size(242, 240);
             this.sourceCard.TabIndex = 76;
             // 
             // audioSourceRadio
@@ -513,10 +515,10 @@ namespace OSLTT
             this.gameExternalRadio.MouseState = MaterialSkin.MouseState.HOVER;
             this.gameExternalRadio.Name = "gameExternalRadio";
             this.gameExternalRadio.Ripple = true;
-            this.gameExternalRadio.Size = new System.Drawing.Size(141, 37);
+            this.gameExternalRadio.Size = new System.Drawing.Size(77, 37);
             this.gameExternalRadio.TabIndex = 69;
             this.gameExternalRadio.TabStop = true;
-            this.gameExternalRadio.Text = "Game/External";
+            this.gameExternalRadio.Text = "Game";
             this.gameExternalRadio.UseVisualStyleBackColor = true;
             this.gameExternalRadio.CheckedChanged += new System.EventHandler(this.gameExternalRadio_CheckedChanged);
             // 
@@ -568,6 +570,23 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
+            // externalRadio
+            // 
+            this.externalRadio.AutoSize = true;
+            this.externalRadio.Depth = 0;
+            this.externalRadio.Location = new System.Drawing.Point(14, 197);
+            this.externalRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.externalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.externalRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.externalRadio.Name = "externalRadio";
+            this.externalRadio.Ripple = true;
+            this.externalRadio.Size = new System.Drawing.Size(92, 37);
+            this.externalRadio.TabIndex = 71;
+            this.externalRadio.TabStop = true;
+            this.externalRadio.Text = "External";
+            this.externalRadio.UseVisualStyleBackColor = true;
+            this.externalRadio.CheckedChanged += new System.EventHandler(this.externalRadio_CheckedChanged);
+            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -577,7 +596,7 @@ namespace OSLTT
             this.Controls.Add(this.triggerCard);
             this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(866, 373);
+            this.Size = new System.Drawing.Size(866, 394);
             this.displayCard.ResumeLayout(false);
             this.displayCard.PerformLayout();
             this.sensorCard.ResumeLayout(false);
@@ -623,5 +642,6 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialRadioButton DirectXRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialButton refreshMonitorsBtn;
+        private MaterialSkin.Controls.MaterialRadioButton externalRadio;
     }
 }
