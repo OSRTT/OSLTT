@@ -805,7 +805,7 @@ namespace OSLTT
                 }
                 File.WriteAllText(filePath, csvString.ToString());
             }
-            else
+            else if (inputLagProcessed.Count != 0)
             {
                 //inputLagProcessed
                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-RAWRESULTS-OSLTT.csv";

@@ -176,11 +176,13 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
 }
 
 void runClickTest() {
+  toggleLED(false);
   Serial.setTimeout(1);
   int baseline = getADCValue(500, 1);
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
       input[0] = 'X';
+      toggleLED(false);
     }
     int current = getSingleADCValue(1);
     int baselineAdjusted = 16380 - baseline;
@@ -197,11 +199,14 @@ void runClickTest() {
 
       Serial.print("CLICK:");
       Serial.println(time / 1000);
+      toggleLED(true);
       delay(100);
+      toggleLED(false);
     }
   }
   Serial.setTimeout(100);
   Serial.println("Clicks Finished");
+  toggleLED(true);
 }
 
 void runAudioTest() {
