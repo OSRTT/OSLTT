@@ -785,8 +785,11 @@ namespace OSLTT
 
                 SaveResultsToFile();
                 CFuncs.removeResultsFolder(resultsFolderPath); // if test failed to produce data, remove folder
-                Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
-                inputLagThread.Start();
+                if (inputLagProcessed.Count != 0 || inputLagRawData.Count != 0)
+                {
+                    Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
+                    inputLagThread.Start();
+                }
             }
         }
 
