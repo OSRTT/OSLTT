@@ -756,6 +756,7 @@ namespace OSLTT
                 settingsPane1.SaveSettings();
                 inputLagRawData.Clear();
                 inputLagProcessed.Clear();
+                textTextBox.Clear();
                 resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
                 if (testSettings.TestSource != 2)

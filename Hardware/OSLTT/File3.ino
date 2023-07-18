@@ -64,6 +64,7 @@ void loop() {
       else if (inputType == 1)
       {
         runClickTest();
+        break;
       }
       else if (inputType == 2)
       {
@@ -76,6 +77,7 @@ void loop() {
             autoRunTest(false, 9000);
           }
         }
+        break;
       }
     }
   }

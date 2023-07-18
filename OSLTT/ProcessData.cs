@@ -225,7 +225,7 @@ namespace OSLTT
                 int endMin = samples[samples.Length - 10]; // Initialise these variables with a real value 
 
                 // Build start min/max to compare against
-                for (int l = 0; l < 50; l++) //CHANGE TO 180 FOR RUN 2 DATA
+                for (int l = 0; l < 300; l++) //CHANGE TO 180 FOR RUN 2 DATA
                 {
                     if (samples[l] < startMin)
                     {
@@ -242,15 +242,17 @@ namespace OSLTT
                 // Search for where the result starts transitioning - start is almost always less sensitive
                 for (int j = 0; j < samples.Length - 17; j++)
                 {
-                    if (samples[j] > (startMax) && j < samples.Length + 17)
+                    if (samples[j] > (startMax))
                     {
 
                         if ((samples[j + 10] > (samples[j] + 2000) || samples[j + 16] > (samples[j] + 2000))
                             || (samples[j + 2] > (samples[j] - 2000) || samples[j + 12] > (samples[j] - 2000)))
                         {
-                            
-                            transStart = j;
-                            
+                            if (samples[j] > startMax + 2000)
+                            {
+                                transStart = j;
+                            }
+
                             //break;
                         }
                         else if (samples[j] > 16000) // backup in case spike is only a couple samples. Shouldn't really be needed
@@ -266,18 +268,16 @@ namespace OSLTT
                             if (countPeakResults > 2) // tweak this for reliable clicks at different volumes
                             {
                                 transStart = j;
-                                
+
                             }
                         }
-
-
-                        /*else
+                        else
                         {
                             if (samples[j] > startMax)
                             {
                                 startMax = samples[j];
                             }
-                        }*/
+                        }
                     }
                     
                 }

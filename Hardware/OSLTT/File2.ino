@@ -209,7 +209,7 @@ void runAudioTest() {
   Serial.println("AUDIO TRIGGER");
   long end = micros();
   long timeTaken = fillADCBufferSlower(14000, 1);
-  Serial.print("RES:");
+  Serial.print("AUDIORES:");
   Serial.print(end - start);
   Serial.print(",");
   Serial.print(timeTaken);
