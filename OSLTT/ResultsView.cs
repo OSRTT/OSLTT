@@ -81,7 +81,7 @@ namespace OSLTT
             else
             {
                 this.Text = "Audio Latency";
-                type = 3;
+                type = 2;
             }
                 
             graphedData.Plot.Clear();
@@ -148,8 +148,25 @@ namespace OSLTT
                 values[1][3] = inputLagResults.totalInputLag.MIN;
                 values[2][3] = inputLagResults.totalInputLag.MAX;
             }
+            else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Audio)
+            {
+                titles = new[]{ "USB Polling Delay", "Audio Latency", "Total Latency" };
+                values[0] = new double[3];
+                values[1] = new double[3];
+                values[2] = new double[3];
+                values[0][0] = inputLagResults.ClickTime.AVG;
+                values[1][0] = inputLagResults.ClickTime.MIN;
+                values[2][0] = inputLagResults.ClickTime.MAX;
+                values[0][1] = inputLagResults.onDisplayLatency.AVG;
+                values[1][1] = inputLagResults.onDisplayLatency.MIN;
+                values[2][1] = inputLagResults.onDisplayLatency.MAX;
+                values[0][2] = inputLagResults.totalInputLag.AVG;
+                values[1][2] = inputLagResults.totalInputLag.MIN;
+                values[2][2] = inputLagResults.totalInputLag.MAX;
+            }
             else
             {
+                titles = new[] { "Total Latency" };
                 values[0] = new double[1];
                 values[1] = new double[1];
                 values[2] = new double[1];

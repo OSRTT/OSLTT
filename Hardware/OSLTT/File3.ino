@@ -40,7 +40,8 @@ void loop() {
               for (int i = 0; i < shotCount; i++)
               {
                 runAudioTest();
-                delay(250);
+                //delay(timeBetween * 1000);
+                delay(100);
               }
               Serial.println("AUDIO TEST FINISHED");
               break;
