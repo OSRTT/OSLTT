@@ -632,18 +632,7 @@ namespace OSLTT
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = testBtnText));
-                //this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = active));
-                //this.controlsPanel.Invoke((MethodInvoker)(() => this.controlsPanel.Enabled = active));
-                /*this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.Enabled = active));
-                this.fpsLimitList.Invoke((MethodInvoker)(() => this.fpsLimitList.Enabled = active));
-                this.testCount.Invoke((MethodInvoker)(() => this.testCount.Enabled = active));
-                this.captureTimeBox.Invoke((MethodInvoker)(() => this.captureTimeBox.Enabled = active));
-                this.vsyncStateList.Invoke((MethodInvoker)(() => this.vsyncStateList.Enabled = active));
-                this.inputLagPanel.Invoke((MethodInvoker)(() => this.inputLagPanel.Enabled = active));
-                this.launchBtn.Invoke((MethodInvoker)(() => this.launchBtn.BackColor = btnBg));
-                this.inputLagButton.Invoke((MethodInvoker)(() => this.inputLagButton.BackColor = btnBg));
-                this.LiveViewBtn.Invoke((MethodInvoker)(() => LiveViewBtn.Enabled = active));
-                */
+                //this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.UseAccentColor = active));
                 this.Invoke((MethodInvoker)(() => this.Invalidate()));
             }
             else
@@ -653,19 +642,7 @@ namespace OSLTT
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
                 this.startTestBtn.Text = testBtnText;
-                //this.startTestBtn.Enabled = active;
-                //this.controlsPanel.Enabled = active;
-                /*this.launchBtn.Enabled = active;
-                this.fpsLimitList.Enabled = active;
-                this.testCount.Enabled = active;
-                this.captureTimeBox.Enabled = active;
-                this.vsyncStateList.Enabled = active;
-                this.inputLagPanel.Enabled = active;
-                this.launchBtn.BackColor = btnBg;
-                this.inputLagButton.BackColor = btnBg;
-                this.LiveViewBtn.Enabled = active;
-                
-                */
+                //this.startTestBtn.UseAccentColor = active;
                 this.Invalidate();
             }
         }
