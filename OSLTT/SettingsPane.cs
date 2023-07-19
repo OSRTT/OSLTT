@@ -17,6 +17,10 @@ namespace OSLTT
         public SettingsPane()
         {
             InitializeComponent();
+            isolateLabel.Visible = false;
+            preTestToggle.Checked = false;
+            preTestToggle.Enabled = false;
+            preTestToggle.Visible = false;
             listMonitors();
             if (Properties.Settings.Default.customTestSettings != null)
             {

@@ -46,19 +46,19 @@ namespace OSLTT
             this.autoClickToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.timeBetweenSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
-            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.isolateLabel = new MaterialSkin.Controls.MaterialLabel();
             this.triggerCard = new MaterialSkin.Controls.MaterialCard();
             this.twoPinRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.buttonTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.sourceCard = new MaterialSkin.Controls.MaterialCard();
+            this.externalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioSourceRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.gameExternalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.externalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -230,7 +230,7 @@ namespace OSLTT
             this.settingsCard.Controls.Add(this.autoClickToggle);
             this.settingsCard.Controls.Add(this.timeBetweenSelect);
             this.settingsCard.Controls.Add(this.preTestToggle);
-            this.settingsCard.Controls.Add(this.materialLabel9);
+            this.settingsCard.Controls.Add(this.isolateLabel);
             this.settingsCard.Depth = 0;
             this.settingsCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.settingsCard.Location = new System.Drawing.Point(232, 7);
@@ -374,18 +374,18 @@ namespace OSLTT
             this.preTestToggle.UseVisualStyleBackColor = true;
             this.preTestToggle.CheckedChanged += new System.EventHandler(this.preTestToggle_CheckedChanged);
             // 
-            // materialLabel9
+            // isolateLabel
             // 
-            this.materialLabel9.AutoSize = true;
-            this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel9.Location = new System.Drawing.Point(28, 196);
-            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(243, 29);
-            this.materialLabel9.TabIndex = 53;
-            this.materialLabel9.Text = "Isolate Device Latency";
+            this.isolateLabel.AutoSize = true;
+            this.isolateLabel.Depth = 0;
+            this.isolateLabel.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.isolateLabel.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.isolateLabel.Location = new System.Drawing.Point(28, 196);
+            this.isolateLabel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.isolateLabel.Name = "isolateLabel";
+            this.isolateLabel.Size = new System.Drawing.Size(243, 29);
+            this.isolateLabel.TabIndex = 53;
+            this.isolateLabel.Text = "Isolate Device Latency";
             // 
             // triggerCard
             // 
@@ -488,6 +488,23 @@ namespace OSLTT
             this.sourceCard.Size = new System.Drawing.Size(242, 240);
             this.sourceCard.TabIndex = 76;
             // 
+            // externalRadio
+            // 
+            this.externalRadio.AutoSize = true;
+            this.externalRadio.Depth = 0;
+            this.externalRadio.Location = new System.Drawing.Point(14, 197);
+            this.externalRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.externalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.externalRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.externalRadio.Name = "externalRadio";
+            this.externalRadio.Ripple = true;
+            this.externalRadio.Size = new System.Drawing.Size(92, 37);
+            this.externalRadio.TabIndex = 71;
+            this.externalRadio.TabStop = true;
+            this.externalRadio.Text = "External";
+            this.externalRadio.UseVisualStyleBackColor = true;
+            this.externalRadio.CheckedChanged += new System.EventHandler(this.externalRadio_CheckedChanged);
+            // 
             // audioSourceRadio
             // 
             this.audioSourceRadio.AutoSize = true;
@@ -570,23 +587,6 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
-            // externalRadio
-            // 
-            this.externalRadio.AutoSize = true;
-            this.externalRadio.Depth = 0;
-            this.externalRadio.Location = new System.Drawing.Point(14, 197);
-            this.externalRadio.Margin = new System.Windows.Forms.Padding(0);
-            this.externalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.externalRadio.MouseState = MaterialSkin.MouseState.HOVER;
-            this.externalRadio.Name = "externalRadio";
-            this.externalRadio.Ripple = true;
-            this.externalRadio.Size = new System.Drawing.Size(92, 37);
-            this.externalRadio.TabIndex = 71;
-            this.externalRadio.TabStop = true;
-            this.externalRadio.Text = "External";
-            this.externalRadio.UseVisualStyleBackColor = true;
-            this.externalRadio.CheckedChanged += new System.EventHandler(this.externalRadio_CheckedChanged);
-            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -629,7 +629,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialSwitch autoClickToggle;
         private MaterialSkin.Controls.MaterialComboBox timeBetweenSelect;
         private MaterialSkin.Controls.MaterialSwitch preTestToggle;
-        private MaterialSkin.Controls.MaterialLabel materialLabel9;
+        private MaterialSkin.Controls.MaterialLabel isolateLabel;
         private MaterialSkin.Controls.MaterialCard triggerCard;
         private MaterialSkin.Controls.MaterialRadioButton twoPinRadio;
         private MaterialSkin.Controls.MaterialRadioButton audioTriggerRadio;
