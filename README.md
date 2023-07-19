@@ -16,6 +16,12 @@ An open source latency testing tool project - here you'll find the desktop softw
 - Take a look at the results in the results view window.
 - Enjoy!
 
+## Features not currently implemented
+- Pre-testing system latency - this is a top priority for me. It will be done ASAP!
+- A more live view style mode would be great. The baud rate is the biggest limiting factor there (115200 baud is ~1ms per byte, so you'd only get ~1000Hz which isn't all that useful)
+- More control over the triggers and sensors. Right now everything is quite fixed how I originally invisaged it, but I can already see methods that might be useful that the device doesn't currently support.
+- More on device processing for better compatability. In theory this can work with at least MacOS and Linux systems at a basic level so would be good to support them at least a little with more on device processing.
+
 ## Reporting problems
 If you encounter an errant bug in the software or firmware, please do let me know. The best way to do that is here on GitHub, through the <a href="https://github.com/OSRTT/OSLTT/issues">issues tab</a>. If you don't have a GitHub account, you can also email me <a href="mailto:inbox@techteamgb.com">here</a>. Please include as much information as possible, and any screenshots relevant. 
 
