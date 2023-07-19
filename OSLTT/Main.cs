@@ -28,6 +28,7 @@ namespace OSLTT
     {
         private string softwareVersion = "0.1";
         private static double boardFirmware = -1;
+        private static double downloadedFirmwareVersion = -1;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
@@ -104,6 +105,8 @@ namespace OSLTT
             SetDeviceStatus(0);
             ControlDeviceButtons(false);
             toggleMouseKeyboardBoxes(false);
+            UpdateFirmware.initialSetup();
+            downloadedFirmwareVersion = UpdateFirmware.getNewFirmwareFile(path);
 
             connectThread = new Thread(new ThreadStart(this.findAndConnectToBoard));
             connectThread.Start();
@@ -217,9 +220,36 @@ namespace OSLTT
                     }
                     Thread.Sleep(1000);
                 }
-                else if (fwUpdateRunning)
+                else if (fwUpdateRunning) // probably don't need this anymore
                 {
                     Thread.Sleep(100);
+                }
+                else if (boardFirmware < downloadedFirmwareVersion)
+                {
+                    fwUpdateRunning = true;
+                    SetDeviceStatus(2);
+                    string p = "";
+                    p = port.PortName;
+                    if (port.IsOpen)
+                    {
+                        ControlDeviceButtons(false);
+                        port.Close();
+                    }
+                    if (p == "")
+                    {
+                        MessageBox.Show("Please connect to the device first!", "Update Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        UpdateFirmware.FirmwareReport fw = UpdateFirmware.UpdateDeviceFirmware(path, p);
+                        SetDeviceStatus(fw.State);
+                        debug.AddToLog(fw.ErrorMessage);
+                        if (fw.State == 4)
+                        {
+                            CFuncs.showMessageBox("Firmware update failed", fw.ErrorMessage, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    fwUpdateRunning = false;
                 }
             }
         }

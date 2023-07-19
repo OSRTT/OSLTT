@@ -22,7 +22,7 @@ namespace OSLTT
             AutoUpdater.UpdateFormSize = new System.Drawing.Size(1200, 800);
             AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
             AutoUpdater.ApplicationExitEvent += AutoUpdater_ApplicationExitEvent;
-            AutoUpdater.Start("https://api.github.com/repos/andymanic/OSRTT/releases/latest");
+            AutoUpdater.Start("https://api.github.com/repos/OSRTT/OSRTT/releases/latest");
         }
 
         private static void AutoUpdaterOnParseUpdateInfoEvent(ParseUpdateInfoEventArgs args)
