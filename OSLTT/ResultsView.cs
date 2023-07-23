@@ -30,6 +30,8 @@ namespace OSLTT
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
+            fillResultsTable();
         }
 
         public void setResultsFolder(string p)
@@ -41,11 +43,12 @@ namespace OSLTT
         {
             inputLagResults = il;
             graphMode();
+            fillResultsTable();
         }
 
         public void importMode()
         {
-            Size = new Size(720, 156);
+            
             importPanel.Visible = true;
             importPanel.BringToFront();
             barPlot.Visible = false;
@@ -56,7 +59,7 @@ namespace OSLTT
 
         public void graphMode()
         {
-            Size = new Size(1222, 829);
+            
             importPanel.Visible = false;
             importPanel.SendToBack();
             barPlot.Visible = true;
@@ -64,6 +67,90 @@ namespace OSLTT
             controlsPanel.Visible = true;
             controlsPanel.BringToFront();
             drawBarGraph();
+        }
+
+        private void fillResultsTable()
+        {
+            setupGridView(resultsTable);
+            List<string[]> data = new List<string[]>();
+            for (int i = 0; i < 5; i++)
+            {
+                string[] line = new string[2];
+                data.Add(line);
+            }
+            data[0][0] = "Average";
+            data[0][1] = "15" +"ms";
+
+            data[1][0] = "Minimum";
+            data[1][1] = "1.5" + "ms";
+
+            data[2][0] = "Maximum";
+            data[2][1] = "25" + "ms";
+
+            data[3][0] = "Average";
+            data[3][1] = "15" + "ms";
+
+            data[4][0] = "Average";
+            data[4][1] = "15" + "ms";
+            
+            foreach (var item in data)
+            {
+                resultsTable.Rows.Add(item);
+            }
+
+            for (int l = 0; l < resultsTable.Rows.Count; l++)
+            {
+                resultsTable.Rows[l].Height += 30;
+                
+            }
+        }
+
+        private void setupGridView(DataGridView dgv)
+        {
+            if (dgv.Columns.Count != 0)
+            {
+                dgv.Columns.Clear();
+            }
+            if (dgv.Rows.Count != 0)
+            {
+                dgv.Rows.Clear();
+            }
+            dgv.SelectionChanged += gridView_SelectionChanged;
+            dgv.ColumnCount = 2;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.ColumnHeadersVisible = false;
+            dgv.RowHeadersVisible = false;
+            dgv.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Outset;
+            dgv.RowsDefaultCellStyle.ForeColor = Color.White;
+            dgv.RowsDefaultCellStyle.BackColor = Color.FromArgb(255, 50, 50,50);
+            dgv.RowsDefaultCellStyle.Font = new Font("Calibri", 20, FontStyle.Bold);
+            
+            
+            //dgv.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
+            
+
+            // rtGridView.RowHeadersDefaultCellStyle.Padding = new Padding(rtGridView.RowHeadersWidth / 2 );
+            for (int k = 0; k < dgv.Columns.Count; k++)
+            {
+                if (k == 0)
+                {
+                    dgv.Columns[k].Width = 150;
+                    //dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                }
+                else
+                {
+                    dgv.Columns[k].Width = 148;
+                    dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                }
+                dgv.Columns[k].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+        private void gridView_SelectionChanged(Object sender, EventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            dgv.ClearSelection();
+            dgv.CurrentRow.Selected = false;
         }
 
         public void drawScatterGraph()

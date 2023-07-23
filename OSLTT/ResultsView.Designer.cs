@@ -39,10 +39,10 @@ namespace OSLTT
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.graphedData = new ScottPlot.FormsPlot();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.resultsTable = new System.Windows.Forms.DataGridView();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resultsTable)).BeginInit();
             this.SuspendLayout();
             // 
             // importPanel
@@ -201,32 +201,32 @@ namespace OSLTT
             this.graphedData.Size = new System.Drawing.Size(1184, 666);
             this.graphedData.TabIndex = 36;
             // 
-            // dataGridView1
+            // resultsTable
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.Gray;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ColumnHeadersVisible = false;
-            this.dataGridView1.Location = new System.Drawing.Point(1208, 174);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView1.Size = new System.Drawing.Size(299, 598);
-            this.dataGridView1.TabIndex = 37;
+            this.resultsTable.AllowUserToAddRows = false;
+            this.resultsTable.AllowUserToDeleteRows = false;
+            this.resultsTable.AllowUserToResizeColumns = false;
+            this.resultsTable.AllowUserToResizeRows = false;
+            this.resultsTable.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.resultsTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.resultsTable.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.resultsTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.resultsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.resultsTable.ColumnHeadersVisible = false;
+            this.resultsTable.Location = new System.Drawing.Point(1208, 170);
+            this.resultsTable.Name = "resultsTable";
+            this.resultsTable.RowHeadersVisible = false;
+            this.resultsTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.resultsTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.resultsTable.Size = new System.Drawing.Size(299, 598);
+            this.resultsTable.TabIndex = 37;
             // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1524, 829);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.resultsTable);
             this.Controls.Add(this.graphedData);
             this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
@@ -237,7 +237,7 @@ namespace OSLTT
             this.importPanel.PerformLayout();
             this.controlsPanel.ResumeLayout(false);
             this.controlsPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resultsTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -254,6 +254,6 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton savePNGBtn;
         private ScottPlot.FormsPlot graphedData;
         private MaterialSkin.Controls.MaterialButton switchGraphTypeBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView resultsTable;
     }
 }
