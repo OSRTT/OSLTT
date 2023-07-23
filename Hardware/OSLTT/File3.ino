@@ -119,8 +119,9 @@ void loop() {
       }
 
       // DirectX - bit 4
-      sourceType = convertHexToDec(input[3]) - 1;
-            
+      sourceType = convertHexToDec(input[4]) - 1;
+      Serial.print("Source: ");
+      Serial.println(sourceType);      
       // Shot count - bit 5 + 6
       int msb = convertHexToDec(input[5]);
       int lsb = convertHexToDec(input[6]);

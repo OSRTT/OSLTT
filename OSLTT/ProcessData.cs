@@ -397,6 +397,10 @@ namespace OSLTT
                     {
                         newRes2.Remove(i);
                     }
+                    else if (i.totalInputLag == 0)
+                    {
+                        newRes2.Remove(i);
+                    }
                 }
             }
 

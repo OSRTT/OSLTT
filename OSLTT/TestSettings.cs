@@ -18,6 +18,8 @@ namespace OSLTT
         public double TimeBetween { get; set; }
         public bool PreTest { get; set; }
 
+        public ProcessData.resultType ResultType { get; set; }
+
         public int TriggerTypes(MaterialRadioButton button, MaterialRadioButton audio)
         {
             if (button.Checked)
@@ -71,6 +73,22 @@ namespace OSLTT
             else
             {
                 return 5;
+            }
+        }
+
+        public ProcessData.resultType GetResultType(int SensorType)
+        {
+            if (SensorType == 1)
+            {
+                return ProcessData.resultType.Light;
+            }
+            else if (SensorType == 2)
+            {
+                return ProcessData.resultType.Audio;
+            }
+            else
+            {
+                return ProcessData.resultType.Click;
             }
         }
 

@@ -88,7 +88,7 @@ namespace OSLTT
             }
         }
 
-        public static string makeResultsFolder(string path, string deviceName="OSLTT")
+        public static string makeResultsFolder(string path, ProcessData.resultType type, string deviceName="OSLTT")
         {
             if (deviceName=="")
             {
@@ -111,7 +111,12 @@ namespace OSLTT
                     }
                 }
             }
-            string filePath = path + "\\" + deviceName + "-" + fileNumber.ToString("000");
+            string typeName = "LIGHT";
+            if (type == ProcessData.resultType.Audio)
+            { typeName = "AUDIO"; }
+            else if (type == ProcessData.resultType.Click)
+            { typeName = "CLICK"; }
+            string filePath = path + "\\" + deviceName + "-" + typeName + "-" + fileNumber.ToString("000");
             Directory.CreateDirectory(filePath);
             return filePath;
             //initRunSettingsFile(filePath, monitor);
@@ -168,7 +173,7 @@ namespace OSLTT
             string[] folders = path.Split('\\');
             decimal fileNumber = 001;
             // search /Results folder for existing file names, pick new name
-            string[] existingFiles = Directory.GetFiles(path, "*-" + folders.Last());
+            string[] existingFiles = Directory.GetFiles(path, "*.png");
             //search files for number
             if (existingFiles.Length != 0)
             {
