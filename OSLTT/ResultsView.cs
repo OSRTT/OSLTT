@@ -42,8 +42,15 @@ namespace OSLTT
         public void inputLagMode(ProcessData.averagedInputLag il)
         {
             inputLagResults = il;
-            graphMode();
-            fillResultsTable();
+            try
+            {
+                graphMode();
+                fillResultsTable();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
         }
 
         public void importMode()
@@ -71,28 +78,35 @@ namespace OSLTT
 
         private void fillResultsTable()
         {
+            if (inputLagResults == null)
+            {
+                throw new Exception("No data provided");
+            }
             setupGridView(resultsTable);
             List<string[]> data = new List<string[]>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 string[] line = new string[2];
                 data.Add(line);
             }
-            data[0][0] = "Average";
-            data[0][1] = "15" +"ms";
+            data[0][0] = "AVG Total";
+            data[0][1] = inputLagResults.totalInputLag.AVG.ToString() +"ms";
 
-            data[1][0] = "Minimum";
-            data[1][1] = "1.5" + "ms";
+            data[1][0] = "Min Total";
+            data[1][1] = inputLagResults.totalInputLag.MIN.ToString() + "ms";
 
-            data[2][0] = "Maximum";
-            data[2][1] = "25" + "ms";
+            data[2][0] = "Max Total";
+            data[2][1] = inputLagResults.totalInputLag.MAX.ToString() + "ms";
 
-            data[3][0] = "Average";
-            data[3][1] = "15" + "ms";
+            data[3][0] = "AVG On Display";
+            data[3][1] = inputLagResults.onDisplayLatency.AVG.ToString() + "ms";
 
-            data[4][0] = "Average";
-            data[4][1] = "15" + "ms";
-            
+            data[4][0] = "Min On Display";
+            data[4][1] = inputLagResults.onDisplayLatency.MIN.ToString() + "ms";
+
+            data[5][0] = "Max On Display";
+            data[5][1] = inputLagResults.onDisplayLatency.MAX.ToString() + "ms";
+
             foreach (var item in data)
             {
                 resultsTable.Rows.Add(item);
@@ -101,7 +115,6 @@ namespace OSLTT
             for (int l = 0; l < resultsTable.Rows.Count; l++)
             {
                 resultsTable.Rows[l].Height += 30;
-                
             }
         }
 
@@ -134,13 +147,13 @@ namespace OSLTT
             {
                 if (k == 0)
                 {
-                    dgv.Columns[k].Width = 150;
+                    dgv.Columns[k].Width = 190;
                     //dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 }
                 else
                 {
-                    dgv.Columns[k].Width = 148;
+                    dgv.Columns[k].Width = 108;
                     dgv.Columns[k].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                 }
                 dgv.Columns[k].SortMode = DataGridViewColumnSortMode.NotSortable;
