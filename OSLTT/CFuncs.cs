@@ -181,7 +181,7 @@ namespace OSLTT
                 {
                     var name = new DirectoryInfo(s).Name;
                     string[] splitMe = name.Split('-');
-                    decimal num = decimal.Parse(splitMe.Last());
+                    decimal num = decimal.Parse(splitMe[0]);
                     if (num >= fileNumber)
                     {
                         fileNumber = num + 1;

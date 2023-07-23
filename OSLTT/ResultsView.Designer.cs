@@ -39,8 +39,10 @@ namespace OSLTT
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.graphedData = new ScottPlot.FormsPlot();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // importPanel
@@ -55,7 +57,7 @@ namespace OSLTT
             this.importPanel.MouseState = MaterialSkin.MouseState.HOVER;
             this.importPanel.Name = "importPanel";
             this.importPanel.Padding = new System.Windows.Forms.Padding(14);
-            this.importPanel.Size = new System.Drawing.Size(679, 60);
+            this.importPanel.Size = new System.Drawing.Size(1490, 60);
             this.importPanel.TabIndex = 0;
             // 
             // importBtn
@@ -65,12 +67,12 @@ namespace OSLTT
             this.importBtn.Depth = 0;
             this.importBtn.HighEmphasis = true;
             this.importBtn.Icon = null;
-            this.importBtn.Location = new System.Drawing.Point(457, 12);
+            this.importBtn.Location = new System.Drawing.Point(1295, 12);
             this.importBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.importBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.importBtn.Name = "importBtn";
             this.importBtn.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.importBtn.Size = new System.Drawing.Size(195, 36);
+            this.importBtn.Size = new System.Drawing.Size(177, 36);
             this.importBtn.TabIndex = 2;
             this.importBtn.Text = "Import Existing File";
             this.importBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -114,7 +116,7 @@ namespace OSLTT
             this.controlsPanel.MouseState = MaterialSkin.MouseState.HOVER;
             this.controlsPanel.Name = "controlsPanel";
             this.controlsPanel.Padding = new System.Windows.Forms.Padding(14);
-            this.controlsPanel.Size = new System.Drawing.Size(1184, 60);
+            this.controlsPanel.Size = new System.Drawing.Size(1490, 60);
             this.controlsPanel.TabIndex = 35;
             // 
             // switchGraphTypeBtn
@@ -199,11 +201,32 @@ namespace OSLTT
             this.graphedData.Size = new System.Drawing.Size(1184, 666);
             this.graphedData.TabIndex = 36;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.Gray;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.ColumnHeadersVisible = false;
+            this.dataGridView1.Location = new System.Drawing.Point(1208, 174);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView1.Size = new System.Drawing.Size(299, 598);
+            this.dataGridView1.TabIndex = 37;
+            // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1222, 829);
+            this.ClientSize = new System.Drawing.Size(1524, 829);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.graphedData);
             this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
@@ -214,6 +237,7 @@ namespace OSLTT
             this.importPanel.PerformLayout();
             this.controlsPanel.ResumeLayout(false);
             this.controlsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -230,5 +254,6 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton savePNGBtn;
         private ScottPlot.FormsPlot graphedData;
         private MaterialSkin.Controls.MaterialButton switchGraphTypeBtn;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
