@@ -124,12 +124,19 @@ namespace OSLTT
 
         public static void removeResultsFolder(string path)
         {
-            // search /Results folder for existing file names, pick new name
-            string[] existingFiles = Directory.GetFiles(path);
-            //search files for number
-            if (existingFiles.Length == 0)
+            try
             {
-                Directory.Delete(path);
+                // search /Results folder for existing file names, pick new name
+                string[] existingFiles = Directory.GetFiles(path);
+                //search files for number
+                if (existingFiles.Length == 0)
+                {
+                    Directory.Delete(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
             }
         }
 

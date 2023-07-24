@@ -30,8 +30,6 @@ namespace OSLTT
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-
-            fillResultsTable();
         }
 
         public void setResultsFolder(string p)
@@ -136,7 +134,7 @@ namespace OSLTT
             dgv.AdvancedCellBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Outset;
             dgv.RowsDefaultCellStyle.ForeColor = Color.White;
             dgv.RowsDefaultCellStyle.BackColor = Color.FromArgb(255, 50, 50,50);
-            dgv.RowsDefaultCellStyle.Font = new Font("Calibri", 20, FontStyle.Bold);
+            dgv.RowsDefaultCellStyle.Font = new Font("Calibri", 18, FontStyle.Bold);
             
             
             //dgv.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
@@ -187,6 +185,7 @@ namespace OSLTT
             graphedData.Plot.Clear();
             double[] xs = new double[inputLagResults.inputLagResults.Count];
             double[] ys = new double[inputLagResults.inputLagResults.Count];
+            double averageLine = inputLagResults.onDisplayLatency.AVG;
             for (int i = 0; i < inputLagResults.inputLagResults.Count; i++)
             {
                 xs[i] = inputLagResults.inputLagResults[i].shotNumber;
@@ -205,6 +204,7 @@ namespace OSLTT
                 else if (type == 3)
                 {
                     ys[i] = inputLagResults.inputLagResults[i].totalInputLag;
+                    averageLine = inputLagResults.totalInputLag.AVG;
                 }
             }
             graphedData.Plot.AddScatter(xs, ys, null, 3, 10);
@@ -216,7 +216,7 @@ namespace OSLTT
             graphedData.Plot.YAxis.TickLabelStyle(Color.Black, "Calibri", 20, false);
             //graphedData.Plot.SetAxisLimitsY(0, inputLagResults.totalInputLag.MAX + 1);
 
-            graphedData.Plot.AddHorizontalLine(inputLagResults.onDisplayLatency.AVG, Color.DarkGreen, 5);
+            graphedData.Plot.AddHorizontalLine(averageLine, Color.DarkGreen, 5);
 
             graphedData.Plot.Render();
             graphedData.Plot.RenderLegend();

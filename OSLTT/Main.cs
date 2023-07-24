@@ -27,7 +27,7 @@ namespace OSLTT
     public partial class Main : MaterialForm
     {
         private string softwareVersion = "0.1";
-        private static double boardFirmware = -1;
+        private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 
         public static System.IO.Ports.SerialPort port;
@@ -583,7 +583,15 @@ namespace OSLTT
             {
                 if (port.IsOpen)
                 {
-                    port.Write(input);
+                    try
+                    {
+                        port.Write(input);
+                    }
+                    catch (Exception ex)
+                    {
+                        debug.AddToLog(ex.Message + ex.StackTrace);
+                        Console.WriteLine(ex.Message + ex.StackTrace);
+                    }
                 }
             }
         }
@@ -650,10 +658,10 @@ namespace OSLTT
             else if (state == 5)
             {
                 text = "Test Running";
-                check = false;
                 active = false;
                 bg = Color.FromArgb(255, 38, 50, 56);
                 testBtnText = "End Test";
+                check = true;
             }
             if (this.devStat.InvokeRequired)
             {
@@ -662,7 +670,7 @@ namespace OSLTT
                 this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Visible = check));
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = testBtnText));
-                //this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.UseAccentColor = active));
+                this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = check));
                 this.Invoke((MethodInvoker)(() => this.Invalidate()));
             }
             else
@@ -672,7 +680,7 @@ namespace OSLTT
                 this.fwLblTitle.Visible = check;
                 this.fwLbl.Visible = check;
                 this.startTestBtn.Text = testBtnText;
-                //this.startTestBtn.UseAccentColor = active;
+                this.startTestBtn.Enabled = check;
                 this.Invalidate();
             }
         }
@@ -1067,12 +1075,14 @@ namespace OSLTT
             // text changed handler added 487us.
             //3-4ms direct (osltt test mode)
             portWrite("H");
+            Console.WriteLine("H sent");
         }
 
         private void materialLabel11_Click(object sender, EventArgs e)
         {
             //clickTestBox_Click(null, null);
             portWrite("H");
+            Console.WriteLine("H sent");
         }
 
         private void clickTestBox_Click(object sender, EventArgs e)
@@ -1080,6 +1090,7 @@ namespace OSLTT
             // click handlers added 87us
             // 1-2ms direct (osltt test mode)
             portWrite("H");
+            Console.WriteLine("H sent");
         }
         bool testbool = false;
         private void materialButton1_Click(object sender, EventArgs e)

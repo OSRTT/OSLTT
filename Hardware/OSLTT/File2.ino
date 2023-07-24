@@ -183,19 +183,33 @@ void runClickTest() {
   toggleLED(false);
   Serial.setTimeout(1);
   int baseline = getADCValue(500, 1);
+  int baselineAdjusted = 16380 - baseline;
+    baselineAdjusted *= 0.8;
+    baselineAdjusted += baseline;
+  Serial.print("baseline: ");
+  Serial.println(baseline);
+  Serial.print("baselineAdjusted: ");
+  Serial.println(baselineAdjusted);
+  int counter = 0;
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
       input[0] = 'X';
       toggleLED(false);
     }
-    int current = getSingleADCValue(1);
-    int baselineAdjusted = 16380 - baseline;
-    baselineAdjusted *= 0.5;
-    if (current > (baseline + baselineAdjusted)) {
+    if (counter == 14000)
+    {
+      counter = 0;
+    }
+    adcBuff[counter] = analogRead(1);
+    int current = adcBuff[counter];
+    counter++;
+    
+    if (current > baselineAdjusted) {
       // keyboard/mouse mode. Listen for click, wait for PC to report click.
       input[0] = '0';
+      Serial.println(current); // remove after debugging
       long start = micros();
-      while (input[0] != 'H') {
+      while (input[0] != 'H' && input[0] != 'X') {
         getSerialChars();
       }
       long end = micros();
@@ -204,10 +218,17 @@ void runClickTest() {
       Serial.print("CLICK:");
       Serial.println(time / 1000);
       toggleLED(true);
-      delay(100);
+      delay(200);
       toggleLED(false);
+      delay(100);
     }
   }
+  for (int i = 0; i < 14000; i++)
+  {
+    Serial.print(adcBuff[i]);
+    Serial.print(",");
+  }
+  Serial.println();
   Serial.setTimeout(100);
   Serial.println("Clicks Finished");
   toggleLED(true);

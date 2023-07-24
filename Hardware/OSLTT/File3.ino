@@ -174,29 +174,19 @@ void loop() {
   }
   else if (input[0] == 'W')
   {
-    long nine = fillADCBufferSlower(9000, 1);
-    Serial.print("9000 samples took ");
-    Serial.print(nine/1000);
-    Serial.println("ms"); 
-    Serial.print("That's ");
-    Serial.print(nine / 9000);
-    Serial.println("us per sample"); 
-
+   
     while(!digitalRead(ButtonPin))
     {
       delay(1);
     }
     long fourteen = fillADCBufferSlower(14000, 1);
-    Serial.print("14000 samples took ");
-    Serial.print(fourteen/1000);
-    Serial.println("ms");
-    Serial.print("That's ");
-    Serial.print(fourteen / 14000);
-    Serial.println("us per sample");
+    
     for (int i = 0; i < 14000; i++) {
       Serial.print(adcBuff[i]);
       Serial.print(",");
     }
+    Serial.println();
+    Serial.println("0");
   }
   else if (input[0] == 'Y')
   {
