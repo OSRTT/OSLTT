@@ -1,7 +1,7 @@
 # OSLTT - Open Source Latency Test Tool 
 An open source latency testing tool project - here you'll find the desktop software needed to use the tool, the firmware for the device, the circuit diagram and support. 
 
-<a href="https://andymanic.github.io/OSRTTDocs/" target="_blank">![View the docs](view-the-docs.png)</a>
+
 <a href="https://osrtt.com" target="_blank">![Buy a kit](buy-a-kit.png)</a>
 
 ## Get Started
