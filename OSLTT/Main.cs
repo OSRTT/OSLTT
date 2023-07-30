@@ -110,8 +110,20 @@ namespace OSLTT
 
             connectThread = new Thread(new ThreadStart(this.findAndConnectToBoard));
             connectThread.Start();
+            
+            CleanupDevTools();
+        }
 
-
+        private void CleanupDevTools()
+        {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                materialButton1.Visible = true;
+            }
+            else
+            {
+                materialButton1.Visible = true;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1078,17 +1090,17 @@ namespace OSLTT
             Console.WriteLine("H sent");
         }
 
-        private void materialLabel11_Click(object sender, EventArgs e)
+        private void materialLabel11_Click(object sender, MouseEventArgs e)
         {
             //clickTestBox_Click(null, null);
             portWrite("H");
             Console.WriteLine("H sent");
         }
 
-        private void clickTestBox_Click(object sender, EventArgs e)
+        private void clickTestBox_Click(object sender, MouseEventArgs e)
         {
             // click handlers added 87us
-            // 1-2ms direct (osltt test mode)
+            // 1.1ms avg added waiting for click handler (triggered with mouse clicks)
             portWrite("H");
             Console.WriteLine("H sent");
         }
@@ -1113,7 +1125,11 @@ namespace OSLTT
             toggleMouseKeyboardBoxes(testbool);
             if (testbool)
             {
-                portWrite("W");
+                portWrite("Y");
+            }
+            else
+            {
+                portWrite("X");
             }
 
         }

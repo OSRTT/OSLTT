@@ -190,7 +190,38 @@ void loop() {
   }
   else if (input[0] == 'Y')
   {
-    toggleLED(true);
+    Serial.setTimeout(0.1);
+    int counter = 0;
+    while (input[0] != 'X')
+    {
+      if (digitalRead(ButtonPin))
+      {
+        Serial.println("clicking...");
+        long click = micros();
+        Mouse.click(MOUSE_LEFT);
+        long start = micros();
+        while (input[0] != 'H' && input[0] != 'X')
+        {
+          getSerialChars();
+        }
+        long end = micros();
+        long t = end - start;
+        Serial.println(t/1000);
+        adcBuff[counter] = t;
+        counter++;
+      }
+      getSerialChars();
+    }
+    long avg = 0;
+    for (int i = 0; i < counter; i++)
+    {
+      avg += adcBuff[i];
+    }
+    avg /= counter;
+    Serial.print("average time: ");
+    Serial.println(avg);
+    Serial.print("number of tests ran: ");
+    Serial.println(counter);
   }
   else if (input[0] == 'Z')
   {
