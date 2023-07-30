@@ -190,15 +190,16 @@ void loop() {
   }
   else if (input[0] == 'Y')
   {
-    Serial.setTimeout(0.1);
+    Serial.setTimeout(1);
     int counter = 0;
     while (input[0] != 'X')
     {
       if (digitalRead(ButtonPin))
       {
-        Serial.println("clicking...");
+        Serial.println("typing...");
         long click = micros();
-        Mouse.click(MOUSE_LEFT);
+        //Mouse.click(MOUSE_LEFT);
+        Keyboard.write('A');
         long start = micros();
         while (input[0] != 'H' && input[0] != 'X')
         {
@@ -211,6 +212,7 @@ void loop() {
         counter++;
       }
       getSerialChars();
+      delay(100);
     }
     long avg = 0;
     for (int i = 0; i < counter; i++)

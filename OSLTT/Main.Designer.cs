@@ -358,7 +358,7 @@ namespace OSLTT
             this.textTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textTextBox.TrailingIcon = null;
             this.textTextBox.UseSystemPasswordChar = false;
-            this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_textChanged);
+            //this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_textChanged);
             // 
             // clickTestBox
             // 

@@ -112,6 +112,8 @@ namespace OSLTT
             connectThread.Start();
             
             CleanupDevTools();
+
+            textTextBox.KeyDown += textTextBox_KeyDown;
         }
 
         private void CleanupDevTools()
@@ -1077,7 +1079,7 @@ namespace OSLTT
         }
 
 
-        private void textTextBox_textChanged(object sender, EventArgs e)
+        private void textTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             //sw.Stop();
             //double ticks = sw.ElapsedTicks;
