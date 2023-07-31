@@ -88,7 +88,7 @@ namespace OSLTT
 
             audioTestClip = new SoundPlayer(Properties.Resources.OSLTTTone);
 
-            //UpdateHandler.UpdateMe(softwareVersion);
+            UpdateHandler.UpdateMe(softwareVersion);
 
             CultureInfo customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
