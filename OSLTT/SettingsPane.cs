@@ -62,7 +62,7 @@ namespace OSLTT
             {
                 displayCard.Enabled = true;
             }
-            if (autoClickToggle.Checked)
+            if (autoClickToggle.Checked || testSettings.AutoClick)
             {
                 clickCountSelect.Enabled = true;
                 timeBetweenSelect.Enabled = true;
@@ -316,6 +316,7 @@ namespace OSLTT
             testSettings.TestSource = source;
             testSettings.TimeBetween = time;
             testSettings.TriggerType = trigger;
+            this.Invalidate();
         }
 
         private void SetComboBoxValue(MaterialComboBox mcb, double value)

@@ -121,10 +121,12 @@ namespace OSLTT
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 materialButton1.Visible = true;
+                materialButton1.Location = new Point(418, 2);
             }
             else
             {
-                materialButton1.Visible = true;
+                materialButton1.Visible = false;
+                materialButton1.Location = new Point(418, -50);
             }
         }
 
