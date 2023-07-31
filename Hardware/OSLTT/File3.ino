@@ -212,7 +212,7 @@ void loop() {
         counter++;
       }
       getSerialChars();
-      delay(100);
+      delay(1000);
     }
     long avg = 0;
     for (int i = 0; i < counter; i++)

@@ -13,7 +13,7 @@ int inByte = 0;         // incoming serial byte
 
 uint16_t adcBuff[14000];
  
-float firmwareVersion = 0.1;
+float firmwareVersion = 0.8;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 
