@@ -11,9 +11,9 @@ int ButtonPin = 6;  //2  // digital sensor
 int inByte = 0;         // incoming serial byte
 
 
-uint16_t adcBuff[14000];
+uint16_t adcBuff[12000];
  
-float firmwareVersion = 0.8;
+float firmwareVersion = 0.85;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 

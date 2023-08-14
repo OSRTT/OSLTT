@@ -5,10 +5,10 @@ void setup() {
   // start serial port at 9600 bps:
   Serial.begin(115200);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    ;  // wait for serial port to connect. Needed for native USB port only
   }
 
-  pinMode(PullDownPin, INPUT_PULLDOWN);   
+  pinMode(PullDownPin, INPUT_PULLDOWN);
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
 
@@ -20,59 +20,42 @@ void setup() {
 
 void loop() {
   int buttonState = 0;
-  
+
   getSerialChars();
 
-  if (input[0] == 'T') // Button trigger test mode
+  if (input[0] == 'T')  // Button trigger test mode
   {
-    while(input[0] != 'X')
-    {
+    while (input[0] != 'X') {
       Serial.setTimeout(100);
       getSerialChars();
-      if (inputType == 0)
-      {
-        if (digitalRead(ButtonPin))
-        {
-          if (sensorType == 1)
-          {
-            if (autoClick)
-            {
-              for (int i = 0; i < shotCount; i++)
-              {
+      if (inputType == 0) {
+        if (digitalRead(ButtonPin)) {
+          if (sensorType == 1) {
+            if (autoClick) {
+              for (int i = 0; i < shotCount; i++) {
                 runAudioTest();
                 //delay(timeBetween * 1000);
                 delay(100);
               }
               Serial.println("AUDIO TEST FINISHED");
               break;
-            }
-            else
-            {
+            } else {
               runAudioTest();
             }
-          }
-          else
-          {
+          } else {
             autoRunTest(autoClick, 9000, shotCount);
-            if (autoClick)
-            {
+            if (autoClick) {
               break;
             }
           }
         }
-      }
-      else if (inputType == 1)
-      {
+      } else if (inputType == 1) {
         runClickTest();
         break;
-      }
-      else if (inputType == 2)
-      {
-        while(input[0] != 'X')
-        {
+      } else if (inputType == 2) {
+        while (input[0] != 'X') {
           getSerialChars();
-          if (digitalRead(PullDownPin) != HIGH)
-          {
+          if (digitalRead(PullDownPin) != HIGH) {
             // Run test
             autoRunTest(false, 9000);
           }
@@ -80,134 +63,105 @@ void loop() {
         break;
       }
     }
-  }
-  else if (input[0] == 'P') // Pre-test
+  } else if (input[0] == 'P')  // Pre-test
   {
-    while(input[0] != 'X')
-    {
+    while (input[0] != 'X') {
       getSerialChars();
-      if (digitalRead(ButtonPin))
-      {
+      if (digitalRead(ButtonPin)) {
         autoRunTest(true, 9000, 100, true);
       }
     }
-  }
-  else if (input[0] == 'I') // Initialise everything
+  } else if (input[0] == 'I')  // Initialise everything
   {
     toggleLED(true);
-    if (input[1] == ' ' || input[2] == ' ')
-    {
-      Serial.print("FW:");
-      Serial.println(firmwareVersion);
+
+    Serial.print("FW:");
+    Serial.println(firmwareVersion);
+
+    // Sensor type - bit 1
+    sensorType = convertHexToDec(input[1]) - 1;
+
+    // Trigger type - bit 2
+    inputType = convertHexToDec(input[2]) - 1;
+
+    // Auto Click - bit 3
+    if (input[3] == '1') {
+      autoClick = true;
+    } else {
+      autoClick = false;
     }
-    else
-    {
-      // Sensor type - bit 1
-      sensorType = convertHexToDec(input[1]) - 1;
-      
-      // Trigger type - bit 2
-      inputType = convertHexToDec(input[2]) - 1;
 
-      // Auto Click - bit 3
-      if (input[3] == '1')
-      {
-        autoClick = true;
-      }
-      else
-      {
-        autoClick = false;
-      }
+    // DirectX - bit 4
+    sourceType = convertHexToDec(input[4]) - 1;
 
-      // DirectX - bit 4
-      sourceType = convertHexToDec(input[4]) - 1;
-         
-      // Shot count - bit 5 + 6
-      int msb = convertHexToDec(input[5]);
-      int lsb = convertHexToDec(input[6]);
-      shotCount = (msb * 100) + (lsb * 10);
-     
-      // Time between - bit 7
-      int tbw = convertHexToDec(input[0]);
-      if (tbw == 1)
-      {
-        timeBetween = 0.5;
-      }
-      else
-      {
-        timeBetween = tbw - 1;
-      }
+    // Shot count - bit 5 + 6
+    int msb = convertHexToDec(input[5]);
+    int lsb = convertHexToDec(input[6]);
+    shotCount = (msb * 100) + (lsb * 10);
 
-      // Confirm settings synced
-      for (int i = 0; i < INPUT_SIZE; i++)
-      {
-        Serial.print(input[i]);
-      }
-      Serial.println();
-      Serial.println("Settings Synced");
+    // Time between - bit 7
+    int tbw = convertHexToDec(input[0]);
+    if (tbw == 1) {
+      timeBetween = 0.5;
+    } else {
+      timeBetween = tbw - 1;
     }
-  }
-  else if (input[0] == 'S') // Shot count
+
+    // Confirm settings synced
+    for (int i = 0; i < INPUT_SIZE; i++) {
+      Serial.print(input[i]);
+    }
+    Serial.println();
+    Serial.println("Settings Synced");
+
+  } else if (input[0] == 'S')  // Shot count
   {
     Serial.println("Ready");
     getSerialChars();
     int MSB = convertHexToDec(input[1]);
     int LSB = convertHexToDec(input[0]);
     shotCount = (MSB * 100) + (LSB * 10);
-  }
-  else if (input[0] == 'Q')
-  {
-    while (input[0] != 'X')
-    {
+  } else if (input[0] == 'Q') {
+    while (input[0] != 'X') {
       getSerialChars();
       int pulldown = digitalRead(PullDownPin);
       Serial.println(pulldown);
-      if (pulldown == LOW)
-      {
+      if (pulldown == LOW) {
         pulseLED(true);
-      }
-      else
-      {
+      } else {
         pulseLED(false);
       }
       delay(100);
     }
-  }
-  else if (input[0] == 'W')
-  {
-   
-    while(!digitalRead(ButtonPin))
-    {
+  } else if (input[0] == 'W') {
+
+    while (!digitalRead(ButtonPin)) {
       delay(1);
     }
     long fourteen = fillADCBufferSlower(14000, 1);
-    
+
     for (int i = 0; i < 14000; i++) {
       Serial.print(adcBuff[i]);
       Serial.print(",");
     }
     Serial.println();
     Serial.println("0");
-  }
-  else if (input[0] == 'Y')
-  {
+  } else if (input[0] == 'Y') {
     Serial.setTimeout(1);
     int counter = 0;
-    while (input[0] != 'X')
-    {
-      if (digitalRead(ButtonPin))
-      {
+    while (input[0] != 'X') {
+      if (digitalRead(ButtonPin)) {
         Serial.println("typing...");
         long click = micros();
         //Mouse.click(MOUSE_LEFT);
         Keyboard.write('A');
         long start = micros();
-        while (input[0] != 'H' && input[0] != 'X')
-        {
+        while (input[0] != 'H' && input[0] != 'X') {
           getSerialChars();
         }
         long end = micros();
         long t = end - start;
-        Serial.println(t/1000);
+        Serial.println(t / 1000);
         adcBuff[counter] = t;
         counter++;
       }
@@ -215,8 +169,7 @@ void loop() {
       delay(1000);
     }
     long avg = 0;
-    for (int i = 0; i < counter; i++)
-    {
+    for (int i = 0; i < counter; i++) {
       avg += adcBuff[i];
     }
     avg /= counter;
@@ -224,9 +177,7 @@ void loop() {
     Serial.println(avg);
     Serial.print("number of tests ran: ");
     Serial.println(counter);
-  }
-  else if (input[0] == 'Z')
-  {
+  } else if (input[0] == 'Z') {
     Serial.println("Z registered");
     Serial.println("Light sensor");
     int buttonState = digitalRead(ButtonPin);
@@ -236,8 +187,7 @@ void loop() {
     // while (!ADC->INTFLAG.bit.RESRDY); //wait for ADC to have a new value
     // int result = ADC->RESULT.reg;
     // Serial.println(result);
-    while (buttonState != HIGH)
-    {
+    while (buttonState != HIGH) {
       //int value = getSingleADCValue();
       int value = analogRead(0);
       Serial.println(value);
@@ -245,6 +195,4 @@ void loop() {
     }
     Serial.println("Exited");
   }
-
-
 }

@@ -47,7 +47,7 @@ long fillADCBufferSlower(int count, int pin = 0) {
   long startTimer = micros();
   while (localCounter < count) {
     adcBuff[localCounter] = analogRead(pin);
-    delayMicroseconds(20);
+    delayMicroseconds(25);
     localCounter++;
   }
   long endTimer = micros();
