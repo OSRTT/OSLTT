@@ -4,6 +4,7 @@
 
 #define INPUT_SIZE 8
 
+#define ArraySize 12000
 
 int LEDPin = 3; //19   // first analog sensor
 int PullDownPin = 4; //16  // second analog sensor
@@ -11,7 +12,7 @@ int ButtonPin = 6;  //2  // digital sensor
 int inByte = 0;         // incoming serial byte
 
 
-uint16_t adcBuff[12000];
+uint16_t adcBuff[ArraySize];
  
 float firmwareVersion = 0.86;
 

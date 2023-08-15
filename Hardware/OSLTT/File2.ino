@@ -235,20 +235,19 @@ void runClickTest() {
 }
 
 void runAudioTest() {
-  int numberOfSamples = 12000;
   long start = micros();
   Serial.println("AUDIO TRIGGER");
   long end = micros();
-  long timeTaken = fillADCBufferSlower(numberOfSamples, 1);
+  long timeTaken = fillADCBufferSlower(ArraySize, 1);
   Serial.print("AUDIORES:");
   Serial.print(end - start);
   Serial.print(",");
   Serial.print(timeTaken);
   Serial.print(",");
-  Serial.print(numberOfSamples);
+  Serial.print(ArraySize);
   Serial.print(",");
 
-  for (int i = 0; i < numberOfSamples; i++) {
+  for (int i = 0; i < ArraySize; i++) {
     Serial.print(adcBuff[i]);
     Serial.print(",");
   }
