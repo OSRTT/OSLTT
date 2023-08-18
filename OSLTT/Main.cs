@@ -26,13 +26,14 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "0.8";
+        private string softwareVersion = "0.85";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
         public static bool fwUpdateRunning = false;
+        public static bool boardUpdate = false;
 
         private ResourceManager rm = OSLTT.Properties.Resources.ResourceManager;
 
@@ -240,7 +241,7 @@ namespace OSLTT
                 {
                     Thread.Sleep(100);
                 }
-                else if (boardFirmware < downloadedFirmwareVersion)
+                else if (boardUpdate)
                 {
                     fwUpdateRunning = true;
                     SetDeviceStatus(2);
@@ -266,6 +267,7 @@ namespace OSLTT
                         }
                     }
                     fwUpdateRunning = false;
+                    boardUpdate = false;
                 }
             }
         }
@@ -619,7 +621,16 @@ namespace OSLTT
             // fwUpdateRunning = true;
             // port.Close();
             // run function to update firmware, returns bool. 
-            // fwUpdateRunning = UpdateFirmware.Update();
+            if (downloadedFirmwareVersion > boardFirmware)
+            {
+                DialogResult d = CFuncs.showMessageBox("Current version: " + boardFirmware.ToString() + "\n New version: " + downloadedFirmwareVersion.ToString() + "\n Update now?", "Firmware Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d == DialogResult.Yes)
+                {
+                    boardUpdate = true;
+                    port.Close();
+                }
+            }
+            
         }
 
         private void ControlDeviceButtons(bool state)

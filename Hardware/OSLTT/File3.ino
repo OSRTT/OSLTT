@@ -2,6 +2,11 @@
 
 
 void setup() {
+  uint32_t bootprot = getBootProt();
+  setBootProt(2);
+  uint32_t newbootprot = getBootProt();
+
+
   // start serial port at 9600 bps:
   Serial.begin(115200);
   while (!Serial) {
@@ -16,6 +21,13 @@ void setup() {
   analogReadResolution(14);
 
   establishContact();  // send a byte to establish contact until receiver responds
+
+  
+  Serial.print("bootprot = ");
+  Serial.println(bootprot);
+
+  Serial.print("new bootprot = ");
+  Serial.println(newbootprot);
 }
 
 void loop() {

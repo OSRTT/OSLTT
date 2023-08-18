@@ -1,5 +1,59 @@
 // Setup and helper functions
 
+static inline void wait_ready(void) {
+    while (NVMCTRL->INTFLAG.bit.READY == 0) {
+    }
+}
+
+void exec_cmd(uint32_t cmd, const uint32_t *addr) {
+    NVMCTRL->STATUS.reg |= NVMCTRL_STATUS_MASK;
+    NVMCTRL->ADDR.reg = (uint32_t)addr / 2;
+    NVMCTRL->CTRLA.reg = NVMCTRL_CTRLA_CMDEX_KEY | cmd;
+    wait_ready();
+}
+
+void setBootProt(int v) { // Because SEEED don't bother protecting the f#cking bootloader by default, I'm doing it here.
+    uint32_t *NVM_FUSES = (uint32_t *)NVMCTRL_AUX0_ADDRESS;
+
+    uint32_t fuses[2];
+
+    fuses[0] = NVM_FUSES[0];
+    fuses[1] = NVM_FUSES[1];
+
+    uint32_t bootprot = (fuses[0] & NVMCTRL_FUSES_BOOTPROT_Msk) >> NVMCTRL_FUSES_BOOTPROT_Pos;
+
+    if (bootprot == v) {
+        return;
+    }
+
+    fuses[0] = (fuses[0] & ~NVMCTRL_FUSES_BOOTPROT_Msk) | (v << NVMCTRL_FUSES_BOOTPROT_Pos);
+
+    wait_ready();
+    exec_cmd(NVMCTRL_CTRLA_CMD_EAR, (uint32_t *)NVMCTRL_USER);
+    exec_cmd(NVMCTRL_CTRLA_CMD_PBC, (uint32_t *)NVMCTRL_USER);
+
+    NVM_FUSES[0] = fuses[0];
+    NVM_FUSES[1] = fuses[1];
+
+    exec_cmd(NVMCTRL_CTRLA_CMD_WAP, (uint32_t *)NVMCTRL_USER);
+
+    NVIC_SystemReset();
+}
+
+uint32_t getBootProt()
+{
+  uint32_t *NVM_FUSES = (uint32_t *)NVMCTRL_AUX0_ADDRESS;
+
+    uint32_t fuses[2];
+
+    fuses[0] = NVM_FUSES[0];
+    fuses[1] = NVM_FUSES[1];
+
+    uint32_t bootprot = (fuses[0] & NVMCTRL_FUSES_BOOTPROT_Msk) >> NVMCTRL_FUSES_BOOTPROT_Pos;
+    return bootprot;
+}
+
+
 
 void getSerialChars() {
   for (int i = 0; i < INPUT_SIZE + 1; i++) {

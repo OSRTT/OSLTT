@@ -80,7 +80,8 @@ namespace OSLTT
                             }
                         }
                     }
-                    wc.DownloadFile(newFirmwareUrl, localPath + @"\\arduinoCLI");
+                    string[] filename = newFirmwareUrl.Split('/');
+                    wc.DownloadFile(newFirmwareUrl, localPath + @"\\arduinoCLI\\" + filename.Last());
                 }
                 catch (Exception ex)
                 {
@@ -122,10 +123,13 @@ namespace OSLTT
             if (binFileAvailable != "")
             {
                 Console.WriteLine(binFileAvailable);
-                updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn adafruit:samd:adafruit_itsybitsy_m4 -i \"" + binFileAvailable + "\"";
+                updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn Seeeduino:samd:seeed_XIAO_m0 -i \"" + binFileAvailable + "\"";
                 Console.WriteLine(updateCommand);
             }
-
+            else
+            {
+                return new FirmwareReport { State = 4, ConsoleOutput = "", ErrorMessage = "No Binary File Available" };
+            }
 
             Console.WriteLine("ready to start");
             process.StartInfo.UseShellExecute = false;
