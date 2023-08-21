@@ -269,6 +269,10 @@ namespace OSLTT
                     fwUpdateRunning = false;
                     boardUpdate = false;
                 }
+                else
+                {
+                    Thread.Sleep(1000);
+                }
             }
         }
 
