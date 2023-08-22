@@ -63,7 +63,9 @@ namespace OSLTT
                         }
                         listSize = debugList.Count();
                     }
+                    Thread.Sleep(1000);
                 }
+                Thread.Sleep(1000);
             }
         }
 
