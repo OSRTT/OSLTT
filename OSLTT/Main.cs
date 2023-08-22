@@ -28,7 +28,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "0.85";
+        private string softwareVersion = "0.86";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 
@@ -82,6 +82,7 @@ namespace OSLTT
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
+            appRunning();
 
             //982, 588
             //this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -133,6 +134,17 @@ namespace OSLTT
             {
                 materialButton1.Visible = false;
                 materialButton1.Location = new Point(418, -50);
+            }
+        }
+
+        private void appRunning()
+        {
+            Process[] p = Process.GetProcessesByName("OSLTT");
+            if (p.Length > 1)
+            {
+                MessageBox.Show("ERROR: Program already open! Please close it before running again, or check the task bar and system tray for the running app.", "Program Open Already", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(p.Length);
+                //this.Close();
             }
         }
 
