@@ -1,4 +1,5 @@
 ﻿using AutoUpdaterDotNET;
+using GlobalHotKey;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Newtonsoft.Json;
@@ -20,6 +21,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 using static OSLTT.ProcessData;
 
 namespace OSLTT
@@ -58,6 +60,9 @@ namespace OSLTT
         public SettingsClasses.RunSettings RunSettings;
         private bool processingFailed = false;
         public bool settingsSynced = false;
+
+        HotKeyManager hotKeys = new HotKeyManager();
+        List<HotKey> hotKeyList = new List<HotKey>();
 
         private readonly string fqbn = "Seeeduino:samd:seeed_XIAO_m0";
 
@@ -131,9 +136,11 @@ namespace OSLTT
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
-
+            hotKeys.KeyPressed += HotKeyPressed;
+            var k = hotKeys.Register(Key.F10, System.Windows.Input.ModifierKeys.None);
+            hotKeyList.Add(k);
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -790,6 +797,22 @@ namespace OSLTT
             debug.Show();
         }
 
+        private void HotKeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            if (e.HotKey.Key == Key.F10)
+            {
+                if (startTestBtn.Enabled)
+                {
+                    startTestBtn_Click(null, null);
+                }
+                else
+                {
+                    // message box to say can't start test? undecided.
+                    Console.WriteLine("Didn't start test");
+                }
+            }
+        }
+
         private Thread testThread;
         public bool stopTest = false;
 
@@ -1096,7 +1119,7 @@ namespace OSLTT
         }
 
 
-        private void textTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void textTextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             //sw.Stop();
             //double ticks = sw.ElapsedTicks;
@@ -1109,14 +1132,14 @@ namespace OSLTT
             Console.WriteLine("H sent");
         }
 
-        private void materialLabel11_Click(object sender, MouseEventArgs e)
+        private void materialLabel11_Click(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             //clickTestBox_Click(null, null);
             portWrite("H");
             Console.WriteLine("H sent");
         }
 
-        private void clickTestBox_Click(object sender, MouseEventArgs e)
+        private void clickTestBox_Click(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             // click handlers added 87us
             // 1.1ms avg added waiting for click handler (triggered with mouse clicks)

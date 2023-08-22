@@ -150,9 +150,9 @@ void loop() {
     while (!digitalRead(ButtonPin)) {
       delay(1);
     }
-    long fourteen = fillADCBufferSlower(14000, 1);
+    long fourteen = fillADCBufferSlower(ArraySize, 1);
 
-    for (int i = 0; i < 14000; i++) {
+    for (int i = 0; i < ArraySize; i++) {
       Serial.print(adcBuff[i]);
       Serial.print(",");
     }
@@ -163,10 +163,10 @@ void loop() {
     int counter = 0;
     while (input[0] != 'X') {
       if (digitalRead(ButtonPin)) {
-        Serial.println("typing...");
+        Serial.println("clicking...");
         long click = micros();
-        //Mouse.click(MOUSE_LEFT);
-        Keyboard.write('A');
+        Mouse.click(MOUSE_LEFT);
+        //Keyboard.write('A');
         long start = micros();
         while (input[0] != 'H' && input[0] != 'X') {
           getSerialChars();

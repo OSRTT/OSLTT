@@ -250,13 +250,14 @@ void runClickTest() {
       input[0] = 'X';
       toggleLED(false);
     }
-    if (counter == 14000)
+    if (counter == ArraySize)
     {
       counter = 0;
     }
     adcBuff[counter] = analogRead(1);
     int current = adcBuff[counter];
     counter++;
+    //Serial.println(current); //debugging use only
     
     if (current > baselineAdjusted) {
       // keyboard/mouse mode. Listen for click, wait for PC to report click.
@@ -277,7 +278,7 @@ void runClickTest() {
       delay(100);
     }
   }
-  for (int i = 0; i < 14000; i++)
+  for (int i = 0; i < ArraySize; i++)
   {
     Serial.print(adcBuff[i]);
     Serial.print(",");
