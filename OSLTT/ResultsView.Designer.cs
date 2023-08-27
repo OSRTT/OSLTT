@@ -116,7 +116,7 @@ namespace OSLTT
             this.controlsPanel.MouseState = MaterialSkin.MouseState.HOVER;
             this.controlsPanel.Name = "controlsPanel";
             this.controlsPanel.Padding = new System.Windows.Forms.Padding(14);
-            this.controlsPanel.Size = new System.Drawing.Size(1490, 60);
+            this.controlsPanel.Size = new System.Drawing.Size(1184, 60);
             this.controlsPanel.TabIndex = 35;
             // 
             // switchGraphTypeBtn

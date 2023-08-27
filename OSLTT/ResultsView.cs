@@ -65,7 +65,7 @@ namespace OSLTT
         public void graphMode()
         {
 
-            importPanel.Visible = false;
+            //importPanel.Visible = false;
             importPanel.SendToBack();
             barPlot.Visible = true;
             barPlot.BringToFront();
@@ -377,7 +377,7 @@ namespace OSLTT
         {
             var data = importInputLagData(path);
             resultsFolderPath = data.Substring(0, data.LastIndexOf('\\'));
-            if (data.Contains("PROCESSED") && data.Contains("LATENCY-OSRTT"))
+            if (data.Contains("PROCESSED") && data.Contains("OSLTT"))
             {
                 inputLagResults = new ProcessData.averagedInputLag();
                 ProcessData.averagedInputLag lag = importProcessedData(data);
@@ -390,7 +390,7 @@ namespace OSLTT
                     MessageBox.Show("Failed to import data", "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else if (data.Contains("RAW") && data.Contains("LATENCY-OSRTT"))
+            else if (data.Contains("RAW") && data.Contains("OSLTT"))
             {
                 inputLagResults = new ProcessData.averagedInputLag();
                 List<ProcessData.rawInputLagResult> rawData = importRawInputLagData(data);
@@ -503,6 +503,11 @@ namespace OSLTT
         private ProcessData.averagedInputLag importProcessedData(string path)
         {
             ProcessData.averagedInputLag averagedInputLag = new ProcessData.averagedInputLag();
+            averagedInputLag.inputLagResults = new List<ProcessData.inputLagResult>();
+            averagedInputLag.ClickTime = new ProcessData.averageInputLagResult();
+            averagedInputLag.FrameTime = new ProcessData.averageInputLagResult();
+            averagedInputLag.onDisplayLatency = new ProcessData.averageInputLagResult();
+            averagedInputLag.totalInputLag = new ProcessData.averageInputLagResult();
             //Read the contents of the file into a stream
             try
             {
@@ -544,7 +549,7 @@ namespace OSLTT
                                         continue;
                                     }
                                 }
-                                if (line[0].Contains("AV"))
+                                if (line[0].Contains("AV"))  // broken for importing non-light results
                                 {
                                     averagedInputLag.ClickTime.AVG = intLine[1];
                                     averagedInputLag.FrameTime.AVG = intLine[2];
@@ -644,7 +649,7 @@ namespace OSLTT
                 }
                 string[] folders = resultsFolderPath.Split('\\');
                 string monitorInfo = folders.Last();
-                string filePath = resultsFolderPath + "\\" + monitorInfo + "-PROCESSED-OSLTT.csv";
+                string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-" + monitorInfo + "-PROCESSED-OSLTT.csv";
                 //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
 
                 string strSeparator = ",";

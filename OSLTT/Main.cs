@@ -797,7 +797,7 @@ namespace OSLTT
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-            CFuncs.HyperlinkOut("https://andymanic.github.io/OSRTTDocs/");
+            CFuncs.HyperlinkOut("https://OSRTT.github.io/OSLTTDocs/");
         }
 
         private void debugBtn_Click(object sender, EventArgs e)
