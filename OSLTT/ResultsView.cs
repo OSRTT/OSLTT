@@ -437,6 +437,15 @@ namespace OSLTT
         private List<ProcessData.rawInputLagResult> importRawInputLagData(string path)
         {
             List<ProcessData.rawInputLagResult> rawILData = new List<ProcessData.rawInputLagResult>();
+            ProcessData.resultType resultType = ProcessData.resultType.Light;
+            if (path.Contains("AUDIO"))
+            {
+                resultType = ProcessData.resultType.Audio;
+            }
+            else if (path.Contains("CLICK"))
+            {
+                resultType = ProcessData.resultType.Click;
+            }
             //Read the contents of the file into a stream
             try
             {
@@ -481,6 +490,7 @@ namespace OSLTT
                             samples.RemoveRange(0, 4);
                             ProcessData.rawInputLagResult rawResult = new ProcessData.rawInputLagResult
                             {
+                                ResultType = resultType,
                                 ClickTime = intLine[0],
                                 FrameTime = frameTime,
                                 TimeTaken = intLine[2],
@@ -508,6 +518,15 @@ namespace OSLTT
             averagedInputLag.FrameTime = new ProcessData.averageInputLagResult();
             averagedInputLag.onDisplayLatency = new ProcessData.averageInputLagResult();
             averagedInputLag.totalInputLag = new ProcessData.averageInputLagResult();
+            ProcessData.resultType resultType = ProcessData.resultType.Light;
+            if (path.Contains("AUDIO"))
+            {
+                resultType = ProcessData.resultType.Audio;
+            }
+            else if (path.Contains("CLICK"))
+            {
+                resultType = ProcessData.resultType.Click;
+            }
             //Read the contents of the file into a stream
             try
             {
@@ -591,6 +610,7 @@ namespace OSLTT
                                 //Array.Resize(ref intLine, intLine.Length - 1);
                                 ProcessData.inputLagResult rawResult = new ProcessData.inputLagResult
                                 {
+                                    Type = resultType,
                                     shotNumber = Convert.ToInt32(intLine[0]),
                                     clickTimeMs = intLine[1],
                                     frameTimeMs = intLine[2],
