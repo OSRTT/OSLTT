@@ -227,10 +227,10 @@ namespace OSLTT
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1524, 829);
             this.Controls.Add(this.resultsTable);
-            this.Controls.Add(this.graphedData);
             this.Controls.Add(this.barPlot);
             this.Controls.Add(this.importPanel);
             this.Controls.Add(this.controlsPanel);
+            this.Controls.Add(this.graphedData);
             this.Name = "ResultsView";
             this.Text = "Results View";
             this.importPanel.ResumeLayout(false);

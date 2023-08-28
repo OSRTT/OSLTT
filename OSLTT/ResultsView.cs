@@ -204,7 +204,7 @@ namespace OSLTT
                 else if (type == 3)
                 {
                     ys[i] = inputLagResults.inputLagResults[i].totalInputLag;
-                    averageLine = inputLagResults.totalInputLag.AVG;
+                    averageLine = Math.Round(inputLagResults.totalInputLag.AVG, 2);
                 }
             }
             graphedData.Plot.AddScatter(xs, ys, null, 3, 10);
@@ -235,18 +235,18 @@ namespace OSLTT
                 values[0] = new double[4];
                 values[1] = new double[4];
                 values[2] = new double[4];
-                values[0][0] = inputLagResults.ClickTime.AVG;
-                values[1][0] = inputLagResults.ClickTime.MIN;
-                values[2][0] = inputLagResults.ClickTime.MAX;
-                values[0][1] = inputLagResults.FrameTime.AVG;
-                values[1][1] = inputLagResults.FrameTime.MIN;
-                values[2][1] = inputLagResults.FrameTime.MAX;
-                values[0][2] = inputLagResults.onDisplayLatency.AVG;
-                values[1][2] = inputLagResults.onDisplayLatency.MIN;
-                values[2][2] = inputLagResults.onDisplayLatency.MAX;
-                values[0][3] = inputLagResults.totalInputLag.AVG;
-                values[1][3] = inputLagResults.totalInputLag.MIN;
-                values[2][3] = inputLagResults.totalInputLag.MAX;
+                values[0][0] = Math.Round(inputLagResults.ClickTime.AVG, 2);
+                values[1][0] = Math.Round(inputLagResults.ClickTime.MIN, 2);
+                values[2][0] = Math.Round(inputLagResults.ClickTime.MAX, 2);
+                values[0][1] = Math.Round(inputLagResults.FrameTime.AVG, 2);
+                values[1][1] = Math.Round(inputLagResults.FrameTime.MIN, 2);
+                values[2][1] = Math.Round(inputLagResults.FrameTime.MAX, 2);
+                values[0][2] = Math.Round(inputLagResults.onDisplayLatency.AVG, 2);
+                values[1][2] = Math.Round(inputLagResults.onDisplayLatency.MIN, 2);
+                values[2][2] = Math.Round(inputLagResults.onDisplayLatency.MAX, 2);
+                values[0][3] = Math.Round(inputLagResults.totalInputLag.AVG, 2);
+                values[1][3] = Math.Round(inputLagResults.totalInputLag.MIN, 2);
+                values[2][3] = Math.Round(inputLagResults.totalInputLag.MAX, 2);
             }
             else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Audio)
             {
@@ -254,15 +254,15 @@ namespace OSLTT
                 values[0] = new double[3];
                 values[1] = new double[3];
                 values[2] = new double[3];
-                values[0][0] = inputLagResults.ClickTime.AVG;
-                values[1][0] = inputLagResults.ClickTime.MIN;
-                values[2][0] = inputLagResults.ClickTime.MAX;
-                values[0][1] = inputLagResults.onDisplayLatency.AVG;
-                values[1][1] = inputLagResults.onDisplayLatency.MIN;
-                values[2][1] = inputLagResults.onDisplayLatency.MAX;
-                values[0][2] = inputLagResults.totalInputLag.AVG;
-                values[1][2] = inputLagResults.totalInputLag.MIN;
-                values[2][2] = inputLagResults.totalInputLag.MAX;
+                values[0][0] = Math.Round(inputLagResults.ClickTime.AVG, 2);
+                values[1][0] = Math.Round(inputLagResults.ClickTime.MIN, 2);
+                values[2][0] = Math.Round(inputLagResults.ClickTime.MAX, 2);
+                values[0][1] = Math.Round(inputLagResults.onDisplayLatency.AVG, 2);
+                values[1][1] = Math.Round(inputLagResults.onDisplayLatency.MIN, 2);
+                values[2][1] = Math.Round(inputLagResults.onDisplayLatency.MAX, 2);
+                values[0][2] = Math.Round(inputLagResults.totalInputLag.AVG, 2);
+                values[1][2] = Math.Round(inputLagResults.totalInputLag.MIN, 2);
+                values[2][2] = Math.Round(inputLagResults.totalInputLag.MAX, 2);
             }
             else
             {
@@ -270,9 +270,9 @@ namespace OSLTT
                 values[0] = new double[1];
                 values[1] = new double[1];
                 values[2] = new double[1];
-                values[0][0] = inputLagResults.totalInputLag.AVG;
-                values[1][0] = inputLagResults.totalInputLag.MIN;
-                values[2][0] = inputLagResults.totalInputLag.MAX;
+                values[0][0] = Math.Round(inputLagResults.totalInputLag.AVG, 2);
+                values[1][0] = Math.Round(inputLagResults.totalInputLag.MIN, 2);
+                values[2][0] = Math.Round(inputLagResults.totalInputLag.MAX, 2);
             }
 
             barPlot.Plot.Style(null, SystemColors.ControlDark);
@@ -281,10 +281,21 @@ namespace OSLTT
             barPlot.Plot.XAxis.Grid(false);
             barPlot.Plot.XAxis.TickLabelStyle(Color.Black, "Calibri", 24, true);
             barPlot.Plot.YAxis.TickLabelStyle(Color.Black, "Calibri", 20, false);
-            barPlot.Plot.SetAxisLimitsY(0, inputLagResults.totalInputLag.MAX + 1);
+            barPlot.Plot.SetAxisLimitsY(0, inputLagResults.totalInputLag.MAX * 1.1);
+
+            //barPlot.Plot.XAxis.Color(Color.White);
+            //barPlot.Plot.YAxis.Color(Color.White);
+
+            var bar = barPlot.Plot.GetPlottables();
+            foreach (ScottPlot.Plottable.BarPlot b in bar)
+            {
+                b.ShowValuesAboveBars = true;
+                b.Font.Bold = true;
+                b.Font.Size = 22;
+            }
+
             barPlot.Plot.Render();
             barPlot.Refresh();
-
             string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*.png");
             /*if (existingFiles.Length == 0 && Properties.Settings.Default.autoSavePNG != 0)
             {
