@@ -121,7 +121,19 @@ namespace OSLTT
             CleanupDevTools();
 
             textTextBox.KeyDown += textTextBox_KeyDown;
+
+            UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
+            if (announcementText != null)
+            {
+                Announcements announcements = new Announcements();
+                announcements.SetAnnouncement(announcementText);
+                announcements.Show();
+                announcements.Activate();
+                //ActiveControl = announcements;
+            }
         }
+
+
 
         private void CleanupDevTools()
         {
@@ -181,6 +193,8 @@ namespace OSLTT
             UserSettings.readAndSaveUserSettings(true);
             Environment.Exit(Environment.ExitCode);
         }
+
+        
 
 
         private void findAndConnectToBoard()
@@ -1175,7 +1189,7 @@ namespace OSLTT
 
             //portWrite("W");
             //textTextBox.Text = "test";
-            testbool = !testbool;
+            /*testbool = !testbool;
             toggleMouseKeyboardBoxes(testbool);
             if (testbool)
             {
@@ -1184,7 +1198,12 @@ namespace OSLTT
             else
             {
                 portWrite("X");
-            }
+            }*/
+
+            Announcements n = new Announcements();
+            n.Show();
+
+            
 
         }
 
