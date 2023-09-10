@@ -28,7 +28,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "0.86";
+        private string softwareVersion = "0.87";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 

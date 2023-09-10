@@ -237,7 +237,7 @@ namespace OSLTT
             {
                 ChangeSettings(1, 1, 1, true, 100, 0.5, false);
             }
-            EnableDisable(true, true, true, true, true, true);
+            EnableDisable(true, true, true, true, true, false);
         }
 
         public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest)
