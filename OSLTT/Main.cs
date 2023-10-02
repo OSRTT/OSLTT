@@ -133,8 +133,9 @@ namespace OSLTT
             }
         }
 
-
-
+        /// <summary>
+        /// Hide dev test button if debugger is attached
+        /// </summary>
         private void CleanupDevTools()
         {
             if (System.Diagnostics.Debugger.IsAttached)
@@ -149,6 +150,9 @@ namespace OSLTT
             }
         }
 
+        /// <summary>
+        /// Checks if there's another instance of the program running
+        /// </summary>
         private void appRunning()
         {
             Process[] p = Process.GetProcessesByName("OSLTT");
@@ -160,6 +164,11 @@ namespace OSLTT
             }
         }
 
+        /// <summary>
+        /// Init hotkeys - specifically F10 for now.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
             hotKeys.KeyPressed += HotKeyPressed;
@@ -167,6 +176,11 @@ namespace OSLTT
             hotKeyList.Add(k);
         }
 
+        /// <summary>
+        /// Handle when the form closes to cancel any running tests and save settings to file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // When form is closed halt read thread & close Serial Port
@@ -193,9 +207,6 @@ namespace OSLTT
             UserSettings.readAndSaveUserSettings(true);
             Environment.Exit(Environment.ExitCode);
         }
-
-        
-
 
         /// <summary>
         /// Function to use the arduino cli to find the board and initiate connect over serial. Also handles the update connection.
@@ -595,6 +606,7 @@ namespace OSLTT
                     {
                         Thread inputLagThread = new Thread(new ThreadStart(processInputLagData)); // change to processPretest?
                         inputLagThread.Start();
+                        
                     }
                     else if (message.Contains("SINGLE FIRE")) // depricated? 
                     {
@@ -606,7 +618,7 @@ namespace OSLTT
                         debug.AddToLog(message);
                     }
                 }
-                catch (TimeoutException ex)
+                catch (TimeoutException ex) // purposefully catch and ignore serial timeouts
                 {
                     //Console.WriteLine(ex);
                     //debug.AddToLog(ex.Message + ex.StackTrace);
@@ -642,6 +654,10 @@ namespace OSLTT
             }
         }
 
+        /// <summary>
+        /// Safely write to the serial port
+        /// </summary>
+        /// <param name="input"></param>
         public void portWrite(string input)
         {
             if (port != null)
@@ -917,7 +933,6 @@ namespace OSLTT
             {
                 //inputLagProcessed
                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-RAWRESULTS-OSLTT.csv";
-                string strSeparator = ",";
                 StringBuilder csvString = new StringBuilder();
                 csvString.AppendLine("Result Type,Shot Number,Click Time (ms),Frame Time (ms),On Display Latency (ms),Total Input Latency (ms)");
                 foreach (var res in inputLagProcessed)
@@ -1015,17 +1030,6 @@ namespace OSLTT
                 //while (!settingsSynced) { Thread.Sleep(100); }
                 Thread.Sleep(100);
 
-                if (testSettings.PreTest && systemLagData.inputLagResults.Count == 0)
-                {
-                    portWrite("P");
-                    // message box to explain what to do?
-                    DirectX.System.DSystem.inputLagMode = true;
-                    if (DirectX.System.DSystem.mainWindow == null)
-                        DirectX.System.DSystem.mainWindow = this;
-
-                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
-                }
-
                 portWrite("T");
                 RunSettings = SettingsClasses.initRunSettings();
                 inputLagEvents.Clear();
@@ -1037,7 +1041,6 @@ namespace OSLTT
                     DirectX.System.DSystem.mainWindow = this;
 
                 DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
-                
 
                 SetDeviceStatus(1);
             }
@@ -1093,7 +1096,6 @@ namespace OSLTT
                 string filePath = resultsFolderPath + "\\" + monitorInfo + "-PROCESSED-OSLTT.csv";
                 //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
 
-                string strSeparator = ",";
                 StringBuilder csvString = new StringBuilder();
                 csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
 

@@ -561,7 +561,6 @@ namespace OSLTT
                         {
                             string[] line = fullLine.Split(',');
                             double[] intLine = new double[line.Length];
-                            string azpattern = "[a-z]+";
                             if (line[0].Contains("A") || line[0].Contains("M"))
                             {
                                 for (int i = 1; i < line.Length; i++)
@@ -683,7 +682,6 @@ namespace OSLTT
                 string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-" + monitorInfo + "-PROCESSED-OSLTT.csv";
                 //string filePath = resultsFolderPath + "\\" + fileNumber.ToString("000") + "-INPUT-LAG-OSRTT.csv";
 
-                string strSeparator = ",";
                 StringBuilder csvString = new StringBuilder();
                 csvString.AppendLine("Shot Number,Click Time (ms),Processing Latency (ms),Display Latency(ms),Total System Input Lag (ms)");
 
