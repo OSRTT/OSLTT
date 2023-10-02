@@ -509,6 +509,10 @@ namespace OSLTT
                             catch
                             { }
                         }
+                        else if (testSettings.TestSource == 3 && systemLagData.onDisplayLatency != null)
+                        {
+                            frameTime = (float)systemLagData.onDisplayLatency.AVG;
+                        }
                         
                         rawInputLagResult rawLag = new rawInputLagResult
                         {
@@ -604,7 +608,7 @@ namespace OSLTT
                     }
                     else if (message.Contains("PRETEST FINISHED")) // auto click test complete, write to folder & process
                     {
-                        Thread inputLagThread = new Thread(new ThreadStart(processInputLagData)); // change to processPretest?
+                        Thread inputLagThread = new Thread(new ThreadStart(processPretestData)); // change to processPretest?
                         inputLagThread.Start();
                         
                     }
@@ -1051,7 +1055,15 @@ namespace OSLTT
             }
         }
 
-
+        private void processPretestData()
+        {
+            averagedInputLag averagedLatency = new averagedInputLag();
+            if (inputLagRawData.Count != 0)
+            {
+                averagedLatency = AverageInputLagResults(rawSystemLagData);
+            }
+            // save pretest data to file?
+        }
         private void processInputLagData()
         {
             //inputLagProcessed.Clear();
