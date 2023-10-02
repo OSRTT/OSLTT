@@ -197,6 +197,9 @@ namespace OSLTT
         
 
 
+        /// <summary>
+        /// Function to use the arduino cli to find the board and initiate connect over serial. Also handles the update connection.
+        /// </summary>
         private void findAndConnectToBoard()
         {
             Thread.Sleep(1000);
@@ -309,6 +312,10 @@ namespace OSLTT
             }
         }
 
+        /// <summary>
+        /// Takes in the COM port name from findAndConnectToBoard and initiates the serial connection
+        /// </summary>
+        /// <param name="comPort"></param>
         private void connectToBoard(string comPort)
         {
             System.ComponentModel.IContainer components =
@@ -346,6 +353,9 @@ namespace OSLTT
         }
 
 
+        /// <summary>
+        /// This function endlessly reads the serial bus waiting for output from the device.
+        /// </summary>
         public void Read()
         {
             while (port.IsOpen)
