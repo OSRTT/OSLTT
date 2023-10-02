@@ -791,7 +791,7 @@ namespace OSLTT
             //Console.WriteLine(fpsList.Average().ToString());
         }
 
-        private DialogResult DialogBox(string title, string message, string okButton, bool showCancel, string cancelText = "Cancel")
+        private DialogResult DialogBox(string message, string title, string okButton, bool showCancel, string cancelText = "Cancel")
         {
             try
             {
