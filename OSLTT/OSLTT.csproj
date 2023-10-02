@@ -279,6 +279,7 @@
     <Content Include="icon.png" />
     <Content Include="OSLTTTone.wav" />
     <Content Include="Properties\icon.ico" />
+    <None Include="Resources\gear-solid.png" />
     <None Include="Resources\wrench-solid.png" />
     <None Include="Resources\circle-question-solid.png" />
     <None Include="Resources\bug-solid.png" />

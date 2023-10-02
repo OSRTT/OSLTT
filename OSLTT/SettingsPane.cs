@@ -17,10 +17,10 @@ namespace OSLTT
         public SettingsPane()
         {
             InitializeComponent();
-            isolateLabel.Visible = false;
+            /*isolateLabel.Visible = false;
             preTestToggle.Checked = false;
             preTestToggle.Enabled = false;
-            preTestToggle.Visible = false;
+            preTestToggle.Visible = false;*/
             listMonitors();
             if (Properties.Settings.Default.customTestSettings != null)
             {
@@ -586,7 +586,12 @@ namespace OSLTT
             MaterialComboBox s = sender as MaterialComboBox;
             if (s.Focused)
             {
-                selectedDisplay = displayList[s.SelectedIndex];
+                if (selectedDisplay != displayList[s.SelectedIndex])
+                {
+                    selectedDisplay = displayList[s.SelectedIndex];
+                    mainWindow.systemLagData = new ProcessData.averagedInputLag();
+                }
+
             }
         }
 

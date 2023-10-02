@@ -55,7 +55,7 @@ namespace OSLTT
         private List<rawInputLagResult> inputLagRawData = new List<rawInputLagResult>();
         private List<inputLagResult> inputLagProcessed = new List<inputLagResult>();
         private List<rawInputLagResult> rawSystemLagData = new List<rawInputLagResult>();
-        private averagedInputLag systemLagData = new averagedInputLag();
+        public averagedInputLag systemLagData = new averagedInputLag();
 
         public SettingsClasses.RunSettings RunSettings;
         private bool processingFailed = false;
@@ -936,13 +936,29 @@ namespace OSLTT
         {
             if (testSettings.PreTest && systemLagData.inputLagResults.Count == 0)
             {
-                portWrite("P");
                 // message box to explain what to do?
-                DirectX.System.DSystem.inputLagMode = true;
-                if (DirectX.System.DSystem.mainWindow == null)
-                    DirectX.System.DSystem.mainWindow = this;
+                DialogResult d = DialogBox("READ CAREFULLY \n - Close any games you have running before completing the pretest. \n" +
+                    "- Once the selected display goes black, wait for the FPS counter in the top left to stabilise at ~1000 FPS. \n" +
+                    "- Click the button on the device to start the pretest. \n" +
+                    "- Wait for the test to complete. The window will close, then open the game you want to test. \n" +
+                    "- Hit the button on the device to trigger the in-game test as normal. \n" +
+                    "- Click \"End Test\" or hit F10 to end the test and view the results.\n" +
+                    "PRETEST Results are only valid once per program open and assume you are using the same display to pretest as you are to game on.",
+                    "PRETEST Instructions", "Continue", true, "Cancel Pretest");
+                if (d == DialogResult.OK)
+                { 
+                    portWrite("P");
+                    DirectX.System.DSystem.inputLagMode = true;
+                    if (DirectX.System.DSystem.mainWindow == null)
+                        DirectX.System.DSystem.mainWindow = this;
 
-                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
+                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
+                }
+                else
+                {
+                    //cancel pretest, continue.
+                }
+
             }
         }
 
