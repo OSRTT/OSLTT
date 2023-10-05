@@ -2,7 +2,7 @@
 #include <Mouse.h>
 #include <Keyboard.h>
 
-#define INPUT_SIZE 8
+#define INPUT_SIZE 9
 
 #define ArraySize 12000
 

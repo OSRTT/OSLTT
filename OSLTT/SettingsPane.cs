@@ -78,7 +78,7 @@ namespace OSLTT
                 int autoClick = 0;
                 if (testSettings.AutoClick)
                 {
-                    autoClick = testSettings.MouseAction + 1;
+                    autoClick = 1;
                 }
                 string settings = "I";
                 settings += testSettings.SensorType.ToString();
@@ -90,6 +90,7 @@ namespace OSLTT
                 double t = testSettings.TimeBetween;
                 if (t == 0.5) { settings += "1"; }
                 else { t += 1; settings += t.ToString(); }
+                settings += testSettings.MouseAction.ToString();
                 Console.WriteLine(settings);
                 mainWindow.portWrite(settings);
 

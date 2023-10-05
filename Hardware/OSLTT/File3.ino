@@ -102,7 +102,6 @@ void loop() {
     } else {
       autoClick = false;
     }
-    MouseAction = convertHexToDec(input[3] - 1);
 
     // DirectX - bit 4
     sourceType = convertHexToDec(input[4]) - 1;
@@ -113,12 +112,15 @@ void loop() {
     shotCount = (msb * 100) + (lsb * 10);
 
     // Time between - bit 7
-    int tbw = convertHexToDec(input[0]);
+    int tbw = convertHexToDec(input[7]);
     if (tbw == 1) {
       timeBetween = 0.5;
     } else {
       timeBetween = tbw - 1;
     }
+
+    // Mouse Action - bit 8
+    MouseAction = convertHexToDec(input[8] - 1);
 
     // Confirm settings synced
     for (int i = 0; i < INPUT_SIZE; i++) {

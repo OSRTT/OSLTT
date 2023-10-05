@@ -153,7 +153,18 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   }
   else if (inputType == 0 && sourceType == 2)
   {
-    Mouse.click(MOUSE_LEFT);
+    if (MouseAction == 0)
+    {
+      Mouse.click(MOUSE_LEFT);
+    }
+    else if (MouseAction == 1)
+    {
+      Mouse.move(-127, 0);
+    }
+    else
+    {
+      Mouse.move(127, 0);
+    }
   }
   unsigned long start_time = micros();
   int t = start_time - clickTime;
