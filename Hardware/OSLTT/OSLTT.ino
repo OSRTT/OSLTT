@@ -28,6 +28,8 @@ double timeBetween = 0.5;
 
 bool autoClick = true;
 
+int MouseAction = 0; // 0 = left click, 1 = move left, 2 = move right
+
 bool directXMode = true;
 
 char input[INPUT_SIZE + 1];

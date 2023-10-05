@@ -32,7 +32,8 @@ namespace OSLTT
                     testSettings.AutoClick,
                     testSettings.ClickCount,
                     testSettings.TimeBetween,
-                    testSettings.PreTest
+                    testSettings.PreTest,
+                    testSettings.MouseAction
                     );
             }
         }
@@ -77,7 +78,7 @@ namespace OSLTT
                 int autoClick = 0;
                 if (testSettings.AutoClick)
                 {
-                    autoClick = 1;
+                    autoClick = testSettings.MouseAction + 1;
                 }
                 string settings = "I";
                 settings += testSettings.SensorType.ToString();
@@ -178,7 +179,7 @@ namespace OSLTT
             // pretest disabled
             // display enabled
             // directx (disabled)
-            ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+            ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0);
             EnableDisable(false, false, false, true, true, false);
         }
 
@@ -188,7 +189,7 @@ namespace OSLTT
             // mouse/keyboard sensor
             // clicks/keypress source
             // audio jack trigger
-            ChangeSettings(2, 3, 2, false, 100, 0.5, false);
+            ChangeSettings(2, 3, 2, false, 100, 0.5, false, 0);
             EnableDisable(false, false, false, false, false, false);
         }
 
@@ -201,7 +202,7 @@ namespace OSLTT
             // pretest on (enabled)
             // display disabled
             // game/external (disabled)
-            ChangeSettings(1, 1, 3, true, 100, 0.5, true);
+            ChangeSettings(1, 1, 3, true, 100, 0.5, true, 0);
             EnableDisable(false, false, false, true, false, false);
         }
 
@@ -213,7 +214,7 @@ namespace OSLTT
             // pretest disabled (for now)
             // display disabled
             // audio clip source
-            ChangeSettings(1, 2, 4, true, 30, 1, false);
+            ChangeSettings(1, 2, 4, true, 30, 1, false, 0);
             EnableDisable(false, false, false, true, false, false);
         }
 
@@ -230,17 +231,18 @@ namespace OSLTT
                     testSettings.AutoClick,
                     testSettings.ClickCount,
                     testSettings.TimeBetween,
-                    testSettings.PreTest
+                    testSettings.PreTest,
+                    testSettings.MouseAction
                     );
             }
             else
             {
-                ChangeSettings(1, 1, 1, true, 100, 0.5, false);
+                ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0);
             }
             EnableDisable(true, true, true, true, true, false);
         }
 
-        public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest)
+        public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest, int mouseAction)
         {
             MaterialRadioButton triggerType;
             MaterialRadioButton sensorType;
@@ -300,6 +302,7 @@ namespace OSLTT
                 sourceType.Invoke((MethodInvoker)(() => sourceType.Checked = true));
                 autoClickToggle.Invoke((MethodInvoker)(() => autoClickToggle.Checked = autoClick));
                 preTestToggle.Invoke((MethodInvoker)(() => preTestToggle.Checked = pretest));
+                mouseActionSelect.Invoke((MethodInvoker)(() => mouseActionSelect.SelectedIndex = mouseAction));
             }
             else
             {
@@ -308,6 +311,7 @@ namespace OSLTT
                 sourceType.Checked = true;
                 autoClickToggle.Checked = autoClick;
                 preTestToggle.Checked = pretest;
+                mouseActionSelect.SelectedIndex = mouseAction;
             }
             testSettings.AutoClick = autoClick;
             testSettings.ClickCount = clicks;
@@ -316,6 +320,7 @@ namespace OSLTT
             testSettings.TestSource = source;
             testSettings.TimeBetween = time;
             testSettings.TriggerType = trigger;
+            testSettings.MouseAction = mouseAction;
             this.Invalidate();
         }
 
@@ -722,6 +727,16 @@ namespace OSLTT
                         lightSensorRadio.Checked = true;
                     }
                 }
+                SaveSettings();
+            }
+        }
+
+        private void mouseActionSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                testSettings.MouseAction = s.SelectedIndex;
                 SaveSettings();
             }
         }

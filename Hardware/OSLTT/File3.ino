@@ -102,6 +102,7 @@ void loop() {
     } else {
       autoClick = false;
     }
+    MouseAction = convertHexToDec(input[3] - 1);
 
     // DirectX - bit 4
     sourceType = convertHexToDec(input[4]) - 1;

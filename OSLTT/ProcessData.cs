@@ -121,25 +121,51 @@ namespace OSLTT
                     }
 
 
-
-                    // Search for where the result starts transitioning - start is almost always less sensitive
-                    for (int j = 0; j < samples.Length; j++)
+                    if (startMax < endMax)
                     {
-                        if (samples[j] > (startMax))
+                        // Search for where the result starts transitioning - start is almost always less sensitive
+                        for (int j = 0; j < samples.Length; j++)
                         {
-                            if ((samples[j + 50] > (samples[j] + 50) || samples[j + 56] > (samples[j] + 50))
-                                 && (samples[j + 100] > (samples[j] + 100) || samples[j + 106] > (samples[j] + 100))
-                                 && (samples[j + 125] > (samples[j] + 100) || samples[j + 131] > (samples[j] + 100))
-                                 && (samples[j + 150] > (samples[j] + 100) || samples[j + 156] > (samples[j] + 100))) // check the trigger point is actually the trigger and not noise
+                            if (samples[j] > (startMax))
                             {
-                                transStart = j;
-                                break;
-                            }
-                            else
-                            {
-                                if (samples[j] > startMax)
+                                if ((samples[j + 50] > (samples[j] + 50) || samples[j + 56] > (samples[j] + 50))
+                                     && (samples[j + 100] > (samples[j] + 100) || samples[j + 106] > (samples[j] + 100))
+                                     && (samples[j + 125] > (samples[j] + 100) || samples[j + 131] > (samples[j] + 100))
+                                     && (samples[j + 150] > (samples[j] + 100) || samples[j + 156] > (samples[j] + 100))) // check the trigger point is actually the trigger and not noise
                                 {
-                                    startMax = samples[j];
+                                    transStart = j;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (samples[j] > startMax)
+                                    {
+                                        startMax = samples[j];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < samples.Length; j++)
+                        {
+                            if (samples[j] < (startMin))
+                            {
+                                if ((samples[j + 50] < (samples[j] - 50) || samples[j + 56] < (samples[j] - 50))
+                                        && (samples[j + 100] < (samples[j] - 100) || samples[j + 106] < (samples[j] - 100))
+                                        && (samples[j + 125] < (samples[j] - 100) || samples[j + 131] < (samples[j] - 100))
+                                        && (samples[j + 150] < (samples[j] - 100) || samples[j + 156] < (samples[j] - 100))) // check the trigger point is actually the trigger and not noise
+                                {
+                                    transStart = j;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (samples[j] < startMin)
+                                    {
+                                        startMin = samples[j];
+                                    }
                                 }
                             }
                         }

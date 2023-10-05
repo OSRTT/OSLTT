@@ -236,6 +236,9 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
 void runClickTest() {
   toggleLED(false);
   Serial.setTimeout(1);
+
+// sync clocks
+
   int baseline = getADCValue(500, 1);
   int baselineAdjusted = 16380 - baseline;
     baselineAdjusted *= 0.8;
@@ -274,6 +277,7 @@ void runClickTest() {
       Serial.println(time / 1000);
       toggleLED(true);
       delay(200);
+      // sync clocks again
       toggleLED(false);
       delay(100);
     }
