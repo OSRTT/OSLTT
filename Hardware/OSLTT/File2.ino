@@ -63,6 +63,14 @@ void getSerialChars() {
   input[size] = 0;
 }
 
+void getClickChar() {
+  for (int i = 0; i < INPUT_SIZE + 1; i++) {
+    input[i] = ' ';
+  }
+  byte size = Serial.readBytesUntil('\n', input, 1);
+  input[size] = 0;
+}
+
 void establishContact() {
   while (Serial.available() <= 0) {
     Serial.println('OSLTT');  // send a capital A
@@ -246,7 +254,7 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
 
 void runClickTest() {
   toggleLED(false);
-  Serial.setTimeout(1);
+  Serial.setTimeout(100);
 
 // sync clocks
 
@@ -279,7 +287,44 @@ void runClickTest() {
       Serial.println(current); // remove after debugging
       long start = micros();
       while (input[0] != 'H' && input[0] != 'X') {
-        getSerialChars();
+        getClickChar();
+        //getSerialChars();
+      }
+      long end = micros();
+      long time = end - start;
+
+      Serial.print("CLICK:");
+      Serial.println(time);
+      toggleLED(true);
+      delay(200);
+      // sync clocks again
+      toggleLED(false);
+      delay(100);
+    }
+  }
+  
+  Serial.setTimeout(100);
+  Serial.println("Clicks Finished");
+  toggleLED(true);
+}
+
+void runClickTest2Pin()
+{
+  while (input[0] != 'X') {
+    if (digitalRead(ButtonPin)) {
+      input[0] = 'X';
+      toggleLED(false);
+    }
+    
+    //Serial.println(current); //debugging use only
+    
+    if (!digitalRead(PullDownPin)) {
+      // keyboard/mouse mode. Listen for click, wait for PC to report click.
+      input[0] = '0';
+      
+      long start = micros();
+      while (input[0] != 'H' && input[0] != 'X') {
+        getClickChar();
       }
       long end = micros();
       long time = end - start;
@@ -293,15 +338,6 @@ void runClickTest() {
       delay(100);
     }
   }
-  for (int i = 0; i < ArraySize; i++)
-  {
-    Serial.print(adcBuff[i]);
-    Serial.print(",");
-  }
-  Serial.println();
-  Serial.setTimeout(100);
-  Serial.println("Clicks Finished");
-  toggleLED(true);
 }
 
 void runAudioTest() {

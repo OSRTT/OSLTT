@@ -61,8 +61,15 @@ void loop() {
             }
           }
         }
-      } else if (inputType == 1) {
-        runClickTest();
+      } else if (sourceType == 1) {
+        if (inputType == 1)
+        {
+          runClickTest();
+        }
+        else if (inputType == 2)
+        {
+          runClickTest2Pin();
+        }
         break;
       } else if (inputType == 2) {
         while (input[0] != 'X') {
@@ -162,31 +169,35 @@ void loop() {
     Serial.println();
     Serial.println("0");
   } else if (input[0] == 'Y') {
-    Serial.setTimeout(1);
-    int counter = 0;
-    while (input[0] != 'X') {
+    Serial.setTimeout(100);
+    int counter = 1000;
+    while (input[0] != 'X'){
       if (digitalRead(ButtonPin)) {
-        Serial.println("clicking...");
-        long click = micros();
-        Mouse.click(MOUSE_LEFT);
-        //Keyboard.write('A');
-        long start = micros();
-        while (input[0] != 'H' && input[0] != 'X') {
-          getSerialChars();
+        for (int i = 0; i < counter; i++){
+          long click = micros();
+          Mouse.click(MOUSE_LEFT);
+          //Keyboard.write('A');
+          long start = micros();
+          while (input[0] != 'H' && input[0] != 'X') {
+            getClickChar();
+            //getSerialChars();
+          }
+          long end = micros();
+          long time = end - start;
+          adcBuff[i] = time;
+          
+          //Serial.println(time);
+          delay(1000);
         }
-        long end = micros();
-        long t = end - start;
-        Serial.println(t / 1000);
-        adcBuff[counter] = t;
-        counter++;
-      }
       getSerialChars();
-      delay(1000);
+      }
     }
     long avg = 0;
     for (int i = 0; i < counter; i++) {
       avg += adcBuff[i];
+      Serial.println(adcBuff[i]);
     }
+    Serial.println();
     avg /= counter;
     Serial.print("average time: ");
     Serial.println(avg);

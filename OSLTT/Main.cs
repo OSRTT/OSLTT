@@ -540,7 +540,7 @@ namespace OSLTT
                         // click result
                         string[] splitMessage = message.Split(':');
                         double result = double.Parse(splitMessage[1]);
-                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result });
+                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000});
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
@@ -1234,7 +1234,7 @@ namespace OSLTT
 
             //portWrite("W");
             //textTextBox.Text = "test";
-            /*testbool = !testbool;
+            testbool = !testbool;
             toggleMouseKeyboardBoxes(testbool);
             if (testbool)
             {
@@ -1243,20 +1243,9 @@ namespace OSLTT
             else
             {
                 portWrite("X");
-            }*/
+            }
 
-            testLoopCounter = 0;
-            testList.Clear();
-            sw.Start();
-            Thread.Sleep(1);
-            double ticks = sw.ElapsedTicks;
             
-            double microseconds = Math.Round((ticks / Stopwatch.Frequency) * 1000000, 0);
-
-            Console.WriteLine(microseconds);
-            portWrite(microseconds.ToString());
-            testList.Add(new List<long> { Convert.ToInt64(microseconds) });
-            Console.WriteLine();
 
         }
 
