@@ -621,76 +621,7 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
-                    else if (message.Contains("TIMESYNC"))
-                    {
-                        // 0 = start time, 1 = board time, 2 = received time
-                        /*testList.Last().Add(long.Parse(message.Remove(0,10)));
-                        //Console.WriteLine(message); // dev test
-
-                        double ticks = sw.ElapsedTicks;
-                        double microseconds = Math.Round((ticks / Stopwatch.Frequency) * 1000000, 0);
-                        testList.Last().Add(Convert.ToInt64(microseconds));
-
-                        //Console.WriteLine(microseconds);
-
-                        if (testLoopCounter < 10)
-                        {
-                            testLoopCounter++;
-                            double ticks2 = sw.ElapsedTicks;
-
-                            double microseconds2 = Math.Round((ticks2 / Stopwatch.Frequency) * 1000000, 0);
-
-                            Console.WriteLine(microseconds);
-                            portWrite(microseconds2.ToString());
-                            testList.Add(new List<long> { Convert.ToInt64(microseconds2) });
-                        }
-                        else
-                        {
-                            List<long> temp = new List<long>();
-                            List<long> temp2 = new List<long>();
-                            testList.RemoveAt(0);
-                            
-                            for (int i = 2; i < testLoopCounter; i++)
-                            {
-                                temp.Add(testList[i][1] - testList[i][0] - 10000000);
-                                temp2.Add(testList[i][2] - testList[i][1]);
-                            }
-                            Console.WriteLine("Average deviation after 100ms: " + temp.Average());
-                            Console.WriteLine("Average deviation between sending and receiving " + temp2.Average());
-                            Console.WriteLine();
-                        }
-                        /*Thread.Sleep(100);
-                        double ticks2 = sw.ElapsedTicks;
-
-                        double microseconds2 = Math.Round((ticks2 / Stopwatch.Frequency) * 1000000, 0);
-                        portWrite((double.Parse(message.Remove(0,10)) - microseconds2 ).ToString());
-                        sw.Restart();*/
-                        // 0 = arduino time, 1 = system time
-                        testList.Add(new List<long> { long.Parse(message.Remove(0, 10)) });
-                        //Console.WriteLine(message); // dev test
-
-                        double ticks = sw.ElapsedTicks;
-                        double microseconds = Math.Round((ticks / Stopwatch.Frequency) * 1000000, 0);
-                        testList.Last().Add(Convert.ToInt64(microseconds));
-                    }
-                    else if (message.Contains("TF"))
-                    {
-                        List<long> temp = new List<long>();
-                        
-                        
-                        var init = testList[0][1];
-                        var ardInit = testList[0][0];
-                        for (int i = 0; i < testList.Count(); i++)
-                        {
-                            temp.Add((testList[i][1] - init) - (testList[i][0] - ardInit));
-                        }
-                        Console.WriteLine("Average deviation after 1000ms: " + temp.Average());
-                        Console.WriteLine();
-                        foreach (var i in temp)
-                        {
-                            Console.WriteLine(i);
-                        }
-                    }
+                    
                     else
                     {
                         debug.AddToLog(message);
