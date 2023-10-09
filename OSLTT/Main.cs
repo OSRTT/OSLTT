@@ -621,7 +621,10 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
-                    
+                    else if (message.Contains("CLICKTEST"))
+                    {
+                        clickTestBox_Click(null, null);
+                    }
                     else
                     {
                         debug.AddToLog(message);
@@ -1200,7 +1203,7 @@ namespace OSLTT
             // text changed handler added 487us.
             //3-4ms direct (osltt test mode)
             portWrite("H");
-            Console.WriteLine("H sent");
+            Console.WriteLine("H sent");  // this is firing twice??
         }
 
         private void materialLabel11_Click(object sender, System.Windows.Forms.MouseEventArgs e)

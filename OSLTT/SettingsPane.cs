@@ -425,15 +425,15 @@ namespace OSLTT
                 {
                     testSettings.TriggerType = 3;
                     // probs more to add here
-                    if (testSettings.SensorType != 1)
+                    if (testSettings.SensorType != 1 )
                     {
-                        audioSensorRadio.Checked = true;
+                        //audioSensorRadio.Checked = true;
                     }
-                    if (testSettings.TestSource == 2 || testSettings.TestSource == 4)
+                    if (testSettings.TestSource == 4)
                     {
-                        gameExternalRadio.Checked = true;
+                        externalRadio.Checked = true;
                     }
-                    if (testSettings.SensorType != 1)
+                    if (testSettings.SensorType != 1 && testSettings.SensorType != 3)
                     {
                         lightSensorRadio.Checked = true;
                     }
@@ -455,6 +455,18 @@ namespace OSLTT
                 {
                     testSettings.SensorType = 1;
                     if (audioSourceRadio.Checked)
+                    {
+                        DirectXRadio.Checked = true;
+                    }
+                    if (testSettings.TestSource == 2 && testSettings.TriggerType == 3)
+                    {
+                        externalRadio.Checked = true;
+                    }
+                    if (testSettings.TriggerType == 2)
+                    {
+                        buttonTriggerRadio.Checked = true;
+                    }
+                    if (testSettings.TestSource != 1 && testSettings.TestSource != 3 && testSettings.TestSource != 5)
                     {
                         DirectXRadio.Checked = true;
                     }
@@ -504,7 +516,7 @@ namespace OSLTT
                     {
                         preTestToggle.Checked = false;
                     }
-                    if (testSettings.TriggerType != 2)
+                    if (testSettings.TriggerType != 2 && testSettings.TriggerType != 3)
                     {
                         audioTriggerRadio.Checked = true;
                     }

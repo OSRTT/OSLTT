@@ -170,13 +170,16 @@ void loop() {
     Serial.println("0");
   } else if (input[0] == 'Y') {
     Serial.setTimeout(100);
-    int counter = 1000;
+    int counter = 100;
+    getSerialChars();
     while (input[0] != 'X'){
+      getSerialChars();
       if (digitalRead(ButtonPin)) {
         for (int i = 0; i < counter; i++){
           long click = micros();
-          Mouse.click(MOUSE_LEFT);
+          //Mouse.click(MOUSE_LEFT);
           //Keyboard.write('A');
+          Serial.println("CLICKTEST");
           long start = micros();
           while (input[0] != 'H' && input[0] != 'X') {
             getClickChar();
@@ -186,16 +189,18 @@ void loop() {
           long time = end - start;
           adcBuff[i] = time;
           
-          //Serial.println(time);
-          delay(1000);
+          Serial.println(i);
+          getSerialChars();
+          delay(500 + random(300));
         }
-      getSerialChars();
+        input[0]='X';
       }
     }
     long avg = 0;
     for (int i = 0; i < counter; i++) {
       avg += adcBuff[i];
-      Serial.println(adcBuff[i]);
+      Serial.print(adcBuff[i]);
+      Serial.print(",");
     }
     Serial.println();
     avg /= counter;

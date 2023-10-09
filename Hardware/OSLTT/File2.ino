@@ -65,7 +65,7 @@ void getSerialChars() {
 
 void getClickChar() {
   for (int i = 0; i < INPUT_SIZE + 1; i++) {
-    input[i] = ' ';
+    input[i] = '0';
   }
   byte size = Serial.readBytesUntil('\n', input, 1);
   input[size] = 0;
