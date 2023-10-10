@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace OSLTT
 {
 
-    class MouseControls
+    static class MouseControls
     {
         [DllImport("User32.dll")]
         static extern Boolean SystemParametersInfo(UInt32 uiAction,UInt32 uiParam,IntPtr pvParam,UInt32 fWinIni);
@@ -26,7 +26,7 @@ namespace OSLTT
 
         public static void GetDefaults()
         {
-            intCurrentSpeed = GetMouseSpeed();
+            originalSpeed = GetMouseSpeed();
         }
         public static void ResetToOriginal()
         {

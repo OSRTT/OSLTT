@@ -210,6 +210,14 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     // }
   }
   Serial.println();
+  if (MouseAction == 1 || MouseAction == 3) // move mouse back
+  {
+    Mouse.move(127, 0);
+  }
+  else if (MouseAction == 2 || MouseAction == 4)
+  {
+    Mouse.move(-127, 0);
+  }
   // Serial.print("RESULT:");
   // double result = (timeTaken / sampleCount) * triggerSampleNum;
   // Serial.println(result / 1000);

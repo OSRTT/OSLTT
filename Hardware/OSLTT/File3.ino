@@ -55,7 +55,15 @@ void loop() {
               runAudioTest();
             }
           } else {
+            if (MouseAction < 3)
+            {
+              Serial.println("MOUSE START");
+            }
             autoRunTest(autoClick, 9000, shotCount);
+            if (MouseAction < 3)
+            {
+              Serial.println("MOUSE END");
+            }
             if (autoClick) {
               break;
             }
@@ -64,7 +72,7 @@ void loop() {
       } else if (sourceType == 1) {
         if (inputType == 1)
         {
-          runClickTest();
+          runClickTest(); 
         }
         else if (inputType == 2)
         {

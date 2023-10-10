@@ -113,7 +113,6 @@ namespace OSLTT
 
             settingsPane1.mainWindow = this;
             SetDeviceStatus(0);
-            ControlDeviceButtons(false);
             toggleMouseKeyboardBoxes(false);
             UpdateFirmware.initialSetup();
             downloadedFirmwareVersion = UpdateFirmware.getNewFirmwareFile(path);
@@ -123,8 +122,8 @@ namespace OSLTT
             
             CleanupDevTools();
 
-            textTextBox.KeyDown += textTextBox_KeyDown;
-            //clickTestBox.MouseDown += new System.Windows.Forms.MouseEventHandler(clickTestBox_Click);
+            textTextBox.KeyDown += textTextBox_KeyDown; // soon-to-be depricated with keyboardhook 
+            //clickTestBox.MouseDown += new System.Windows.Forms.MouseEventHandler(clickTestBox_Click); // depricated, unstable method of capture
             //materialLabel11.MouseDown += new System.Windows.Forms.MouseEventHandler(materialLabel11_Click);
 
             UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
@@ -183,9 +182,14 @@ namespace OSLTT
             hotKeyList.Add(k);
 
             mouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
-            
+
+            MouseControls.GetDefaults();
         }
 
+        /// <summary>
+        /// MouseHook left click event handler - used for click/keypress test
+        /// </summary>
+        /// <param name="mouseStruct"></param>
         private void MouseHook_LeftButtonDown(MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
             portWrite("H");
@@ -225,6 +229,7 @@ namespace OSLTT
             Environment.Exit(Environment.ExitCode);
         }
 
+        #region Serial Connection
         /// <summary>
         /// Function to use the arduino cli to find the board and initiate connect over serial. Also handles the update connection.
         /// </summary>
@@ -236,7 +241,6 @@ namespace OSLTT
             {
                 if (!portConnected)
                 {
-                    ControlDeviceButtons(false);
                     SetDeviceStatus(0);
                     portConnected = false;
                     if (this.fwLbl.IsHandleCreated)
@@ -288,7 +292,6 @@ namespace OSLTT
                             connectToBoard(p);
                             Thread.Sleep(1000);
                             SetDeviceStatus(1);
-                            ControlDeviceButtons(true);
                             Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
                             syncThread.Start();
                             //setBoardSerial();
@@ -313,7 +316,6 @@ namespace OSLTT
                     p = port.PortName;
                     if (port.IsOpen)
                     {
-                        ControlDeviceButtons(false);
                         port.Close();
                     }
                     if (p == "")
@@ -376,11 +378,11 @@ namespace OSLTT
             else
             {
                 SetDeviceStatus(0);
-                ControlDeviceButtons(false);
             }
         }
+        #endregion
 
-
+        #region Serial Read
         /// <summary>
         /// This function endlessly reads the serial bus waiting for output from the device.
         /// </summary>
@@ -634,6 +636,19 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
+                    else if (message.Contains("MOUSE"))
+                    {
+                        if (message.Contains("START"))
+                        {
+                            // change pointer sensitivity to max
+                            MouseControls.SetMaxSpeed();
+                        }
+                        else
+                        {
+                            // reset pointer sensitivity
+                            MouseControls.ResetToOriginal();
+                        }
+                    }
                     else if (message.Contains("CLICKTEST"))
                     {
                         clickTestBox_Click(null, null);
@@ -678,6 +693,7 @@ namespace OSLTT
                 }
             }
         }
+        #endregion
 
         /// <summary>
         /// Safely write to the serial port
@@ -721,25 +737,9 @@ namespace OSLTT
             
         }
 
-        private void ControlDeviceButtons(bool state)
-        {
-            /*if (this.launchBtn.InvokeRequired)
-            {
-                this.launchBtn.Invoke((MethodInvoker)(() => launchBtn.Enabled = state));
-                this.menuStrip1.Invoke((MethodInvoker)(() => BrightnessCalBtn.Visible = state));
-                this.inputLagButton.Invoke((MethodInvoker)(() => inputLagButton.Enabled = state));
-                this.LiveViewBtn.Invoke((MethodInvoker)(() => LiveViewBtn.Enabled = state));
-            }
-            else
-            {
-                this.launchBtn.Enabled = state;
-                this.BrightnessCalBtn.Visible = state;
-                this.inputLagButton.Enabled = state;
-                this.LiveViewBtn.Enabled = state;
-            }*/
-                    }
+        
 
-                    private void SetDeviceStatus(int state)
+        private void SetDeviceStatus(int state)
         {
             string text = " Device Not Connected";
             string testBtnText = "Start";
