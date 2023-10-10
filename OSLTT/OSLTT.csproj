@@ -204,6 +204,8 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MouseControls.cs" />
+    <Compile Include="MouseHook\KeyboardHook.cs" />
+    <Compile Include="MouseHook\MouseHook.cs" />
     <Compile Include="ProcessData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

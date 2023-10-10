@@ -39,6 +39,8 @@ namespace OSLTT
             this.lightSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.mouseActionSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.clickCountSelect = new MaterialSkin.Controls.MaterialComboBox();
@@ -59,8 +61,6 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.mouseActionSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -244,6 +244,47 @@ namespace OSLTT
             this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
             this.settingsCard.Size = new System.Drawing.Size(340, 353);
             this.settingsCard.TabIndex = 73;
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.Location = new System.Drawing.Point(30, 207);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(98, 19);
+            this.materialLabel2.TabIndex = 56;
+            this.materialLabel2.Text = "Mouse Action";
+            // 
+            // mouseActionSelect
+            // 
+            this.mouseActionSelect.AutoResize = false;
+            this.mouseActionSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.mouseActionSelect.Depth = 0;
+            this.mouseActionSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.mouseActionSelect.DropDownHeight = 174;
+            this.mouseActionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mouseActionSelect.DropDownWidth = 121;
+            this.mouseActionSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.mouseActionSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mouseActionSelect.FormattingEnabled = true;
+            this.mouseActionSelect.IntegralHeight = false;
+            this.mouseActionSelect.ItemHeight = 43;
+            this.mouseActionSelect.Items.AddRange(new object[] {
+            "Left Click",
+            "Small Pointer Move (Left)",
+            "Small Pointer Move (Right)",
+            "Large Pointer Move (Left)",
+            "Large Pointer Move (Right)"});
+            this.mouseActionSelect.Location = new System.Drawing.Point(134, 190);
+            this.mouseActionSelect.MaxDropDownItems = 4;
+            this.mouseActionSelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.mouseActionSelect.Name = "mouseActionSelect";
+            this.mouseActionSelect.Size = new System.Drawing.Size(175, 49);
+            this.mouseActionSelect.StartIndex = 0;
+            this.mouseActionSelect.TabIndex = 57;
+            this.mouseActionSelect.SelectedIndexChanged += new System.EventHandler(this.mouseActionSelect_SelectedIndexChanged);
             // 
             // materialLabel8
             // 
@@ -590,45 +631,6 @@ namespace OSLTT
             this.materialLabel3.Size = new System.Drawing.Size(129, 29);
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.Location = new System.Drawing.Point(30, 207);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(98, 19);
-            this.materialLabel2.TabIndex = 56;
-            this.materialLabel2.Text = "Mouse Action";
-            // 
-            // mouseActionSelect
-            // 
-            this.mouseActionSelect.AutoResize = false;
-            this.mouseActionSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.mouseActionSelect.Depth = 0;
-            this.mouseActionSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.mouseActionSelect.DropDownHeight = 174;
-            this.mouseActionSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mouseActionSelect.DropDownWidth = 121;
-            this.mouseActionSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.mouseActionSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.mouseActionSelect.FormattingEnabled = true;
-            this.mouseActionSelect.IntegralHeight = false;
-            this.mouseActionSelect.ItemHeight = 43;
-            this.mouseActionSelect.Items.AddRange(new object[] {
-            "Left Click",
-            "Pointer Move (Left)",
-            "Pointer Move (Right)"});
-            this.mouseActionSelect.Location = new System.Drawing.Point(134, 190);
-            this.mouseActionSelect.MaxDropDownItems = 4;
-            this.mouseActionSelect.MouseState = MaterialSkin.MouseState.OUT;
-            this.mouseActionSelect.Name = "mouseActionSelect";
-            this.mouseActionSelect.Size = new System.Drawing.Size(175, 49);
-            this.mouseActionSelect.StartIndex = 0;
-            this.mouseActionSelect.TabIndex = 57;
-            this.mouseActionSelect.SelectedIndexChanged += new System.EventHandler(this.mouseActionSelect_SelectedIndexChanged);
             // 
             // SettingsPane
             // 

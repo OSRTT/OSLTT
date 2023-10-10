@@ -165,7 +165,7 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     {
       Mouse.click(MOUSE_LEFT);
     }
-    else if (MouseAction == 1)
+    else if (MouseAction == 1 || MouseAction == 3)
     {
       Mouse.move(-127, 0);
     }

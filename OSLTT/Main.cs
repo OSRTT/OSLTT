@@ -63,6 +63,7 @@ namespace OSLTT
 
         HotKeyManager hotKeys = new HotKeyManager();
         List<HotKey> hotKeyList = new List<HotKey>();
+        MouseHook mouseHook = new MouseHook();
 
         private readonly string fqbn = "Seeeduino:samd:seeed_XIAO_m0";
 
@@ -123,6 +124,8 @@ namespace OSLTT
             CleanupDevTools();
 
             textTextBox.KeyDown += textTextBox_KeyDown;
+            //clickTestBox.MouseDown += new System.Windows.Forms.MouseEventHandler(clickTestBox_Click);
+            //materialLabel11.MouseDown += new System.Windows.Forms.MouseEventHandler(materialLabel11_Click);
 
             UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
             if (announcementText != null)
@@ -178,6 +181,16 @@ namespace OSLTT
             hotKeys.KeyPressed += HotKeyPressed;
             var k = hotKeys.Register(Key.F10, System.Windows.Input.ModifierKeys.None);
             hotKeyList.Add(k);
+
+            mouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
+            
+        }
+
+        private void MouseHook_LeftButtonDown(MouseHook.MSLLHOOKSTRUCT mouseStruct)
+        {
+            portWrite("H");
+            Console.WriteLine(mouseStruct.time);
+            
         }
 
         /// <summary>
@@ -799,8 +812,13 @@ namespace OSLTT
                 {
                     this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
+                    mouseHook.Install();
                 }
-                    
+                else
+                {
+                    mouseHook.Uninstall();
+                }
+
             }
             else
             {
@@ -811,6 +829,11 @@ namespace OSLTT
                 {
                     this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
+                    mouseHook.Install();
+                }
+                else
+                {
+                    mouseHook.Uninstall();
                 }
             }
         }
@@ -1065,10 +1088,9 @@ namespace OSLTT
 
         private void processPretestData()
         {
-            averagedInputLag averagedLatency = new averagedInputLag();
-            if (inputLagRawData.Count != 0)
+            if (rawSystemLagData.Count != 0)
             {
-                averagedLatency = AverageInputLagResults(rawSystemLagData);
+                systemLagData = AverageInputLagResults(rawSystemLagData);
             }
             // save pretest data to file?
         }
@@ -1163,36 +1185,6 @@ namespace OSLTT
             }
         }
 
-        private void processSystemLagData()
-        {
-            systemLagData = new averagedInputLag();
-
-            try //Wrapped whole thing in try just in case
-            {
-                // Then process the lines
-                averagedInputLag inputLagProcessed = AverageInputLagResults(inputLagRawData);
-
-                systemLagData = inputLagProcessed;
-            }
-            catch (Exception procEx)
-            {
-                Console.WriteLine(procEx);
-                processingFailed = true;
-                if (port != null)
-                {
-                    if (port.IsOpen)
-                    {
-                        port.Write("X");
-                        DialogBox("One or more set of results failed to process and won't be included in the multi-run averaging. \n " +
-                            "Brightness may be too high or monitor may be strobing it's backlight. \n" +
-                            "Try calibrating the brightness again, or use the Graph View Template to view the raw data.", "Processing Failed", "OK", false);
-                        processingFailed = false;
-                    }
-                }
-            }
-        }
-
-
         private void textTextBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             //sw.Stop();
@@ -1242,10 +1234,12 @@ namespace OSLTT
             if (testbool)
             {
                 portWrite("Y");
+                mouseHook.Install();
             }
             else
             {
                 portWrite("X");
+                mouseHook.Uninstall();
             }
 
             

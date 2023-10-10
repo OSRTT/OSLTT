@@ -177,9 +177,9 @@ void loop() {
       if (digitalRead(ButtonPin)) {
         for (int i = 0; i < counter; i++){
           long click = micros();
-          //Mouse.click(MOUSE_LEFT);
+          Mouse.click(MOUSE_LEFT);
           //Keyboard.write('A');
-          Serial.println("CLICKTEST");
+          //Serial.println("CLICKTEST");
           long start = micros();
           while (input[0] != 'H' && input[0] != 'X') {
             getClickChar();
