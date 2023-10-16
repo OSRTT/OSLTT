@@ -47,7 +47,7 @@ namespace OSLTT
             
             testSettings.TriggerType = testSettings.TriggerTypes(buttonTriggerRadio, audioTriggerRadio);
             testSettings.SensorType = testSettings.SensorTypes(lightSensorRadio, audioSensorRadio);
-            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, gameExternalRadio, audioSourceRadio);
+            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, gameExternalRadio, audioSourceRadio, externalRadio);
             testSettings.AutoClick = autoClickToggle.Checked;
             testSettings.ClickCount = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
             testSettings.PreTest = preTestToggle.Checked;
@@ -607,7 +607,11 @@ namespace OSLTT
                 if (selectedDisplay != displayList[s.SelectedIndex])
                 {
                     selectedDisplay = displayList[s.SelectedIndex];
-                    mainWindow.systemLagData = new ProcessData.averagedInputLag();
+                    if (mainWindow.systemLagData.inputLagResults != null)
+                    {
+                        mainWindow.systemLagData = new ProcessData.averagedInputLag();
+                        // message box to say system lag data cleared due to display change?
+                    }
                 }
 
             }
@@ -750,6 +754,35 @@ namespace OSLTT
             if (s.Focused)
             {
                 testSettings.MouseAction = s.SelectedIndex;
+                SaveSettings();
+            }
+        }
+
+        private void keyboardRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            MaterialRadioButton s = sender as MaterialRadioButton;
+            if (s.Focused)
+            {
+                if (s.Checked)
+                {
+                    testSettings.SensorType = 2;
+                    if (!audioTriggerRadio.Checked)
+                    {
+                        audioTriggerRadio.Checked = true;
+                    }
+                    if (!clickKeypressRadio.Checked)
+                    {
+                        clickKeypressRadio.Checked = true;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
                 SaveSettings();
             }
         }

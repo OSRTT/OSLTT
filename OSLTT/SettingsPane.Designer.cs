@@ -61,6 +61,7 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.keyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -273,10 +274,8 @@ namespace OSLTT
             this.mouseActionSelect.ItemHeight = 43;
             this.mouseActionSelect.Items.AddRange(new object[] {
             "Left Click",
-            "Small Pointer Move (Left)",
-            "Small Pointer Move (Right)",
-            "Large Pointer Move (Left)",
-            "Large Pointer Move (Right)"});
+            "(L) Small Move",
+            "(R) Small Move"});
             this.mouseActionSelect.Location = new System.Drawing.Point(134, 190);
             this.mouseActionSelect.MaxDropDownItems = 4;
             this.mouseActionSelect.MouseState = MaterialSkin.MouseState.OUT;
@@ -517,6 +516,7 @@ namespace OSLTT
             // sourceCard
             // 
             this.sourceCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.sourceCard.Controls.Add(this.keyboardRadio);
             this.sourceCard.Controls.Add(this.externalRadio);
             this.sourceCard.Controls.Add(this.audioSourceRadio);
             this.sourceCard.Controls.Add(this.gameExternalRadio);
@@ -530,14 +530,14 @@ namespace OSLTT
             this.sourceCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.sourceCard.Name = "sourceCard";
             this.sourceCard.Padding = new System.Windows.Forms.Padding(14);
-            this.sourceCard.Size = new System.Drawing.Size(242, 240);
+            this.sourceCard.Size = new System.Drawing.Size(242, 274);
             this.sourceCard.TabIndex = 76;
             // 
             // externalRadio
             // 
             this.externalRadio.AutoSize = true;
             this.externalRadio.Depth = 0;
-            this.externalRadio.Location = new System.Drawing.Point(14, 197);
+            this.externalRadio.Location = new System.Drawing.Point(14, 234);
             this.externalRadio.Margin = new System.Windows.Forms.Padding(0);
             this.externalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
             this.externalRadio.MouseState = MaterialSkin.MouseState.HOVER;
@@ -554,7 +554,7 @@ namespace OSLTT
             // 
             this.audioSourceRadio.AutoSize = true;
             this.audioSourceRadio.Depth = 0;
-            this.audioSourceRadio.Location = new System.Drawing.Point(14, 160);
+            this.audioSourceRadio.Location = new System.Drawing.Point(14, 197);
             this.audioSourceRadio.Margin = new System.Windows.Forms.Padding(0);
             this.audioSourceRadio.MouseLocation = new System.Drawing.Point(-1, -1);
             this.audioSourceRadio.MouseState = MaterialSkin.MouseState.HOVER;
@@ -571,7 +571,7 @@ namespace OSLTT
             // 
             this.gameExternalRadio.AutoSize = true;
             this.gameExternalRadio.Depth = 0;
-            this.gameExternalRadio.Location = new System.Drawing.Point(14, 123);
+            this.gameExternalRadio.Location = new System.Drawing.Point(14, 160);
             this.gameExternalRadio.Margin = new System.Windows.Forms.Padding(0);
             this.gameExternalRadio.MouseLocation = new System.Drawing.Point(-1, -1);
             this.gameExternalRadio.MouseState = MaterialSkin.MouseState.HOVER;
@@ -594,10 +594,10 @@ namespace OSLTT
             this.mouseKeyboardRadio.MouseState = MaterialSkin.MouseState.HOVER;
             this.mouseKeyboardRadio.Name = "mouseKeyboardRadio";
             this.mouseKeyboardRadio.Ripple = true;
-            this.mouseKeyboardRadio.Size = new System.Drawing.Size(157, 37);
+            this.mouseKeyboardRadio.Size = new System.Drawing.Size(83, 37);
             this.mouseKeyboardRadio.TabIndex = 68;
             this.mouseKeyboardRadio.TabStop = true;
-            this.mouseKeyboardRadio.Text = "Mouse/Keyboard";
+            this.mouseKeyboardRadio.Text = "Mouse";
             this.mouseKeyboardRadio.UseVisualStyleBackColor = true;
             this.mouseKeyboardRadio.CheckedChanged += new System.EventHandler(this.mouseKeyboardRadio_CheckedChanged);
             // 
@@ -632,6 +632,23 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
+            // keyboardRadio
+            // 
+            this.keyboardRadio.AutoSize = true;
+            this.keyboardRadio.Depth = 0;
+            this.keyboardRadio.Location = new System.Drawing.Point(14, 123);
+            this.keyboardRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.keyboardRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.keyboardRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.keyboardRadio.Name = "keyboardRadio";
+            this.keyboardRadio.Ripple = true;
+            this.keyboardRadio.Size = new System.Drawing.Size(102, 37);
+            this.keyboardRadio.TabIndex = 72;
+            this.keyboardRadio.TabStop = true;
+            this.keyboardRadio.Text = "Keyboard";
+            this.keyboardRadio.UseVisualStyleBackColor = true;
+            this.keyboardRadio.CheckedChanged += new System.EventHandler(this.keyboardRadio_CheckedChanged);
+            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -641,7 +658,7 @@ namespace OSLTT
             this.Controls.Add(this.triggerCard);
             this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(866, 394);
+            this.Size = new System.Drawing.Size(866, 428);
             this.displayCard.ResumeLayout(false);
             this.displayCard.PerformLayout();
             this.sensorCard.ResumeLayout(false);
@@ -690,5 +707,6 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialRadioButton externalRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialComboBox mouseActionSelect;
+        private MaterialSkin.Controls.MaterialRadioButton keyboardRadio;
     }
 }

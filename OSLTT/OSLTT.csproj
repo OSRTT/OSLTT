@@ -203,7 +203,6 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="MouseControls.cs" />
     <Compile Include="MouseHook\KeyboardHook.cs" />
     <Compile Include="MouseHook\MouseHook.cs" />
     <Compile Include="ProcessData.cs" />

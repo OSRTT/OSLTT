@@ -35,3 +35,4 @@ bool directXMode = true;
 char input[INPUT_SIZE + 1];
 
 bool LEDState = false;
+

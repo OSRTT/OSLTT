@@ -37,6 +37,15 @@ void loop() {
 
   if (input[0] == 'T')  // Button trigger test mode
   {
+    if (input[1] == 'P')  // Pre-test
+    {
+      while (input[0] != 'X') {
+        getSerialChars();
+        if (digitalRead(ButtonPin)) {
+          autoRunTest(true, 9000, 50, true);
+        }
+      }
+    }
     while (input[0] != 'X') {
       Serial.setTimeout(100);
       getSerialChars();
@@ -69,7 +78,7 @@ void loop() {
             }
           }
         }
-      } else if (sourceType == 1) {
+      } else if (sourceType == 1 || sourceType == 5) {
         if (inputType == 1)
         {
           runClickTest(); 
@@ -88,14 +97,6 @@ void loop() {
           }
         }
         break;
-      }
-    }
-  } else if (input[0] == 'P')  // Pre-test
-  {
-    while (input[0] != 'X') {
-      getSerialChars();
-      if (digitalRead(ButtonPin)) {
-        autoRunTest(true, 9000, 100, true);
       }
     }
   } else if (input[0] == 'I')  // Initialise everything
@@ -217,21 +218,11 @@ void loop() {
     Serial.print("number of tests ran: ");
     Serial.println(counter);
   } else if (input[0] == 'Z') {
-    Serial.println("Z registered");
-    Serial.println("Light sensor");
-    int buttonState = digitalRead(ButtonPin);
-    Serial.print("Read button - ");
-    Serial.println(buttonState);
-    // ADC->SWTRIG.bit.START = 1; //Start ADC
-    // while (!ADC->INTFLAG.bit.RESRDY); //wait for ADC to have a new value
-    // int result = ADC->RESULT.reg;
-    // Serial.println(result);
-    while (buttonState != HIGH) {
-      //int value = getSingleADCValue();
-      int value = analogRead(0);
-      Serial.println(value);
-      buttonState = digitalRead(ButtonPin);
+    while (input[0] != 'X')
+    {
+      getSerialChars();
+      Serial.println(digitalRead(PullDownPin));
+      delay(100);
     }
-    Serial.println("Exited");
   }
 }

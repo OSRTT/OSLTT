@@ -169,9 +169,13 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     {
       Mouse.move(-127, 0);
     }
-    else
+    else if (MouseAction == 2 || MouseAction == 4)
     {
       Mouse.move(127, 0);
+    }
+    else
+    {
+      Keyboard.write((char)32);
     }
   }
   unsigned long start_time = micros();
@@ -199,15 +203,6 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
   for (int i = 0; i < sampleCount; i++) {
     Serial.print(adcBuff[i]);
     Serial.print(",");
-    // if (i < 100) {
-    //   localStartValue += adcBuff[i];
-    // } else if (i == 100) {
-    //   localStartValue /= 100;
-    // } else {
-    //   if (adcBuff[i] > (localStartValue * 2) && triggerSampleNum == 0) {
-    //     triggerSampleNum = i;
-    //   }
-    // }
   }
   Serial.println();
   if (MouseAction == 1 || MouseAction == 3) // move mouse back
@@ -226,7 +221,22 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
 
 
 void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false) {
-  if (autoRun) {
+  if (pretest) {
+    int localCounter = 0;
+    int localMouseAction = MouseAction;
+    MouseAction = 5; // must be spacebar
+    while (input[0] != 'X' && localCounter < clickCount) {
+      getSerialChars();
+      runTest(sampleCount, "PRETEST:");
+      localCounter++;
+    }
+    MouseAction = localMouseAction;
+    Serial.println("PRETEST FINISHED");
+    delay(1000);
+    Keyboard.press(KEY_ESC);
+    Keyboard.releaseAll();
+  }
+  else if (autoRun) {
     int localCounter = 0;
     Serial.setTimeout(100);
     while (input[0] != 'X' && localCounter < clickCount) {
@@ -246,25 +256,12 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
   } else if (!autoRun) {
     runTest(sampleCount);
     Serial.println("SINGLE FIRE");
-  } else if (pretest) {
-    int localCounter = 0;
-    while (input[0] != 'X' && localCounter < clickCount) {
-      getSerialChars();
-      runTest(sampleCount, "PRETEST:");
-      localCounter++;
-    }
-    Serial.println("PRETEST FINISHED");
-    delay(1000);
-    Keyboard.press(KEY_ESC);
-    Keyboard.releaseAll();
-  }
+  } 
 }
 
 void runClickTest() {
   toggleLED(false);
   Serial.setTimeout(100);
-
-// sync clocks
 
   int baseline = getADCValue(500, 1);
   int baselineAdjusted = 16380 - baseline;

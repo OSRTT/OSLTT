@@ -45,8 +45,12 @@ namespace OSLTT
         /// <param name="mouseHookCallbackFunc">Callback function</param>
         public void Install()
         {
-            hookHandler = HookFunc;
-            hookID = SetHook(hookHandler);
+            try
+            {
+                hookHandler = HookFunc;
+                hookID = SetHook(hookHandler);
+            }
+            catch { }
         }
 
         /// <summary>

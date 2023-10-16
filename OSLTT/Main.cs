@@ -64,6 +64,7 @@ namespace OSLTT
         HotKeyManager hotKeys = new HotKeyManager();
         List<HotKey> hotKeyList = new List<HotKey>();
         MouseHook mouseHook = new MouseHook();
+        KeyboardHook keyboardHook = new KeyboardHook();
 
         private readonly string fqbn = "Seeeduino:samd:seeed_XIAO_m0";
 
@@ -182,8 +183,13 @@ namespace OSLTT
             hotKeyList.Add(k);
 
             mouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
+            keyboardHook.KeyDown += KeyboardHook_KeyDown;
+        }
 
-            MouseControls.GetDefaults();
+        private void KeyboardHook_KeyDown(KeyboardHook.VKeys key)
+        {
+            portWrite("H");
+            Console.WriteLine(key.ToString());
         }
 
         /// <summary>
@@ -194,7 +200,6 @@ namespace OSLTT
         {
             portWrite("H");
             Console.WriteLine(mouseStruct.time);
-            
         }
 
         /// <summary>
@@ -636,19 +641,6 @@ namespace OSLTT
                         // write most recent result to raw file
                         // process then append processed result to file
                     }
-                    else if (message.Contains("MOUSE"))
-                    {
-                        if (message.Contains("START"))
-                        {
-                            // change pointer sensitivity to max
-                            MouseControls.SetMaxSpeed();
-                        }
-                        else
-                        {
-                            // reset pointer sensitivity
-                            MouseControls.ResetToOriginal();
-                        }
-                    }
                     else if (message.Contains("CLICKTEST"))
                     {
                         clickTestBox_Click(null, null);
@@ -812,11 +804,13 @@ namespace OSLTT
                 {
                     this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
-                    mouseHook.Install();
+                    this.Invoke((MethodInvoker)(() => this.mouseHook.Install()));
+                    Console.WriteLine("(invoke) Mousehook installed");
                 }
                 else
                 {
-                    mouseHook.Uninstall();
+                    this.Invoke((MethodInvoker)(() => this.mouseHook.Uninstall()));
+                    Console.WriteLine("(invoke) Mousehook uninstalled");
                 }
 
             }
@@ -830,10 +824,12 @@ namespace OSLTT
                     this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
                     mouseHook.Install();
+                    Console.WriteLine("Mousehook installed");
                 }
                 else
                 {
                     mouseHook.Uninstall();
+                    Console.WriteLine("Mousehook uninstalled");
                 }
             }
         }
@@ -856,7 +852,7 @@ namespace OSLTT
         {
             try
             {
-                MaterialDialog materialDialog = new MaterialDialog(this, title, message, okButton, showCancel, cancelText);
+                MaterialDialog materialDialog = new MaterialDialog(this, title, message, okButton, showCancel, cancelText, true);
                 DialogResult result = materialDialog.ShowDialog(this);
                 MaterialSnackBar SnackBarMessage = new MaterialSnackBar(result.ToString(), 750);
 
@@ -928,6 +924,7 @@ namespace OSLTT
                 else
                 {
                     runPretest();
+                    Console.WriteLine("Exiting pretest, starting regular testing");
                     testThread = new Thread(new ThreadStart(runTest));
                     testThread.Start();
                 }
@@ -994,20 +991,14 @@ namespace OSLTT
 
         private void runPretest()
         {
-            if (testSettings.PreTest && systemLagData.inputLagResults.Count == 0)
+            if (testSettings.PreTest && systemLagData.inputLagResults == null)
             {
                 // message box to explain what to do?
-                DialogResult d = DialogBox("READ CAREFULLY \n - Close any games you have running before completing the pretest. \n" +
-                    "- Once the selected display goes black, wait for the FPS counter in the top left to stabilise at ~1000 FPS. \n" +
-                    "- Click the button on the device to start the pretest. \n" +
-                    "- Wait for the test to complete. The window will close, then open the game you want to test. \n" +
-                    "- Hit the button on the device to trigger the in-game test as normal. \n" +
-                    "- Click \"End Test\" or hit F10 to end the test and view the results.\n" +
-                    "PRETEST Results are only valid once per program open and assume you are using the same display to pretest as you are to game on.",
+                DialogResult d = DialogBox("Close any running games before testing! Read the full guide via the help button.",
                     "PRETEST Instructions", "Continue", true, "Cancel Pretest");
                 if (d == DialogResult.OK)
                 { 
-                    portWrite("P");
+                    portWrite("TP");
                     DirectX.System.DSystem.inputLagMode = true;
                     if (DirectX.System.DSystem.mainWindow == null)
                         DirectX.System.DSystem.mainWindow = this;
@@ -1242,8 +1233,8 @@ namespace OSLTT
                 mouseHook.Uninstall();
             }
 
-            
-
+            //portWrite("Z");
+           
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
