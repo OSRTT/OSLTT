@@ -290,7 +290,6 @@ void runClickTest() {
       // keyboard/mouse mode. Listen for click, wait for PC to report click.
       input[0] = '0';
       Serial.println(current); // remove after debugging
-      Serial.println("just testing were in the right function");
       long start = micros();
       while (input[0] != 'H' && input[0] != 'X') {
         getClickChar();

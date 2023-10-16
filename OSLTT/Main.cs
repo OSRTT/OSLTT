@@ -930,7 +930,7 @@ namespace OSLTT
                 inputLagProcessed.Clear();
                 resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
-                if (testSettings.TestSource != 2)
+                if (testSettings.TestSource != 2 && testSettings.TestSource != 6)
                 {
                     rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                 }
@@ -1042,7 +1042,7 @@ namespace OSLTT
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
-                if (testSettings.TestSource == 2) // mouse/keyboard mode
+                if (testSettings.TestSource == 2 || testSettings.TestSource == 6) // mouse/keyboard mode
                 {
                     // switch modes then wait for test end
                     toggleMouseKeyboardBoxes(true);
