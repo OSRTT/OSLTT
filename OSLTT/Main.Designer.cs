@@ -44,8 +44,6 @@ namespace OSLTT
             this.startTestBtn = new MaterialSkin.Controls.MaterialButton();
             this.debugBtn = new MaterialSkin.Controls.MaterialButton();
             this.helpBtn = new MaterialSkin.Controls.MaterialButton();
-            this.typeTextCard = new MaterialSkin.Controls.MaterialCard();
-            this.textTextBox = new MaterialSkin.Controls.MaterialTextBox2();
             this.clickTestBox = new MaterialSkin.Controls.MaterialCard();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -61,7 +59,6 @@ namespace OSLTT
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
-            this.typeTextCard.SuspendLayout();
             this.clickTestBox.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialCard3.SuspendLayout();
@@ -316,50 +313,6 @@ namespace OSLTT
             this.helpBtn.UseVisualStyleBackColor = true;
             this.helpBtn.Click += new System.EventHandler(this.helpBtn_Click);
             // 
-            // typeTextCard
-            // 
-            this.typeTextCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.typeTextCard.Controls.Add(this.textTextBox);
-            this.typeTextCard.Depth = 0;
-            this.typeTextCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.typeTextCard.Location = new System.Drawing.Point(13, 603);
-            this.typeTextCard.Margin = new System.Windows.Forms.Padding(14);
-            this.typeTextCard.MouseState = MaterialSkin.MouseState.HOVER;
-            this.typeTextCard.Name = "typeTextCard";
-            this.typeTextCard.Padding = new System.Windows.Forms.Padding(14);
-            this.typeTextCard.Size = new System.Drawing.Size(885, 83);
-            this.typeTextCard.TabIndex = 49;
-            // 
-            // textTextBox
-            // 
-            this.textTextBox.AnimateReadOnly = false;
-            this.textTextBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.textTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.textTextBox.Depth = 0;
-            this.textTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.textTextBox.HideSelection = true;
-            this.textTextBox.Hint = "Type in here";
-            this.textTextBox.LeadingIcon = null;
-            this.textTextBox.Location = new System.Drawing.Point(17, 17);
-            this.textTextBox.MaxLength = 32767;
-            this.textTextBox.MouseState = MaterialSkin.MouseState.OUT;
-            this.textTextBox.Name = "textTextBox";
-            this.textTextBox.PasswordChar = '\0';
-            this.textTextBox.PrefixSuffixText = null;
-            this.textTextBox.ReadOnly = false;
-            this.textTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.textTextBox.SelectedText = "";
-            this.textTextBox.SelectionLength = 0;
-            this.textTextBox.SelectionStart = 0;
-            this.textTextBox.ShortcutsEnabled = true;
-            this.textTextBox.Size = new System.Drawing.Size(822, 48);
-            this.textTextBox.TabIndex = 3;
-            this.textTextBox.TabStop = false;
-            this.textTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textTextBox.TrailingIcon = null;
-            this.textTextBox.UseSystemPasswordChar = false;
-            //this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_textChanged);
-            // 
             // clickTestBox
             // 
             this.clickTestBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -371,9 +324,8 @@ namespace OSLTT
             this.clickTestBox.MouseState = MaterialSkin.MouseState.HOVER;
             this.clickTestBox.Name = "clickTestBox";
             this.clickTestBox.Padding = new System.Windows.Forms.Padding(14);
-            this.clickTestBox.Size = new System.Drawing.Size(885, 283);
+            this.clickTestBox.Size = new System.Drawing.Size(885, 415);
             this.clickTestBox.TabIndex = 48;
-            //this.clickTestBox.Click += new System.EventHandler(this.clickTestBox_Click);
             // 
             // materialLabel11
             // 
@@ -381,12 +333,12 @@ namespace OSLTT
             this.materialLabel11.Depth = 0;
             this.materialLabel11.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.materialLabel11.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel11.Location = new System.Drawing.Point(185, 14);
+            this.materialLabel11.Location = new System.Drawing.Point(324, 14);
             this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(531, 29);
+            this.materialLabel11.Size = new System.Drawing.Size(248, 29);
             this.materialLabel11.TabIndex = 1;
-            this.materialLabel11.Text = "Click anywhere in this box for mouse click latency";
+            this.materialLabel11.Text = "Click or type in this box";
             // 
             // imageList1
             // 
@@ -533,7 +485,7 @@ namespace OSLTT
             // 
             this.settingsPane1.Location = new System.Drawing.Point(28, 310);
             this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(857, 392);
+            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
             this.settingsPane1.TabIndex = 59;
             // 
             // materialCard3
@@ -570,9 +522,8 @@ namespace OSLTT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 709);
+            this.ClientSize = new System.Drawing.Size(911, 735);
             this.Controls.Add(this.settingsPane1);
-            this.Controls.Add(this.typeTextCard);
             this.Controls.Add(this.materialCard4);
             this.Controls.Add(this.materialCard3);
             this.Controls.Add(this.materialCard1);
@@ -589,7 +540,6 @@ namespace OSLTT
             this.deviceStatusPanel.ResumeLayout(false);
             this.deviceStatusPanel.PerformLayout();
             this.materialCard2.ResumeLayout(false);
-            this.typeTextCard.ResumeLayout(false);
             this.clickTestBox.ResumeLayout(false);
             this.clickTestBox.PerformLayout();
             this.materialCard1.ResumeLayout(false);
@@ -617,8 +567,6 @@ namespace OSLTT
         private System.Windows.Forms.ImageList imageList1;
         private MaterialSkin.Controls.MaterialCard clickTestBox;
         private MaterialSkin.Controls.MaterialLabel materialLabel11;
-        private MaterialSkin.Controls.MaterialCard typeTextCard;
-        private MaterialSkin.Controls.MaterialTextBox2 textTextBox;
         private MaterialSkin.Controls.MaterialButton resultsViewBtn;
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;

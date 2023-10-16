@@ -123,10 +123,6 @@ namespace OSLTT
             
             CleanupDevTools();
 
-            textTextBox.KeyDown += textTextBox_KeyDown; // soon-to-be depricated with keyboardhook 
-            //clickTestBox.MouseDown += new System.Windows.Forms.MouseEventHandler(clickTestBox_Click); // depricated, unstable method of capture
-            //materialLabel11.MouseDown += new System.Windows.Forms.MouseEventHandler(materialLabel11_Click);
-
             UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
             if (announcementText != null)
             {
@@ -794,15 +790,13 @@ namespace OSLTT
 
         private void toggleMouseKeyboardBoxes(bool state)
         {
-            if (this.textTextBox.InvokeRequired)
+            if (this.clickTestBox.InvokeRequired)
             {
                 this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.Visible = state));
-                this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.Visible = state));
                 this.settingsPane1.Invoke((MethodInvoker)(() => this.settingsPane1.Visible = !state));
 
                 if (state)
                 {
-                    this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
                     if (testSettings.TestSource == 2)
                     {
@@ -830,11 +824,9 @@ namespace OSLTT
             else
             {
                 this.clickTestBox.Visible = state;
-                this.typeTextCard.Visible = state;
                 this.settingsPane1.Visible = !state;
                 if (state)
                 {
-                    this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
                     if (testSettings.TestSource == 2)
                     {
@@ -936,7 +928,6 @@ namespace OSLTT
                 settingsPane1.SaveSettings();
                 inputLagRawData.Clear();
                 inputLagProcessed.Clear();
-                textTextBox.Clear();
                 resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
                 // create raw and processed files? or just let the files do that?
                 if (testSettings.TestSource != 2)
