@@ -165,11 +165,11 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     {
       Mouse.click(MOUSE_LEFT);
     }
-    else if (MouseAction == 1 || MouseAction == 3)
+    else if (MouseAction == 1)
     {
       Mouse.move(-127, 0);
     }
-    else if (MouseAction == 2 || MouseAction == 4)
+    else if (MouseAction == 2)
     {
       Mouse.move(127, 0);
     }
@@ -205,11 +205,11 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     Serial.print(",");
   }
   Serial.println();
-  if (MouseAction == 1 || MouseAction == 3) // move mouse back
+  if (MouseAction == 1) // move mouse back
   {
     Mouse.move(127, 0);
   }
-  else if (MouseAction == 2 || MouseAction == 4)
+  else if (MouseAction == 2)
   {
     Mouse.move(-127, 0);
   }

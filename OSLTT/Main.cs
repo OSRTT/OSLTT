@@ -1239,7 +1239,7 @@ namespace OSLTT
 
             //portWrite("W");
             //textTextBox.Text = "test";
-            testbool = !testbool;
+            /*testbool = !testbool;
             toggleMouseKeyboardBoxes(testbool);
             if (testbool)
             {
@@ -1250,9 +1250,9 @@ namespace OSLTT
             {
                 portWrite("X");
                 mouseHook.Uninstall();
-            }
+            }*/
 
-            //portWrite("Z");
+            portWrite("Z");
            
         }
 

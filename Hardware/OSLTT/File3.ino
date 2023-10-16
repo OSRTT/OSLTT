@@ -64,15 +64,7 @@ void loop() {
               runAudioTest();
             }
           } else {
-            if (MouseAction < 3)
-            {
-              Serial.println("MOUSE START");
-            }
             autoRunTest(autoClick, 9000, shotCount);
-            if (MouseAction < 3)
-            {
-              Serial.println("MOUSE END");
-            }
             if (autoClick) {
               break;
             }
@@ -136,7 +128,7 @@ void loop() {
     }
 
     // Mouse Action - bit 8
-    MouseAction = convertHexToDec(input[8] - 1);
+    MouseAction = convertHexToDec(input[8]);
 
     // Confirm settings synced
     for (int i = 0; i < INPUT_SIZE; i++) {
@@ -221,8 +213,13 @@ void loop() {
     while (input[0] != 'X')
     {
       getSerialChars();
-      Serial.println(digitalRead(PullDownPin));
-      delay(100);
+      if (digitalRead(ButtonPin))
+      {
+        Mouse.move(127, 0);
+        delay(1000);
+        Mouse.move(-127, 0);
+      }
+      
     }
   }
 }
