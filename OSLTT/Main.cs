@@ -804,15 +804,28 @@ namespace OSLTT
                 {
                     this.typeTextCard.Invoke((MethodInvoker)(() => this.typeTextCard.BringToFront()));
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
-                    this.Invoke((MethodInvoker)(() => this.mouseHook.Install()));
-                    Console.WriteLine("(invoke) Mousehook installed");
+                    if (testSettings.TestSource == 2)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.mouseHook.Install()));
+                        //Console.WriteLine("(invoke) Mousehook installed");
+                    }
+                    else if (testSettings.TestSource == 6)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.keyboardHook.Install()));
+                    }
                 }
                 else
                 {
-                    this.Invoke((MethodInvoker)(() => this.mouseHook.Uninstall()));
-                    Console.WriteLine("(invoke) Mousehook uninstalled");
+                    if (testSettings.TestSource == 2)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.mouseHook.Uninstall()));
+                        //Console.WriteLine("(invoke) Mousehook installed");
+                    }
+                    else if (testSettings.TestSource == 6)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.keyboardHook.Uninstall()));
+                    }
                 }
-
             }
             else
             {
@@ -823,13 +836,28 @@ namespace OSLTT
                 {
                     this.typeTextCard.BringToFront();
                     this.clickTestBox.BringToFront();
-                    mouseHook.Install();
-                    Console.WriteLine("Mousehook installed");
+                    if (testSettings.TestSource == 2)
+                    {
+                        mouseHook.Install();
+                        //Console.WriteLine("(invoke) Mousehook installed");
+                    }
+                    else if (testSettings.TestSource == 6)
+                    {
+                        keyboardHook.Install();
+                    }
+                    
                 }
                 else
                 {
-                    mouseHook.Uninstall();
-                    Console.WriteLine("Mousehook uninstalled");
+                    if (testSettings.TestSource == 2)
+                    {
+                        mouseHook.Uninstall();
+                        //Console.WriteLine("(invoke) Mousehook installed");
+                    }
+                    else if (testSettings.TestSource == 6)
+                    {
+                        keyboardHook.Uninstall();
+                    }
                 }
             }
         }
