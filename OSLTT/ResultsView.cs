@@ -296,7 +296,7 @@ namespace OSLTT
 
             barPlot.Plot.Render();
             barPlot.Refresh();
-            string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*.png");
+            //string[] existingFiles = Directory.GetFiles(resultsFolderPath, "*.png");
             /*if (existingFiles.Length == 0 && Properties.Settings.Default.autoSavePNG != 0)
             {
                 if (Properties.Settings.Default.autoSavePNG == 1)
@@ -308,6 +308,7 @@ namespace OSLTT
                     saveWhitePNGBtn_Click(null, null);
                 }
             }*/
+            barPlot.Refresh();
         }
 
         private void switchGraphTypeBtn_Click(object sender, EventArgs e)

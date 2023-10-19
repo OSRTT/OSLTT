@@ -23,11 +23,11 @@ void setup() {
   establishContact();  // send a byte to establish contact until receiver responds
 
   
-  Serial.print("bootprot = ");
-  Serial.println(bootprot);
+  // Serial.print("bootprot = ");
+  // Serial.println(bootprot);
 
-  Serial.print("new bootprot = ");
-  Serial.println(newbootprot);
+  // Serial.print("new bootprot = ");
+  // Serial.println(newbootprot);
 }
 
 void loop() {
@@ -37,15 +37,6 @@ void loop() {
 
   if (input[0] == 'T')  // Button trigger test mode
   {
-    if (input[1] == 'P')  // Pre-test
-    {
-      while (input[0] != 'X') {
-        getSerialChars();
-        if (digitalRead(ButtonPin)) {
-          autoRunTest(true, 9000, 50, true);
-        }
-      }
-    }
     while (input[0] != 'X') {
       Serial.setTimeout(100);
       getSerialChars();
@@ -64,7 +55,7 @@ void loop() {
               runAudioTest();
             }
           } else {
-            autoRunTest(autoClick, 9000, shotCount);
+            autoRunTest(autoClick, 12000, shotCount);
             if (autoClick) {
               break;
             }
@@ -85,12 +76,29 @@ void loop() {
           getSerialChars();
           if (digitalRead(PullDownPin) != HIGH) {
             // Run test
-            autoRunTest(false, 9000);
+            autoRunTest(false, 12000);
           }
         }
         break;
       }
     }
+  } else if (input[0] == 'P')  // Pre-test
+    {
+      Serial.println("pretest starting");
+      int localInputType = inputType;
+      int localSourceType = sourceType;
+      inputType = 0;
+      sourceType = 0;
+      while (input[0] != 'X') {
+        getSerialChars();
+        if (digitalRead(ButtonPin)) {
+          autoRunTest(true, 9000, 50, true); // set this back to 50 or 100
+          inputType = localInputType;
+          sourceType = localSourceType;
+          input[0] = 'X';
+
+        }
+      }
   } else if (input[0] == 'I')  // Initialise everything
   {
     toggleLED(true);

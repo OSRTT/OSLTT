@@ -120,7 +120,7 @@ namespace OSLTT
 
             connectThread = new Thread(new ThreadStart(this.findAndConnectToBoard));
             connectThread.Start();
-            
+
             CleanupDevTools();
 
             UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
@@ -533,7 +533,7 @@ namespace OSLTT
                         {
                             frameTime = (float)systemLagData.onDisplayLatency.AVG;
                         }
-                        
+
                         rawInputLagResult rawLag = new rawInputLagResult
                         {
                             ResultType = type,
@@ -556,7 +556,7 @@ namespace OSLTT
                         // click result
                         string[] splitMessage = message.Split(':');
                         double result = double.Parse(splitMessage[1]);
-                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000});
+                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000 });
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
@@ -576,7 +576,7 @@ namespace OSLTT
                     else if (message.Contains("PRETEST:"))
                     {
                         // Results Data
-                        string newMessage = message.Remove(0, 4);
+                        string newMessage = message.Remove(0, 8);
                         string[] values = newMessage.Split(',');
                         List<int> intValues = new List<int>();
                         for (int i = 0; i < values.Length - 1; i++)
@@ -599,7 +599,7 @@ namespace OSLTT
                             else { continue; }
                         }
                         float frameTime = 0;
-                        
+
                         if (DirectX.System.DSystem.EventList.Count == 0)
                         { Thread.Sleep(50); } // add continuous check
                         try
@@ -608,7 +608,7 @@ namespace OSLTT
                         }
                         catch
                         { }
-                        
+
 
                         rawInputLagResult rawLag = new rawInputLagResult
                         {
@@ -630,7 +630,7 @@ namespace OSLTT
                     {
                         Thread inputLagThread = new Thread(new ThreadStart(processPretestData)); // change to processPretest?
                         inputLagThread.Start();
-                        
+
                     }
                     else if (message.Contains("SINGLE FIRE")) // depricated? 
                     {
@@ -722,10 +722,10 @@ namespace OSLTT
                     port.Close();
                 }
             }
-            
+
         }
 
-        
+
 
         private void SetDeviceStatus(int state)
         {
@@ -766,6 +766,10 @@ namespace OSLTT
                 testBtnText = "End Test";
                 check = true;
             }
+            if (systemLagData.inputLagResults != null)
+            {
+                text += " - Pretest Data Saved";
+            }
             if (this.devStat.InvokeRequired)
             {
                 this.devStat.Invoke((MethodInvoker)(() => this.devStat.Text = text));
@@ -774,6 +778,7 @@ namespace OSLTT
                 this.deviceStatusPanel.Invoke((MethodInvoker)(() => this.deviceStatusPanel.BackColor = bg));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Text = testBtnText));
                 this.startTestBtn.Invoke((MethodInvoker)(() => this.startTestBtn.Enabled = check));
+                this.runPretestButton.Invoke((MethodInvoker)(() => this.runPretestButton.Enabled = check));
                 this.Invoke((MethodInvoker)(() => this.Invalidate()));
             }
             else
@@ -784,6 +789,7 @@ namespace OSLTT
                 this.fwLbl.Visible = check;
                 this.startTestBtn.Text = testBtnText;
                 this.startTestBtn.Enabled = check;
+                this.runPretestButton.Enabled = check;
                 this.Invalidate();
             }
         }
@@ -837,7 +843,7 @@ namespace OSLTT
                     {
                         keyboardHook.Install();
                     }
-                    
+
                 }
                 else
                 {
@@ -854,7 +860,7 @@ namespace OSLTT
             }
         }
 
-        
+
         private void Form1_Resize(object sender, EventArgs e)
         {
             this.Invalidate();
@@ -916,6 +922,26 @@ namespace OSLTT
             }
         }
 
+        private void runPretestButton_Click(object sender, EventArgs e)
+        {
+            runPretest();
+            pretestButtonState();
+        }
+
+        public void pretestButtonState()
+        {
+            if (systemLagData.inputLagResults != null)
+            {
+                SetDeviceStatus(1);
+                runPretestButton.Enabled = false;
+            }
+            else
+            {
+                SetDeviceStatus(1);
+                runPretestButton.Enabled = true;
+            }
+        }
+
         private Thread testThread;
         public bool stopTest = false;
 
@@ -923,29 +949,40 @@ namespace OSLTT
         {
             if (startTestBtn.Text == "Start")
             {
-                settingsSynced = false;
-                stopTest = false;
-                settingsPane1.SaveSettings();
-                inputLagRawData.Clear();
-                inputLagProcessed.Clear();
-                resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
-                // create raw and processed files? or just let the files do that?
-                if (testSettings.TestSource != 2 && testSettings.TestSource != 6)
+                bool skipTest = false; // can't think of a better way to do this atm..
+                if (testSettings.PreTest && systemLagData.inputLagResults == null)
                 {
-                    rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
+                    DialogResult d = DialogBox("WARNING: No pretest data found. Please run the pretest before testing or disable the pretest option. Continuing will disable the option.",
+                    "PRETEST Data Not Found", "Continue Anyway", true, "Cancel Test");
+                    if (d == DialogResult.Cancel)
+                    {
+                        skipTest = true;
+                    }
                 }
-                processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
-                SetDeviceStatus(5);
-                if (testSettings.TestSource == 1)
+                if (!skipTest)
                 {
-                    runDirectXTest();
-                }
-                else
-                {
-                    runPretest();
-                    Console.WriteLine("Exiting pretest, starting regular testing");
-                    testThread = new Thread(new ThreadStart(runTest));
-                    testThread.Start();
+                    settingsSynced = false;
+                    stopTest = false;
+                    settingsPane1.SaveSettings();
+                    inputLagRawData.Clear();
+                    inputLagProcessed.Clear();
+                    resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
+                    // create raw and processed files? or just let the files do that?
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6)
+                    {
+                        rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
+                    }
+                    processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
+                    SetDeviceStatus(5);
+                    if (testSettings.TestSource == 1)
+                    {
+                        runDirectXTest();
+                    }
+                    else
+                    {
+                        testThread = new Thread(new ThreadStart(runTest));
+                        testThread.Start();
+                    }
                 }
             }
             else
@@ -1001,7 +1038,8 @@ namespace OSLTT
             {
                 if (!settingsSynced)
                 {
-                    this.Invoke((MethodInvoker)delegate () { 
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
                         settingsPane1.SaveSettings();
                     });
                 }
@@ -1010,25 +1048,14 @@ namespace OSLTT
 
         private void runPretest()
         {
-            if (testSettings.PreTest && systemLagData.inputLagResults == null)
+            if (systemLagData.inputLagResults == null)
             {
-                // message box to explain what to do?
-                DialogResult d = DialogBox("Close any running games before testing! Read the full guide via the help button.",
-                    "PRETEST Instructions", "Continue", true, "Cancel Pretest");
-                if (d == DialogResult.OK)
-                { 
-                    portWrite("TP");
-                    DirectX.System.DSystem.inputLagMode = true;
-                    if (DirectX.System.DSystem.mainWindow == null)
-                        DirectX.System.DSystem.mainWindow = this;
+                portWrite("P");
+                DirectX.System.DSystem.inputLagMode = true;
+                if (DirectX.System.DSystem.mainWindow == null)
+                    DirectX.System.DSystem.mainWindow = this;
 
-                    DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
-                }
-                else
-                {
-                    //cancel pretest, continue.
-                }
-
+                DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, settingsPane1.selectedDisplay.DisplayNumber, 1);
             }
         }
 
@@ -1080,7 +1107,7 @@ namespace OSLTT
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
-                
+
                 DirectX.System.DSystem.inputLagMode = true;
                 if (DirectX.System.DSystem.mainWindow == null)
                     DirectX.System.DSystem.mainWindow = this;
@@ -1102,6 +1129,7 @@ namespace OSLTT
             {
                 systemLagData = AverageInputLagResults(rawSystemLagData);
             }
+            SetDeviceStatus(1);
             // save pretest data to file?
         }
         private void processInputLagData()
@@ -1172,7 +1200,7 @@ namespace OSLTT
                 {
                     ResultsView rv = new ResultsView();
                     rv.setResultsFolder(resultsFolderPath);
-                    rv.inputLagMode(averagedLatency); 
+                    rv.inputLagMode(averagedLatency);
                     rv.Show();
                 });
                 //Process.Start("explorer.exe", resultsFolderPath);
@@ -1252,8 +1280,10 @@ namespace OSLTT
                 mouseHook.Uninstall();
             }*/
 
-            portWrite("Z");
-           
+            //portWrite("Z");
+
+            runPretestButton.Enabled = !runPretestButton.Enabled;
+
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
@@ -1287,6 +1317,8 @@ namespace OSLTT
             res.importMode();
             res.Show();
         }
+
+
     }
 
 }

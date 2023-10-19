@@ -54,9 +54,10 @@ namespace OSLTT
             this.miceKeyboardPresetBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.monitorPresetBtn = new MaterialSkin.Controls.MaterialButton();
-            this.settingsPane1 = new OSLTT.SettingsPane();
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
+            this.settingsPane1 = new OSLTT.SettingsPane();
+            this.runPretestButton = new MaterialSkin.Controls.MaterialButton();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
@@ -260,7 +261,7 @@ namespace OSLTT
             this.startTestBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startTestBtn.HighEmphasis = true;
             this.startTestBtn.Icon = global::OSLTT.Properties.Resources.play_solid;
-            this.startTestBtn.Location = new System.Drawing.Point(121, 8);
+            this.startTestBtn.Location = new System.Drawing.Point(221, 8);
             this.startTestBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.startTestBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.startTestBtn.Name = "startTestBtn";
@@ -481,13 +482,6 @@ namespace OSLTT
             this.monitorPresetBtn.UseVisualStyleBackColor = true;
             this.monitorPresetBtn.Click += new System.EventHandler(this.monitorPresetBtn_Click);
             // 
-            // settingsPane1
-            // 
-            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
-            this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
-            this.settingsPane1.TabIndex = 59;
-            // 
             // materialCard3
             // 
             this.materialCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -507,6 +501,7 @@ namespace OSLTT
             // materialCard4
             // 
             this.materialCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard4.Controls.Add(this.runPretestButton);
             this.materialCard4.Controls.Add(this.startTestBtn);
             this.materialCard4.Depth = 0;
             this.materialCard4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -517,6 +512,35 @@ namespace OSLTT
             this.materialCard4.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard4.Size = new System.Drawing.Size(417, 72);
             this.materialCard4.TabIndex = 61;
+            // 
+            // settingsPane1
+            // 
+            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
+            this.settingsPane1.Name = "settingsPane1";
+            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
+            this.settingsPane1.TabIndex = 59;
+            // 
+            // runPretestButton
+            // 
+            this.runPretestButton.AutoSize = false;
+            this.runPretestButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.runPretestButton.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.runPretestButton.Depth = 0;
+            this.runPretestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runPretestButton.HighEmphasis = true;
+            this.runPretestButton.Icon = null;
+            this.runPretestButton.Location = new System.Drawing.Point(18, 9);
+            this.runPretestButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.runPretestButton.MouseState = MaterialSkin.MouseState.HOVER;
+            this.runPretestButton.Name = "runPretestButton";
+            this.runPretestButton.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.runPretestButton.Size = new System.Drawing.Size(123, 54);
+            this.runPretestButton.TabIndex = 56;
+            this.runPretestButton.Text = "Run Pretest";
+            this.runPretestButton.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.runPretestButton.UseAccentColor = true;
+            this.runPretestButton.UseVisualStyleBackColor = true;
+            this.runPretestButton.Click += new System.EventHandler(this.runPretestButton_Click);
             // 
             // Main
             // 
@@ -578,6 +602,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton customPresetBtn;
         private MaterialSkin.Controls.MaterialCard materialCard3;
         private MaterialSkin.Controls.MaterialCard materialCard4;
+        private MaterialSkin.Controls.MaterialButton runPretestButton;
     }
 }
 

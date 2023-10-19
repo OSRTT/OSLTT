@@ -611,6 +611,7 @@ namespace OSLTT
                     {
                         mainWindow.systemLagData = new ProcessData.averagedInputLag();
                         // message box to say system lag data cleared due to display change?
+                        mainWindow.pretestButtonState();
                     }
                 }
 

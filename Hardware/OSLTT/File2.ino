@@ -223,16 +223,13 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
 void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 100, bool pretest = false) {
   if (pretest) {
     int localCounter = 0;
-    int localMouseAction = MouseAction;
-    MouseAction = 5; // must be spacebar
     while (input[0] != 'X' && localCounter < clickCount) {
       getSerialChars();
       runTest(sampleCount, "PRETEST:");
       localCounter++;
     }
-    MouseAction = localMouseAction;
     Serial.println("PRETEST FINISHED");
-    delay(1000);
+    //delay(1000);
     Keyboard.press(KEY_ESC);
     Keyboard.releaseAll();
   }
