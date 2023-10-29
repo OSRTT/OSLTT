@@ -73,7 +73,7 @@ void getClickChar() {
 
 void establishContact() {
   while (Serial.available() <= 0) {
-    Serial.println('OSLTT');  // send a capital A
+    Serial.println('OSLTT');
     delay(250);
   }
 }
@@ -286,7 +286,7 @@ void runClickTest() {
     if (current > baselineAdjusted) {
       // keyboard/mouse mode. Listen for click, wait for PC to report click.
       input[0] = '0';
-      Serial.println(current); // remove after debugging
+      //Serial.println(current); // remove after debugging
       long start = micros();
       while (input[0] != 'H' && input[0] != 'X') {
         getClickChar();
