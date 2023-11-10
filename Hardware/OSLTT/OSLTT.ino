@@ -36,3 +36,5 @@ char input[INPUT_SIZE + 1];
 
 bool LEDState = false;
 
+bool InterruptFlag = false;
+int InterruptCount = 0;

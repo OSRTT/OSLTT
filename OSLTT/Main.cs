@@ -195,7 +195,7 @@ namespace OSLTT
         private void MouseHook_LeftButtonDown(MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
             portWrite("H");
-            Console.WriteLine(mouseStruct.time);
+            Console.WriteLine("Triggered");
         }
 
         /// <summary>

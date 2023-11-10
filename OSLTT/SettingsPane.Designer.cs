@@ -55,13 +55,15 @@ namespace OSLTT
             this.buttonTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.sourceCard = new MaterialSkin.Controls.MaterialCard();
+            this.keyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.externalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioSourceRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.gameExternalRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.keyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.twoPinTriggerSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -226,6 +228,8 @@ namespace OSLTT
             // settingsCard
             // 
             this.settingsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.settingsCard.Controls.Add(this.materialLabel7);
+            this.settingsCard.Controls.Add(this.twoPinTriggerSelect);
             this.settingsCard.Controls.Add(this.materialLabel2);
             this.settingsCard.Controls.Add(this.mouseActionSelect);
             this.settingsCard.Controls.Add(this.materialLabel8);
@@ -243,7 +247,7 @@ namespace OSLTT
             this.settingsCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.settingsCard.Name = "settingsCard";
             this.settingsCard.Padding = new System.Windows.Forms.Padding(14);
-            this.settingsCard.Size = new System.Drawing.Size(340, 353);
+            this.settingsCard.Size = new System.Drawing.Size(340, 407);
             this.settingsCard.TabIndex = 73;
             // 
             // materialLabel2
@@ -406,7 +410,7 @@ namespace OSLTT
             // 
             this.preTestToggle.AutoSize = true;
             this.preTestToggle.Depth = 0;
-            this.preTestToggle.Location = new System.Drawing.Point(23, 303);
+            this.preTestToggle.Location = new System.Drawing.Point(23, 351);
             this.preTestToggle.Margin = new System.Windows.Forms.Padding(0);
             this.preTestToggle.MouseLocation = new System.Drawing.Point(-1, -1);
             this.preTestToggle.MouseState = MaterialSkin.MouseState.HOVER;
@@ -424,7 +428,7 @@ namespace OSLTT
             this.isolateLabel.Depth = 0;
             this.isolateLabel.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.isolateLabel.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.isolateLabel.Location = new System.Drawing.Point(28, 273);
+            this.isolateLabel.Location = new System.Drawing.Point(28, 321);
             this.isolateLabel.MouseState = MaterialSkin.MouseState.HOVER;
             this.isolateLabel.Name = "isolateLabel";
             this.isolateLabel.Size = new System.Drawing.Size(243, 29);
@@ -533,6 +537,23 @@ namespace OSLTT
             this.sourceCard.Size = new System.Drawing.Size(242, 274);
             this.sourceCard.TabIndex = 76;
             // 
+            // keyboardRadio
+            // 
+            this.keyboardRadio.AutoSize = true;
+            this.keyboardRadio.Depth = 0;
+            this.keyboardRadio.Location = new System.Drawing.Point(14, 123);
+            this.keyboardRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.keyboardRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.keyboardRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.keyboardRadio.Name = "keyboardRadio";
+            this.keyboardRadio.Ripple = true;
+            this.keyboardRadio.Size = new System.Drawing.Size(102, 37);
+            this.keyboardRadio.TabIndex = 72;
+            this.keyboardRadio.TabStop = true;
+            this.keyboardRadio.Text = "Keyboard";
+            this.keyboardRadio.UseVisualStyleBackColor = true;
+            this.keyboardRadio.CheckedChanged += new System.EventHandler(this.keyboardRadio_CheckedChanged);
+            // 
             // externalRadio
             // 
             this.externalRadio.AutoSize = true;
@@ -632,22 +653,43 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
-            // keyboardRadio
+            // materialLabel7
             // 
-            this.keyboardRadio.AutoSize = true;
-            this.keyboardRadio.Depth = 0;
-            this.keyboardRadio.Location = new System.Drawing.Point(14, 123);
-            this.keyboardRadio.Margin = new System.Windows.Forms.Padding(0);
-            this.keyboardRadio.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.keyboardRadio.MouseState = MaterialSkin.MouseState.HOVER;
-            this.keyboardRadio.Name = "keyboardRadio";
-            this.keyboardRadio.Ripple = true;
-            this.keyboardRadio.Size = new System.Drawing.Size(102, 37);
-            this.keyboardRadio.TabIndex = 72;
-            this.keyboardRadio.TabStop = true;
-            this.keyboardRadio.Text = "Keyboard";
-            this.keyboardRadio.UseVisualStyleBackColor = true;
-            this.keyboardRadio.CheckedChanged += new System.EventHandler(this.keyboardRadio_CheckedChanged);
+            this.materialLabel7.AutoSize = true;
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel7.Location = new System.Drawing.Point(30, 269);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(91, 19);
+            this.materialLabel7.TabIndex = 58;
+            this.materialLabel7.Text = "2 Pin Trigger";
+            // 
+            // twoPinTriggerSelect
+            // 
+            this.twoPinTriggerSelect.AutoResize = false;
+            this.twoPinTriggerSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.twoPinTriggerSelect.Depth = 0;
+            this.twoPinTriggerSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.twoPinTriggerSelect.DropDownHeight = 174;
+            this.twoPinTriggerSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.twoPinTriggerSelect.DropDownWidth = 121;
+            this.twoPinTriggerSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.twoPinTriggerSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.twoPinTriggerSelect.FormattingEnabled = true;
+            this.twoPinTriggerSelect.IntegralHeight = false;
+            this.twoPinTriggerSelect.ItemHeight = 43;
+            this.twoPinTriggerSelect.Items.AddRange(new object[] {
+            "RISING",
+            "FALLING"});
+            this.twoPinTriggerSelect.Location = new System.Drawing.Point(134, 252);
+            this.twoPinTriggerSelect.MaxDropDownItems = 4;
+            this.twoPinTriggerSelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.twoPinTriggerSelect.Name = "twoPinTriggerSelect";
+            this.twoPinTriggerSelect.Size = new System.Drawing.Size(175, 49);
+            this.twoPinTriggerSelect.StartIndex = 0;
+            this.twoPinTriggerSelect.TabIndex = 59;
+            this.twoPinTriggerSelect.SelectedIndexChanged += new System.EventHandler(this.twoPinTriggerSelect_SelectedIndexChanged);
             // 
             // SettingsPane
             // 
@@ -708,5 +750,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialComboBox mouseActionSelect;
         private MaterialSkin.Controls.MaterialRadioButton keyboardRadio;
+        private MaterialSkin.Controls.MaterialLabel materialLabel7;
+        private MaterialSkin.Controls.MaterialComboBox twoPinTriggerSelect;
     }
 }

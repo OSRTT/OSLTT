@@ -33,7 +33,8 @@ namespace OSLTT
                     testSettings.ClickCount,
                     testSettings.TimeBetween,
                     testSettings.PreTest,
-                    testSettings.MouseAction
+                    testSettings.MouseAction,
+                    testSettings.TwoPinTrigger
                     );
             }
         }
@@ -80,9 +81,14 @@ namespace OSLTT
                 {
                     autoClick = 1;
                 }
+                int trigger = testSettings.TriggerType;
+                if (trigger == 3)
+                {
+                    trigger += testSettings.TwoPinTrigger;
+                }
                 string settings = "I";
                 settings += testSettings.SensorType.ToString();
-                settings += testSettings.TriggerType.ToString();
+                settings += trigger.ToString();
                 settings += autoClick.ToString();
                 settings += testSettings.TestSource.ToString();
                 int clicks = testSettings.ClickCount / 10;
@@ -180,7 +186,7 @@ namespace OSLTT
             // pretest disabled
             // display enabled
             // directx (disabled)
-            ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0);
+            ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0, 0);
             EnableDisable(false, false, false, true, true, false);
         }
 
@@ -190,7 +196,7 @@ namespace OSLTT
             // mouse/keyboard sensor
             // clicks/keypress source
             // audio jack trigger
-            ChangeSettings(2, 3, 2, false, 100, 0.5, false, 0);
+            ChangeSettings(2, 3, 2, false, 100, 0.5, false, 0, 0);
             EnableDisable(false, false, false, false, false, false);
         }
 
@@ -203,7 +209,7 @@ namespace OSLTT
             // pretest on (enabled)
             // display disabled
             // game/external (disabled)
-            ChangeSettings(1, 1, 3, true, 100, 0.5, true, 0);
+            ChangeSettings(1, 1, 3, true, 100, 0.5, true, 0, 0);
             EnableDisable(false, false, false, true, false, false);
         }
 
@@ -215,7 +221,7 @@ namespace OSLTT
             // pretest disabled (for now)
             // display disabled
             // audio clip source
-            ChangeSettings(1, 2, 4, true, 30, 1, false, 0);
+            ChangeSettings(1, 2, 4, true, 30, 1, false, 0, 0);
             EnableDisable(false, false, false, true, false, false);
         }
 
@@ -233,17 +239,18 @@ namespace OSLTT
                     testSettings.ClickCount,
                     testSettings.TimeBetween,
                     testSettings.PreTest,
-                    testSettings.MouseAction
+                    testSettings.MouseAction,
+                    testSettings.TwoPinTrigger
                     );
             }
             else
             {
-                ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0);
+                ChangeSettings(1, 1, 1, true, 100, 0.5, false, 0, 0);
             }
             EnableDisable(true, true, true, true, true, false);
         }
 
-        public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest, int mouseAction)
+        public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest, int mouseAction, int twoPinTrigger)
         {
             MaterialRadioButton triggerType;
             MaterialRadioButton sensorType;
@@ -304,6 +311,7 @@ namespace OSLTT
                 autoClickToggle.Invoke((MethodInvoker)(() => autoClickToggle.Checked = autoClick));
                 preTestToggle.Invoke((MethodInvoker)(() => preTestToggle.Checked = pretest));
                 mouseActionSelect.Invoke((MethodInvoker)(() => mouseActionSelect.SelectedIndex = mouseAction));
+                twoPinTriggerSelect.Invoke((MethodInvoker)(() => twoPinTriggerSelect.SelectedIndex = twoPinTrigger));
             }
             else
             {
@@ -313,6 +321,7 @@ namespace OSLTT
                 autoClickToggle.Checked = autoClick;
                 preTestToggle.Checked = pretest;
                 mouseActionSelect.SelectedIndex = mouseAction;
+                twoPinTriggerSelect.SelectedIndex = twoPinTrigger;
             }
             testSettings.AutoClick = autoClick;
             testSettings.ClickCount = clicks;
@@ -322,6 +331,7 @@ namespace OSLTT
             testSettings.TimeBetween = time;
             testSettings.TriggerType = trigger;
             testSettings.MouseAction = mouseAction;
+            testSettings.TwoPinTrigger = twoPinTrigger;
             this.Invalidate();
         }
 
@@ -784,6 +794,16 @@ namespace OSLTT
                         preTestToggle.Checked = false;
                     }
                 }
+                SaveSettings();
+            }
+        }
+
+        private void twoPinTriggerSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                testSettings.TwoPinTrigger = s.SelectedIndex;
                 SaveSettings();
             }
         }

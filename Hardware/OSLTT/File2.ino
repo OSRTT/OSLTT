@@ -78,6 +78,27 @@ void establishContact() {
   }
 }
 
+void ChangeInterrupt(bool falling) // false == rising, true == falling
+{
+  detachInterrupt(PullDownPin);
+  if (falling)
+  {
+    attachInterrupt(PullDownPin, PullDownInterrupt, FALLING);
+  }
+  else
+  {
+    attachInterrupt(PullDownPin, PullDownInterrupt, RISING);
+  }
+}
+
+void PullDownInterrupt()
+{
+  InterruptFlag = true;
+  if (!InterruptFlag && InterruptCount == 0)
+  {
+    InterruptCount++;
+  }
+}
 
 int getADCValue(int count, int pin = 0) {
   uint32_t value = 0;
@@ -312,6 +333,7 @@ void runClickTest() {
 
 void runClickTest2Pin()
 {
+  InterruptFlag = false;
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
       input[0] = 'X';
@@ -320,10 +342,9 @@ void runClickTest2Pin()
     
     //Serial.println(current); //debugging use only
     
-    if (!digitalRead(PullDownPin)) {
-      // keyboard/mouse mode. Listen for click, wait for PC to report click.
+    if (InterruptFlag) {
       input[0] = '0';
-      
+
       long start = micros();
       while (input[0] != 'H' && input[0] != 'X') {
         getClickChar();
@@ -338,6 +359,8 @@ void runClickTest2Pin()
       // sync clocks again
       toggleLED(false);
       delay(100);
+      InterruptFlag = false;
+      InterruptCount = 0;
     }
   }
 }

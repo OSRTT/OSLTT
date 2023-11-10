@@ -16,6 +16,7 @@ void setup() {
   pinMode(PullDownPin, INPUT_PULLDOWN);
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
+  ChangeInterrupt(false);
 
   //ADC_Init();
   analogReadResolution(14);
@@ -111,6 +112,15 @@ void loop() {
 
     // Trigger type - bit 2
     inputType = convertHexToDec(input[2]) - 1;
+    if (inputType == 3)
+    {
+      ChangeInterrupt(true);
+      inputType--;
+    }
+    else if (inputType == 2)
+    {
+      ChangeInterrupt(false);
+    }
 
     // Auto Click - bit 3
     if (input[3] == '1') {
@@ -218,14 +228,12 @@ void loop() {
     Serial.print("number of tests ran: ");
     Serial.println(counter);
   } else if (input[0] == 'Z') {
-    while (input[0] != 'X')
+    while (digitalRead(ButtonPin) == LOW)
     {
-      getSerialChars();
-      if (digitalRead(ButtonPin))
+      if (InterruptFlag)
       {
-        Mouse.move(127, 0);
-        delay(1000);
-        Mouse.move(-127, 0);
+        Serial.println("Interrupted");
+        InterruptFlag = false;
       }
       
     }

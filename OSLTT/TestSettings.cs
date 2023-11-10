@@ -18,6 +18,7 @@ namespace OSLTT
         public double TimeBetween { get; set; }
         public bool PreTest { get; set; }
         public int MouseAction { get; set; }
+        public int TwoPinTrigger { get; set; }
 
         public ProcessData.resultType ResultType { get; set; }
 
