@@ -15,6 +15,7 @@ namespace OSLTT
 {
     public partial class debugForm : MaterialForm
     {
+        public Main mainWindow;
         public debugForm()
         {
             InitializeComponent();
@@ -72,6 +73,14 @@ namespace OSLTT
         private void closeBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void testMicBtn_Click(object sender, EventArgs e)
+        {
+            if (mainWindow != null)
+            {
+                mainWindow.portWrite("W3");
+            }
         }
     }
 }

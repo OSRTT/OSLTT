@@ -28,7 +28,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "0.9";
+        private string softwareVersion = "1.0";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 
@@ -122,6 +122,7 @@ namespace OSLTT
             connectThread.Start();
 
             CleanupDevTools();
+            debug.mainWindow = this;
 
             UpdateHandler.AnnouncementText announcementText = UpdateHandler.GetAnnouncements(path);
             if (announcementText != null)
@@ -573,6 +574,11 @@ namespace OSLTT
                         // end test
                         startTestBtn_Click(null, null);
                     }
+                    else if (message.Contains("FINISHED")) 
+                    {
+                        // end test
+                        startTestBtn_Click(null, null);
+                    }
                     else if (message.Contains("PRETEST:"))
                     {
                         // Results Data
@@ -640,6 +646,12 @@ namespace OSLTT
                     else if (message.Contains("CLICKTEST"))
                     {
                         clickTestBox_Click(null, null);
+                    }
+                    else if (message.Contains("MICTEST:"))
+                    {
+                        string message2 = message.Remove(0, 8);
+                        File.WriteAllText(resultsPath + "\\micdump.csv", message2);
+                        debug.AddToLog("Saved Mic Dump Data to " + resultsPath + "\\micdump.csv");
                     }
                     else
                     {
@@ -902,6 +914,7 @@ namespace OSLTT
             if (debug.IsDisposed)
             {
                 debug = new debugForm();
+                debug.mainWindow = this;
             }
             debug.Show();
         }

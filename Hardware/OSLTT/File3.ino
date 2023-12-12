@@ -72,6 +72,24 @@ void loop() {
           runClickTest2Pin();
         }
         break;
+      } else if (inputType == 1 && sensorType == 0) // mic trigger, light sensor data source. Console testing mode
+      {
+        micBaseline = setMicBaseline();
+        while (input[0] != 'X') {
+          if (digitalRead(ButtonPin)) {
+            input[0] = 'X';
+            toggleLED(false);
+            Serial.println("FINISHED");
+          }
+          if (analogRead(1) > micBaseline)
+          {
+            autoRunTest(false, 12000);
+            toggleLED(true);
+            getSerialChars();
+            delay(300);
+            toggleLED(false);
+          }
+        }
       } else if (inputType == 2) {
         while (input[0] != 'X') {
           getSerialChars();
@@ -175,18 +193,42 @@ void loop() {
       delay(100);
     }
   } else if (input[0] == 'W') {
+    if (input[1] == '1')
+    {
+      while (!digitalRead(ButtonPin)) {
+        delay(1);
+      }
+      long fourteen = fillADCBufferSlower(ArraySize, 1);
 
-    while (!digitalRead(ButtonPin)) {
-      delay(1);
+      for (int i = 0; i < ArraySize; i++) {
+        Serial.print(adcBuff[i]);
+        Serial.print(",");
+      }
+      Serial.println();
     }
-    long fourteen = fillADCBufferSlower(ArraySize, 1);
+    else if (input[1]=='2')
+    {
+      while (!digitalRead(ButtonPin)) {
+        delay(1);
+      }
+      long fourteen = fillADCBuffer(ArraySize, 0);
 
-    for (int i = 0; i < ArraySize; i++) {
-      Serial.print(adcBuff[i]);
-      Serial.print(",");
-    }
-    Serial.println();
-    Serial.println("0");
+      for (int i = 0; i < ArraySize; i++) {
+        Serial.print(adcBuff[i]);
+        Serial.print(",");
+      }
+      Serial.println();
+      }
+      else if (input[1]=='3')
+    {
+      long fourteen = fillADCBufferSlower(ArraySize, 1);
+      Serial.print("MICTEST:");
+      for (int i = 0; i < ArraySize; i++) {
+        Serial.print(adcBuff[i]);
+        Serial.print(",");
+      }
+      Serial.println();
+      }
   } else if (input[0] == 'Y') {
     Serial.setTimeout(100);
     int counter = 100;

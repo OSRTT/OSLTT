@@ -58,8 +58,6 @@ namespace OSLTT
                 try
                 {
                     string latest = wc.DownloadString(releasesUrl);
-                    //object jsonData = JsonConvert.DeserializeObject(latest);
-                    //Console.WriteLine(jsonData);
                     string[] splitMessage = latest.Split('}');
                     foreach (var s in splitMessage)
                     {

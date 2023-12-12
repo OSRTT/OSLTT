@@ -277,18 +277,20 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
   } 
 }
 
-void runClickTest() {
-  toggleLED(false);
-  Serial.setTimeout(100);
-
+int setMicBaseline()
+{
   int baseline = getADCValue(500, 1);
   int baselineAdjusted = 16380 - baseline;
     baselineAdjusted *= 0.8;
     baselineAdjusted += baseline;
-  Serial.print("baseline: ");
-  Serial.println(baseline);
-  Serial.print("baselineAdjusted: ");
-  Serial.println(baselineAdjusted);
+  return baselineAdjusted;
+}
+
+void runClickTest() {
+  toggleLED(false);
+  Serial.setTimeout(100);
+
+  micBaseline = setMicBaseline();
   int counter = 0;
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
@@ -304,7 +306,7 @@ void runClickTest() {
     counter++;
     //Serial.println(current); //debugging use only
     
-    if (current > baselineAdjusted) {
+    if (current > micBaseline) {
       // keyboard/mouse mode. Listen for click, wait for PC to report click.
       input[0] = '0';
       //Serial.println(current); // remove after debugging

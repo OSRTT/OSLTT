@@ -14,7 +14,7 @@ int inByte = 0;         // incoming serial byte
 
 uint16_t adcBuff[ArraySize];
  
-float firmwareVersion = 1.0;
+float firmwareVersion = 1.1;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 
@@ -38,3 +38,5 @@ bool LEDState = false;
 
 bool InterruptFlag = false;
 int InterruptCount = 0;
+
+int micBaseline = 16000;

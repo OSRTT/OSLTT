@@ -405,11 +405,11 @@ namespace OSLTT
                 if (s.Checked)
                 {
                     testSettings.TriggerType = 2;
-                    if (!clickKeypressRadio.Checked)
+                    if (!clickKeypressRadio.Checked || !externalRadio.Checked)
                     {
                         clickKeypressRadio.Checked = true;
                     }
-                    if (!mouseKeyboardRadio.Checked)
+                    if (!mouseKeyboardRadio.Checked || !lightSensorRadio.Checked)
                     {
                         mouseKeyboardRadio.Checked = true;
                     }
@@ -471,10 +471,6 @@ namespace OSLTT
                     if (testSettings.TestSource == 2 && testSettings.TriggerType == 3)
                     {
                         externalRadio.Checked = true;
-                    }
-                    if (testSettings.TriggerType == 2)
-                    {
-                        buttonTriggerRadio.Checked = true;
                     }
                     if (testSettings.TestSource != 1 && testSettings.TestSource != 3 && testSettings.TestSource != 5)
                     {
@@ -745,7 +741,7 @@ namespace OSLTT
             {
                 if (s.Checked)
                 {
-                    testSettings.SensorType = 3;
+                    /*testSettings.SensorType = 3;
                     if (!buttonTriggerRadio.Checked)
                     {
                         buttonTriggerRadio.Checked = true;
@@ -753,7 +749,7 @@ namespace OSLTT
                     if (!lightSensorRadio.Checked)
                     {
                         lightSensorRadio.Checked = true;
-                    }
+                    }*/
                 }
                 SaveSettings();
             }
