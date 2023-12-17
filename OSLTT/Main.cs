@@ -245,6 +245,11 @@ namespace OSLTT
                 {
                     SetDeviceStatus(0);
                     portConnected = false;
+                    try
+                    {
+                        testThread.Abort();
+                    }
+                    catch { }
                     if (this.fwLbl.IsHandleCreated)
                     {
                         this.fwLbl.Invoke((MethodInvoker)(() => this.fwLbl.Text = "N/A"));
@@ -652,6 +657,34 @@ namespace OSLTT
                         string message2 = message.Remove(0, 8);
                         File.WriteAllText(resultsPath + "\\micdump.csv", message2);
                         debug.AddToLog("Saved Mic Dump Data to " + resultsPath + "\\micdump.csv");
+                        if (Debugger.IsAttached)
+                        {
+                            string[] values = message2.Split(',');
+                            List<int> intValues = new List<int>();
+                            for (int i = 0; i < values.Length - 1; i++)
+                            {
+                                if (values[i] == "0")
+                                {
+                                    intValues.Add(0);
+                                }
+                                else if (values[i] != "")
+                                {
+                                    try
+                                    {
+                                        intValues.Add(int.Parse(values[i]));
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine(values[i]);
+                                    }
+                                }
+                                else { continue; }
+                            }
+                            if (intValues.Max() > 12000)
+                            {
+                                debug.AddToLog("Problem, check file");
+                            }
+                        }
                     }
                     else
                     {
@@ -1000,10 +1033,12 @@ namespace OSLTT
             }
             else
             {
+                Console.WriteLine("Test thread alive: " +testThread.IsAlive);
                 // End test
                 portWrite("X");
                 stopTest = true;
                 toggleMouseKeyboardBoxes(false);
+                SetDeviceStatus(1);
 
                 SaveResultsToFile();
                 CFuncs.removeResultsFolder(resultsFolderPath); // if test failed to produce data, remove folder
@@ -1012,6 +1047,8 @@ namespace OSLTT
                     Thread inputLagThread = new Thread(new ThreadStart(processInputLagData));
                     inputLagThread.Start();
                 }
+                try { testThread.Abort(); } catch { } // added this as a catch incase the thread is still hanging around
+
             }
         }
 
@@ -1295,8 +1332,9 @@ namespace OSLTT
 
             //portWrite("Z");
 
-            runPretestButton.Enabled = !runPretestButton.Enabled;
+            //runPretestButton.Enabled = !runPretestButton.Enabled;
 
+            Console.WriteLine(testThread.IsAlive);
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)

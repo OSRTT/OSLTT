@@ -44,6 +44,7 @@ uint32_t getBootProt()
 {
   uint32_t *NVM_FUSES = (uint32_t *)NVMCTRL_AUX0_ADDRESS;
 
+
     uint32_t fuses[2];
 
     fuses[0] = NVM_FUSES[0];
