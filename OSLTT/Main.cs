@@ -247,7 +247,7 @@ namespace OSLTT
                     portConnected = false;
                     try
                     {
-                        testThread.Abort();
+                        //testThread.Abort();
                     }
                     catch { }
                     if (this.fwLbl.IsHandleCreated)
@@ -579,11 +579,6 @@ namespace OSLTT
                         // end test
                         startTestBtn_Click(null, null);
                     }
-                    else if (message.Contains("FINISHED")) 
-                    {
-                        // end test
-                        startTestBtn_Click(null, null);
-                    }
                     else if (message.Contains("PRETEST:"))
                     {
                         // Results Data
@@ -642,6 +637,11 @@ namespace OSLTT
                         Thread inputLagThread = new Thread(new ThreadStart(processPretestData)); // change to processPretest?
                         inputLagThread.Start();
 
+                    }
+                    else if (message.Contains("FINISHED"))
+                    {
+                        // end test
+                        startTestBtn_Click(null, null);
                     }
                     else if (message.Contains("SINGLE FIRE")) // depricated? 
                     {
