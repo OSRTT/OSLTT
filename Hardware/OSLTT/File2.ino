@@ -195,6 +195,10 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     {
       Mouse.move(127, 0);
     }
+    else if (MouseAction == 3)
+    {
+      Mouse.press(MOUSE_LEFT);
+    }
     else
     {
       Keyboard.write((char)32);
@@ -212,6 +216,10 @@ void runTest(int sampleCount = 9000, String textType = "RES:", bool audioTest = 
     timeTaken = fillADCBuffer(sampleCount, 0); 
   }
   toggleLED(true);
+  if (MouseAction == 3)
+  {
+    Mouse.release(MOUSE_LEFT);
+  }
   long localStartValue = 0;
   int triggerSampleNum = 0;
   Serial.print(textType);

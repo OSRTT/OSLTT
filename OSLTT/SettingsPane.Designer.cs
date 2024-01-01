@@ -39,6 +39,8 @@ namespace OSLTT
             this.lightSensorRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.settingsCard = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.twoPinTriggerSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.mouseActionSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
@@ -62,8 +64,6 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.twoPinTriggerSelect = new MaterialSkin.Controls.MaterialComboBox();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -250,6 +250,44 @@ namespace OSLTT
             this.settingsCard.Size = new System.Drawing.Size(340, 407);
             this.settingsCard.TabIndex = 73;
             // 
+            // materialLabel7
+            // 
+            this.materialLabel7.AutoSize = true;
+            this.materialLabel7.Depth = 0;
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel7.Location = new System.Drawing.Point(30, 269);
+            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(91, 19);
+            this.materialLabel7.TabIndex = 58;
+            this.materialLabel7.Text = "2 Pin Trigger";
+            // 
+            // twoPinTriggerSelect
+            // 
+            this.twoPinTriggerSelect.AutoResize = false;
+            this.twoPinTriggerSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.twoPinTriggerSelect.Depth = 0;
+            this.twoPinTriggerSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.twoPinTriggerSelect.DropDownHeight = 174;
+            this.twoPinTriggerSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.twoPinTriggerSelect.DropDownWidth = 121;
+            this.twoPinTriggerSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.twoPinTriggerSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.twoPinTriggerSelect.FormattingEnabled = true;
+            this.twoPinTriggerSelect.IntegralHeight = false;
+            this.twoPinTriggerSelect.ItemHeight = 43;
+            this.twoPinTriggerSelect.Items.AddRange(new object[] {
+            "RISING",
+            "FALLING"});
+            this.twoPinTriggerSelect.Location = new System.Drawing.Point(134, 252);
+            this.twoPinTriggerSelect.MaxDropDownItems = 4;
+            this.twoPinTriggerSelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.twoPinTriggerSelect.Name = "twoPinTriggerSelect";
+            this.twoPinTriggerSelect.Size = new System.Drawing.Size(175, 49);
+            this.twoPinTriggerSelect.StartIndex = 0;
+            this.twoPinTriggerSelect.TabIndex = 59;
+            this.twoPinTriggerSelect.SelectedIndexChanged += new System.EventHandler(this.twoPinTriggerSelect_SelectedIndexChanged);
+            // 
             // materialLabel2
             // 
             this.materialLabel2.AutoSize = true;
@@ -279,7 +317,8 @@ namespace OSLTT
             this.mouseActionSelect.Items.AddRange(new object[] {
             "Left Click",
             "(L) Small Move",
-            "(R) Small Move"});
+            "(R) Small Move",
+            "Hold Left Click"});
             this.mouseActionSelect.Location = new System.Drawing.Point(134, 190);
             this.mouseActionSelect.MaxDropDownItems = 4;
             this.mouseActionSelect.MouseState = MaterialSkin.MouseState.OUT;
@@ -652,44 +691,6 @@ namespace OSLTT
             this.materialLabel3.Size = new System.Drawing.Size(129, 29);
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
-            // 
-            // materialLabel7
-            // 
-            this.materialLabel7.AutoSize = true;
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel7.Location = new System.Drawing.Point(30, 269);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(91, 19);
-            this.materialLabel7.TabIndex = 58;
-            this.materialLabel7.Text = "2 Pin Trigger";
-            // 
-            // twoPinTriggerSelect
-            // 
-            this.twoPinTriggerSelect.AutoResize = false;
-            this.twoPinTriggerSelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.twoPinTriggerSelect.Depth = 0;
-            this.twoPinTriggerSelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.twoPinTriggerSelect.DropDownHeight = 174;
-            this.twoPinTriggerSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.twoPinTriggerSelect.DropDownWidth = 121;
-            this.twoPinTriggerSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.twoPinTriggerSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.twoPinTriggerSelect.FormattingEnabled = true;
-            this.twoPinTriggerSelect.IntegralHeight = false;
-            this.twoPinTriggerSelect.ItemHeight = 43;
-            this.twoPinTriggerSelect.Items.AddRange(new object[] {
-            "RISING",
-            "FALLING"});
-            this.twoPinTriggerSelect.Location = new System.Drawing.Point(134, 252);
-            this.twoPinTriggerSelect.MaxDropDownItems = 4;
-            this.twoPinTriggerSelect.MouseState = MaterialSkin.MouseState.OUT;
-            this.twoPinTriggerSelect.Name = "twoPinTriggerSelect";
-            this.twoPinTriggerSelect.Size = new System.Drawing.Size(175, 49);
-            this.twoPinTriggerSelect.StartIndex = 0;
-            this.twoPinTriggerSelect.TabIndex = 59;
-            this.twoPinTriggerSelect.SelectedIndexChanged += new System.EventHandler(this.twoPinTriggerSelect_SelectedIndexChanged);
             // 
             // SettingsPane
             // 
