@@ -1033,7 +1033,7 @@ namespace OSLTT
             }
             else
             {
-                Console.WriteLine("Test thread alive: " +testThread.IsAlive);
+                //Console.WriteLine("Test thread alive: " +testThread.IsAlive);
                 // End test
                 portWrite("X");
                 stopTest = true;
