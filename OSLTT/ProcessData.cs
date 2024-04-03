@@ -79,7 +79,7 @@ namespace OSLTT
                     double SampleTime = ((double)TimeTaken / (double)SampleCount); // Get the time taken between samples
 
                     // Clean up noisy data using moving average function
-                    /*int period = 20;
+                    int period = 10;
                     int[] buffer = new int[period];
                     int[] averagedSamples = new int[samples.Length];
                     int current_index = 0;
@@ -96,8 +96,11 @@ namespace OSLTT
                     }
 
                     samples = averagedSamples.Skip(period).ToArray(); //Moving average spoils the first 10 samples so currently removing them.
-                    */
-                    // removed smoothing to not spoil data/accuracy and it's just not needed.
+                    /*foreach (var i in samples)
+                    {
+                        Console.Write(i + ",");
+                    }
+                    Console.WriteLine();*/
 
                     // Initialise in-use variables
                     int transStart = 0;
@@ -108,7 +111,8 @@ namespace OSLTT
                     int endMin = samples[samples.Length - 10]; // Initialise these variables with a real value 
 
                     // Build start min/max to compare against
-                    for (int l = 0; l < 50; l++) //CHANGE TO 180 FOR RUN 2 DATA
+                    int minMaxCount = 50;  // 50 samples at 15.27us = 763us. Under 1ms. More = more stable, but longer minimum time
+                    for (int l = 0; l < minMaxCount; l++)
                     {
                         if (samples[l] < startMin)
                         {
@@ -119,9 +123,55 @@ namespace OSLTT
                             startMax = samples[l];
                         }
                     }
+                    for (int l = samples.Length - 1; l > samples.Length - minMaxCount; l--) 
+                    {
+                        if (samples[l] < endMin)
+                        {
+                            endMin = samples[l];
+                        }
+                        else if (samples[l] > endMax)
+                        {
+                            endMax = samples[l];
+                        }
+                    }
 
-
-                    if (startMax < endMax)
+                    //Check if the data contains a pulse that's 20% greater than BOTH the start and end maximums
+                    if (samples.Max() > (startMax * 1.2) && samples.Max() > (endMax * 1.2))
+                    {
+                        Console.WriteLine("Pulse Detected");
+                        // Search for where the result starts transitioning - start is almost always less sensitive
+                        for (int j = 0; j < samples.Length; j++)
+                        {
+                            if (samples[j] > (startMax * 1.2))
+                            {
+                                if ((samples[j + 50] > (samples[j] * 1.5) || samples[j + 56] > (samples[j] *1.5))
+                                     && (samples[j + 100] > (samples[j] *1.5) || samples[j + 106] > (samples[j] *1.5))
+                                     && (samples[j + 125] > (samples[j] *2) || samples[j + 131] > (samples[j] *2))
+                                     && (samples[j + 150] > (samples[j] *2) || samples[j + 156] > (samples[j] *2))) 
+                                {
+                                    transStart = j;
+                                    break;
+                                }
+                                else if ((samples[j + 250] > (samples[j] * 1.5) || samples[j + 256] > (samples[j] * 1.5))
+                                     && (samples[j + 300] > (samples[j] * 1.5) || samples[j + 306] > (samples[j] * 1.5))
+                                     && (samples[j + 325] > (samples[j] * 1.75) || samples[j + 331] > (samples[j] * 1.75))
+                                     && (samples[j + 350] > (samples[j] * 2) || samples[j + 356] > (samples[j] * 2))) // catch for slow transitions
+                                {
+                                    transStart = j;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (samples[j] > startMax)
+                                    {
+                                        startMax = samples[j];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //Rising transition
+                    else if (startMax < endMax)
                     {
                         // Search for where the result starts transitioning - start is almost always less sensitive
                         for (int j = 0; j < samples.Length; j++)
@@ -146,7 +196,7 @@ namespace OSLTT
                             }
                         }
                     }
-                    else
+                    else // falling transition
                     {
                         for (int j = 0; j < samples.Length; j++)
                         {
