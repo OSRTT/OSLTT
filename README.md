@@ -5,7 +5,7 @@ An open source latency testing tool project - here you'll find the desktop softw
 <a href="https://osrtt.com" target="_blank">![Buy a kit](buy-a-kit.png)</a>
 
 ## Get Started
-- Download the most recent release from the <a href="">releases page</a>.
+- Download the most recent release from the <a href="https://github.com/OSRTT/OSLTT/releases/latest">releases page</a>.
 - Run the installer, which will install to C:\OSLTT
 - Launch the software
 - Allow it to install the drivers for the board
