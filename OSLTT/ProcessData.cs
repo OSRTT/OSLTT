@@ -134,7 +134,7 @@ namespace OSLTT
                             endMax = samples[l];
                         }
                     }
-
+                                        
                     //Check if the data contains a pulse that's 20% greater than BOTH the start and end maximums
                     if (samples.Max() > (startMax * 1.2) && samples.Max() > (endMax * 1.2))
                     {
@@ -171,7 +171,7 @@ namespace OSLTT
                         }
                     }
                     //Rising transition
-                    else if (startMax < endMax)
+                    else if (startMax < endMax || item.ResultType == resultType.Audio)
                     {
                         // Search for where the result starts transitioning - start is almost always less sensitive
                         for (int j = 0; j < samples.Length; j++)
