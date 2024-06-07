@@ -189,5 +189,17 @@ namespace OSLTT.Properties {
                 this["customTestSettings"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F10")]
+        public string hotkey {
+            get {
+                return ((string)(this["hotkey"]));
+            }
+            set {
+                this["hotkey"] = value;
+            }
+        }
     }
 }

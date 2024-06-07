@@ -56,14 +56,18 @@ namespace OSLTT
             this.monitorPresetBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
-            this.settingsPane1 = new OSLTT.SettingsPane();
             this.runPretestButton = new MaterialSkin.Controls.MaterialButton();
+            this.settingsPane1 = new OSLTT.SettingsPane();
+            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
+            this.hotkeySelect = new MaterialSkin.Controls.MaterialComboBox();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
             this.materialCard1.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.materialCard4.SuspendLayout();
+            this.materialCard5.SuspendLayout();
             this.SuspendLayout();
             // 
             // deviceStatusPanel
@@ -171,7 +175,7 @@ namespace OSLTT
             this.materialCard2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
             this.materialCard2.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard2.Size = new System.Drawing.Size(884, 77);
+            this.materialCard2.Size = new System.Drawing.Size(637, 77);
             this.materialCard2.TabIndex = 45;
             // 
             // notesBox
@@ -184,7 +188,7 @@ namespace OSLTT
             this.notesBox.HideSelection = true;
             this.notesBox.Hint = "Test Notes";
             this.notesBox.LeadingIcon = null;
-            this.notesBox.Location = new System.Drawing.Point(367, 13);
+            this.notesBox.Location = new System.Drawing.Point(315, 13);
             this.notesBox.MaxLength = 32767;
             this.notesBox.MouseState = MaterialSkin.MouseState.OUT;
             this.notesBox.Name = "notesBox";
@@ -196,7 +200,7 @@ namespace OSLTT
             this.notesBox.SelectionLength = 0;
             this.notesBox.SelectionStart = 0;
             this.notesBox.ShortcutsEnabled = true;
-            this.notesBox.Size = new System.Drawing.Size(499, 48);
+            this.notesBox.Size = new System.Drawing.Size(305, 48);
             this.notesBox.TabIndex = 5;
             this.notesBox.TabStop = false;
             this.notesBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -225,7 +229,7 @@ namespace OSLTT
             this.deviceNameBox.SelectionLength = 0;
             this.deviceNameBox.SelectionStart = 0;
             this.deviceNameBox.ShortcutsEnabled = true;
-            this.deviceNameBox.Size = new System.Drawing.Size(336, 48);
+            this.deviceNameBox.Size = new System.Drawing.Size(295, 48);
             this.deviceNameBox.TabIndex = 3;
             this.deviceNameBox.TabStop = false;
             this.deviceNameBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -513,13 +517,6 @@ namespace OSLTT
             this.materialCard4.Size = new System.Drawing.Size(417, 72);
             this.materialCard4.TabIndex = 61;
             // 
-            // settingsPane1
-            // 
-            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
-            this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
-            this.settingsPane1.TabIndex = 59;
-            // 
             // runPretestButton
             // 
             this.runPretestButton.AutoSize = false;
@@ -529,7 +526,7 @@ namespace OSLTT
             this.runPretestButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.runPretestButton.HighEmphasis = true;
             this.runPretestButton.Icon = null;
-            this.runPretestButton.Location = new System.Drawing.Point(18, 9);
+            this.runPretestButton.Location = new System.Drawing.Point(18, 8);
             this.runPretestButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.runPretestButton.MouseState = MaterialSkin.MouseState.HOVER;
             this.runPretestButton.Name = "runPretestButton";
@@ -542,11 +539,70 @@ namespace OSLTT
             this.runPretestButton.UseVisualStyleBackColor = true;
             this.runPretestButton.Click += new System.EventHandler(this.runPretestButton_Click);
             // 
+            // settingsPane1
+            // 
+            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
+            this.settingsPane1.Name = "settingsPane1";
+            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
+            this.settingsPane1.TabIndex = 59;
+            // 
+            // materialCard5
+            // 
+            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard5.Controls.Add(this.hotkeySelect);
+            this.materialCard5.Controls.Add(this.materialLabel9);
+            this.materialCard5.Depth = 0;
+            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard5.Location = new System.Drawing.Point(663, 228);
+            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard5.Name = "materialCard5";
+            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard5.Size = new System.Drawing.Size(235, 77);
+            this.materialCard5.TabIndex = 77;
+            // 
+            // hotkeySelect
+            // 
+            this.hotkeySelect.AutoResize = false;
+            this.hotkeySelect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.hotkeySelect.Depth = 0;
+            this.hotkeySelect.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.hotkeySelect.DropDownHeight = 174;
+            this.hotkeySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.hotkeySelect.DropDownWidth = 121;
+            this.hotkeySelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.hotkeySelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.hotkeySelect.FormattingEnabled = true;
+            this.hotkeySelect.IntegralHeight = false;
+            this.hotkeySelect.ItemHeight = 43;
+            this.hotkeySelect.Location = new System.Drawing.Point(99, 13);
+            this.hotkeySelect.MaxDropDownItems = 4;
+            this.hotkeySelect.MouseState = MaterialSkin.MouseState.OUT;
+            this.hotkeySelect.Name = "hotkeySelect";
+            this.hotkeySelect.Size = new System.Drawing.Size(120, 49);
+            this.hotkeySelect.StartIndex = 0;
+            this.hotkeySelect.TabIndex = 67;
+            this.hotkeySelect.SelectedIndexChanged += new System.EventHandler(this.hotkeySelect_SelectedIndexChanged);
+            // 
+            // materialLabel9
+            // 
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel9.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel9.Location = new System.Drawing.Point(13, 23);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(76, 29);
+            this.materialLabel9.TabIndex = 66;
+            this.materialLabel9.Text = "Hotkey";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 735);
+            this.ClientSize = new System.Drawing.Size(911, 742);
+            this.Controls.Add(this.materialCard5);
             this.Controls.Add(this.settingsPane1);
             this.Controls.Add(this.materialCard4);
             this.Controls.Add(this.materialCard3);
@@ -571,6 +627,8 @@ namespace OSLTT
             this.materialCard3.ResumeLayout(false);
             this.materialCard3.PerformLayout();
             this.materialCard4.ResumeLayout(false);
+            this.materialCard5.ResumeLayout(false);
+            this.materialCard5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -603,6 +661,9 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialCard materialCard3;
         private MaterialSkin.Controls.MaterialCard materialCard4;
         private MaterialSkin.Controls.MaterialButton runPretestButton;
+        private MaterialSkin.Controls.MaterialCard materialCard5;
+        private MaterialSkin.Controls.MaterialComboBox hotkeySelect;
+        private MaterialSkin.Controls.MaterialLabel materialLabel9;
     }
 }
 

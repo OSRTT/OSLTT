@@ -115,6 +115,7 @@ namespace OSLTT
             settingsPane1.mainWindow = this;
             SetDeviceStatus(0);
             toggleMouseKeyboardBoxes(false);
+            fillHotkeyList();
             UpdateFirmware.initialSetup();
             downloadedFirmwareVersion = UpdateFirmware.getNewFirmwareFile(path);
 
@@ -176,8 +177,18 @@ namespace OSLTT
         private void Main_Load(object sender, EventArgs e)
         {
             hotKeys.KeyPressed += HotKeyPressed;
-            var k = hotKeys.Register(Key.F10, System.Windows.Input.ModifierKeys.None);
-            hotKeyList.Add(k);
+            try
+            {
+                var k = hotKeys.Register(hotkeysDict[Properties.Settings.Default.hotkey], System.Windows.Input.ModifierKeys.None);
+                hotKeyList.Add(k);
+            }
+            catch (Exception ex)
+            {
+                CFuncs.showMessageBox("Error Registering Hotkey",
+                    "Error: Unable to register hotkey. Please pick a different key not already in use.",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error
+                    );
+            }
 
             mouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
             keyboardHook.KeyDown += KeyboardHook_KeyDown;
@@ -954,7 +965,7 @@ namespace OSLTT
 
         private void HotKeyPressed(object sender, KeyPressedEventArgs e)
         {
-            if (e.HotKey.Key == Key.F10)
+            if (e.HotKey.Key == hotKeyList[0].Key)
             {
                 if (startTestBtn.Enabled)
                 {
@@ -1369,7 +1380,55 @@ namespace OSLTT
             res.Show();
         }
 
-
+        private void hotkeySelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                try
+                {
+                    string selected = s.Items[s.SelectedIndex].ToString();
+                    Key newKey = hotkeysDict[selected];
+                    if (hotKeyList.Count > 0)
+                    {
+                        hotKeys.Unregister(hotKeyList[0].Key, System.Windows.Input.ModifierKeys.None);
+                        hotKeyList.Clear();
+                    }
+                    var k = hotKeys.Register(newKey, System.Windows.Input.ModifierKeys.None);
+                    hotKeyList.Add(k);
+                    Properties.Settings.Default.hotkey = selected;
+                    Properties.Settings.Default.Save();
+                }
+                catch { }
+            }   
+        }
+        public Dictionary<string, Key> hotkeysDict = new Dictionary<string, Key> {
+                { "F1", Key.F1 },
+                { "F2", Key.F2 },
+                { "F3", Key.F3 },
+                { "F4", Key.F4 },
+                { "F5", Key.F5 },
+                { "F6", Key.F6 },
+                { "F7", Key.F7 },
+                { "F8", Key.F8 },
+                { "F9", Key.F9 },
+                { "F10", Key.F10 },
+                { "F11", Key.F11 },
+                { "F12", Key.F12 },
+            };
+        private void fillHotkeyList()
+        {
+            var preset = Properties.Settings.Default.hotkey;
+            int count = 0; // I know I could do this with a for loop but it's midnight I cba
+            int sel = 0;
+            foreach (var i in hotkeysDict)
+            {
+                hotkeySelect.Items.Add(i.Key);
+                if (i.Key != preset) { count++; }
+                else { sel = count; }
+            }
+            hotkeySelect.SelectedIndex = sel;
+        }
     }
 
 }

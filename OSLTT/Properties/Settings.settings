@@ -44,5 +44,8 @@
     <Setting Name="customTestSettings" Type="OSLTT.TestSettings" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="hotkey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

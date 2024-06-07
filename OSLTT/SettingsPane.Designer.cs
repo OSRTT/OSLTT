@@ -701,7 +701,7 @@ namespace OSLTT
             this.Controls.Add(this.triggerCard);
             this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(866, 428);
+            this.Size = new System.Drawing.Size(866, 427);
             this.displayCard.ResumeLayout(false);
             this.displayCard.PerformLayout();
             this.sensorCard.ResumeLayout(false);
