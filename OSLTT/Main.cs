@@ -29,9 +29,10 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.4";
+        private string softwareVersion = "1.45";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
+        public static int boardType = 0;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
@@ -357,8 +358,14 @@ namespace OSLTT
                             connectToBoard(p);
                             Thread.Sleep(1000);
                             SetDeviceStatus(1);
-                            if (board.Contains("feather")) { settingsPane1.CheckBoardType(1); }
-                            else { settingsPane1.CheckBoardType(); }
+                            if (board.Contains("feather")) { 
+                                settingsPane1.CheckBoardType(1);
+                                boardType = 1;
+                            }
+                            else { 
+                                settingsPane1.CheckBoardType();
+                                boardType = 0;
+                            }
                             Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
                             syncThread.Start();
                             //setBoardSerial();
@@ -391,12 +398,19 @@ namespace OSLTT
                     }
                     else
                     {
-                        UpdateFirmware.FirmwareReport fw = UpdateFirmware.UpdateDeviceFirmware(path, p);
+                        UpdateFirmware.FirmwareReport fw = UpdateFirmware.UpdateDeviceFirmware(path, p, boardType);
                         SetDeviceStatus(fw.State);
                         debug.AddToLog(fw.ErrorMessage);
                         if (fw.State == 4)
                         {
                             CFuncs.showMessageBox("Firmware update failed", fw.ErrorMessage, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        if (fw.State == 3)
+                        {
+                            if (port.IsOpen)
+                            {
+                                port.Close();
+                            }
                         }
                     }
                     fwUpdateRunning = false;

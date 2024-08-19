@@ -69,7 +69,8 @@ namespace OSLTT
                                 if (st.StartsWith("https://github.com/") && st.Contains(".ino.bin")) // change to .ino.bin for prod
                                 {
                                     newFirmwareUrl = st;
-                                    break;
+                                    string[] filename = newFirmwareUrl.Split('/');
+                                    wc.DownloadFile(newFirmwareUrl, localPath + @"\\arduinoCLI\\" + filename.Last());
                                 }
                             }
                             if (newFirmwareUrl != "")
@@ -78,8 +79,7 @@ namespace OSLTT
                             }
                         }
                     }
-                    string[] filename = newFirmwareUrl.Split('/');
-                    wc.DownloadFile(newFirmwareUrl, localPath + @"\\arduinoCLI\\" + filename.Last());
+                    
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +105,7 @@ namespace OSLTT
             public string ConsoleOutput { get; set; }
         }
 
-        public static FirmwareReport UpdateDeviceFirmware(string localPath, string p)
+        public static FirmwareReport UpdateDeviceFirmware(string localPath, string p, int boardType = 0)
         {
             FirmwareReport fwr = new FirmwareReport { ErrorMessage = "", State = 0, ConsoleOutput="" };
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -114,14 +114,22 @@ namespace OSLTT
             string updateCommand = "";
 
             string binFileAvailable = "";
+            string csBinFile = "";
             foreach (var f in Directory.GetFiles(localPath + @"\\arduinoCLI"))
             {
-                if (f.Contains("ino.bin")) { binFileAvailable = f; }
+                if (f.Contains("ino.bin") && !f.Contains("CS") && boardType == 0) { binFileAvailable = f; }
+                else if (f.Contains("ino.bin") && f.Contains("CS") && boardType == 1) { csBinFile = f; }
             }
-            if (binFileAvailable != "")
+            if (binFileAvailable != "" && boardType == 0)
             {
                 Console.WriteLine(binFileAvailable);
                 updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn Seeeduino:samd:seeed_XIAO_m0 -i \"" + binFileAvailable + "\"";
+                Console.WriteLine(updateCommand);
+            }
+            else if (csBinFile != "" && boardType == 1)
+            {
+                Console.WriteLine(binFileAvailable);
+                updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn adafruit:samd:adafruit_feather_m0 -i \"" + binFileAvailable + "\"";
                 Console.WriteLine(updateCommand);
             }
             else
