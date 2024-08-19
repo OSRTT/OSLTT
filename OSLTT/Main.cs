@@ -3,6 +3,7 @@ using GlobalHotKey;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Newtonsoft.Json;
+using SharpDX.XInput;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.3";
+        private string softwareVersion = "1.4";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
 
@@ -67,6 +68,7 @@ namespace OSLTT
         KeyboardHook keyboardHook = new KeyboardHook();
 
         private readonly string fqbn = "Seeeduino:samd:seeed_XIAO_m0";
+        private readonly string fqbn2 = "adafruit:samd:adafruit_feather_m0";
 
         debugForm debug = new debugForm();
 
@@ -210,6 +212,48 @@ namespace OSLTT
             Console.WriteLine("Triggered");
         }
 
+        private bool ControllerKill = false;
+        private GamepadButtonFlags lastButton;
+        /// <summary>
+        /// Controller handler
+        /// </summary>
+        private void ControllerEventHandler()
+        {
+            Console.WriteLine("Controller starting");
+            Controller c = new Controller(UserIndex.One);
+            if (c.IsConnected == false)
+            {
+                Console.WriteLine("Controller not found");
+                CFuncs.showMessageBox("Controller Not Found", "Unable to connect to controller, please connect one and start the test again.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                var previousState = c.GetState();
+                while (c.IsConnected)
+                {
+                    if (ControllerKill == true)
+                    {
+                        break;
+                    }
+                    var state = c.GetState();
+                    if (previousState.PacketNumber != state.PacketNumber)
+                    {
+                        if (state.Gamepad.Buttons != GamepadButtonFlags.None && state.Gamepad.Buttons != lastButton)
+                        {
+                            lastButton = state.Gamepad.Buttons;
+                            portWrite("H");
+                            Console.WriteLine(state.Gamepad);
+                            Thread.Sleep(100);
+                        }
+                    }
+                    Thread.Sleep(1);
+                    previousState = state;
+                }
+            }
+            Console.WriteLine("Exiting controller handler");
+
+        }
+
         /// <summary>
         /// Handle when the form closes to cancel any running tests and save settings to file.
         /// </summary>
@@ -294,13 +338,15 @@ namespace OSLTT
                         StringSplitOptions.None
                     );
                     string p = "";
+                    string board = "";
                     foreach (var s in lines)
                     {
-                        if (s.Contains(fqbn))
+                        if (s.Contains(fqbn) || s.Contains(fqbn2))
                         {
                             char[] whitespace = new char[] { ' ', '\t' };
                             string[] split = s.Split(whitespace);
                             p = split[0];
+                            board = s;
                         }
                     }
                     if (p != "")
@@ -310,6 +356,8 @@ namespace OSLTT
                             connectToBoard(p);
                             Thread.Sleep(1000);
                             SetDeviceStatus(1);
+                            if (board.Contains("feather")) { settingsPane1.CheckBoardType(1); }
+                            else { settingsPane1.CheckBoardType(); }
                             Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
                             syncThread.Start();
                             //setBoardSerial();
@@ -574,6 +622,7 @@ namespace OSLTT
                         string[] splitMessage = message.Split(':');
                         double result = double.Parse(splitMessage[1]);
                         inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000 });
+                        lastButton = GamepadButtonFlags.None;
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
@@ -869,6 +918,11 @@ namespace OSLTT
                     {
                         this.Invoke((MethodInvoker)(() => this.keyboardHook.Install()));
                     }
+                    else if (testSettings.TestSource == 7)
+                    {
+                        Thread t = new Thread(new ThreadStart(ControllerEventHandler));
+                        t.Start();
+                    }
                 }
                 else
                 {
@@ -880,6 +934,10 @@ namespace OSLTT
                     else if (testSettings.TestSource == 6)
                     {
                         this.Invoke((MethodInvoker)(() => this.keyboardHook.Uninstall()));
+                    }
+                    else if (testSettings.TestSource == 7)
+                    {
+                        ControllerKill = true;
                     }
                 }
             }
@@ -899,6 +957,11 @@ namespace OSLTT
                     {
                         keyboardHook.Install();
                     }
+                    else if (testSettings.TestSource == 7)
+                    {
+                        Thread t = new Thread(new ThreadStart(ControllerEventHandler));
+                        t.Start();
+                    }
 
                 }
                 else
@@ -911,6 +974,10 @@ namespace OSLTT
                     else if (testSettings.TestSource == 6)
                     {
                         keyboardHook.Uninstall();
+                    }
+                    else if (testSettings.TestSource == 7)
+                    {
+                        ControllerKill = true;
                     }
                 }
             }
@@ -1130,7 +1197,8 @@ namespace OSLTT
                 inputLagEvents.Clear();
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
-                if (testSettings.TestSource == 2 || testSettings.TestSource == 6) // mouse/keyboard mode
+                ControllerKill = false;
+                if (testSettings.TestSource == 2 || testSettings.TestSource == 6 || testSettings.TestSource == 7) // mouse/keyboard mode
                 {
                     // switch modes then wait for test end
                     toggleMouseKeyboardBoxes(true);
@@ -1345,7 +1413,10 @@ namespace OSLTT
 
             //runPretestButton.Enabled = !runPretestButton.Enabled;
 
-            Console.WriteLine(testThread.IsAlive);
+            //Console.WriteLine(testThread.IsAlive);
+            Thread t = new Thread(new ThreadStart(ControllerEventHandler));
+            t.Start();
+            
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)

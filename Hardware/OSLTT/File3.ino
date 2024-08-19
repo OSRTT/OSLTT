@@ -2,10 +2,8 @@
 
 
 void setup() {
-  uint32_t bootprot = getBootProt();
   setBootProt(2);
-  uint32_t newbootprot = getBootProt();
-
+  uint32_t bootprot = getBootProt();
 
   // start serial port at 9600 bps:
   Serial.begin(115200);
@@ -17,18 +15,13 @@ void setup() {
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
   ChangeInterrupt(false);
+  attachInterrupt(PullUpPin, PullUpInterrupt, LOW);
 
   //ADC_Init();
   analogReadResolution(14);
 
   establishContact();  // send a byte to establish contact until receiver responds
 
-  
-  // Serial.print("bootprot = ");
-  // Serial.println(bootprot);
-
-  // Serial.print("new bootprot = ");
-  // Serial.println(newbootprot);
 }
 
 void loop() {
@@ -62,7 +55,7 @@ void loop() {
             }
           }
         }
-      } else if (sourceType == 1 || sourceType == 5) {
+      } else if (sourceType == 1 || sourceType == 5 || sourceType == 6) {
         if (inputType == 1)
         {
           runClickTest(); 
@@ -70,6 +63,10 @@ void loop() {
         else if (inputType == 2)
         {
           runClickTest2Pin();
+        }
+        else if (inputType == 3)
+        {
+          runClickTest3Pin();
         }
         break;
       } else if (inputType == 1 && sensorType == 0) // mic trigger, light sensor data source. Console testing mode
@@ -99,7 +96,7 @@ void loop() {
           }
         }
         break;
-      }
+      } 
     }
   } else if (input[0] == 'P')  // Pre-test
     {
@@ -139,6 +136,7 @@ void loop() {
     {
       ChangeInterrupt(false);
     }
+    if (inputType == 4) { inputType--;}
 
     // Auto Click - bit 3
     if (input[3] == '1') {
@@ -149,6 +147,8 @@ void loop() {
 
     // DirectX - bit 4
     sourceType = convertHexToDec(input[4]) - 1;
+    if (sourceType == 3) { setAGain(true); }
+    else { setAGain(false); }
 
     // Shot count - bit 5 + 6
     int msb = convertHexToDec(input[5]);

@@ -52,6 +52,7 @@ namespace OSLTT
             this.preTestToggle = new MaterialSkin.Controls.MaterialSwitch();
             this.isolateLabel = new MaterialSkin.Controls.MaterialLabel();
             this.triggerCard = new MaterialSkin.Controls.MaterialCard();
+            this.threePinRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.twoPinRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.audioTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.buttonTriggerRadio = new MaterialSkin.Controls.MaterialRadioButton();
@@ -64,6 +65,7 @@ namespace OSLTT
             this.mouseKeyboardRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.DirectXRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
+            this.gamepadRadio = new MaterialSkin.Controls.MaterialRadioButton();
             this.displayCard.SuspendLayout();
             this.sensorCard.SuspendLayout();
             this.settingsCard.SuspendLayout();
@@ -152,7 +154,7 @@ namespace OSLTT
             this.sensorCard.Controls.Add(this.materialLabel1);
             this.sensorCard.Depth = 0;
             this.sensorCard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.sensorCard.Location = new System.Drawing.Point(4, 191);
+            this.sensorCard.Location = new System.Drawing.Point(4, 204);
             this.sensorCard.Margin = new System.Windows.Forms.Padding(14);
             this.sensorCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.sensorCard.Name = "sensorCard";
@@ -477,6 +479,7 @@ namespace OSLTT
             // triggerCard
             // 
             this.triggerCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.triggerCard.Controls.Add(this.threePinRadio);
             this.triggerCard.Controls.Add(this.twoPinRadio);
             this.triggerCard.Controls.Add(this.audioTriggerRadio);
             this.triggerCard.Controls.Add(this.buttonTriggerRadio);
@@ -490,6 +493,23 @@ namespace OSLTT
             this.triggerCard.Padding = new System.Windows.Forms.Padding(14);
             this.triggerCard.Size = new System.Drawing.Size(195, 169);
             this.triggerCard.TabIndex = 74;
+            // 
+            // threePinRadio
+            // 
+            this.threePinRadio.AutoSize = true;
+            this.threePinRadio.Depth = 0;
+            this.threePinRadio.Location = new System.Drawing.Point(14, 160);
+            this.threePinRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.threePinRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.threePinRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.threePinRadio.Name = "threePinRadio";
+            this.threePinRadio.Ripple = true;
+            this.threePinRadio.Size = new System.Drawing.Size(103, 37);
+            this.threePinRadio.TabIndex = 70;
+            this.threePinRadio.TabStop = true;
+            this.threePinRadio.Text = "Tap Input";
+            this.threePinRadio.UseVisualStyleBackColor = true;
+            this.threePinRadio.CheckedChanged += new System.EventHandler(this.threePinRadio_CheckedChanged);
             // 
             // twoPinRadio
             // 
@@ -559,6 +579,7 @@ namespace OSLTT
             // sourceCard
             // 
             this.sourceCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.sourceCard.Controls.Add(this.gamepadRadio);
             this.sourceCard.Controls.Add(this.keyboardRadio);
             this.sourceCard.Controls.Add(this.externalRadio);
             this.sourceCard.Controls.Add(this.audioSourceRadio);
@@ -573,7 +594,7 @@ namespace OSLTT
             this.sourceCard.MouseState = MaterialSkin.MouseState.HOVER;
             this.sourceCard.Name = "sourceCard";
             this.sourceCard.Padding = new System.Windows.Forms.Padding(14);
-            this.sourceCard.Size = new System.Drawing.Size(242, 274);
+            this.sourceCard.Size = new System.Drawing.Size(242, 311);
             this.sourceCard.TabIndex = 76;
             // 
             // keyboardRadio
@@ -692,6 +713,23 @@ namespace OSLTT
             this.materialLabel3.TabIndex = 66;
             this.materialLabel3.Text = "Test Source";
             // 
+            // gamepadRadio
+            // 
+            this.gamepadRadio.AutoSize = true;
+            this.gamepadRadio.Depth = 0;
+            this.gamepadRadio.Location = new System.Drawing.Point(14, 271);
+            this.gamepadRadio.Margin = new System.Windows.Forms.Padding(0);
+            this.gamepadRadio.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.gamepadRadio.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gamepadRadio.Name = "gamepadRadio";
+            this.gamepadRadio.Ripple = true;
+            this.gamepadRadio.Size = new System.Drawing.Size(179, 37);
+            this.gamepadRadio.TabIndex = 73;
+            this.gamepadRadio.TabStop = true;
+            this.gamepadRadio.Text = "Gamepad/Controller";
+            this.gamepadRadio.UseVisualStyleBackColor = true;
+            this.gamepadRadio.CheckedChanged += new System.EventHandler(this.gamepadRadio_CheckedChanged);
+            // 
             // SettingsPane
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -701,7 +739,7 @@ namespace OSLTT
             this.Controls.Add(this.triggerCard);
             this.Controls.Add(this.sourceCard);
             this.Name = "SettingsPane";
-            this.Size = new System.Drawing.Size(866, 427);
+            this.Size = new System.Drawing.Size(866, 466);
             this.displayCard.ResumeLayout(false);
             this.displayCard.PerformLayout();
             this.sensorCard.ResumeLayout(false);
@@ -753,5 +791,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialRadioButton keyboardRadio;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
         private MaterialSkin.Controls.MaterialComboBox twoPinTriggerSelect;
+        private MaterialSkin.Controls.MaterialRadioButton threePinRadio;
+        private MaterialSkin.Controls.MaterialRadioButton gamepadRadio;
     }
 }

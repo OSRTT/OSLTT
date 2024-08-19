@@ -10,11 +10,12 @@ int LEDPin = 3; //19   // first analog sensor
 int PullDownPin = 4; //16  // second analog sensor
 int ButtonPin = 6;  //2  // digital sensor
 int inByte = 0;         // incoming serial byte
-
+int PullUpPin = 9;      // CS Only
+int AGain = 7;          // CS Only
 
 uint16_t adcBuff[ArraySize];
  
-float firmwareVersion = 1.2;
+float firmwareVersion = 1.3;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 
@@ -38,5 +39,6 @@ bool LEDState = false;
 
 bool InterruptFlag = false;
 int InterruptCount = 0;
+bool PullDownInterruptFlag = false;
 
 int micBaseline = 16000;

@@ -329,7 +329,7 @@ namespace OSLTT
             this.clickTestBox.MouseState = MaterialSkin.MouseState.HOVER;
             this.clickTestBox.Name = "clickTestBox";
             this.clickTestBox.Padding = new System.Windows.Forms.Padding(14);
-            this.clickTestBox.Size = new System.Drawing.Size(885, 415);
+            this.clickTestBox.Size = new System.Drawing.Size(885, 447);
             this.clickTestBox.TabIndex = 48;
             // 
             // materialLabel11
@@ -543,7 +543,7 @@ namespace OSLTT
             // 
             this.settingsPane1.Location = new System.Drawing.Point(28, 310);
             this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(857, 415);
+            this.settingsPane1.Size = new System.Drawing.Size(857, 458);
             this.settingsPane1.TabIndex = 59;
             // 
             // materialCard5
@@ -601,7 +601,7 @@ namespace OSLTT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 742);
+            this.ClientSize = new System.Drawing.Size(911, 774);
             this.Controls.Add(this.materialCard5);
             this.Controls.Add(this.settingsPane1);
             this.Controls.Add(this.materialCard4);

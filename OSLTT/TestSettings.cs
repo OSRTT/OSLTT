@@ -22,7 +22,7 @@ namespace OSLTT
 
         public ProcessData.resultType ResultType { get; set; }
 
-        public int TriggerTypes(MaterialRadioButton button, MaterialRadioButton audio)
+        public int TriggerTypes(MaterialRadioButton button, MaterialRadioButton audio, MaterialRadioButton twoPin)
         {
             if (button.Checked)
             {
@@ -32,9 +32,13 @@ namespace OSLTT
             {
                 return 2;
             }
-            else
+            else if (twoPin.Checked)
             {
                 return 3;
+            }
+            else
+            {
+                return 4;
             }
         }
 
@@ -54,7 +58,7 @@ namespace OSLTT
             }
         }
 
-        public int SourceTypes(MaterialRadioButton directx, MaterialRadioButton mouse, MaterialRadioButton game, MaterialRadioButton audio, MaterialRadioButton external)
+        public int SourceTypes(MaterialRadioButton directx, MaterialRadioButton mouse, MaterialRadioButton keyboard, MaterialRadioButton game, MaterialRadioButton audio, MaterialRadioButton external)
         {
             if (directx.Checked)
             {
@@ -76,9 +80,13 @@ namespace OSLTT
             {
                 return 5;
             }
-            else
+            else if (keyboard.Checked)
             {
                 return 6;
+            }
+            else
+            {
+                return 7; // Controller
             }
         }
 

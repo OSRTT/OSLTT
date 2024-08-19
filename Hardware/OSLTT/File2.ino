@@ -43,18 +43,12 @@ void setBootProt(int v) { // Because SEEED don't bother protecting the f#cking b
 uint32_t getBootProt()
 {
   uint32_t *NVM_FUSES = (uint32_t *)NVMCTRL_AUX0_ADDRESS;
-
-
-    uint32_t fuses[2];
-
-    fuses[0] = NVM_FUSES[0];
-    fuses[1] = NVM_FUSES[1];
-
-    uint32_t bootprot = (fuses[0] & NVMCTRL_FUSES_BOOTPROT_Msk) >> NVMCTRL_FUSES_BOOTPROT_Pos;
-    return bootprot;
+  uint32_t fuses[2];
+  fuses[0] = NVM_FUSES[0];
+  fuses[1] = NVM_FUSES[1];
+  uint32_t bootprot = (fuses[0] & NVMCTRL_FUSES_BOOTPROT_Msk) >> NVMCTRL_FUSES_BOOTPROT_Pos;
+  return bootprot;
 }
-
-
 
 void getSerialChars() {
   for (int i = 0; i < INPUT_SIZE + 1; i++) {
@@ -95,7 +89,18 @@ void ChangeInterrupt(bool falling) // false == rising, true == falling
 void PullDownInterrupt()
 {
   InterruptFlag = true;
+  //Serial.println("2 pin interrupt");
   if (!InterruptFlag && InterruptCount == 0)
+  {
+    InterruptCount++;
+  }
+}
+
+void PullUpInterrupt()
+{
+  PullDownInterruptFlag = true;
+  //Serial.println("3 pin interrupt");
+  if (!PullDownInterruptFlag && InterruptCount == 0)
   {
     InterruptCount++;
   }
@@ -376,6 +381,43 @@ void runClickTest2Pin()
   }
 }
 
+void runClickTest3Pin()
+{
+  Serial.println("3 pin test started");
+  PullDownInterruptFlag = false;
+  while (input[0] != 'X') {
+    if (digitalRead(ButtonPin)) {
+      input[0] = 'X';
+      toggleLED(false);
+    }
+    
+    //Serial.println(current); //debugging use only
+    
+    if (PullDownInterruptFlag) {
+      input[0] = '0';
+
+      long start = micros();
+      while (input[0] != 'H' && input[0] != 'X') {
+        getClickChar();
+      }
+      long end = micros();
+      long time = end - start;
+
+      Serial.print("CLICK:");
+      Serial.println(time);
+      toggleLED(true);
+      delay(200);
+      // sync clocks again
+      toggleLED(false);
+      delay(100);
+      PullDownInterruptFlag = false;
+      InterruptCount = 0;
+      Serial.print("PDIF:");
+      Serial.println(PullDownInterruptFlag);
+    }
+  }
+}
+
 void runAudioTest() {
   long start = micros();
   Serial.println("AUDIO TRIGGER");
@@ -396,4 +438,9 @@ void runAudioTest() {
   Serial.println();
   //Serial.print("AUDIO SERIAL DELAY:");
   //Serial.println(end - start);
+}
+
+void setAGain(bool state)
+{
+  digitalWrite(AGain, state);
 }
