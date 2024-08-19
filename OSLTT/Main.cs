@@ -262,6 +262,7 @@ namespace OSLTT
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // When form is closed halt read thread & close Serial Port
+            ControllerKill = true;
             if (port != null)
             {
                 try

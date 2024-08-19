@@ -68,7 +68,7 @@ void getClickChar() {
 
 void establishContact() {
   while (Serial.available() <= 0) {
-    Serial.println('OSLTT');
+    Serial.println("OSLTT");
     delay(250);
   }
 }

@@ -1,5 +1,11 @@
 // Main loop body
-
+#if defined(ARDUINO_SEEED_XIAO_M0)
+const char* boardname = "Seeed";
+#elif defined(ARDUINO_SAMD_ZERO)
+const char* boardname = "Feather";
+#else
+const char* boardname = "UNKNOWN BOARD";
+#endif
 
 void setup() {
   setBootProt(2);
@@ -10,12 +16,16 @@ void setup() {
   while (!Serial) {
     ;  // wait for serial port to connect. Needed for native USB port only
   }
-
+  Serial.println(boardname);
   pinMode(PullDownPin, INPUT_PULLDOWN);
   pinMode(ButtonPin, INPUT_PULLUP);
   pinMode(LEDPin, OUTPUT);
   ChangeInterrupt(false);
-  attachInterrupt(PullUpPin, PullUpInterrupt, LOW);
+  if (boardname == "Feather")
+  {
+    attachInterrupt(PullUpPin, PullUpInterrupt, LOW);
+    Serial.println("Attached Interrupt");
+  }
 
   //ADC_Init();
   analogReadResolution(14);
