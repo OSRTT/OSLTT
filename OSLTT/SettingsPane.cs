@@ -338,11 +338,23 @@ namespace OSLTT
             {
                 sourceType = audioSourceRadio;
             }
+            else if (source == 5)
+            {
+                sourceType = externalRadio;
+            }
+            else if (source == 6)
+            {
+                sourceType = keyboardRadio;
+            }
+            else if (source == 7)
+            {
+                sourceType = gamepadRadio;
+            }
             else
             {
                 sourceType = externalRadio;
             }
-            
+
             SetComboBoxValue(clickCountSelect, clicks);
             SetComboBoxValue(timeBetweenSelect, time);
 
