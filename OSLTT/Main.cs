@@ -23,13 +23,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using SharpDX.Multimedia;
+using SharpDX.XAudio2;
 using static OSLTT.ProcessData;
 
 namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.45";
+        private string softwareVersion = "1.5";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
         public static int boardType = 0;
@@ -150,11 +152,15 @@ namespace OSLTT
             {
                 materialButton1.Visible = true;
                 materialButton1.Location = new Point(418, 2);
+                materialButton2.Visible = true;
+                materialButton2.Location = new Point(260, 2);
             }
             else
             {
                 materialButton1.Visible = false;
                 materialButton1.Location = new Point(418, -50);
+                materialButton2.Visible = false;
+                materialButton2.Location = new Point(260, -50);
             }
         }
 
@@ -1425,12 +1431,13 @@ namespace OSLTT
             }*/
 
             //portWrite("Z");
+            boardUpdate = true;
 
             //runPretestButton.Enabled = !runPretestButton.Enabled;
 
             //Console.WriteLine(testThread.IsAlive);
-            Thread t = new Thread(new ThreadStart(ControllerEventHandler));
-            t.Start();
+            //Thread t = new Thread(new ThreadStart(ControllerEventHandler));
+            //t.Start();
             
         }
 
@@ -1514,6 +1521,11 @@ namespace OSLTT
                 else { sel = count; }
             }
             hotkeySelect.SelectedIndex = sel;
+        }
+
+        private void materialButton2_Click(object sender, EventArgs e)
+        {
+            portWrite("Z1");
         }
     }
 

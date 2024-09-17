@@ -23,7 +23,8 @@ void setup() {
   ChangeInterrupt(false);
   if (boardname == "Feather")
   {
-    attachInterrupt(PullUpPin, PullUpInterrupt, LOW);
+    pinMode(PullUpPin, INPUT_PULLUP);
+    //attachInterrupt(PullUpPin, PullUpInterrupt, LOW);
     Serial.println("Attached Interrupt");
   }
 
@@ -280,13 +281,88 @@ void loop() {
     Serial.print("number of tests ran: ");
     Serial.println(counter);
   } else if (input[0] == 'Z') {
-    while (digitalRead(ButtonPin) == LOW)
+    if (input[1] == '1') // Pro CS board pre-shipping validation
     {
-      if (InterruptFlag)
+      toggleLED(false);
+      uint32_t temp = 0;
+      for (int i = 0; i < 1000; i++)
       {
-        Serial.println("Interrupted");
-        InterruptFlag = false;
+        temp += analogRead(A0);
       }
+      temp /= 1000;
+      if (temp < 10 || temp > 1000)
+      {
+        Serial.println("Light sensor failed");
+      }
+      else { Serial.println("Light sensor passed");}
+      long fourteen = fillADCBufferSlower(ArraySize, 1);
+      int max = 0;
+      int min = 16000;
+      for (int i = 0; i < ArraySize; i++) {
+        if (adcBuff[i] > max)
+        {
+          max = adcBuff[i];
+        }  
+        if (adcBuff[i] < min)
+        {
+          min = adcBuff[i];
+        }
+      }
+      if (max > 12000 || min < 5000){ Serial.println("Audio test failed"); }
+      else { Serial.println("Audio test passed");}
+      bool button = false;
+      bool twopin = true;
+      bool threepin = true;
+      long timer = millis();
+      long start = millis();
+      while (!button)
+      {
+        button = digitalRead(ButtonPin);
+        timer= millis();
+        if (timer > 180000 + start)
+        {
+          Serial.println("button wasn't detected");
+          break;
+        }
+      }
+      if (button) {Serial.println("Button passed");}
+      while (twopin)
+      {
+        twopin = digitalRead(PullDownPin);
+        timer= millis();
+        if (timer > 180000 + start)
+        {
+          Serial.println("two pin wasn't detected");
+          break;
+        }
+      }
+      if (twopin) {Serial.println("Two Pin passed");}
+      while (threepin)
+      {
+        threepin = digitalRead(PullUpPin);
+        timer= millis();
+        if (timer > 180000 + start)
+        {
+          Serial.println("Three pin wasn't detected");
+          break;
+        }
+      }
+      if (threepin) {Serial.println("Three pin passed");}
+      toggleLED(true);
+      delay(1000);
+      toggleLED(false);
+      delay(1000);
+      toggleLED(true);
+      delay(1000);
+      toggleLED(false);
+      Serial.println("Test complete, check for errors");
+    }
+    else
+    {
+      long start = micros();
+      digitalRead(PullUpPin);
+      long end = micros();
+      Serial.println(end - start);
       
     }
   }

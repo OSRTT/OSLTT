@@ -88,22 +88,22 @@ void ChangeInterrupt(bool falling) // false == rising, true == falling
 
 void PullDownInterrupt()
 {
-  InterruptFlag = true;
   //Serial.println("2 pin interrupt");
   if (!InterruptFlag && InterruptCount == 0)
   {
     InterruptCount++;
   }
+  InterruptFlag = true;
 }
 
 void PullUpInterrupt()
 {
-  PullDownInterruptFlag = true;
   //Serial.println("3 pin interrupt");
   if (!PullDownInterruptFlag && InterruptCount == 0)
   {
     InterruptCount++;
   }
+  PullDownInterruptFlag = true;
 }
 
 int getADCValue(int count, int pin = 0) {
@@ -379,29 +379,38 @@ void runClickTest2Pin()
       InterruptCount = 0;
     }
   }
+  Serial.setTimeout(100);
+  Serial.println("Clicks Finished");
+  toggleLED(true);
 }
 
 void runClickTest3Pin()
 {
+  Serial.setTimeout(3000);
   Serial.println("3 pin test started");
   PullDownInterruptFlag = false;
+  InterruptCount = 0;
+
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
       input[0] = 'X';
       toggleLED(false);
+      break;
     }
+    //input[0] = '0';
+    //Serial.println(InterruptCount); //debugging use only
     
-    //Serial.println(current); //debugging use only
-    
-    if (PullDownInterruptFlag) {
-      input[0] = '0';
-
+    if (!digitalRead(PullUpPin)) {
+      //input[0] = '0';
+      
       long start = micros();
-      while (input[0] != 'H' && input[0] != 'X') {
-        getClickChar();
-      }
+      //while (input[0] != 'H' && input[0] != 'X') {
+        getClickChar(); // removed while as getclickchar acts as 1s timer + returns when new line received
+      //}
       long end = micros();
       long time = end - start;
+      Serial.print("input[0] = ");
+      Serial.println(input[0]);
 
       Serial.print("CLICK:");
       Serial.println(time);
@@ -409,13 +418,16 @@ void runClickTest3Pin()
       delay(200);
       // sync clocks again
       toggleLED(false);
-      delay(100);
       PullDownInterruptFlag = false;
       InterruptCount = 0;
-      Serial.print("PDIF:");
-      Serial.println(PullDownInterruptFlag);
+      delay(100);
+      // Serial.print("PDIF:");
+      // Serial.println(PullDownInterruptFlag);
     }
   }
+  Serial.setTimeout(100);
+  Serial.println("Clicks Finished");
+  toggleLED(true);
 }
 
 void runAudioTest() {

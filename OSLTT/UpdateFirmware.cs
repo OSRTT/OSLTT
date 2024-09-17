@@ -118,7 +118,7 @@ namespace OSLTT
             foreach (var f in Directory.GetFiles(localPath + @"\\arduinoCLI"))
             {
                 if (f.Contains("ino.bin") && !f.Contains("CS") && boardType == 0) { binFileAvailable = f; }
-                else if (f.Contains("ino.bin") && f.Contains("CS") && boardType == 1) { csBinFile = f; }
+                if (f.Contains("ino.bin") && f.Contains("CS") && boardType == 1) { csBinFile = f; }
             }
             if (binFileAvailable != "" && boardType == 0)
             {
@@ -129,7 +129,7 @@ namespace OSLTT
             else if (csBinFile != "" && boardType == 1)
             {
                 Console.WriteLine(binFileAvailable);
-                updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn adafruit:samd:adafruit_feather_m0 -i \"" + binFileAvailable + "\"";
+                updateCommand = "/C .\\arduinoCLI\\arduino-cli.exe upload --port " + p + " --fqbn adafruit:samd:adafruit_feather_m0 -i \"" + csBinFile + "\"";
                 Console.WriteLine(updateCommand);
             }
             else

@@ -61,6 +61,7 @@ namespace OSLTT
             this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
             this.hotkeySelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
@@ -73,6 +74,7 @@ namespace OSLTT
             // deviceStatusPanel
             // 
             this.deviceStatusPanel.BackColor = System.Drawing.Color.White;
+            this.deviceStatusPanel.Controls.Add(this.materialButton2);
             this.deviceStatusPanel.Controls.Add(this.fwLbl);
             this.deviceStatusPanel.Controls.Add(this.fwLblTitle);
             this.deviceStatusPanel.Controls.Add(this.devStat);
@@ -597,6 +599,26 @@ namespace OSLTT
             this.materialLabel9.TabIndex = 66;
             this.materialLabel9.Text = "Hotkey";
             // 
+            // materialButton2
+            // 
+            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton2.Depth = 0;
+            this.materialButton2.HighEmphasis = true;
+            this.materialButton2.Icon = null;
+            this.materialButton2.Location = new System.Drawing.Point(260, 2);
+            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton2.Name = "materialButton2";
+            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton2.Size = new System.Drawing.Size(150, 36);
+            this.materialButton2.TabIndex = 59;
+            this.materialButton2.Text = "(Dev) Test Board";
+            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton2.UseAccentColor = false;
+            this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -664,6 +686,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialCard materialCard5;
         private MaterialSkin.Controls.MaterialComboBox hotkeySelect;
         private MaterialSkin.Controls.MaterialLabel materialLabel9;
+        private MaterialSkin.Controls.MaterialButton materialButton2;
     }
 }
 
