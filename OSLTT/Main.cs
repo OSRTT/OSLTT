@@ -31,7 +31,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.5";
+        private string softwareVersion = "1.6";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
         public static int boardType = 0;
@@ -139,7 +139,7 @@ namespace OSLTT
                 announcements.Activate();
                 //ActiveControl = announcements;
             }
-
+            this.Text += softwareVersion;
             sw.Start();
         }
 

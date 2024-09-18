@@ -32,6 +32,7 @@ namespace OSLTT
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.deviceStatusPanel = new System.Windows.Forms.Panel();
+            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.fwLbl = new MaterialSkin.Controls.MaterialLabel();
             this.fwLblTitle = new MaterialSkin.Controls.MaterialLabel();
             this.devStat = new MaterialSkin.Controls.MaterialLabel();
@@ -57,11 +58,10 @@ namespace OSLTT
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.runPretestButton = new MaterialSkin.Controls.MaterialButton();
-            this.settingsPane1 = new OSLTT.SettingsPane();
             this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
             this.hotkeySelect = new MaterialSkin.Controls.MaterialComboBox();
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
+            this.settingsPane1 = new OSLTT.SettingsPane();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
@@ -83,6 +83,26 @@ namespace OSLTT
             this.deviceStatusPanel.Name = "deviceStatusPanel";
             this.deviceStatusPanel.Size = new System.Drawing.Size(831, 40);
             this.deviceStatusPanel.TabIndex = 31;
+            // 
+            // materialButton2
+            // 
+            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton2.Depth = 0;
+            this.materialButton2.HighEmphasis = true;
+            this.materialButton2.Icon = null;
+            this.materialButton2.Location = new System.Drawing.Point(260, 2);
+            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton2.Name = "materialButton2";
+            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton2.Size = new System.Drawing.Size(150, 36);
+            this.materialButton2.TabIndex = 59;
+            this.materialButton2.Text = "(Dev) Test Board";
+            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton2.UseAccentColor = false;
+            this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
             // 
             // fwLbl
             // 
@@ -541,13 +561,6 @@ namespace OSLTT
             this.runPretestButton.UseVisualStyleBackColor = true;
             this.runPretestButton.Click += new System.EventHandler(this.runPretestButton_Click);
             // 
-            // settingsPane1
-            // 
-            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
-            this.settingsPane1.Name = "settingsPane1";
-            this.settingsPane1.Size = new System.Drawing.Size(857, 458);
-            this.settingsPane1.TabIndex = 59;
-            // 
             // materialCard5
             // 
             this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -599,25 +612,12 @@ namespace OSLTT
             this.materialLabel9.TabIndex = 66;
             this.materialLabel9.Text = "Hotkey";
             // 
-            // materialButton2
+            // settingsPane1
             // 
-            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton2.Depth = 0;
-            this.materialButton2.HighEmphasis = true;
-            this.materialButton2.Icon = null;
-            this.materialButton2.Location = new System.Drawing.Point(260, 2);
-            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton2.Name = "materialButton2";
-            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton2.Size = new System.Drawing.Size(150, 36);
-            this.materialButton2.TabIndex = 59;
-            this.materialButton2.Text = "(Dev) Test Board";
-            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton2.UseAccentColor = false;
-            this.materialButton2.UseVisualStyleBackColor = true;
-            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
+            this.settingsPane1.Location = new System.Drawing.Point(28, 310);
+            this.settingsPane1.Name = "settingsPane1";
+            this.settingsPane1.Size = new System.Drawing.Size(857, 458);
+            this.settingsPane1.TabIndex = 59;
             // 
             // Main
             // 
@@ -637,7 +637,7 @@ namespace OSLTT
             this.DrawerUseColors = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.Text = "OSLTT";
+            this.Text = "OSLTT V";
             this.Load += new System.EventHandler(this.Main_Load);
             this.deviceStatusPanel.ResumeLayout(false);
             this.deviceStatusPanel.PerformLayout();

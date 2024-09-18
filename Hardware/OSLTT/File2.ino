@@ -409,8 +409,7 @@ void runClickTest3Pin()
       //}
       long end = micros();
       long time = end - start;
-      Serial.print("input[0] = ");
-      Serial.println(input[0]);
+      
 
       Serial.print("CLICK:");
       Serial.println(time);
