@@ -141,6 +141,7 @@ namespace OSLTT
             }
             this.Text += softwareVersion;
             sw.Start();
+            UpdateHandler.UpdateMe(softwareVersion);
         }
 
         /// <summary>
