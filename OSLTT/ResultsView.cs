@@ -15,6 +15,7 @@ namespace OSLTT
     public partial class ResultsView : MaterialForm
     {
         public string resultsFolderPath = "";
+        public string RunName = "";
         public string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
         public ProcessData.averagedInputLag inputLagResults { get; set; }
         public int type = 2;
@@ -35,6 +36,13 @@ namespace OSLTT
         public void setResultsFolder(string p)
         {
             resultsFolderPath = p;
+            setWindowTitle(p);
+        }
+
+        public void setWindowTitle(string r)
+        {
+            string[] splitName = r.Split('\\');
+            RunName = " | " + splitName.Last();
         }
 
         public void inputLagMode(ProcessData.averagedInputLag il)
@@ -168,17 +176,17 @@ namespace OSLTT
         {
             if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
             {
-                this.Text = "On Display Latency";
+                this.Text = "On Display Latency" + RunName;
                 type = 2;
             }
             else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Click)
             {
-                this.Text = "Click Latency";
+                this.Text = "Click Latency" + RunName;
                 type = 3;
             }
             else
             {
-                this.Text = "Audio Latency";
+                this.Text = "Audio Latency" + RunName;
                 type = 2;
             }
 
@@ -225,7 +233,7 @@ namespace OSLTT
         }
         public void drawBarGraph()
         {
-            this.Text = "Latency Results";
+            this.Text = "Latency Results" + RunName;
             barPlot.Plot.Clear();
             double[][] values = new double[3][];
             string[] titles = { "USB Polling Delay", "Render Time", "On Display Lag", "Total Input Lag" };
@@ -389,6 +397,7 @@ namespace OSLTT
         {
             var data = importInputLagData(path);
             resultsFolderPath = data.Substring(0, data.LastIndexOf('\\'));
+            setWindowTitle(resultsFolderPath);
             if (data.Contains("PROCESSED") && data.Contains("OSLTT"))
             {
                 inputLagResults = new ProcessData.averagedInputLag();

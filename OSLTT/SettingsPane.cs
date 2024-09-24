@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace OSLTT
 {
+    // TODO  - write functions to fill the selects!!!!
     public partial class SettingsPane : UserControl
     {
         public SettingsPane()
@@ -23,6 +24,7 @@ namespace OSLTT
             preTestToggle.Enabled = false;
             preTestToggle.Visible = false;*/
             listMonitors();
+            FillSelects();
             if (Properties.Settings.Default.customTestSettings != null)
             {
                 testSettings = Properties.Settings.Default.customTestSettings;
@@ -38,6 +40,10 @@ namespace OSLTT
                     testSettings.TwoPinTrigger
                     );
             }
+            else
+            {
+                MonitorPreset();
+            }
         }
 
         TestSettings testSettings = new TestSettings();
@@ -45,44 +51,33 @@ namespace OSLTT
 
         public void CheckBoardType(int BoardType = 0)
         {
-            bool state = false;
-            Size s = new Size(195, 169);
-            Point p = new Point(4, 204);
             if (BoardType == 1)
             {
-                state = true;
-                s = new Size(195, 210);
-                p = new Point(4, 245);
-            }
-            else
-            {
-                if (threePinRadio.Checked)
+                if (triggerSelect.Items.Count != 4)
                 {
-                    this.twoPinRadio.Invoke((MethodInvoker)(() => this.twoPinRadio.Checked = true));
+                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
                 }
             }
-            if (threePinRadio.InvokeRequired)
-            {
-                this.threePinRadio.Invoke((MethodInvoker)(() => this.threePinRadio.Visible = state));
-                this.triggerCard.Invoke((MethodInvoker)(() => this.triggerCard.Size = s));
-                this.sensorCard.Invoke((MethodInvoker)(() => this.sensorCard.Location = p));
-            }
             else
             {
-                threePinRadio.Visible = state;
-                triggerCard.Size = s;
-                sensorCard.Location = p;
+                if (triggerSelect.Items.Count == 4)
+                {
+                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.RemoveAt(3)));
+                }
+                if (triggerSelect.SelectedIndex == 3)
+                {
+                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.SelectedIndex = 2));
+                }
             }
-
         }
 
         public void SaveSettings()
         {
             // save to testSettings, then save custom profile to settings?
             
-            testSettings.TriggerType = testSettings.TriggerTypes(buttonTriggerRadio, audioTriggerRadio, twoPinRadio);
-            testSettings.SensorType = testSettings.SensorTypes(lightSensorRadio, audioSensorRadio);
-            testSettings.TestSource = testSettings.SourceTypes(DirectXRadio, mouseKeyboardRadio, keyboardRadio, gameExternalRadio, audioSourceRadio, externalRadio);
+            testSettings.TriggerType = triggerSelect.SelectedIndex + 1;
+            testSettings.SensorType = sensorSelect.SelectedIndex + 1;
+            testSettings.TestSource = testSelect.SelectedIndex + 1;
             testSettings.AutoClick = autoClickToggle.Checked;
             testSettings.ClickCount = int.Parse(clickCountSelect.Items[clickCountSelect.SelectedIndex].ToString());
             testSettings.PreTest = preTestToggle.Checked;
@@ -142,8 +137,29 @@ namespace OSLTT
                 mainWindow.testSettings = testSettings;
                 // maybe change these settings? change directX to source
             }
+            this.Refresh();
         }
+        private void FillSelects()
+        {
+            triggerSelect.Items.Clear();
+            triggerSelect.Items.Add("OSLTT Button");
+            triggerSelect.Items.Add("Audio Jack (Mic)");
+            triggerSelect.Items.Add("2 Pin Input");
 
+            sensorSelect.Items.Clear();
+            sensorSelect.Items.Add("Light Sensor");
+            sensorSelect.Items.Add("Audio Sensor");
+            sensorSelect.Items.Add("Clicks/Keypresses");
+
+            testSelect.Items.Clear();
+            testSelect.Items.Add("DirectX Tool");
+            testSelect.Items.Add("Mouse (Click)");
+            testSelect.Items.Add("Game");
+            testSelect.Items.Add("Audio Clip");
+            testSelect.Items.Add("External");
+            testSelect.Items.Add("Keyboard");
+            testSelect.Items.Add("Gamepad/Controller");
+        }
 
         public class Displays
         {
@@ -238,6 +254,24 @@ namespace OSLTT
             ChangeSettings(2, 3, 2, false, 100, 0.5, false, 0, 0);
             EnableDisable(false, false, false, false, false, false);
         }
+        public void KeyboardPreset()
+        {
+            // disable all settings
+            // mouse/keyboard sensor
+            // clicks/keypress source
+            // audio jack trigger
+            ChangeSettings(2, 3, 6, false, 100, 0.5, false, 0, 0);
+            EnableDisable(false, false, false, false, false, false);
+        }
+        public void GamepadPreset()
+        {
+            // disable all settings
+            // mouse/keyboard sensor
+            // clicks/keypress source
+            // audio jack trigger
+            ChangeSettings(2, 3, 7, false, 100, 0.5, false, 0, 0);
+            EnableDisable(false, false, false, false, false, false);
+        }
 
         public void GamesPreset()
         {
@@ -291,78 +325,18 @@ namespace OSLTT
 
         public void ChangeSettings(int trigger, int sensor, int source, bool autoClick, int clicks, double time, bool pretest, int mouseAction, int twoPinTrigger)
         {
-            MaterialRadioButton triggerType;
-            MaterialRadioButton sensorType;
-            MaterialRadioButton sourceType;
-            if (trigger == 1)
-            {
-                triggerType = buttonTriggerRadio;
-            }
-            else if (trigger == 2)
-            {
-                triggerType = audioTriggerRadio;
-            }
-            else if (trigger == 3)
-            {
-                triggerType = twoPinRadio;
-            }
-            else
-            {
-                triggerType = threePinRadio;
-            }
-            if (sensor == 1)
-            {
-                sensorType = lightSensorRadio;
-            }
-            else if (sensor == 2)
-            {
-                sensorType = audioSensorRadio;
-            }
-            else
-            {
-                sensorType = clickKeypressRadio;
-            }
-            if (source == 1)
-            {
-                sourceType = DirectXRadio;
-            }
-            else if (source == 2)
-            {
-                sourceType = mouseKeyboardRadio;
-            }
-            else if (source == 3)
-            {
-                sourceType = gameExternalRadio;
-            }
-            else if (source == 4)
-            {
-                sourceType = audioSourceRadio;
-            }
-            else if (source == 5)
-            {
-                sourceType = externalRadio;
-            }
-            else if (source == 6)
-            {
-                sourceType = keyboardRadio;
-            }
-            else if (source == 7)
-            {
-                sourceType = gamepadRadio;
-            }
-            else
-            {
-                sourceType = externalRadio;
-            }
-
             SetComboBoxValue(clickCountSelect, clicks);
             SetComboBoxValue(timeBetweenSelect, time);
+            if (trigger == 4 && triggerSelect.Items.Count < 4)
+            {
+                trigger = 3;
+            }
 
             if (this.InvokeRequired)
             {
-                triggerType.Invoke((MethodInvoker)(() => triggerType.Checked = true));
-                sensorType.Invoke((MethodInvoker)(() => sensorType.Checked = true));
-                sourceType.Invoke((MethodInvoker)(() => sourceType.Checked = true));
+                triggerSelect.Invoke((MethodInvoker)(() => triggerSelect.SelectedIndex = trigger - 1));
+                sensorSelect.Invoke((MethodInvoker)(() => sensorSelect.SelectedIndex = sensor - 1));
+                testSelect.Invoke((MethodInvoker)(() => testSelect.SelectedIndex = source - 1));
                 autoClickToggle.Invoke((MethodInvoker)(() => autoClickToggle.Checked = autoClick));
                 preTestToggle.Invoke((MethodInvoker)(() => preTestToggle.Checked = pretest));
                 mouseActionSelect.Invoke((MethodInvoker)(() => mouseActionSelect.SelectedIndex = mouseAction));
@@ -370,9 +344,9 @@ namespace OSLTT
             }
             else
             {
-                triggerType.Checked = true;
-                sensorType.Checked = true;
-                sourceType.Checked = true;
+                triggerSelect.SelectedIndex = trigger - 1;
+                sensorSelect.SelectedIndex = sensor - 1;
+                testSelect.SelectedIndex = source - 1;
                 autoClickToggle.Checked = autoClick;
                 preTestToggle.Checked = pretest;
                 mouseActionSelect.SelectedIndex = mouseAction;
@@ -414,8 +388,6 @@ namespace OSLTT
             if (this.InvokeRequired)
             {
                 this.triggerCard.Invoke((MethodInvoker)(() => this.triggerCard.Enabled = triggerCard));
-                this.sensorCard.Invoke((MethodInvoker)(() => this.sensorCard.Enabled = sensorCard));
-                this.sourceCard.Invoke((MethodInvoker)(() => this.sourceCard.Enabled = sourceCard));
                 this.settingsCard.Invoke((MethodInvoker)(() => this.settingsCard.Enabled = settingsCard));
                 this.displayCard.Invoke((MethodInvoker)(() => this.displayCard.Enabled = displayCard));
                 this.preTestToggle.Invoke((MethodInvoker)(() => this.preTestToggle.Enabled = pretest));
@@ -423,172 +395,15 @@ namespace OSLTT
             else
             {
                 this.triggerCard.Enabled = triggerCard;
-                this.sensorCard.Enabled = sensorCard;
-                this.sourceCard.Enabled = sourceCard;
                 this.settingsCard.Enabled = settingsCard;
                 this.displayCard.Enabled = displayCard;
                 this.preTestToggle.Enabled = pretest;
             }
         }
 
-        private void buttonTriggerRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.TriggerType = 1;
-                    if (clickKeypressRadio.Checked)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }
-                    if (mouseKeyboardRadio.Checked)
-                    {
-                        DirectXRadio.Checked = true;
-                    }
-                }
-                SaveSettings();
-            }
-        }
+        
 
-        private void audioTriggerRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.TriggerType = 2;
-                    if (!clickKeypressRadio.Checked || !externalRadio.Checked)
-                    {
-                        clickKeypressRadio.Checked = true;
-                    }
-                    if (!mouseKeyboardRadio.Checked || !lightSensorRadio.Checked)
-                    {
-                        mouseKeyboardRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                    if (autoClickToggle.Checked)
-                    {
-                        autoClickToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void twoPinRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.TriggerType = 3;
-                    // probs more to add here
-                    if (testSettings.SensorType != 1 )
-                    {
-                        //audioSensorRadio.Checked = true;
-                    }
-                    if (testSettings.TestSource == 4)
-                    {
-                        externalRadio.Checked = true;
-                    }
-                    if (testSettings.SensorType != 1 && testSettings.SensorType != 3)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void lightSensorRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 1;
-                    if (audioSourceRadio.Checked)
-                    {
-                        DirectXRadio.Checked = true;
-                    }
-                    if (testSettings.TestSource == 2 && testSettings.TriggerType == 3)
-                    {
-                        externalRadio.Checked = true;
-                    }
-                    if (testSettings.TestSource != 1 && testSettings.TestSource != 3 && testSettings.TestSource != 5)
-                    {
-                        DirectXRadio.Checked = true;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void audioSensorRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 2;
-                    if (!buttonTriggerRadio.Checked)
-                    {
-                        buttonTriggerRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                    if (testSettings.TestSource != 4)
-                    {
-                        audioSourceRadio.Checked = true;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void clickKeypressRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 3;
-                    if (!mouseKeyboardRadio.Checked)
-                    {
-                        mouseKeyboardRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                    if (testSettings.TriggerType != 2 && testSettings.TriggerType != 3)
-                    {
-                        audioTriggerRadio.Checked = true;
-                    }
-                    if (autoClickToggle.Checked)
-                    {
-                        autoClickToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
+       
 
         private void autoClickToggle_CheckedChanged(object sender, EventArgs e)
         {
@@ -600,15 +415,15 @@ namespace OSLTT
                     testSettings.AutoClick = s.Checked;
                     if (testSettings.TriggerType != 1)
                     {
-                        buttonTriggerRadio.Checked = true;
+                        triggerSelect.SelectedIndex = 0;
                     }
                     if (testSettings.SensorType == 3)
                     {
-                        lightSensorRadio.Checked = true;
+                        sensorSelect.SelectedIndex = 0;
                     }
                     if (testSettings.TestSource == 2)
                     {
-                        DirectXRadio.Checked = true;
+                        testSelect.SelectedIndex = 0;
                     }
                 }
                 SaveSettings();
@@ -645,15 +460,15 @@ namespace OSLTT
                     testSettings.PreTest = s.Checked;
                     if (testSettings.TriggerType != 1)
                     {
-                        buttonTriggerRadio.Checked = true;
+                        triggerSelect.SelectedIndex = 0;
                     }
                     if (testSettings.SensorType != 1)
                     {
-                        lightSensorRadio.Checked = true;
+                        sensorSelect.SelectedIndex = 0;
                     }
                     if (testSettings.TestSource != 3)
                     {
-                        gameExternalRadio.Checked = true;
+                        testSelect.SelectedIndex = 2;
                     }
                 }
                 SaveSettings();
@@ -679,136 +494,12 @@ namespace OSLTT
             }
         }
 
-        private void DirectXRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 1;
-                    if (!buttonTriggerRadio.Checked)
-                    {
-                        buttonTriggerRadio.Checked = true;
-                    }
-                    if (!lightSensorRadio.Checked)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void mouseKeyboardRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 2;
-                    if (!audioTriggerRadio.Checked)
-                    {
-                        audioTriggerRadio.Checked = true;
-                    }
-                    if (!clickKeypressRadio.Checked)
-                    {
-                        clickKeypressRadio.Checked = true;
-                    }
-                    if (autoClickToggle.Checked)
-                    {
-                        autoClickToggle.Checked = false;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void gameExternalRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 3;
-                    buttonTriggerRadio.Checked = true;
-                    if (!buttonTriggerRadio.Checked)
-                    {
-                        buttonTriggerRadio.Checked = true;
-                    }
-                    if (!lightSensorRadio.Checked)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
-        private void audioSourceRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 4;
-                    if (!buttonTriggerRadio.Checked)
-                    {
-                        buttonTriggerRadio.Checked = true;
-                    }
-                    if (!lightSensorRadio.Checked)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }
-                    if (testSettings.SensorType != 2)
-                    {
-                        audioSensorRadio.Checked = true;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
-
         private void refreshMonitorsBtn_Click(object sender, EventArgs e)
         {
             listMonitors();
         }
 
-        private void externalRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    /*testSettings.SensorType = 3;
-                    if (!buttonTriggerRadio.Checked)
-                    {
-                        buttonTriggerRadio.Checked = true;
-                    }
-                    if (!lightSensorRadio.Checked)
-                    {
-                        lightSensorRadio.Checked = true;
-                    }*/
-                }
-                SaveSettings();
-            }
-        }
+        
 
         private void mouseActionSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -820,34 +511,7 @@ namespace OSLTT
             }
         }
 
-        private void keyboardRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            MaterialRadioButton s = sender as MaterialRadioButton;
-            if (s.Focused)
-            {
-                if (s.Checked)
-                {
-                    testSettings.SensorType = 2;
-                    if (!audioTriggerRadio.Checked)
-                    {
-                        audioTriggerRadio.Checked = true;
-                    }
-                    if (!clickKeypressRadio.Checked)
-                    {
-                        clickKeypressRadio.Checked = true;
-                    }
-                    if (autoClickToggle.Checked)
-                    {
-                        autoClickToggle.Checked = false;
-                    }
-                    if (preTestToggle.Checked)
-                    {
-                        preTestToggle.Checked = false;
-                    }
-                }
-                SaveSettings();
-            }
-        }
+        
 
         private void twoPinTriggerSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -859,26 +523,81 @@ namespace OSLTT
             }
         }
 
-        private void threePinRadio_CheckedChanged(object sender, EventArgs e)
+        private void triggerSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MaterialRadioButton s = sender as MaterialRadioButton;
+            MaterialComboBox s = sender as MaterialComboBox;
             if (s.Focused)
             {
-                if (s.Checked)
+                testSettings.TriggerType = s.SelectedIndex + 1;
+                if (s.SelectedIndex == 0) // button
                 {
-                    testSettings.TriggerType = 4;
-                    // probs more to add here
-                    if (testSettings.SensorType != 1)
+                    // Only works with Light or Audio
+                    if (testSettings.SensorType != 1 && testSettings.SensorType != 2 )
                     {
-                        //audioSensorRadio.Checked = true;
+                        sensorSelect.SelectedIndex = 0;
                     }
-                    if (testSettings.TestSource == 4)
+                    // Only works with DirectX, Game, Audio
+                    if (testSettings.TestSource != 1 && testSettings.TestSource != 3 && testSettings.TestSource != 4)
                     {
-                        externalRadio.Checked = true;
+                        testSelect.SelectedIndex = 0;
                     }
+                }
+                else if (s.SelectedIndex == 1) // Audio Jack
+                {
+                    // Only works with Light or Clicks
                     if (testSettings.SensorType != 1 && testSettings.SensorType != 3)
                     {
-                        lightSensorRadio.Checked = true;
+                        sensorSelect.SelectedIndex = 2; // set to clicks by default
+                    }
+                    // Only works with Mouse click, game, keyboard or controller
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 3 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    {
+                        testSelect.SelectedIndex = 1; // set to mouse by default
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
+                    }
+                }
+                else if (s.SelectedIndex == 2) // 2 pin
+                {
+                    // Only works with light and clicks
+                    if (testSettings.SensorType != 1 && testSettings.SensorType != 3)
+                    {
+                        sensorSelect.SelectedIndex = 2; // set to clicks as default
+                    }
+                    // Only works with Mouse click, external, keyboard, controller
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 5 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    {
+                        if (testSettings.SensorType == 1) // if light sensor, set external
+                        {
+                            testSelect.SelectedIndex = 4;
+                        }
+                        else
+                        {
+                            testSelect.SelectedIndex = 1; // Set to mouse as default
+                        }
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                else if (s.SelectedIndex == 3) // 3 pin
+                {
+                    // Only works with clicks
+                    if (testSettings.SensorType != 3)
+                    {
+                        sensorSelect.SelectedIndex = 2; // set to clicks as default
+                    }
+                    // Only works with Mouse click,  keyboard, controller
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    {
+                        testSelect.SelectedIndex = 1; // Set to mouse as default
                     }
                     if (preTestToggle.Checked)
                     {
@@ -889,21 +608,108 @@ namespace OSLTT
             }
         }
 
-        private void gamepadRadio_CheckedChanged(object sender, EventArgs e)
+        private void sensorSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MaterialRadioButton s = sender as MaterialRadioButton;
+            MaterialComboBox s = sender as MaterialComboBox;
             if (s.Focused)
             {
-                if (s.Checked)
+                testSettings.SensorType = s.SelectedIndex + 1;
+                if (s.SelectedIndex == 0) // light
                 {
-                    //testSettings.SensorType = 2;
-                    if (!audioTriggerRadio.Checked)
+                    // Only works with button, mic and 2 pin
+                    if (testSettings.TriggerType != 1 && testSettings.TriggerType != 2 && testSettings.TriggerType != 3)
                     {
-                        audioTriggerRadio.Checked = true;
+                        triggerSelect.SelectedIndex = 0; // set to button by default   
                     }
-                    if (!clickKeypressRadio.Checked)
+                    // Only works with DirectX, game and external
+                    if (testSettings.TestSource != 1 && testSettings.TestSource != 3 && testSettings.TestSource != 5)
                     {
-                        clickKeypressRadio.Checked = true;
+                        if (testSettings.TriggerType == 3) // if 2pin, set to external
+                        {
+                            testSelect.SelectedIndex = 4; // set external
+                        }
+                        else
+                        {
+                            testSelect.SelectedIndex = 0; // set to DirectX by default
+                        }
+                    }
+                }
+                else if (s.SelectedIndex == 1) // audio
+                {
+                    // Only works with button
+                    if (testSettings.TriggerType != 1)
+                    {
+                        triggerSelect.SelectedIndex = 0; // set to button
+                    }
+                    // Only works with audio
+                    if (testSettings.TestSource != 4)
+                    {
+                        testSelect.SelectedIndex = 3; // set to audio
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                else if (s.SelectedIndex == 2) // clicks
+                {
+                    // Only works with Mic, 2 pin and 3 pin
+                    if (testSettings.TriggerType != 2 && testSettings.TriggerType != 3 && testSettings.TriggerType != 4)
+                    {
+                        triggerSelect.SelectedIndex = 1; // set to clicks by default
+                    }
+                    // Only works with mouse, keyboard and controller
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    {
+                        testSelect.SelectedIndex = 1; // set to mouse by default
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
+                    }
+                }
+                SaveSettings();
+            }
+        }
+
+        private void testSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MaterialComboBox s = sender as MaterialComboBox;
+            if (s.Focused)
+            {
+                testSettings.TestSource = s.SelectedIndex + 1;
+                if (s.SelectedIndex == 0) // DirectX
+                {
+                    // Only works with button
+                    if (testSettings.TriggerType != 1)
+                    {
+                        triggerSelect.SelectedIndex = 0; // set to button
+                    }
+                    // Only works with light
+                    if (testSettings.SensorType != 1)
+                    {
+                        sensorSelect.SelectedIndex = 0; // set to directx
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                }
+                else if (s.SelectedIndex == 1 || s.SelectedIndex == 5 || s.SelectedIndex == 6) // Mouse (clicks), Keyboard, Gamepad
+                {
+                    // only works with mic, 2 pin, 3 pin
+                    if (testSettings.TriggerType != 2 && testSettings.TriggerType != 3 && testSettings.TriggerType != 4)
+                    {
+                        triggerSelect.SelectedIndex = 1; // set to mic by default
+                    }
+                    // only works with clicks
+                    if (testSettings.SensorType != 3)
+                    {
+                        sensorSelect.SelectedIndex = 2; // set to clicks by default
                     }
                     if (autoClickToggle.Checked)
                     {
@@ -912,6 +718,51 @@ namespace OSLTT
                     if (preTestToggle.Checked)
                     {
                         preTestToggle.Checked = false;
+                    }
+
+                }
+                else if (s.SelectedIndex == 2) // Game
+                {
+                    // Only works with button and mic
+                    if (testSettings.TriggerType != 1 && testSettings.TriggerType != 2)
+                    {
+                        triggerSelect.SelectedIndex = 0; // set to button by default
+                    }
+                    // only works with light
+                    if (testSettings.SensorType != 1)
+                    {
+                        sensorSelect.SelectedIndex = 0; // set to light
+                    }
+                }
+                else if (s.SelectedIndex == 3) // Audio
+                {
+                    // Only works with button
+                    if (testSettings.TriggerType != 1)
+                    {
+                        triggerSelect.SelectedIndex = 0; // set to button
+                    }
+                    // Only works with mic
+                    if (testSettings.SensorType != 2)
+                    {
+                        sensorSelect.SelectedIndex = 1; // set to mic
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+
+                }
+                else if (s.SelectedIndex == 4) // External
+                {
+                    // Only works with 2 pin
+                    if (testSettings.TriggerType != 3)
+                    {
+                        triggerSelect.SelectedIndex = 2; // set to 2 pin
+                    }
+                    // Only works with light
+                    if (testSettings.SensorType != 1)
+                    {
+                        sensorSelect.SelectedIndex = 0; // set to light
                     }
                 }
                 SaveSettings();

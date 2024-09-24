@@ -1451,6 +1451,15 @@ namespace OSLTT
         {
             settingsPane1.MouseKeyboardPreset();
         }
+        private void gamepadPresetBtn_Click(object sender, EventArgs e)
+        {
+            settingsPane1.GamepadPreset();
+        }
+
+        private void keyboardPresetBtn_Click(object sender, EventArgs e)
+        {
+            settingsPane1.KeyboardPreset();
+        }
 
         private void gamePresetBtn_Click(object sender, EventArgs e)
         {
@@ -1528,6 +1537,13 @@ namespace OSLTT
         {
             portWrite("Z1");
         }
+
+        private void resultsFolderBtn_Click(object sender, EventArgs e)
+        {
+            Process.Start(resultsPath);
+        }
+
+        
     }
 
 }

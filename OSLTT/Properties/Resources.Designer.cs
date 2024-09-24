@@ -133,6 +133,16 @@ namespace OSLTT.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folder_solid {
+            get {
+                object obj = ResourceManager.GetObject("folder_solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gamepad_solid {
             get {
                 object obj = ResourceManager.GetObject("gamepad-solid", resourceCulture);
@@ -156,6 +166,16 @@ namespace OSLTT.Properties {
         internal static System.Drawing.Bitmap headset_solid {
             get {
                 object obj = ResourceManager.GetObject("headset-solid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap keyboard_solid {
+            get {
+                object obj = ResourceManager.GetObject("keyboard_solid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

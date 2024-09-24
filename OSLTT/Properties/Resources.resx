@@ -157,4 +157,10 @@
   <data name="gear_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gear-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="folder_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="keyboard_solid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\keyboard-solid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
