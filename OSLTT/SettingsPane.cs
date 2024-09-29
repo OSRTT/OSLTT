@@ -298,6 +298,13 @@ namespace OSLTT
             EnableDisable(false, false, false, true, false, false);
         }
 
+        public void ConsolePreset()
+        {
+            
+            ChangeSettings(2, 1, 5, false, 100, 1, false, 0, 0);
+            EnableDisable(false, false, false, false, false, false);
+        }
+
         public void CustomPreset1()
         {
             // set to monitor settings then enable everything

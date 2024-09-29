@@ -65,6 +65,7 @@ namespace OSLTT
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.settingsPane1 = new OSLTT.SettingsPane();
+            this.consolesPresetBtn = new MaterialSkin.Controls.MaterialButton();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
@@ -382,6 +383,7 @@ namespace OSLTT
             // materialCard1
             // 
             this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard1.Controls.Add(this.consolesPresetBtn);
             this.materialCard1.Controls.Add(this.gamepadPresetBtn);
             this.materialCard1.Controls.Add(this.keyboardPresetBtn);
             this.materialCard1.Controls.Add(this.customPresetBtn);
@@ -447,7 +449,7 @@ namespace OSLTT
             this.customPresetBtn.Depth = 0;
             this.customPresetBtn.HighEmphasis = true;
             this.customPresetBtn.Icon = global::OSLTT.Properties.Resources.wrench_solid;
-            this.customPresetBtn.Location = new System.Drawing.Point(14, 92);
+            this.customPresetBtn.Location = new System.Drawing.Point(165, 93);
             this.customPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.customPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.customPresetBtn.Name = "customPresetBtn";
@@ -685,6 +687,26 @@ namespace OSLTT
             this.settingsPane1.Size = new System.Drawing.Size(623, 458);
             this.settingsPane1.TabIndex = 59;
             // 
+            // consolesPresetBtn
+            // 
+            this.consolesPresetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.consolesPresetBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.consolesPresetBtn.Depth = 0;
+            this.consolesPresetBtn.HighEmphasis = true;
+            this.consolesPresetBtn.Icon = global::OSLTT.Properties.Resources.gamepad_solid;
+            this.consolesPresetBtn.Location = new System.Drawing.Point(14, 93);
+            this.consolesPresetBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.consolesPresetBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.consolesPresetBtn.Name = "consolesPresetBtn";
+            this.consolesPresetBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.consolesPresetBtn.Size = new System.Drawing.Size(124, 36);
+            this.consolesPresetBtn.TabIndex = 65;
+            this.consolesPresetBtn.Text = "Consoles";
+            this.consolesPresetBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.consolesPresetBtn.UseAccentColor = false;
+            this.consolesPresetBtn.UseVisualStyleBackColor = true;
+            this.consolesPresetBtn.Click += new System.EventHandler(this.consolesPresetBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -758,6 +780,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton gamepadPresetBtn;
         private MaterialSkin.Controls.MaterialButton keyboardPresetBtn;
         private MaterialSkin.Controls.MaterialCard materialCard4;
+        private MaterialSkin.Controls.MaterialButton consolesPresetBtn;
     }
 }
 

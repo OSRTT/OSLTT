@@ -1471,6 +1471,11 @@ namespace OSLTT
             settingsPane1.AudioPreset();
         }
 
+        private void consolesPresetBtn_Click(object sender, EventArgs e)
+        {
+            settingsPane1.ConsolePreset();
+        }
+
         private void customPresetBtn_Click(object sender, EventArgs e)
         {
             settingsPane1.CustomPreset1();
