@@ -201,5 +201,53 @@ namespace OSLTT.Properties {
                 this["hotkey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int yMax {
+            get {
+                return ((int)(this["yMax"]));
+            }
+            set {
+                this["yMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color chartTextColour {
+            get {
+                return ((global::System.Drawing.Color)(this["chartTextColour"]));
+            }
+            set {
+                this["chartTextColour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int autoSaveScreenshots {
+            get {
+                return ((int)(this["autoSaveScreenshots"]));
+            }
+            set {
+                this["autoSaveScreenshots"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int defaultGraphView {
+            get {
+                return ((int)(this["defaultGraphView"]));
+            }
+            set {
+                this["defaultGraphView"] = value;
+            }
+        }
     }
 }

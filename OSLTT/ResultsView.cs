@@ -75,11 +75,31 @@ namespace OSLTT
 
             //importPanel.Visible = false;
             importPanel.SendToBack();
-            barPlot.Visible = true;
-            barPlot.BringToFront();
+
             controlsPanel.Visible = true;
             controlsPanel.BringToFront();
-            drawBarGraph();
+
+            if (Properties.Settings.Default.defaultGraphView == 0)
+            {
+                barPlot.Visible = true;
+                barPlot.BringToFront();
+                drawBarGraph();
+            }
+            else
+            {
+                ScatterOption = true;
+                graphedData.Visible = true;
+                graphedData.BringToFront();
+                drawScatterGraph();
+            }
+            if (Properties.Settings.Default.autoSaveScreenshots == 1)
+            {
+                savePNGBtn_Click(null, null);
+            }
+            else if (Properties.Settings.Default.autoSaveScreenshots == 2)
+            {
+                saveWhitePNGBtn_Click(null, null);
+            }
         }
 
         private void fillResultsTable()
@@ -172,7 +192,7 @@ namespace OSLTT
             dgv.CurrentRow.Selected = false;
         }
 
-        public void drawScatterGraph()
+        public void drawScatterGraph(bool avgLine = true)
         {
             if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
             {
@@ -191,6 +211,7 @@ namespace OSLTT
             }
 
             graphedData.Plot.Clear();
+            graphedData.Plot.ResetLayout();
             double[] xs = new double[inputLagResults.inputLagResults.Count];
             double[] ys = new double[inputLagResults.inputLagResults.Count];
             double averageLine = inputLagResults.onDisplayLatency.AVG;
@@ -220,11 +241,21 @@ namespace OSLTT
             graphedData.Plot.Legend(false);
             graphedData.Plot.Style(null, SystemColors.ControlDark, Color.LightGray);
 
-            graphedData.Plot.XAxis.TickLabelStyle(Color.Black, "Calibri", 20, false);
-            graphedData.Plot.YAxis.TickLabelStyle(Color.Black, "Calibri", 20, false);
+            graphedData.Plot.XAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 20, false);
+            graphedData.Plot.YAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 20, false);
             //graphedData.Plot.SetAxisLimitsY(0, inputLagResults.totalInputLag.MAX + 1);
 
-            graphedData.Plot.AddHorizontalLine(averageLine, Color.DarkGreen, 5);
+            if (avgLine)
+            {
+                graphedData.Plot.AddHorizontalLine(averageLine, Color.DarkGreen, 5);
+                
+                
+            }
+            else
+            {
+                graphedData.Plot.Frameless();
+                graphedData.Plot.SetAxisLimitsY(0, (double)Properties.Settings.Default.yMax);
+            }
 
             graphedData.Plot.Render();
             graphedData.Plot.RenderLegend();
@@ -282,13 +313,14 @@ namespace OSLTT
                 values[1][0] = Math.Round(inputLagResults.totalInputLag.MIN, 2);
                 values[2][0] = Math.Round(inputLagResults.totalInputLag.MAX, 2);
             }
-
-            barPlot.Plot.Style(null, SystemColors.ControlDark);
+            Console.WriteLine(Properties.Settings.Default.chartTextColour);
+            barPlot.Plot.Style(figureBackground: Color.Transparent, dataBackground: SystemColors.ControlDark);
+            
             barPlot.Plot.AddBarGroups(titles, labels, values, null);
             barPlot.Plot.Legend(location: ScottPlot.Alignment.UpperLeft);
             barPlot.Plot.XAxis.Grid(false);
-            barPlot.Plot.XAxis.TickLabelStyle(Color.Black, "Calibri", 24, true);
-            barPlot.Plot.YAxis.TickLabelStyle(Color.Black, "Calibri", 20, false);
+            barPlot.Plot.XAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 24, true);
+            barPlot.Plot.YAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 20, false);
             barPlot.Plot.SetAxisLimitsY(0, inputLagResults.totalInputLag.MAX * 1.1);
 
             //barPlot.Plot.XAxis.Color(Color.White);
@@ -300,6 +332,7 @@ namespace OSLTT
                 b.ShowValuesAboveBars = true;
                 b.Font.Bold = true;
                 b.Font.Size = 22;
+                b.Font.Color = Properties.Settings.Default.chartTextColour;
             }
 
             barPlot.Plot.Render();
@@ -722,5 +755,51 @@ namespace OSLTT
             return averagedLatency;
         }
 
+        private void savePNGNoLineBtn_Click(object sender, EventArgs e)
+        {
+            if (ScatterOption)
+            {
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-SCATTER");
+                Color bnColor = BackColor;
+                drawScatterGraph(false);
+                graphedData.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent, grid: Color.Transparent, axisLabel: Color.Transparent);
+                graphedData.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
+                graphedData.Plot.Style(figureBackground: bnColor, dataBackground: bnColor);
+                graphedData.Plot.Frameless(false);
+                graphedData.Plot.AxisAutoY();
+                graphedData.Plot.XAxis2.IsVisible = false;
+                graphedData.Plot.YAxis2.IsVisible = false;
+                drawScatterGraph();
+                Process.Start("explorer.exe", resultsFolderPath);
+            }
+            else
+            {
+                string run = CFuncs.createIMGFileName(resultsFolderPath, "LATENCY-CHART");
+                Color bnColor = BackColor;
+                barPlot.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent);
+                barPlot.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
+                barPlot.Plot.Style(figureBackground: bnColor, dataBackground: bnColor);
+                Process.Start("explorer.exe", resultsFolderPath);
+            }
+        }
+
+        private void settingsBtn_Click(object sender, EventArgs e)
+        {
+            int resSet = -1;
+            FormCollection fc = Application.OpenForms;
+            for (int i = 0; i < fc.Count; i++)
+            {
+                if (fc[i].Name == "ResultsSettings")
+                {
+                    resSet = i;
+                }
+            }
+            if (resSet != -1)
+            {
+                fc[resSet].Close();
+            }
+            ResultsSettings rs = new ResultsSettings();
+            rs.Show();
+        }
     }
 }

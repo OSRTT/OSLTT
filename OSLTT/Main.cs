@@ -77,6 +77,8 @@ namespace OSLTT
 
         SoundPlayer audioTestClip;
 
+        public bool MouseMoveTest = false;
+
         Stopwatch sw = new Stopwatch();
         List<List<long>> testList = new List<List<long>>();
         int testLoopCounter = 0;
@@ -201,13 +203,22 @@ namespace OSLTT
             }
 
             mouseHook.LeftButtonDown += MouseHook_LeftButtonDown;
+            mouseHook.MouseMove += MouseHook_Move;
             keyboardHook.KeyDown += KeyboardHook_KeyDown;
         }
 
         private void KeyboardHook_KeyDown(KeyboardHook.VKeys key)
         {
-            portWrite("H");
-            Console.WriteLine(key.ToString());
+            if (!MouseMoveTest)
+            {
+                portWrite("H");
+                Console.WriteLine(key.ToString());
+            }
+            else if (!MouseMoveReady)
+            {
+                portWrite("R");
+                MouseMoveReady = true;
+            }
         }
 
         /// <summary>
@@ -216,8 +227,30 @@ namespace OSLTT
         /// <param name="mouseStruct"></param>
         private void MouseHook_LeftButtonDown(MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
-            portWrite("H");
-            Console.WriteLine("Triggered");
+            if (testSettings.TestSource == 2)
+            {
+                portWrite("H");
+                Console.WriteLine("Triggered");
+            }
+            else
+            {
+                MouseMoveReady = true;
+            }
+        }
+
+        private bool MouseMoveReady = true;
+        /// <summary>
+        /// MouseHook move event handler - used for click/keypress test
+        /// </summary>
+        /// <param name="mouseStruct"></param>
+        private void MouseHook_Move(MouseHook.MSLLHOOKSTRUCT mouseStruct)
+        {
+            if (MouseMoveReady)
+            {
+                portWrite("H");
+                Console.WriteLine("Triggered");
+                MouseMoveReady = false;
+            }
         }
 
         private bool ControllerKill = false;
@@ -259,7 +292,30 @@ namespace OSLTT
                 }
             }
             Console.WriteLine("Exiting controller handler");
+        }
 
+        static void PlaySoundFile(XAudio2 device)
+        {
+            var stream = new SoundStream(Properties.Resources.OSLTTTone);
+            var waveFormat = stream.Format;
+            var buffer = new AudioBuffer
+            {
+                Stream = stream.ToDataStream(),
+                AudioBytes = (int)stream.Length,
+                Flags = BufferFlags.EndOfStream
+            };
+            stream.Close();
+            var sourceVoice = new SourceVoice(device, waveFormat, true);
+            sourceVoice.SubmitSourceBuffer(buffer, stream.DecodedPacketsInfo);
+            sourceVoice.Start();
+            while (sourceVoice.State.BuffersQueued > 0)
+            {
+                Thread.Sleep(10);
+            }
+            Console.WriteLine();
+            sourceVoice.DestroyVoice();
+            sourceVoice.Dispose();
+            buffer.Stream.Dispose();
         }
 
         /// <summary>
@@ -931,6 +987,7 @@ namespace OSLTT
                 if (state)
                 {
                     this.clickTestBox.Invoke((MethodInvoker)(() => this.clickTestBox.BringToFront()));
+                    this.Invoke((MethodInvoker)(() => this.mouseMoveLabel.Visible = false));
                     if (testSettings.TestSource == 2)
                     {
                         this.Invoke((MethodInvoker)(() => this.mouseHook.Install()));
@@ -944,6 +1001,12 @@ namespace OSLTT
                     {
                         Thread t = new Thread(new ThreadStart(ControllerEventHandler));
                         t.Start();
+                    }
+                    else if (testSettings.TestSource == 8)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.mouseHook.Install()));
+                        this.Invoke((MethodInvoker)(() => this.keyboardHook.Install()));
+                        this.Invoke((MethodInvoker)(() => this.mouseMoveLabel.Visible = true));
                     }
                 }
                 else
@@ -961,6 +1024,12 @@ namespace OSLTT
                     {
                         ControllerKill = true;
                     }
+                    else if (testSettings.TestSource == 8)
+                    {
+                        this.Invoke((MethodInvoker)(() => this.mouseHook.Uninstall()));
+                        this.Invoke((MethodInvoker)(() => this.keyboardHook.Uninstall()));
+                        this.Invoke((MethodInvoker)(() => this.mouseMoveLabel.Visible = false));
+                    }
                 }
             }
             else
@@ -970,6 +1039,7 @@ namespace OSLTT
                 if (state)
                 {
                     this.clickTestBox.BringToFront();
+                    mouseMoveLabel.Visible = false;
                     if (testSettings.TestSource == 2)
                     {
                         mouseHook.Install();
@@ -983,6 +1053,12 @@ namespace OSLTT
                     {
                         Thread t = new Thread(new ThreadStart(ControllerEventHandler));
                         t.Start();
+                    }
+                    else if (testSettings.TestSource == 8)
+                    {
+                        mouseHook.Install();
+                        keyboardHook.Install();
+                        mouseMoveLabel.Visible = true;
                     }
 
                 }
@@ -1000,6 +1076,12 @@ namespace OSLTT
                     else if (testSettings.TestSource == 7)
                     {
                         ControllerKill = true;
+                    }
+                    else if (testSettings.TestSource == 8)
+                    {
+                        mouseHook.Uninstall();
+                        keyboardHook.Uninstall();
+                        mouseMoveLabel.Visible = false;
                     }
                 }
             }
@@ -1137,6 +1219,7 @@ namespace OSLTT
                 // End test
                 portWrite("X");
                 stopTest = true;
+                MouseMoveTest = false;
                 toggleMouseKeyboardBoxes(false);
                 SetDeviceStatus(1);
 
@@ -1220,10 +1303,14 @@ namespace OSLTT
                 inputLagProcessed.Clear();
                 inputLagRawData.Clear();
                 ControllerKill = false;
-                if (testSettings.TestSource == 2 || testSettings.TestSource == 6 || testSettings.TestSource == 7) // mouse/keyboard mode
+                if (testSettings.TestSource == 2 || testSettings.TestSource == 6 || testSettings.TestSource == 7 || testSettings.TestSource == 8) // mouse/keyboard mode
                 {
                     // switch modes then wait for test end
                     toggleMouseKeyboardBoxes(true);
+                    if (testSettings.TestSource == 8)
+                    {
+                        MouseMoveTest = true;
+                    }
                 }
                 else if (testSettings.TestSource == 4) // audio clip
                 {
@@ -1432,14 +1519,25 @@ namespace OSLTT
             }*/
 
             //portWrite("Z");
-            boardUpdate = true;
+            //boardUpdate = true;
+            //mouseHook.Install();
 
             //runPretestButton.Enabled = !runPretestButton.Enabled;
 
             //Console.WriteLine(testThread.IsAlive);
             //Thread t = new Thread(new ThreadStart(ControllerEventHandler));
             //t.Start();
+            Stopwatch sw = new Stopwatch();
+            var xaudio2 = new XAudio2();
+            var masteringVoice = new MasteringVoice(xaudio2);
+            sw.Start();
+            PlaySoundFile(xaudio2);
+            sw.Stop();
+            masteringVoice.Dispose();
+            xaudio2.Dispose();
             
+            //audioTestClip.Play(); 
+            Console.WriteLine("Time taken: " + sw.ElapsedMilliseconds + "ms");
         }
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)

@@ -34,12 +34,14 @@ namespace OSLTT
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.barPlot = new ScottPlot.FormsPlot();
             this.controlsPanel = new MaterialSkin.Controls.MaterialCard();
+            this.savePNGNoLineBtn = new MaterialSkin.Controls.MaterialButton();
             this.switchGraphTypeBtn = new MaterialSkin.Controls.MaterialButton();
             this.saveWhitePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.savePNGBtn = new MaterialSkin.Controls.MaterialButton();
             this.graphedData = new ScottPlot.FormsPlot();
             this.resultsTable = new System.Windows.Forms.DataGridView();
+            this.settingsBtn = new MaterialSkin.Controls.MaterialButton();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultsTable)).BeginInit();
@@ -105,6 +107,7 @@ namespace OSLTT
             // controlsPanel
             // 
             this.controlsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.controlsPanel.Controls.Add(this.savePNGNoLineBtn);
             this.controlsPanel.Controls.Add(this.switchGraphTypeBtn);
             this.controlsPanel.Controls.Add(this.saveWhitePNGBtn);
             this.controlsPanel.Controls.Add(this.materialLabel2);
@@ -119,6 +122,26 @@ namespace OSLTT
             this.controlsPanel.Size = new System.Drawing.Size(1184, 60);
             this.controlsPanel.TabIndex = 35;
             // 
+            // savePNGNoLineBtn
+            // 
+            this.savePNGNoLineBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.savePNGNoLineBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.savePNGNoLineBtn.Depth = 0;
+            this.savePNGNoLineBtn.HighEmphasis = true;
+            this.savePNGNoLineBtn.Icon = null;
+            this.savePNGNoLineBtn.Location = new System.Drawing.Point(782, 12);
+            this.savePNGNoLineBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.savePNGNoLineBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.savePNGNoLineBtn.Name = "savePNGNoLineBtn";
+            this.savePNGNoLineBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.savePNGNoLineBtn.Size = new System.Drawing.Size(137, 36);
+            this.savePNGNoLineBtn.TabIndex = 4;
+            this.savePNGNoLineBtn.Text = "Save PNG (Raw)";
+            this.savePNGNoLineBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.savePNGNoLineBtn.UseAccentColor = false;
+            this.savePNGNoLineBtn.UseVisualStyleBackColor = true;
+            this.savePNGNoLineBtn.Click += new System.EventHandler(this.savePNGNoLineBtn_Click);
+            // 
             // switchGraphTypeBtn
             // 
             this.switchGraphTypeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -126,7 +149,7 @@ namespace OSLTT
             this.switchGraphTypeBtn.Depth = 0;
             this.switchGraphTypeBtn.HighEmphasis = true;
             this.switchGraphTypeBtn.Icon = null;
-            this.switchGraphTypeBtn.Location = new System.Drawing.Point(637, 12);
+            this.switchGraphTypeBtn.Location = new System.Drawing.Point(421, 12);
             this.switchGraphTypeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.switchGraphTypeBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.switchGraphTypeBtn.Name = "switchGraphTypeBtn";
@@ -218,17 +241,38 @@ namespace OSLTT
             this.resultsTable.RowHeadersVisible = false;
             this.resultsTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.resultsTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.resultsTable.Size = new System.Drawing.Size(299, 598);
+            this.resultsTable.Size = new System.Drawing.Size(299, 549);
             this.resultsTable.TabIndex = 37;
+            // 
+            // settingsBtn
+            // 
+            this.settingsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.settingsBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.settingsBtn.Depth = 0;
+            this.settingsBtn.HighEmphasis = true;
+            this.settingsBtn.Icon = null;
+            this.settingsBtn.Location = new System.Drawing.Point(1351, 739);
+            this.settingsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.settingsBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.settingsBtn.Name = "settingsBtn";
+            this.settingsBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.settingsBtn.Size = new System.Drawing.Size(156, 36);
+            this.settingsBtn.TabIndex = 38;
+            this.settingsBtn.Text = "Results Settings";
+            this.settingsBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.settingsBtn.UseAccentColor = false;
+            this.settingsBtn.UseVisualStyleBackColor = true;
+            this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
             // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1524, 829);
+            this.Controls.Add(this.settingsBtn);
+            this.Controls.Add(this.importPanel);
             this.Controls.Add(this.resultsTable);
             this.Controls.Add(this.barPlot);
-            this.Controls.Add(this.importPanel);
             this.Controls.Add(this.controlsPanel);
             this.Controls.Add(this.graphedData);
             this.Name = "ResultsView";
@@ -239,6 +283,7 @@ namespace OSLTT
             this.controlsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultsTable)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -255,5 +300,7 @@ namespace OSLTT
         private ScottPlot.FormsPlot graphedData;
         private MaterialSkin.Controls.MaterialButton switchGraphTypeBtn;
         private System.Windows.Forms.DataGridView resultsTable;
+        private MaterialSkin.Controls.MaterialButton savePNGNoLineBtn;
+        private MaterialSkin.Controls.MaterialButton settingsBtn;
     }
 }

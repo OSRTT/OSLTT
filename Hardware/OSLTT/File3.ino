@@ -66,7 +66,7 @@ void loop() {
             }
           }
         }
-      } else if (sourceType == 1 || sourceType == 5 || sourceType == 6) {
+      } else if (sourceType == 1 || sourceType == 5 || sourceType == 6 || sourceType == 7) {
         if (inputType == 1)
         {
           runClickTest(); 

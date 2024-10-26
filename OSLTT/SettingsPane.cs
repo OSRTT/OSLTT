@@ -159,6 +159,7 @@ namespace OSLTT
             testSelect.Items.Add("External");
             testSelect.Items.Add("Keyboard");
             testSelect.Items.Add("Gamepad/Controller");
+            testSelect.Items.Add("Mouse Move");
         }
 
         public class Displays

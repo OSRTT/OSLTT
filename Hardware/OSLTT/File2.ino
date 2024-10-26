@@ -420,6 +420,14 @@ void runClickTest3Pin()
       PullDownInterruptFlag = false;
       InterruptCount = 0;
       delay(100);
+      input[0] = ' ';
+      if (sourceType == 7)
+      {
+        while (input[0] != 'R')
+        {
+          getSerialChars();
+        }
+      }
       // Serial.print("PDIF:");
       // Serial.println(PullDownInterruptFlag);
     }
