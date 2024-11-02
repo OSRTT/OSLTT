@@ -425,8 +425,11 @@ void runClickTest3Pin()
       {
         while (input[0] != 'R')
         {
-          getSerialChars();
+          getClickChar();
         }
+        toggleLED(true);
+        delay(200);
+        toggleLED(false);
       }
       // Serial.print("PDIF:");
       // Serial.println(PullDownInterruptFlag);

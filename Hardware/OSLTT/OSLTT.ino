@@ -15,7 +15,7 @@ int AGain = 7;          // CS Only
 
 uint16_t adcBuff[ArraySize];
  
-float firmwareVersion = 1.6;
+float firmwareVersion = 1.7;
 
 int inputType = 0; // 0 = button, 1 = audio, 2 = pin trigger
 

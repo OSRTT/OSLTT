@@ -67,6 +67,10 @@ namespace OSLTT
             if (ctrl.Focused)
             {
                 // Save new setting
+                if (ctrl.Value < 5)
+                {
+                    ctrl.Value = 5;
+                }
                 Properties.Settings.Default.yMax = ctrl.Value;
                 Properties.Settings.Default.Save();
             }

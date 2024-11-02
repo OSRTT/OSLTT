@@ -239,7 +239,7 @@ namespace OSLTT
             graphedData.Plot.AddScatter(xs, ys, null, 3, 10);
             //graphedData.Plot.Title("");
             graphedData.Plot.Legend(false);
-            graphedData.Plot.Style(null, SystemColors.ControlDark, Color.LightGray);
+            graphedData.Plot.Style(figureBackground: Color.Transparent, dataBackground: SystemColors.ControlDark, grid: Color.LightGray);
 
             graphedData.Plot.XAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 20, false);
             graphedData.Plot.YAxis.TickLabelStyle(Properties.Settings.Default.chartTextColour, "Calibri", 20, false);
@@ -388,7 +388,7 @@ namespace OSLTT
                 Color bnColor = BackColor;
                 graphedData.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent);
                 graphedData.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
-                graphedData.Plot.Style(figureBackground: bnColor, dataBackground: bnColor);
+                graphedData.Plot.Style(figureBackground: bnColor, dataBackground: SystemColors.ControlDark);
                 Process.Start("explorer.exe", resultsFolderPath);
             }
             else
@@ -397,7 +397,7 @@ namespace OSLTT
                 Color bnColor = BackColor;
                 barPlot.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent);
                 barPlot.Plot.SaveFig(resultsFolderPath + "\\" + run, 1920, 1080, false);
-                barPlot.Plot.Style(figureBackground: bnColor, dataBackground: bnColor);
+                barPlot.Plot.Style(figureBackground: bnColor, dataBackground: SystemColors.ControlDark);
                 Process.Start("explorer.exe", resultsFolderPath);
             }
         }

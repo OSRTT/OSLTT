@@ -54,12 +54,12 @@ namespace OSLTT
             this.yAxisSlider.Location = new System.Drawing.Point(23, 19);
             this.yAxisSlider.MouseState = MaterialSkin.MouseState.HOVER;
             this.yAxisSlider.Name = "yAxisSlider";
-            this.yAxisSlider.RangeMin = 5;
             this.yAxisSlider.Size = new System.Drawing.Size(718, 40);
             this.yAxisSlider.TabIndex = 2;
             this.yAxisSlider.Text = "RAW PNG Y Axis Maximum";
             this.yAxisSlider.UseAccentColor = true;
             this.yAxisSlider.Value = 30;
+            this.yAxisSlider.ValueMax = 100;
             this.yAxisSlider.MouseUp += new System.Windows.Forms.MouseEventHandler(this.yAxisSlider_MouseUp);
             // 
             // axisColourSelect

@@ -57,16 +57,46 @@ namespace OSLTT
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
                 }
+                if (testSelect.Items.Count != 8)
+                {
+                    this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.Items.Add("Mouse Move")));
+                }
             }
             else
             {
+                int triggerIndex = 0;
+                int testIndex = 0;
+                try
+                {
+                    this.triggerSelect.Invoke((MethodInvoker)(() => triggerIndex = this.triggerSelect.SelectedIndex));
+                    this.testSelect.Invoke((MethodInvoker)(() => testIndex = this.testSelect.SelectedIndex));
+                }
+                catch { }
                 if (triggerSelect.Items.Count == 4)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.RemoveAt(3)));
                 }
-                if (triggerSelect.SelectedIndex == 3)
+                if (triggerIndex == 3)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.SelectedIndex = 2));
+                    try
+                    {
+                        this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Refresh()));
+                    }
+                    catch { }
+                }
+                if (testSelect.Items.Count == 8)
+                {
+                    this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.Items.RemoveAt(7)));
+                }
+                if (testIndex == 7)
+                {
+                    this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.SelectedIndex = 1));
+                    try
+                    {
+                        this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.Refresh()));
+                    }
+                    catch { }
                 }
             }
         }
@@ -159,7 +189,7 @@ namespace OSLTT
             testSelect.Items.Add("External");
             testSelect.Items.Add("Keyboard");
             testSelect.Items.Add("Gamepad/Controller");
-            testSelect.Items.Add("Mouse Move");
+            //testSelect.Items.Add("Mouse Move");
         }
 
         public class Displays
@@ -338,6 +368,10 @@ namespace OSLTT
             if (trigger == 4 && triggerSelect.Items.Count < 4)
             {
                 trigger = 3;
+            }
+            if (source == 8 && testSelect.Items.Count < 8)
+            {
+                source = 2;
             }
 
             if (this.InvokeRequired)
@@ -602,8 +636,8 @@ namespace OSLTT
                     {
                         sensorSelect.SelectedIndex = 2; // set to clicks as default
                     }
-                    // Only works with Mouse click,  keyboard, controller
-                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    // Only works with Mouse click,  keyboard, controller and mouse mouse
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6 && testSettings.TestSource != 7 && testSettings.TestSource != 8)
                     {
                         testSelect.SelectedIndex = 1; // Set to mouse as default
                     }

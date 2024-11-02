@@ -65,6 +65,11 @@ namespace OSLTT
                             try
                             {
                                 Type t = Properties.Settings.Default[s.name].GetType();
+                                if (s.name.Contains("Colour"))
+                                {
+                                    Console.WriteLine(System.Drawing.Color.FromName(s.value));
+                                    //Console.WriteLine();
+                                }
                                 Properties.Settings.Default[s.name] = Convert.ChangeType(s.value, t);
                             }
                             catch (Exception e) { Console.WriteLine(e.Message + e.StackTrace); }

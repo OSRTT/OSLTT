@@ -249,5 +249,17 @@ namespace OSLTT.Properties {
                 this["defaultGraphView"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastBoardType {
+            get {
+                return ((int)(this["LastBoardType"]));
+            }
+            set {
+                this["LastBoardType"] = value;
+            }
+        }
     }
 }

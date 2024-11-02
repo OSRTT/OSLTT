@@ -31,10 +31,10 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.6";
+        private string softwareVersion = "1.7";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
-        public static int boardType = 0;
+        public static int boardType = Properties.Settings.Default.LastBoardType;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
@@ -424,13 +424,16 @@ namespace OSLTT
                             if (board.Contains("feather")) { 
                                 settingsPane1.CheckBoardType(1);
                                 boardType = 1;
+                                Properties.Settings.Default.LastBoardType = 1;
                             }
                             else { 
                                 settingsPane1.CheckBoardType();
                                 boardType = 0;
+                                Properties.Settings.Default.LastBoardType = 0;
                             }
                             Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
                             syncThread.Start();
+                            Properties.Settings.Default.Save();
                             //setBoardSerial();
                         }
                         catch (Exception e)
