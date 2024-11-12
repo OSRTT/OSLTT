@@ -117,11 +117,15 @@ namespace OSLTT
             }
             if (newFirmwareUrl != "")
             {
-                string[] fileSplit = newFirmwareUrl.Split('/');
-                string[] fileVersion = fileSplit.Last().Split('_');
-                string fileNumber = fileVersion.Last();
-                fileNumber = fileNumber.Remove(fileNumber.Length - 8);
-                return double.Parse(fileNumber);
+                try
+                {
+                    string[] fileSplit = newFirmwareUrl.Split('/');
+                    string[] fileVersion = fileSplit.Last().Split('_');
+                    string fileNumber = fileVersion.Last();
+                    fileNumber = fileNumber.Remove(fileNumber.Length - 8);
+                    return double.Parse(fileNumber);
+                }
+                catch { return 0; }
             }
             return 0;
         }
