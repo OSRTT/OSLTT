@@ -42,6 +42,7 @@ namespace OSLTT
             this.graphedData = new ScottPlot.FormsPlot();
             this.resultsTable = new System.Windows.Forms.DataGridView();
             this.settingsBtn = new MaterialSkin.Controls.MaterialButton();
+            this.compareBtn = new MaterialSkin.Controls.MaterialButton();
             this.importPanel.SuspendLayout();
             this.controlsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultsTable)).BeginInit();
@@ -264,11 +265,32 @@ namespace OSLTT
             this.settingsBtn.UseVisualStyleBackColor = true;
             this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
             // 
+            // compareBtn
+            // 
+            this.compareBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.compareBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.compareBtn.Depth = 0;
+            this.compareBtn.HighEmphasis = true;
+            this.compareBtn.Icon = null;
+            this.compareBtn.Location = new System.Drawing.Point(1209, 739);
+            this.compareBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.compareBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.compareBtn.Name = "compareBtn";
+            this.compareBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.compareBtn.Size = new System.Drawing.Size(91, 36);
+            this.compareBtn.TabIndex = 39;
+            this.compareBtn.Text = "Compare";
+            this.compareBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.compareBtn.UseAccentColor = false;
+            this.compareBtn.UseVisualStyleBackColor = true;
+            this.compareBtn.Click += new System.EventHandler(this.compareBtn_Click);
+            // 
             // ResultsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1524, 829);
+            this.Controls.Add(this.compareBtn);
             this.Controls.Add(this.settingsBtn);
             this.Controls.Add(this.importPanel);
             this.Controls.Add(this.resultsTable);
@@ -302,5 +324,6 @@ namespace OSLTT
         private System.Windows.Forms.DataGridView resultsTable;
         private MaterialSkin.Controls.MaterialButton savePNGNoLineBtn;
         private MaterialSkin.Controls.MaterialButton settingsBtn;
+        private MaterialSkin.Controls.MaterialButton compareBtn;
     }
 }

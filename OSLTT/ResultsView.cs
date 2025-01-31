@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Newtonsoft.Json;
+using static OSLTT.ProcessData;
 
 namespace OSLTT
 {
@@ -17,9 +18,24 @@ namespace OSLTT
         public string resultsFolderPath = "";
         public string RunName = "";
         public string path = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
-        public ProcessData.averagedInputLag inputLagResults { get; set; }
+        public averagedInputLag inputLagResults { get; set; }
+        public List<averagedInputLag> resultsList;
         public int type = 2;
         private bool ScatterOption = false;
+        public List<Color> colors = new List<Color> { 
+            Color.SeaGreen, 
+            Color.MediumPurple, 
+            Color.Coral, 
+            Color.Crimson, 
+            Color.Turquoise, 
+            Color.Gold,
+            Color.Violet,
+            Color.Yellow,
+            Color.YellowGreen,
+            Color.SkyBlue,
+            Color.DeepPink,
+            Color.Chartreuse,
+        };
 
         public ResultsView()
         {
@@ -31,6 +47,8 @@ namespace OSLTT
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            resultsList = new List<averagedInputLag>();
+            compareBtn.Visible = false;
         }
 
         public void setResultsFolder(string p)
@@ -45,9 +63,10 @@ namespace OSLTT
             RunName = " | " + splitName.Last();
         }
 
-        public void inputLagMode(ProcessData.averagedInputLag il)
+        public void inputLagMode(averagedInputLag il)
         {
             inputLagResults = il;
+            resultsList.Add(il);
             try
             {
                 graphMode();
@@ -82,6 +101,7 @@ namespace OSLTT
             if (Properties.Settings.Default.defaultGraphView == 0)
             {
                 barPlot.Visible = true;
+                compareBtn.Visible = false;
                 barPlot.BringToFront();
                 drawBarGraph();
             }
@@ -90,6 +110,7 @@ namespace OSLTT
                 ScatterOption = true;
                 graphedData.Visible = true;
                 graphedData.BringToFront();
+                compareBtn.Visible = true;
                 drawScatterGraph();
             }
             if (Properties.Settings.Default.autoSaveScreenshots == 1)
@@ -192,14 +213,50 @@ namespace OSLTT
             dgv.CurrentRow.Selected = false;
         }
 
-        public void drawScatterGraph(bool avgLine = true)
+        public void drawCompareScatter()
         {
-            if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
+            if (inputLagResults.inputLagResults.Count > 0 && resultsList.Count > 1 && resultsList.Count <= colors.Count)
+            {
+                resultType t = inputLagResults.inputLagResults[0].Type;
+                for (int i = 1; i < resultsList.Count; i++)
+                {
+                    // Check results type match, ie light to light, clicks to clicks
+                    if (t == resultsList[i].inputLagResults[0].Type) 
+                    {
+                        // add to scatter
+                        double[] xs = new double[resultsList[i].inputLagResults.Count];
+                        double[] ys = new double[resultsList[i].inputLagResults.Count];
+                        var plt = graphedData.Plot.AddScatter(xs, ys, colors[i], 3, 10);
+                        var plottables = graphedData.Plot.GetPlottables();
+                        graphedData.Plot.Remove(plottables[0]);
+                        // add legend
+                        plt.Label = resultsList[i].RunName; // not correct, needs fixing
+                        graphedData.Plot.Legend(true);
+
+                    }
+                }
+            }
+            else
+            {
+                if (inputLagResults.inputLagResults.Count == 0)
+                {
+                    CFuncs.showMessageBox("Error", "Unable to compare, please import a file first.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                if (resultsList.Count > colors.Count)
+                {
+                    CFuncs.showMessageBox("Error", "Unable to compare that many files. Please import fewer files. Existing imports have been cleared.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    resultsList.Clear();
+                }
+            }
+        }
+        public void drawScatterGraph( bool avgLine = true)
+        {
+            if (inputLagResults.inputLagResults[0].Type == resultType.Light)
             {
                 this.Text = "On Display Latency" + RunName;
                 type = 2;
             }
-            else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Click)
+            else if (inputLagResults.inputLagResults[0].Type == resultType.Click)
             {
                 this.Text = "Click Latency" + RunName;
                 type = 3;
@@ -269,7 +326,7 @@ namespace OSLTT
             double[][] values = new double[3][];
             string[] titles = { "USB Polling Delay", "Render Time", "On Display Lag", "Total Input Lag" };
             string[] labels = { "AVG", "MIN", "MAX" };
-            if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Light)
+            if (inputLagResults.inputLagResults[0].Type == resultType.Light)
             {
                 values[0] = new double[4];
                 values[1] = new double[4];
@@ -287,7 +344,7 @@ namespace OSLTT
                 values[1][3] = Math.Round(inputLagResults.totalInputLag.MIN, 2);
                 values[2][3] = Math.Round(inputLagResults.totalInputLag.MAX, 2);
             }
-            else if (inputLagResults.inputLagResults[0].Type == ProcessData.resultType.Audio)
+            else if (inputLagResults.inputLagResults[0].Type == resultType.Audio)
             {
                 titles = new[] { "USB Polling Delay", "Audio Latency", "Total Latency" };
                 values[0] = new double[3];
@@ -433,8 +490,8 @@ namespace OSLTT
             setWindowTitle(resultsFolderPath);
             if (data.Contains("PROCESSED") && data.Contains("OSLTT"))
             {
-                inputLagResults = new ProcessData.averagedInputLag();
-                ProcessData.averagedInputLag lag = importProcessedData(data);
+                inputLagResults = new averagedInputLag();
+                averagedInputLag lag = importProcessedData(data);
                 if (lag.inputLagResults.Count != 0)
                 {
                     inputLagMode(lag);
@@ -446,8 +503,8 @@ namespace OSLTT
             }
             else if (data.Contains("RAW") && data.Contains("OSLTT"))
             {
-                inputLagResults = new ProcessData.averagedInputLag();
-                List<ProcessData.rawInputLagResult> rawData = importRawInputLagData(data);
+                inputLagResults = new averagedInputLag();
+                List<rawInputLagResult> rawData = importRawInputLagData(data);
                 if (rawData.Count != 0)
                 {
                     //process data
@@ -466,12 +523,12 @@ namespace OSLTT
         {
             // Open file picker dialogue
             var filePath = string.Empty;
-            ProcessData.averagedInputLag averagedInputLag = new ProcessData.averagedInputLag();
-            averagedInputLag.inputLagResults = new List<ProcessData.inputLagResult>();
-            averagedInputLag.ClickTime = new ProcessData.averageInputLagResult();
-            averagedInputLag.FrameTime = new ProcessData.averageInputLagResult();
-            averagedInputLag.onDisplayLatency = new ProcessData.averageInputLagResult();
-            averagedInputLag.totalInputLag = new ProcessData.averageInputLagResult();
+            averagedInputLag averagedInputLag = new averagedInputLag();
+            averagedInputLag.inputLagResults = new List<inputLagResult>();
+            averagedInputLag.ClickTime = new averageInputLagResult();
+            averagedInputLag.FrameTime = new averageInputLagResult();
+            averagedInputLag.onDisplayLatency = new averageInputLagResult();
+            averagedInputLag.totalInputLag = new averageInputLagResult();
             using (System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = path;
@@ -488,17 +545,17 @@ namespace OSLTT
             return filePath;
         }
 
-        private List<ProcessData.rawInputLagResult> importRawInputLagData(string path)
+        private List<rawInputLagResult> importRawInputLagData(string path)
         {
-            List<ProcessData.rawInputLagResult> rawILData = new List<ProcessData.rawInputLagResult>();
-            ProcessData.resultType resultType = ProcessData.resultType.Light;
+            List<rawInputLagResult> rawILData = new List<rawInputLagResult>();
+            resultType resultType = resultType.Light;
             if (path.Contains("AUDIO"))
             {
-                resultType = ProcessData.resultType.Audio;
+                resultType = resultType.Audio;
             }
             else if (path.Contains("CLICK"))
             {
-                resultType = ProcessData.resultType.Click;
+                resultType = resultType.Click;
             }
             //Read the contents of the file into a stream
             try
@@ -542,7 +599,7 @@ namespace OSLTT
                             Array.Resize(ref intLine, intLine.Length - 1);
                             List<int> samples = intLine.ToList();
                             samples.RemoveRange(0, 4);
-                            ProcessData.rawInputLagResult rawResult = new ProcessData.rawInputLagResult
+                            rawInputLagResult rawResult = new rawInputLagResult
                             {
                                 ResultType = resultType,
                                 ClickTime = intLine[0],
@@ -564,22 +621,27 @@ namespace OSLTT
             return rawILData;
         }
 
-        private ProcessData.averagedInputLag importProcessedData(string path)
+        private averagedInputLag importProcessedData(string path, bool compare = false)
         {
-            ProcessData.averagedInputLag averagedInputLag = new ProcessData.averagedInputLag();
-            averagedInputLag.inputLagResults = new List<ProcessData.inputLagResult>();
-            averagedInputLag.ClickTime = new ProcessData.averageInputLagResult();
-            averagedInputLag.FrameTime = new ProcessData.averageInputLagResult();
-            averagedInputLag.onDisplayLatency = new ProcessData.averageInputLagResult();
-            averagedInputLag.totalInputLag = new ProcessData.averageInputLagResult();
-            ProcessData.resultType resultType = ProcessData.resultType.Light;
+            averagedInputLag averagedInputLag = new averagedInputLag();
+            averagedInputLag.inputLagResults = new List<inputLagResult>();
+            averagedInputLag.ClickTime = new averageInputLagResult();
+            averagedInputLag.FrameTime = new averageInputLagResult();
+            averagedInputLag.onDisplayLatency = new averageInputLagResult();
+            averagedInputLag.totalInputLag = new averageInputLagResult();
+            averagedInputLag.RunName = path.Split('\\').Last();
+            resultType resultType = resultType.Light;
+            if (!compare)
+            {
+                resultsList.Clear();
+            }
             if (path.Contains("AUDIO"))
             {
-                resultType = ProcessData.resultType.Audio;
+                resultType = resultType.Audio;
             }
             else if (path.Contains("CLICK"))
             {
-                resultType = ProcessData.resultType.Click;
+                resultType = resultType.Click;
             }
             //Read the contents of the file into a stream
             try
@@ -661,7 +723,7 @@ namespace OSLTT
                                     }
                                 }
                                 //Array.Resize(ref intLine, intLine.Length - 1);
-                                ProcessData.inputLagResult rawResult = new ProcessData.inputLagResult
+                                inputLagResult rawResult = new inputLagResult
                                 {
                                     Type = resultType,
                                     shotNumber = Convert.ToInt32(intLine[0]),
@@ -684,17 +746,17 @@ namespace OSLTT
             return averagedInputLag;
         }
 
-        private ProcessData.averagedInputLag processInputLagData(List<ProcessData.rawInputLagResult> inputLagRawData)
+        private averagedInputLag processInputLagData(List<rawInputLagResult> inputLagRawData)
         {
             //inputLagProcessed.Clear();
 
-            ProcessData.averagedInputLag averagedLatency = new ProcessData.averagedInputLag();
+            averagedInputLag averagedLatency = new averagedInputLag();
             try //Wrapped whole thing in try just in case
             {
                 // Then process the lines
                 if (inputLagRawData.Count != 0)
                 {
-                    averagedLatency = ProcessData.AverageInputLagResults(inputLagRawData);
+                    averagedLatency = AverageInputLagResults(inputLagRawData);
                 }
                 
 
@@ -800,6 +862,30 @@ namespace OSLTT
             }
             ResultsSettings rs = new ResultsSettings();
             rs.Show();
+        }
+
+        private void compareBtn_Click(object sender, EventArgs e)
+        {
+            // import new files
+            var data = importInputLagData(path);
+            if (data.Contains("PROCESSED") && data.Contains("OSLTT"))
+            {
+                inputLagResults = new averagedInputLag();
+                averagedInputLag lag = importProcessedData(data, true);
+                resultsList.Add(lag);
+                if (lag.inputLagResults.Count != 0)
+                {
+                    drawCompareScatter();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to import data", "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                CFuncs.showMessageBox("Failed to import", "Please import PROCESSED OSLTT results only", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

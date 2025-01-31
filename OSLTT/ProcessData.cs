@@ -56,6 +56,7 @@ namespace OSLTT
             public averageInputLagResult FrameTime { get; set; }
             public averageInputLagResult onDisplayLatency { get; set; }
             public averageInputLagResult totalInputLag { get; set; }
+            public string RunName { get; set; }
         }
 
         public static List<inputLagResult> processInputLagData(List<rawInputLagResult> inputLagRawData)
