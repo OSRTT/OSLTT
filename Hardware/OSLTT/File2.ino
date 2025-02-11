@@ -277,7 +277,7 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
       long timer1 = millis();
       getSerialChars();
       long targetTime = timer1 + (timeBetween * 1000);
-      while (millis() > targetTime) { delay(1); }
+      while (millis() < targetTime) { delay(1); }
       localCounter++;
     }
     Serial.println("AUTO FINISHED");
