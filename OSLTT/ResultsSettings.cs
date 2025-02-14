@@ -46,6 +46,7 @@ namespace OSLTT
             autoScreenshotSelect.SelectedIndex = Properties.Settings.Default.autoSaveScreenshots;
             graphViewSelect.SelectedIndex = Properties.Settings.Default.defaultGraphView;
             yAxisSlider.Value = Properties.Settings.Default.yMax;
+            comparePointsLimit.Value = Properties.Settings.Default.comparePoints;
 
         }
 
@@ -102,6 +103,16 @@ namespace OSLTT
             if (ctrl.Focused)
             {
                 Properties.Settings.Default.autoSaveScreenshots = ctrl.SelectedIndex;
+                Properties.Settings.Default.Save();
+            }
+        }
+        private void comparePointsLimit_MouseUp(object sender, MouseEventArgs e)
+        {
+            var ctrl = sender as MaterialSlider;
+            if (ctrl.Focused)
+            {
+                // Save new setting
+                Properties.Settings.Default.comparePoints = ctrl.Value;
                 Properties.Settings.Default.Save();
             }
         }

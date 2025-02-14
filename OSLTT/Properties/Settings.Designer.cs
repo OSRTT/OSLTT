@@ -261,5 +261,17 @@ namespace OSLTT.Properties {
                 this["LastBoardType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int comparePoints {
+            get {
+                return ((int)(this["comparePoints"]));
+            }
+            set {
+                this["comparePoints"] = value;
+            }
+        }
     }
 }

@@ -40,10 +40,13 @@ namespace OSLTT
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.autoScreenshotSelect = new MaterialSkin.Controls.MaterialComboBox();
+            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
+            this.comparePointsLimit = new MaterialSkin.Controls.MaterialSlider();
             this.materialCard1.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.materialCard4.SuspendLayout();
+            this.materialCard5.SuspendLayout();
             this.SuspendLayout();
             // 
             // yAxisSlider
@@ -229,11 +232,43 @@ namespace OSLTT
             this.autoScreenshotSelect.TabIndex = 3;
             this.autoScreenshotSelect.SelectedIndexChanged += new System.EventHandler(this.autoScreenshotSelect_SelectedIndexChanged);
             // 
+            // materialCard5
+            // 
+            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard5.Controls.Add(this.comparePointsLimit);
+            this.materialCard5.Depth = 0;
+            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard5.Location = new System.Drawing.Point(17, 447);
+            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard5.Name = "materialCard5";
+            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard5.Size = new System.Drawing.Size(766, 78);
+            this.materialCard5.TabIndex = 8;
+            // 
+            // comparePointsLimit
+            // 
+            this.comparePointsLimit.Depth = 0;
+            this.comparePointsLimit.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.comparePointsLimit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.comparePointsLimit.Location = new System.Drawing.Point(23, 19);
+            this.comparePointsLimit.MouseState = MaterialSkin.MouseState.HOVER;
+            this.comparePointsLimit.Name = "comparePointsLimit";
+            this.comparePointsLimit.RangeMax = 500;
+            this.comparePointsLimit.Size = new System.Drawing.Size(718, 40);
+            this.comparePointsLimit.TabIndex = 2;
+            this.comparePointsLimit.Text = "Comparison Scatter Points Limit";
+            this.comparePointsLimit.UseAccentColor = true;
+            this.comparePointsLimit.Value = 500;
+            this.comparePointsLimit.ValueMax = 500;
+            this.comparePointsLimit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.comparePointsLimit_MouseUp);
+            // 
             // ResultsSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 450);
+            this.ClientSize = new System.Drawing.Size(801, 532);
+            this.Controls.Add(this.materialCard5);
             this.Controls.Add(this.materialCard4);
             this.Controls.Add(this.materialCard3);
             this.Controls.Add(this.materialCard2);
@@ -247,6 +282,7 @@ namespace OSLTT
             this.materialCard3.PerformLayout();
             this.materialCard4.ResumeLayout(false);
             this.materialCard4.PerformLayout();
+            this.materialCard5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -264,5 +300,7 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialCard materialCard4;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialComboBox autoScreenshotSelect;
+        private MaterialSkin.Controls.MaterialCard materialCard5;
+        private MaterialSkin.Controls.MaterialSlider comparePointsLimit;
     }
 }
