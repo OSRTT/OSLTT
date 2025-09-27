@@ -273,5 +273,17 @@ namespace OSLTT.Properties {
                 this["comparePoints"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool useArduinoCLI {
+            get {
+                return ((bool)(this["useArduinoCLI"]));
+            }
+            set {
+                this["useArduinoCLI"] = value;
+            }
+        }
     }
 }

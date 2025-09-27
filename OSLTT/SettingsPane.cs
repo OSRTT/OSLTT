@@ -103,7 +103,7 @@ namespace OSLTT
 
         public void SaveSettings()
         {
-            // save to testSettings, then save custom profile to settings?
+            // Make this delegate in case it's called from another thread
             
             testSettings.TriggerType = triggerSelect.SelectedIndex + 1;
             testSettings.SensorType = sensorSelect.SelectedIndex + 1;

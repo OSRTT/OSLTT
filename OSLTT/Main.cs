@@ -279,6 +279,10 @@ namespace OSLTT
                     var state = c.GetState();
                     if (previousState.PacketNumber != state.PacketNumber)
                     {
+                        if (debugController)
+                        {
+                            debug.AddToLog(state.Gamepad.Buttons.ToString());
+                        }
                         if (state.Gamepad.Buttons != GamepadButtonFlags.None && state.Gamepad.Buttons != lastButton)
                         {
                             lastButton = state.Gamepad.Buttons;
@@ -398,48 +402,101 @@ namespace OSLTT
                     process.Start();
                     string output = process.StandardOutput.ReadToEnd();
                     process.WaitForExit();
-                    string[] lines = output.Split(
-                        new[] { "\r\n", "\r", "\n" },
-                        StringSplitOptions.None
-                    );
-                    string p = "";
-                    string board = "";
-                    foreach (var s in lines)
+                    // if mdns discovery is blocked, the Arduino CLI will fail to search for boards. This is a backup way to connect to the board.
+                    if (output.Contains("mdns-discovery")) 
                     {
-                        if (s.Contains(fqbn) || s.Contains(fqbn2))
+                        Properties.Settings.Default.useArduinoCLI = false;
+                        Properties.Settings.Default.Save();
+                        var ports = SerialPort.GetPortNames();
+                        bool correctPort = false;
+                        foreach (var p in ports)
                         {
-                            char[] whitespace = new char[] { ' ', '\t' };
-                            string[] split = s.Split(whitespace);
-                            p = split[0];
-                            board = s;
+                            System.ComponentModel.IContainer components =
+                                new System.ComponentModel.Container();
+                            port = new System.IO.Ports.SerialPort(components);
+                            port.PortName = p;
+                            port.BaudRate = 115200;
+                            port.DtrEnable = true;
+                            port.ReadTimeout = 5000;
+                            port.WriteTimeout = 5000;
+                            port.ReadBufferSize = 2097152;
+                            Console.WriteLine("Port details set");
+                            try
+                            { port.Open(); }
+                            catch (Exception ex)
+                            { Console.WriteLine(ex); }
+
+                            if (port.IsOpen)
+                            {
+                                portWrite("I");
+                                Stopwatch sw2 = new Stopwatch();
+                                sw2.Start();
+                                while (sw2.ElapsedMilliseconds < 5000)
+                                {
+                                    string message = port.ReadLine();
+                                    if (message.Contains("FW:"))
+                                    {
+                                        correctPort = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (correctPort)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                port.Close();
+                                port.Dispose();
+                            }
                         }
                     }
-                    if (p != "")
+                    else
                     {
-                        try
+                        string[] lines = output.Split(
+                            new[] { "\r\n", "\r", "\n" },
+                            StringSplitOptions.None
+                        );
+                        string p = "";
+                        string board = "";
+                        foreach (var s in lines)
                         {
-                            connectToBoard(p);
-                            Thread.Sleep(1000);
-                            SetDeviceStatus(1);
-                            if (board.Contains("feather")) { 
-                                settingsPane1.CheckBoardType(1);
-                                boardType = 1;
-                                Properties.Settings.Default.LastBoardType = 1;
+                            if (s.Contains(fqbn) || s.Contains(fqbn2))
+                            {
+                                char[] whitespace = new char[] { ' ', '\t' };
+                                string[] split = s.Split(whitespace);
+                                p = split[0];
+                                board = s;
                             }
-                            else { 
-                                settingsPane1.CheckBoardType();
-                                boardType = 0;
-                                Properties.Settings.Default.LastBoardType = 0;
-                            }
-                            Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
-                            syncThread.Start();
-                            Properties.Settings.Default.Save();
-                            //setBoardSerial();
                         }
-                        catch (Exception e)
+                        if (p != "")
                         {
-                            Console.WriteLine(e);
-                            debug.AddToLog(e.Message + e.StackTrace);
+                            try
+                            {
+                                connectToBoard(p);
+                                Thread.Sleep(1000);
+                                SetDeviceStatus(1);
+                                if (board.Contains("feather")) { 
+                                    settingsPane1.CheckBoardType(1);
+                                    boardType = 1;
+                                    Properties.Settings.Default.LastBoardType = 1;
+                                }
+                                else { 
+                                    settingsPane1.CheckBoardType();
+                                    boardType = 0;
+                                    Properties.Settings.Default.LastBoardType = 0;
+                                }
+                                Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
+                                syncThread.Start();
+                                Properties.Settings.Default.Save();
+                                //setBoardSerial();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                                debug.AddToLog(e.Message + e.StackTrace);
+                            }
                         }
                     }
                     Thread.Sleep(1000);
@@ -825,6 +882,13 @@ namespace OSLTT
                             {
                                 debug.AddToLog("Problem, check file");
                             }
+                            this.Invoke((MethodInvoker)delegate ()
+                            {
+                                micDebug md = new micDebug();
+                                md.mainData = intValues;
+                                md.showData(intValues);
+                                md.Show();
+                            });
                         }
                     }
                     else
@@ -1194,7 +1258,17 @@ namespace OSLTT
                 {
                     settingsSynced = false;
                     stopTest = false;
-                    settingsPane1.SaveSettings();
+                    if (settingsPane1.InvokeRequired)
+                    {
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            settingsPane1.SaveSettings();
+                        });
+                    }
+                    else
+                    {
+                        settingsPane1.SaveSettings();
+                    }
                     inputLagRawData.Clear();
                     inputLagProcessed.Clear();
                     resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
@@ -1530,7 +1604,7 @@ namespace OSLTT
             //Console.WriteLine(testThread.IsAlive);
             //Thread t = new Thread(new ThreadStart(ControllerEventHandler));
             //t.Start();
-            Stopwatch sw = new Stopwatch();
+            /*Stopwatch sw = new Stopwatch();
             var xaudio2 = new XAudio2();
             var masteringVoice = new MasteringVoice(xaudio2);
             sw.Start();
@@ -1541,7 +1615,20 @@ namespace OSLTT
             
             //audioTestClip.Play(); 
             Console.WriteLine("Time taken: " + sw.ElapsedMilliseconds + "ms");
+            */
+            if (!debugController)
+            {
+                Thread t = new Thread(new ThreadStart(ControllerEventHandler));
+                t.Start();
+            }
+            else
+            {
+                ControllerKill = true;
+            }
+            debugController = !debugController;
+
         }
+        bool debugController = false;
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
         {

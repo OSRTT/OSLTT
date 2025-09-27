@@ -97,6 +97,11 @@ namespace OSLTT
                     }
 
                     samples = averagedSamples.Skip(period).ToArray(); //Moving average spoils the first 10 samples so currently removing them.
+                    foreach (var item1 in samples)
+                    {
+                        Console.Write(item1 + ",");
+                    }
+                    Console.WriteLine();
                     /*foreach (var i in samples)
                     {
                         Console.Write(i + ",");
@@ -201,7 +206,7 @@ namespace OSLTT
                     {
                         for (int j = 0; j < samples.Length; j++)
                         {
-                            if (samples[j] < (startMin))
+                            if (samples[j] < (startMin * 0.98))
                             {
                                 if ((samples[j + 50] < (samples[j] - 50) || samples[j + 56] < (samples[j] - 50))
                                         && (samples[j + 100] < (samples[j] - 100) || samples[j + 106] < (samples[j] - 100))
@@ -246,6 +251,7 @@ namespace OSLTT
                     inputLagResult completeResult = new inputLagResult { Type=resultType.Light, shotNumber = shotNumber, clickTimeMs = clickTimeMs, frameTimeMs = Convert.ToDouble(FrameTime), inputLag = inputLag, totalInputLag = totalInputLag, onDisplayLatency = onDisplayLag };
                     inputLagProcessed.Add(completeResult);
                     shotNumber++;
+                    Console.WriteLine(transStart);
                 }
                 catch (Exception ex)
                 {

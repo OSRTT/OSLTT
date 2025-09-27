@@ -209,6 +209,12 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="micDebug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="micDebug.Designer.cs">
+      <DependentUpon>micDebug.cs</DependentUpon>
+    </Compile>
     <Compile Include="MouseHook\KeyboardHook.cs" />
     <Compile Include="MouseHook\MouseHook.cs" />
     <Compile Include="ProcessData.cs" />
@@ -249,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="micDebug.resx">
+      <DependentUpon>micDebug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
