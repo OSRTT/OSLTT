@@ -293,9 +293,15 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
 
 int setMicBaseline()
 {
+  float adj = 0.8;
+  if (highMicSense)
+  {
+    adj = 0.4;
+    Serial.println("HIGH MIC SENSE");
+  }
   int baseline = getADCValue(500, 1);
   int baselineAdjusted = 16380 - baseline;
-    baselineAdjusted *= 0.8;
+    baselineAdjusted *= adj;
     baselineAdjusted += baseline;
   return baselineAdjusted;
 }

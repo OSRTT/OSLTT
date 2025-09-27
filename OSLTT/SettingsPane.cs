@@ -28,6 +28,10 @@ namespace OSLTT
             if (Properties.Settings.Default.customTestSettings != null)
             {
                 testSettings = Properties.Settings.Default.customTestSettings;
+                if (testSettings.TriggerType >= 3)
+                {
+                    testSettings.TriggerType = 2;
+                }
                 ChangeSettings(
                     testSettings.TriggerType,
                     testSettings.SensorType,
@@ -56,6 +60,7 @@ namespace OSLTT
                 if (triggerSelect.Items.Count != 4)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
+                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Mic (High Sense)")));
                 }
                 if (testSelect.Items.Count != 8)
                 {
@@ -75,8 +80,9 @@ namespace OSLTT
                 if (triggerSelect.Items.Count == 4)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.RemoveAt(3)));
+                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.RemoveAt(3)));
                 }
-                if (triggerIndex == 3)
+                if (triggerIndex >= 3)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.SelectedIndex = 2));
                     try
@@ -592,7 +598,7 @@ namespace OSLTT
                         sensorSelect.SelectedIndex = 2; // set to clicks by default
                     }
                     // Only works with Mouse click, game, keyboard or controller
-                    if (testSettings.TestSource != 2 && testSettings.TestSource != 3 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 3 && testSettings.TestSource != 5 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
                     {
                         testSelect.SelectedIndex = 1; // set to mouse by default
                     }
@@ -644,6 +650,27 @@ namespace OSLTT
                     if (preTestToggle.Checked)
                     {
                         preTestToggle.Checked = false;
+                    }
+                }
+                else if (s.SelectedIndex == 4) // high sensitivity mic
+                {
+                    // Only works with Light or Clicks
+                    if (testSettings.SensorType != 1 && testSettings.SensorType != 3)
+                    {
+                        sensorSelect.SelectedIndex = 2; // set to clicks by default
+                    }
+                    // Only works with Mouse click, game, keyboard or controller
+                    if (testSettings.TestSource != 2 && testSettings.TestSource != 3 && testSettings.TestSource != 5 && testSettings.TestSource != 6 && testSettings.TestSource != 7)
+                    {
+                        testSelect.SelectedIndex = 1; // set to mouse by default
+                    }
+                    if (preTestToggle.Checked)
+                    {
+                        preTestToggle.Checked = false;
+                    }
+                    if (autoClickToggle.Checked)
+                    {
+                        autoClickToggle.Checked = false;
                     }
                 }
                 SaveSettings();

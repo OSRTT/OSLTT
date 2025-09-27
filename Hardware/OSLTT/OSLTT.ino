@@ -42,3 +42,5 @@ int InterruptCount = 0;
 bool PullDownInterruptFlag = false;
 
 int micBaseline = 16000;
+
+bool highMicSense = false;

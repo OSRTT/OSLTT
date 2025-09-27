@@ -140,7 +140,7 @@ namespace OSLTT
                             endMax = samples[l];
                         }
                     }
-                                        
+
                     //Check if the data contains a pulse that's 20% greater than BOTH the start and end maximums
                     if (samples.Max() > (startMax * 1.2) && samples.Max() > (endMax * 1.2))
                     {
@@ -226,7 +226,7 @@ namespace OSLTT
                             }
                         }
                     }
-
+                    transStart += period;
                     Console.WriteLine("ClickTime: " + ClickTime);
                     double clickTimeMs = ClickTime;
                     clickTimeMs /= 1000;

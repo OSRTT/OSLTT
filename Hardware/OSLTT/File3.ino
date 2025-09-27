@@ -83,6 +83,8 @@ void loop() {
       } else if (inputType == 1 && sensorType == 0) // mic trigger, light sensor data source. Console testing mode
       {
         micBaseline = setMicBaseline();
+        Serial.print("MICBASELINE:");
+        Serial.println(micBaseline);
         while (input[0] != 'X') {
           if (digitalRead(ButtonPin)) {
             input[0] = 'X';
@@ -147,7 +149,16 @@ void loop() {
     {
       ChangeInterrupt(false);
     }
-    if (inputType == 4) { inputType--;}
+    else if (inputType == 1)
+    {
+      highMicSense = false;
+    }
+    else if (inputType == 4)
+    { // high mic sensitivity mode
+      inputType = 1;
+      highMicSense = true;
+    }
+    if (inputType == 3) { inputType--;}
 
     // Auto Click - bit 3
     if (input[3] == '1') {
