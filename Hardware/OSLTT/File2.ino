@@ -293,16 +293,18 @@ void autoRunTest(bool autoRun = true, int sampleCount = 9000, int clickCount = 1
 
 int setMicBaseline()
 {
-  float adj = 0.8;
+  float adj = 0.7;
   if (highMicSense)
   {
-    adj = 0.4;
+    adj = 0.35;
     Serial.println("HIGH MIC SENSE");
   }
   int baseline = getADCValue(500, 1);
   int baselineAdjusted = 16380 - baseline;
     baselineAdjusted *= adj;
     baselineAdjusted += baseline;
+    //Serial.print("BASELINE:");
+    //Serial.println(baselineAdjusted);
   return baselineAdjusted;
 }
 
@@ -311,19 +313,12 @@ void runClickTest() {
   Serial.setTimeout(100);
 
   micBaseline = setMicBaseline();
-  int counter = 0;
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {
       input[0] = 'X';
       toggleLED(false);
     }
-    if (counter == ArraySize)
-    {
-      counter = 0;
-    }
-    adcBuff[counter] = analogRead(1);
-    int current = adcBuff[counter];
-    counter++;
+    int current = analogRead(1);
     //Serial.println(current); //debugging use only
     
     if (current > micBaseline) {
