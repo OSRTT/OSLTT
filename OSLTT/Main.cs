@@ -35,6 +35,7 @@ namespace OSLTT
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
         public static int boardType = Properties.Settings.Default.LastBoardType;
+        public bool declinedUpdate = false;
 
         public static System.IO.Ports.SerialPort port;
         public static bool portConnected = false;
@@ -963,13 +964,17 @@ namespace OSLTT
             // fwUpdateRunning = true;
             // port.Close();
             // run function to update firmware, returns bool. 
-            if (downloadedFirmwareVersion > boardFirmware)
+            if (downloadedFirmwareVersion > boardFirmware && !declinedUpdate)
             {
-                DialogResult d = CFuncs.showMessageBox("Current version: " + boardFirmware.ToString() + "\n New version: " + downloadedFirmwareVersion.ToString() + "\n Update now?", "Firmware Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult d = CFuncs.showMessageBox("Current version: " + boardFirmware.ToString() + "\nNew version: " + downloadedFirmwareVersion.ToString() + "\nUpdate now?", "Firmware Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.Yes)
                 {
                     boardUpdate = true;
                     port.Close();
+                }
+                else
+                {
+                    declinedUpdate = true;
                 }
             }
 
