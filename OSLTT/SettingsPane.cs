@@ -57,7 +57,7 @@ namespace OSLTT
         {
             if (BoardType == 1)
             {
-                if (triggerSelect.Items.Count != 4)
+                if (triggerSelect.Items.Count != 4 && triggerSelect.Items.Count < 5)
                 {
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
                     this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Mic (High Sense)")));
@@ -151,9 +151,9 @@ namespace OSLTT
                 {
                     trigger += testSettings.TwoPinTrigger;
                 }
-                else if (trigger == 4)
+                else if (trigger == 4 || trigger == 5)
                 {
-                    trigger++; // skip over 4 as two pin mode uses it
+                    trigger++; // skip over 4 as two pin rise/fall mode uses it
                 }
                 string settings = "I";
                 settings += testSettings.SensorType.ToString();

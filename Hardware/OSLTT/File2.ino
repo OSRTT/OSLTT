@@ -309,6 +309,7 @@ int setMicBaseline()
 }
 
 void runClickTest() {
+  Serial.println("mic click test");
   toggleLED(false);
   Serial.setTimeout(100);
 
@@ -350,6 +351,7 @@ void runClickTest() {
 
 void runClickTest2Pin()
 {
+  Serial.println("2pin test");
   InterruptFlag = false;
   while (input[0] != 'X') {
     if (digitalRead(ButtonPin)) {

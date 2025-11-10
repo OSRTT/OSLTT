@@ -45,9 +45,9 @@ void loop() {
     while (input[0] != 'X') {
       Serial.setTimeout(100);
       getSerialChars();
-      if (inputType == 0) {
+      if (inputType == inputTypes::button) {
         if (digitalRead(ButtonPin)) {
-          if (sensorType == 1) {
+          if (sensorType == sensorTypes::audio) {
             if (autoClick) {
               for (int i = 0; i < shotCount; i++) {
                 runAudioTest();
@@ -66,21 +66,24 @@ void loop() {
             }
           }
         }
-      } else if (sourceType == 1 || sourceType == 5 || sourceType == 6 || sourceType == 7) {
-        if (inputType == 1)
+      } else if (sourceType == sourceTypes::mouseClick || 
+      sourceType == sourceTypes::keyboard || 
+      sourceType == sourceTypes::gamepad || 
+      sourceType == sourceTypes::mouseMove) {
+        if (inputType == inputTypes::mic || inputType == inputTypes::micHighSense)
         {
           runClickTest(); 
         }
-        else if (inputType == 2)
+        else if (inputType == inputTypes::twoPin)
         {
           runClickTest2Pin();
         }
-        else if (inputType == 3)
+        else if (inputType == inputTypes::tap)
         {
           runClickTest3Pin();
         }
         break;
-      } else if (inputType == 1 && sensorType == 0) // mic trigger, light sensor data source. Console testing mode
+      } else if ((inputType == inputTypes::mic || inputType == inputTypes::micHighSense) && sensorType == sensorTypes::light) // mic trigger, light sensor data source. Console testing mode
       {
         micBaseline = setMicBaseline();
         Serial.print("MICBASELINE:");
@@ -100,7 +103,7 @@ void loop() {
             toggleLED(false);
           }
         }
-      } else if (inputType == 2) {
+      } else if (inputType == inputTypes::twoPin || inputType == inputTypes::twoPinFalling) {
         while (input[0] != 'X') {
           getSerialChars();
           if (digitalRead(PullDownPin) != HIGH) {
@@ -140,25 +143,26 @@ void loop() {
 
     // Trigger type - bit 2
     inputType = convertHexToDec(input[2]) - 1;
-    if (inputType == 3)
+    if (inputType == inputTypes::twoPinFalling)
     {
       ChangeInterrupt(true);
       inputType--;
     }
-    else if (inputType == 2)
+    else if (inputType == inputTypes::twoPin)
     {
       ChangeInterrupt(false);
     }
-    else if (inputType == 1)
+    else if (inputType == inputTypes::mic)
     {
       highMicSense = false;
     }
-    else if (inputType == 4)
-    { // high mic sensitivity mode
+    else if (inputType == inputTypes::micHighSense)
+    {
+      // high mic sensitivity mode
       inputType = 1;
       highMicSense = true;
     }
-    if (inputType == 3) { inputType--;}
+    //if (inputType == 3) { inputType--;}
 
     // Auto Click - bit 3
     if (input[3] == '1') {
@@ -169,7 +173,7 @@ void loop() {
 
     // DirectX - bit 4
     sourceType = convertHexToDec(input[4]) - 1;
-    if (sourceType == 3) { setAGain(true); }
+    if (sourceType == sourceTypes::audioClip) { setAGain(true); }
     else { setAGain(false); }
 
     // Shot count - bit 5 + 6

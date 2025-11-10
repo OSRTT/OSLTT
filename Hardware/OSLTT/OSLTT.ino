@@ -44,3 +44,29 @@ bool PullDownInterruptFlag = false;
 int micBaseline = 16000;
 
 bool highMicSense = false;
+
+enum inputTypes {
+  button = 0,
+  mic = 1,
+  twoPin = 2,
+  twoPinFalling = 3,
+  tap = 4,
+  micHighSense = 5,
+};
+
+enum sensorTypes {
+  light = 0,
+  audio = 1,
+  clicks = 2,
+};
+
+enum sourceTypes {
+  directX = 0,
+  mouseClick = 1,
+  game = 2,
+  audioClip = 3,
+  external = 4,
+  keyboard = 5,
+  gamepad = 6,
+  mouseMove = 7,
+};
