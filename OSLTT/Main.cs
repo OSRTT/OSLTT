@@ -31,7 +31,7 @@ namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.8";
+        private string softwareVersion = "1.9";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
         public static int boardType = Properties.Settings.Default.LastBoardType;
