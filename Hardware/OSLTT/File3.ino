@@ -112,7 +112,40 @@ void loop() {
           }
         }
         break;
-      } 
+      } else if (inputType == inputTypes::tap && sensorType == sensorTypes::light) // end to end latency
+      {
+        while (input[0] != 'X')
+        {
+          if (digitalRead(ButtonPin)) {
+            input[0] = 'X';
+            toggleLED(false);
+            Serial.println("FINISHED");
+          }
+          if (!digitalRead(PullUpPin))
+          {
+            autoRunTest(false, 12000);
+            toggleLED(true);
+            getSerialChars();
+            delay(300);
+            toggleLED(false);
+          }
+        }
+      } else if (inputType == inputTypes::tap && sensorType == sensorTypes::audio) // click to audio latency
+      {
+          if (digitalRead(ButtonPin)) {
+            input[0] = 'X';
+            toggleLED(false);
+            Serial.println("FINISHED");
+          }
+          if (!digitalRead(PullUpPin))
+          {
+            runAudioTest(false);
+            toggleLED(true);
+            getSerialChars();
+            delay(300);
+            toggleLED(false);
+          }
+      }
     }
   } else if (input[0] == 'P')  // Pre-test
     {

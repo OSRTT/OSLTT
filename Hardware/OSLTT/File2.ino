@@ -351,6 +351,7 @@ void runClickTest() {
 
 void runClickTest2Pin()
 {
+  Serial.setTimeout(3000);
   Serial.println("2pin test");
   InterruptFlag = false;
   while (input[0] != 'X') {
@@ -365,9 +366,9 @@ void runClickTest2Pin()
       input[0] = '0';
 
       long start = micros();
-      while (input[0] != 'H' && input[0] != 'X') {
-        getClickChar();
-      }
+      //while (input[0] != 'H' && input[0] != 'X') {
+        getClickChar(); // removed while as getclickchar acts as 1s timer + returns when new line received
+      //}
       long end = micros();
       long time = end - start;
 
@@ -377,7 +378,7 @@ void runClickTest2Pin()
       delay(200);
       // sync clocks again
       toggleLED(false);
-      delay(100);
+      delay(300);
       InterruptFlag = false;
       InterruptCount = 0;
     }
@@ -443,9 +444,9 @@ void runClickTest3Pin()
   toggleLED(true);
 }
 
-void runAudioTest() {
+void runAudioTest(bool trigger = true) {
   long start = micros();
-  Serial.println("AUDIO TRIGGER");
+  if (trigger){ Serial.println("AUDIO TRIGGER"); }
   long end = micros();
   long timeTaken = fillADCBufferSlower(ArraySize, 1);
   Serial.print("AUDIORES:");

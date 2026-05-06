@@ -120,7 +120,14 @@ namespace OSLTT
                     if (MiddleButtonUp != null)
                         MiddleButtonUp((MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT)));
             }
-            return CallNextHookEx(hookID, nCode, wParam, lParam);
+            try
+            {
+                return CallNextHookEx(hookID, nCode, wParam, lParam);
+            }
+            catch
+            {
+                return (IntPtr)0;
+            }
         }
 
         #region WinAPI

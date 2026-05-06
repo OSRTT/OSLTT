@@ -46,6 +46,7 @@ namespace OSLTT
             this.debugBtn = new MaterialSkin.Controls.MaterialButton();
             this.helpBtn = new MaterialSkin.Controls.MaterialButton();
             this.clickTestBox = new MaterialSkin.Controls.MaterialCard();
+            this.resultsListBox = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             this.mouseMoveLabel = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -60,6 +61,7 @@ namespace OSLTT
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.monitorPresetBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
             this.resultsFolderBtn = new MaterialSkin.Controls.MaterialButton();
             this.runPretestButton = new MaterialSkin.Controls.MaterialButton();
             this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
@@ -67,7 +69,7 @@ namespace OSLTT
             this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.settingsPane1 = new OSLTT.SettingsPane();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.liveResultsPlot = new ScottPlot.FormsPlot();
             this.deviceStatusPanel.SuspendLayout();
             this.materialCard2.SuspendLayout();
             this.clickTestBox.SuspendLayout();
@@ -349,17 +351,38 @@ namespace OSLTT
             // clickTestBox
             // 
             this.clickTestBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clickTestBox.Controls.Add(this.liveResultsPlot);
+            this.clickTestBox.Controls.Add(this.resultsListBox);
             this.clickTestBox.Controls.Add(this.mouseMoveLabel);
             this.clickTestBox.Controls.Add(this.materialLabel11);
             this.clickTestBox.Depth = 0;
             this.clickTestBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.clickTestBox.Location = new System.Drawing.Point(14, 80);
+            this.clickTestBox.Location = new System.Drawing.Point(14, 77);
             this.clickTestBox.Margin = new System.Windows.Forms.Padding(14);
             this.clickTestBox.MouseState = MaterialSkin.MouseState.HOVER;
             this.clickTestBox.Name = "clickTestBox";
             this.clickTestBox.Padding = new System.Windows.Forms.Padding(14);
             this.clickTestBox.Size = new System.Drawing.Size(903, 661);
             this.clickTestBox.TabIndex = 48;
+            // 
+            // resultsListBox
+            // 
+            this.resultsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.resultsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.resultsListBox.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.resultsListBox.Depth = 0;
+            this.resultsListBox.Font = new System.Drawing.Font("Roboto", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resultsListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.resultsListBox.Location = new System.Drawing.Point(30, 14);
+            this.resultsListBox.MouseState = MaterialSkin.MouseState.HOVER;
+            this.resultsListBox.Name = "resultsListBox";
+            this.resultsListBox.ReadOnly = true;
+            this.resultsListBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.resultsListBox.ShortcutsEnabled = false;
+            this.resultsListBox.Size = new System.Drawing.Size(167, 622);
+            this.resultsListBox.TabIndex = 3;
+            this.resultsListBox.TabStop = false;
+            this.resultsListBox.Text = "";
             // 
             // mouseMoveLabel
             // 
@@ -607,6 +630,19 @@ namespace OSLTT
             this.materialCard3.Size = new System.Drawing.Size(258, 118);
             this.materialCard3.TabIndex = 60;
             // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.materialLabel2.Location = new System.Drawing.Point(60, 14);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(146, 29);
+            this.materialLabel2.TabIndex = 67;
+            this.materialLabel2.Text = "Results Tools";
+            // 
             // resultsFolderBtn
             // 
             this.resultsFolderBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -724,24 +760,18 @@ namespace OSLTT
             this.settingsPane1.Size = new System.Drawing.Size(623, 458);
             this.settingsPane1.TabIndex = 59;
             // 
-            // materialLabel2
+            // liveResultsPlot
             // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.materialLabel2.Location = new System.Drawing.Point(60, 14);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(146, 29);
-            this.materialLabel2.TabIndex = 67;
-            this.materialLabel2.Text = "Results Tools";
+            this.liveResultsPlot.Location = new System.Drawing.Point(0, 48);
+            this.liveResultsPlot.Name = "liveResultsPlot";
+            this.liveResultsPlot.Size = new System.Drawing.Size(903, 542);
+            this.liveResultsPlot.TabIndex = 4;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(931, 755);
+            this.ClientSize = new System.Drawing.Size(934, 755);
             this.Controls.Add(this.notesBox);
             this.Controls.Add(this.materialCard5);
             this.Controls.Add(this.settingsPane1);
@@ -813,6 +843,8 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialButton consolesPresetBtn;
         private MaterialSkin.Controls.MaterialLabel mouseMoveLabel;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private MaterialSkin.Controls.MaterialMultiLineTextBox resultsListBox;
+        private ScottPlot.FormsPlot liveResultsPlot;
     }
 }
 

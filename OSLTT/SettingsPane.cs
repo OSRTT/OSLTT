@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static OSLTT.TestSettings;
 
 namespace OSLTT
 {
     // TODO  - write functions to fill the selects!!!!
     public partial class SettingsPane : UserControl
     {
+        public int BoardType = 1;
         public SettingsPane()
         {
             InitializeComponent();
@@ -53,9 +55,10 @@ namespace OSLTT
         TestSettings testSettings = new TestSettings();
         public Main mainWindow;
 
-        public void CheckBoardType(int BoardType = 0)
+        public void CheckBoardType(int boardType = 0)
         {
-            if (BoardType == 1)
+            boardType = BoardType;
+            if (boardType == 1)
             {
                 if (triggerSelect.Items.Count != 4 && triggerSelect.Items.Count < 5)
                 {
@@ -181,6 +184,9 @@ namespace OSLTT
             triggerSelect.Items.Add("OSLTT Button");
             triggerSelect.Items.Add("Audio Jack (Mic)");
             triggerSelect.Items.Add("2 Pin Input");
+            triggerSelect.Items.Add("Tap Input"); // adding these in by default as it's annoying to have to change em every time
+            triggerSelect.Items.Add("Mic (High Sense)");
+
 
             sensorSelect.Items.Clear();
             sensorSelect.Items.Add("Light Sensor");
@@ -195,7 +201,7 @@ namespace OSLTT
             testSelect.Items.Add("External");
             testSelect.Items.Add("Keyboard");
             testSelect.Items.Add("Gamepad/Controller");
-            //testSelect.Items.Add("Mouse Move");
+            testSelect.Items.Add("Mouse Move");
         }
 
         public class Displays
@@ -449,10 +455,6 @@ namespace OSLTT
             }
         }
 
-        
-
-       
-
         private void autoClickToggle_CheckedChanged(object sender, EventArgs e)
         {
             MaterialSwitch s = sender as MaterialSwitch;
@@ -577,7 +579,25 @@ namespace OSLTT
             if (s.Focused)
             {
                 testSettings.TriggerType = s.SelectedIndex + 1;
-                if (s.SelectedIndex == 0) // button
+                ConfigSetting cfg = ConfigValidator.ResolveConfiguration(
+                    (TriggerTypes)s.SelectedIndex + 1,
+                    (SensorTypes)sensorSelect.SelectedIndex + 1,
+                    (TestSources)testSelect.SelectedIndex + 1,
+                    typeof(TriggerTypes),
+                    BoardType);
+                if ((int)cfg.Sensor != sensorSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    sensorSelect.SelectedIndex = (int)cfg.Sensor - 1;
+                }
+                if ((int)cfg.Source != testSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    testSelect.SelectedIndex = (int)cfg.Source - 1;
+                }
+
+                SaveSettings();
+
+                #region Old select code
+                /*if (s.SelectedIndex == 0) // button
                 {
                     // Only works with Light or Audio
                     if (testSettings.SensorType != 1 && testSettings.SensorType != 2 )
@@ -638,7 +658,7 @@ namespace OSLTT
                 else if (s.SelectedIndex == 3) // 3 pin
                 {
                     // Only works with clicks
-                    if (testSettings.SensorType != 3)
+                    if (testSettings.SensorType != 3 && testSettings.SensorType != 1)
                     {
                         sensorSelect.SelectedIndex = 2; // set to clicks as default
                     }
@@ -674,6 +694,8 @@ namespace OSLTT
                     }
                 }
                 SaveSettings();
+                */
+                #endregion 
             }
         }
 
@@ -683,6 +705,24 @@ namespace OSLTT
             if (s.Focused)
             {
                 testSettings.SensorType = s.SelectedIndex + 1;
+                ConfigSetting cfg = ConfigValidator.ResolveConfiguration(
+                    (TriggerTypes)triggerSelect.SelectedIndex + 1,
+                    (SensorTypes)s.SelectedIndex + 1,
+                    (TestSources)testSelect.SelectedIndex + 1,
+                    typeof(SensorTypes),
+                    BoardType);
+                if ((int)cfg.Trigger != triggerSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    triggerSelect.SelectedIndex = (int)cfg.Trigger - 1;
+                }
+                if ((int)cfg.Source != testSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    testSelect.SelectedIndex = (int)cfg.Source - 1;
+                }
+
+                SaveSettings();
+                #region old selection code
+                /*
                 if (s.SelectedIndex == 0) // light
                 {
                     // Only works with button, mic and 2 pin
@@ -706,7 +746,7 @@ namespace OSLTT
                 else if (s.SelectedIndex == 1) // audio
                 {
                     // Only works with button
-                    if (testSettings.TriggerType != 1)
+                    if (testSettings.TriggerType != 1 && testSettings.TriggerType != 3)
                     {
                         triggerSelect.SelectedIndex = 0; // set to button
                     }
@@ -741,7 +781,8 @@ namespace OSLTT
                         autoClickToggle.Checked = false;
                     }
                 }
-                SaveSettings();
+                SaveSettings();*/
+                #endregion
             }
         }
 
@@ -751,6 +792,25 @@ namespace OSLTT
             if (s.Focused)
             {
                 testSettings.TestSource = s.SelectedIndex + 1;
+                ConfigSetting cfg = ConfigValidator.ResolveConfiguration(
+                    (TriggerTypes)triggerSelect.SelectedIndex + 1,
+                    (SensorTypes)sensorSelect.SelectedIndex + 1,
+                    (TestSources)s.SelectedIndex + 1,
+                    typeof(TestSources),
+                    BoardType);
+                if ((int)cfg.Trigger != triggerSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    triggerSelect.SelectedIndex = (int)cfg.Trigger - 1;
+                }
+                if ((int)cfg.Sensor != sensorSelect.SelectedIndex + 1)
+                {   // change sensor to match trigger
+                    sensorSelect.SelectedIndex = (int)cfg.Sensor - 1;
+                }
+
+                SaveSettings();
+
+                #region old selection code
+                /*
                 if (s.SelectedIndex == 0) // DirectX
                 {
                     // Only works with button
@@ -834,7 +894,8 @@ namespace OSLTT
                         sensorSelect.SelectedIndex = 0; // set to light
                     }
                 }
-                SaveSettings();
+                SaveSettings();*/
+                #endregion
             }
         }
     }

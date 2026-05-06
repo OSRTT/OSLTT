@@ -26,12 +26,13 @@ using System.Windows.Input;
 using SharpDX.Multimedia;
 using SharpDX.XAudio2;
 using static OSLTT.ProcessData;
+using static OSLTT.TestSettings;
 
 namespace OSLTT
 {
     public partial class Main : MaterialForm
     {
-        private string softwareVersion = "1.9";
+        private string softwareVersion = "2.0";
         private static double boardFirmware = 0;
         private static double downloadedFirmwareVersion = -1;
         public static int boardType = Properties.Settings.Default.LastBoardType;
@@ -124,6 +125,7 @@ namespace OSLTT
             SetDeviceStatus(0);
             toggleMouseKeyboardBoxes(false);
             fillHotkeyList();
+            //initLiveView();
             UpdateFirmware.initialSetup();
             downloadedFirmwareVersion = UpdateFirmware.getNewFirmwareFile(path);
 
@@ -228,6 +230,7 @@ namespace OSLTT
         /// <param name="mouseStruct"></param>
         private void MouseHook_LeftButtonDown(MouseHook.MSLLHOOKSTRUCT mouseStruct)
         {
+            
             if (testSettings.TestSource == 2)
             {
                 portWrite("H");
@@ -476,7 +479,7 @@ namespace OSLTT
                             try
                             {
                                 connectToBoard(p);
-                                Thread.Sleep(1000);
+                                Thread.Sleep(500);
                                 SetDeviceStatus(1);
                                 if (board.Contains("feather")) { 
                                     settingsPane1.CheckBoardType(1);
@@ -488,9 +491,9 @@ namespace OSLTT
                                     boardType = 0;
                                     Properties.Settings.Default.LastBoardType = 0;
                                 }
+                                Properties.Settings.Default.Save();
                                 Thread syncThread = new Thread(new ThreadStart(SyncSettingsThreadFunc));
                                 syncThread.Start();
-                                Properties.Settings.Default.Save();
                                 //setBoardSerial();
                             }
                             catch (Exception e)
@@ -760,8 +763,20 @@ namespace OSLTT
                         // click result
                         string[] splitMessage = message.Split(':');
                         double result = double.Parse(splitMessage[1]);
-                        inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000 });
-                        lastButton = GamepadButtonFlags.None;
+                        if (result > 25) // ignore bad results
+                        {
+                            inputLagProcessed.Add(new inputLagResult { Type = resultType.Click, shotNumber = inputLagProcessed.Count + 1, totalInputLag = result / 1000 });
+                            lastButton = GamepadButtonFlags.None;
+                        }
+                        if (testSettings.SensorType == 3)
+                        {
+                            //addToResultsBox("CLICK:" + Math.Round((result / 1000), 2).ToString());
+                            this.Invoke((MethodInvoker)delegate ()
+                            {
+                                addToLiveViewPlot(Math.Round((result / 1000), 2));
+                            });
+                            
+                        }
                     }
                     else if (message.Contains("AUTO FINISHED")) // auto click test complete, write to folder & process
                     {
@@ -980,8 +995,6 @@ namespace OSLTT
 
         }
 
-
-
         private void SetDeviceStatus(int state)
         {
             string text = " Device Not Connected";
@@ -1159,13 +1172,70 @@ namespace OSLTT
             }
         }
 
+        public void addToResultsBox(string res) // make this a thread to add new results to the screen and remove ones that are over X seconds old
+        {
+            try
+            {
+                resultsListBox.Invoke((MethodInvoker)(() => this.resultsListBox.Text = res + "\n" + resultsListBox.Text));
+            }
+            catch {
+
+                resultsListBox.Invoke((MethodInvoker)(() => this.resultsListBox.Clear()));
+            }
+        }
+        private List<double> liveResults; 
+        private void initLiveView()
+        {
+            if (liveResults == null)
+            {
+                liveResults = new List<double>();
+            }
+            liveResultsPlot.Reset();
+            liveResults.Clear();
+            liveResultsPlot.Plot.Clear();
+            //liveResultsPlot.Plot.AddSignal(new double[] { 0.0 }, 1, Color.AliceBlue);
+            liveResultsPlot.Plot.Legend(false);
+            liveResultsPlot.Plot.Style(figureBackground: Color.Transparent, dataBackground: Color.Transparent, grid: Color.Gray);
+            liveResultsPlot.Plot.XAxis.TickLabelStyle(Color.White, "Calibri", 20, false);
+            liveResultsPlot.Plot.YAxis.TickLabelStyle(Color.White, "Calibri", 20, false);
+            liveResultsPlot.Configuration.LockHorizontalAxis = true;
+            liveResultsPlot.Configuration.LockVerticalAxis = true;
+            liveResultsPlot.Configuration.LeftClickDragPan = false;
+            liveResultsPlot.Configuration.RightClickDragZoom = false;
+            liveResultsPlot.Configuration.ScrollWheelZoom = false;
+            liveResultsPlot.Configuration.DoubleClickBenchmark = false;
+            liveResultsPlot.Plot.Render();
+            liveResultsPlot.Refresh();
+        }
+        public void addToLiveViewPlot(double res) // make this a thread to add new results to the screen and remove ones that are over X seconds old
+        {
+            try
+            {
+                //liveResultsPlot.Plot.Clear();
+                if (liveResults == null)
+                {
+                    liveResults = new List<double>();
+                }
+                if (res < 500)
+                {
+                    liveResults.Add(res);
+                    List<double> xsList = new List<double>();
+                
+                    liveResultsPlot.Plot.AddSignal( liveResults.ToArray(),1,Color.AliceBlue);
+                    //liveResultsPlot.Plot.AddScatter(xsList.ToArray(), liveResults.ToArray(), null, 3, 10);
+                
+                    liveResultsPlot.Plot.AxisAuto();
+                    liveResultsPlot.Plot.Render();
+                    liveResultsPlot.Refresh();
+                }
+            }
+            catch { }
+        }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             this.Invalidate();
         }
-
-
 
         public void getInputLagEvents(List<float> fpsList)
         {
@@ -1268,18 +1338,21 @@ namespace OSLTT
                         this.Invoke((MethodInvoker)delegate ()
                         {
                             settingsPane1.SaveSettings();
+                            resultsListBox.Clear();
                         });
                     }
                     else
                     {
                         settingsPane1.SaveSettings();
+                        resultsListBox.Clear();
                     }
+
                     inputLagRawData.Clear();
                     inputLagProcessed.Clear();
                     resultsFolderPath = CFuncs.makeResultsFolder(resultsPath, testSettings.GetResultType(testSettings.SensorType), deviceNameBox.Text);
                     // create raw and processed files? or just let the files do that?
-                    if (testSettings.TestSource != 2 && testSettings.TestSource != 6)
-                    {
+                    if (testSettings.TestSource != 2 || (testSettings.TestSource <= 6 && testSettings.TestSource >= 8))
+                    { // Keyboard/Mice/Controller tests don't need a raw file as there is no light/audio data to process, just results.
                         rawFileName = CFuncs.makeResultsFile(resultsFolderPath, "RAW");
                     }
                     processedFileName = CFuncs.makeResultsFile(resultsFolderPath, "PROCESSED");
@@ -1290,6 +1363,10 @@ namespace OSLTT
                     }
                     else
                     {
+                        if (testSettings.SensorType == 3)
+                        {
+                            initLiveView();
+                        }    
                         testThread = new Thread(new ThreadStart(runTest));
                         testThread.Start();
                     }
@@ -1573,55 +1650,8 @@ namespace OSLTT
         bool testbool = false;
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            //UpdateFirmware.getNewFirmwareFile();
 
-            //DirectX.System.DSystem.inputLagMode = true;
-            //if (DirectX.System.DSystem.mainWindow == null)
-            //DirectX.System.DSystem.mainWindow = this;
-
-            //DirectX.System.DSystem.StartRenderForm("OSLTT Test Window (DirectX 11)", 800, 600, false, true, 0, 1);
-
-            //audioTestClip.Play();
-
-            //sw.Restart();
-
-            //portWrite("W");
-            //textTextBox.Text = "test";
-            /*testbool = !testbool;
-            toggleMouseKeyboardBoxes(testbool);
-            if (testbool)
-            {
-                portWrite("Y");
-                mouseHook.Install();
-            }
-            else
-            {
-                portWrite("X");
-                mouseHook.Uninstall();
-            }*/
-
-            //portWrite("Z");
-            //boardUpdate = true;
-            //mouseHook.Install();
-
-            //runPretestButton.Enabled = !runPretestButton.Enabled;
-
-            //Console.WriteLine(testThread.IsAlive);
-            //Thread t = new Thread(new ThreadStart(ControllerEventHandler));
-            //t.Start();
-            /*Stopwatch sw = new Stopwatch();
-            var xaudio2 = new XAudio2();
-            var masteringVoice = new MasteringVoice(xaudio2);
-            sw.Start();
-            PlaySoundFile(xaudio2);
-            sw.Stop();
-            masteringVoice.Dispose();
-            xaudio2.Dispose();
-            
-            //audioTestClip.Play(); 
-            Console.WriteLine("Time taken: " + sw.ElapsedMilliseconds + "ms");
-            */
-            if (!debugController)
+            /*if (!debugController)
             {
                 Thread t = new Thread(new ThreadStart(ControllerEventHandler));
                 t.Start();
@@ -1630,10 +1660,14 @@ namespace OSLTT
             {
                 ControllerKill = true;
             }
-            debugController = !debugController;
+            debugController = !debugController;*/
+            //toggleMouseKeyboardBoxes(true);
+            //addToLiveViewPlot(15.3);
+            
+            Console.WriteLine((TriggerTypes)1);
 
         }
-        bool debugController = false;
+        bool debugController = true;
 
         private void monitorPresetBtn_Click(object sender, EventArgs e)
         {

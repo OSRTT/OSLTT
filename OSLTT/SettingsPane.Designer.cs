@@ -545,10 +545,10 @@ namespace OSLTT
         private MaterialSkin.Controls.MaterialComboBox mouseActionSelect;
         private MaterialSkin.Controls.MaterialLabel materialLabel7;
         private MaterialSkin.Controls.MaterialComboBox twoPinTriggerSelect;
-        private MaterialSkin.Controls.MaterialComboBox testSelect;
         private MaterialSkin.Controls.MaterialLabel materialLabel11;
-        private MaterialSkin.Controls.MaterialComboBox sensorSelect;
         private MaterialSkin.Controls.MaterialLabel materialLabel9;
-        private MaterialSkin.Controls.MaterialComboBox triggerSelect;
+        public MaterialSkin.Controls.MaterialComboBox triggerSelect;
+        public MaterialSkin.Controls.MaterialComboBox testSelect;
+        public MaterialSkin.Controls.MaterialComboBox sensorSelect;
     }
 }
