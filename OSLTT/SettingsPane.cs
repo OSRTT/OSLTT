@@ -60,15 +60,19 @@ namespace OSLTT
             boardType = BoardType;
             if (boardType == 1)
             {
-                if (triggerSelect.Items.Count != 4 && triggerSelect.Items.Count < 5)
+                try
                 {
-                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
-                    this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Mic (High Sense)")));
+                    if (triggerSelect.Items.Count != 4 && triggerSelect.Items.Count < 5)
+                    {
+                        this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Tap Input")));
+                        this.triggerSelect.Invoke((MethodInvoker)(() => this.triggerSelect.Items.Add("Mic (High Sense)")));
+                    }
+                    if (testSelect.Items.Count != 8)
+                    {
+                        this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.Items.Add("Mouse Move")));
+                    }
                 }
-                if (testSelect.Items.Count != 8)
-                {
-                    this.testSelect.Invoke((MethodInvoker)(() => this.testSelect.Items.Add("Mouse Move")));
-                }
+                catch { }
             }
             else
             {
