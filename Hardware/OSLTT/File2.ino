@@ -340,7 +340,9 @@ void runClickTest() {
       delay(200);
       // sync clocks again
       toggleLED(false);
-      delay(100);
+      Serial.setTimeout(100);
+      getClickChar();
+      Serial.setTimeout(3000);
     }
   }
   
@@ -378,7 +380,9 @@ void runClickTest2Pin()
       delay(200);
       // sync clocks again
       toggleLED(false);
-      delay(300);
+      Serial.setTimeout(100);
+      getClickChar();
+      Serial.setTimeout(3000);
       InterruptFlag = false;
       InterruptCount = 0;
     }
@@ -423,7 +427,7 @@ void runClickTest3Pin()
       toggleLED(false);
       PullDownInterruptFlag = false;
       InterruptCount = 0;
-      delay(100);
+      //delay(100);
       input[0] = ' ';
       if (sourceType == 7)
       {
@@ -435,6 +439,9 @@ void runClickTest3Pin()
         delay(200);
         toggleLED(false);
       }
+      Serial.setTimeout(100);
+      getClickChar();
+      Serial.setTimeout(3000);
       // Serial.print("PDIF:");
       // Serial.println(PullDownInterruptFlag);
     }

@@ -1663,8 +1663,10 @@ namespace OSLTT
             debugController = !debugController;*/
             //toggleMouseKeyboardBoxes(true);
             //addToLiveViewPlot(15.3);
-            
-            Console.WriteLine((TriggerTypes)1);
+
+            //Console.WriteLine((TriggerTypes)1);
+
+            portWrite("Z2");
 
         }
         bool debugController = true;

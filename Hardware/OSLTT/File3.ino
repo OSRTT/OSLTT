@@ -408,7 +408,7 @@ void loop() {
     else
     {
       long start = micros();
-      digitalRead(PullUpPin);
+      Serial.setTimeout(100);
       long end = micros();
       Serial.println(end - start);
       
